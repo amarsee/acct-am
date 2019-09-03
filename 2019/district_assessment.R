@@ -51,23 +51,7 @@ total_by_subgroup <- function(df) {
     ungroup()
   return(out_df)
 }
-# total_by_subgroup <- function(df) {
-#   out_df <- df %>%
-#     group_by(acct_system, test, subject, grade, subgroup) %>%
-#     summarise(
-#       enrolled = sum(enrolled),
-#       tested = sum(tested),
-#       valid_tests = sum( valid_test),
-#       n_below = sum(below),
-#       n_approaching = sum(approaching),
-#       n_on_track = sum(on_track),
-#       n_mastered = sum(mastered)
-#     ) %>%
-#     ungroup() %>%
-#     rename(system = acct_system) %>%
-#     left_join(names, by = 'system')
-#   return(out_df)
-# }
+
 
 # Takes df and groups by race (now named subgroup) from student level file 
 grouped_by_race <- total_by_subgroup(sl)

@@ -72,22 +72,6 @@ ready_grad_student_level_total <- read_csv('N:/ORP_accountability/projects/2019_
     completed_act_sat = if_else((sat_total > 0 | act_composite > 0) & included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13), 1, 0),
     on_time_grad = if_else(included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13), 1, 0)
     )
-# 
-# ready_grad_student_level_total <- ready_grad_student_level_school_act %>% 
-#   full_join(ready_grad_student_level_school_sat, by=c('student_key','first_name', 'middle_name', 'last_name', 'race_ethnicity', 'cohortyear',
-#                                                       'elb', 'swd', 'econ_dis', 'system', 'school', 'included_in_cohort', 'completion_type', 
-#                                                       'sat_math', 'sat_critical_reading', 'sat_total', 'act_english', 'act_math', 'act_reading',
-#                                                       'act_science', 'act_composite', 'industry_cert_earned', 'asvab', 'ncrc_work_keys',
-#                                                       'n_cambridge', 'n_ap', 'n_ib', 'n_sdc', 'n_ldc', 'n_de', 'participate_clg_lvl_pgm', 'ready_graduate')) %>% 
-#   bind_rows(ready_grad_student_level_neither) %>% 
-#   mutate(
-#     cohort_indicator = if_else(included_in_cohort == 'Y', 1, 0),
-#     ready_grad_indicator = if_else(ready_graduate == 'Y', 1, 0),
-#     on_time_grad = if_else(completion_type %in% c(1,11,12,13), 1, 0)
-#   ) %>% 
-#   replace_na(list(completed_act = 0, completed_sat = 0)) %>% 
-#   mutate(completed_act_sat = if_else(completed_act > 0 | completed_sat > 0, 1, 0))
-
 
 # ================================== Ready Grad Subgroups ===========================================================
 

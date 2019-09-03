@@ -123,15 +123,6 @@ all_students <- sl %>%
   mutate(subgroup = "All Students") %>% 
   total_by_subgroup_dist()
 
-# super_subgroup <- sl_2018 %>% 
-#   filter(bhn_group > 0 | economically_disadvantaged > 0 | el_t1234 > 0 | el > 0 | special_ed > 0) %>% 
-#   mutate(subgroup = "Super Subgroup") %>% 
-#   total_by_subgroup_dist()
-# 
-# all_students <- all_students %>% 
-#   rbind(super_subgroup)
-
-# grouped_by_race <- total_by_subgroup_dist(sl_2018)
 
 cat_subgroups <- function(student_df, students_grouped ){
   base_df = students_grouped
@@ -159,34 +150,6 @@ cat_subgroups <- function(student_df, students_grouped ){
   }
   return(base_df)
 }
-# ====================== TCAP Participation Rate =======================
-# school_assessment <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/school_assessment_file.csv") %>% 
-#   mutate(
-#     grade = case_when(
-#       grade %in% c("9", "10", "11", "12") ~ "9th through 12th",
-#       # grade %in% c(9, 10, 11, 12) ~ "9th through 12th",
-#       grade %in% c("6", "7", "8") ~ "6th through 8th",
-#       # grade %in% c(6, 7, 8) ~ "6th through 8th",
-#       grade %in% c("3", "4", "5") ~ "3rd through 5th",
-#       grade == "All Grades" ~ "All Grades",
-#       #grade == "All Grades" ~ "All Grades",
-#       TRUE ~ NA_character_
-#     )
-#   )
-# 
-# tcap_participation <- school_assessment %>% 
-#   filter(year == 2018, grade != 'All Grades') %>% 
-#   group_by(system, system_name, subgroup, grade) %>%
-#   summarise(
-#     n_enrolled = sum(enrolled),
-#     n_tested = sum(tested)
-#   ) %>% 
-#   ungroup() %>% 
-#   mutate(
-#     participation_rate = round(n_tested/n_enrolled * 100 + 1e-5, 0)
-#   ) %>% 
-#   arrange(system, system_name, subgroup, grade)
-
 
 # ======================================= Success Rate ================================================
 
@@ -230,23 +193,12 @@ dist_totals <- cat_subgroups(sl, all_students) %>%
   
 
 dist_achievement <- dist_totals %>% 
-  # group_by(system, subject, subgroup, grade)  %>%
-  # summarise_at(
-  #   .vars = c('enrolled', 'tested', 'valid_tests', 'n_on_track', 'n_mastered'),
-  #   .funs = ~ sum(., na.rm=T)
-  # ) %>%
-  # ungroup() %>% 
   mutate(
     tested = if_else(valid_tests > 29, tested, 0),
     enrolled = if_else(valid_tests > 29, enrolled, 0),
     valid_tests = if_else(valid_tests > 29, valid_tests, 0),
     n_on_track = if_else(valid_tests > 29, n_on_track, NA_real_),
     n_mastered = if_else(valid_tests > 29, n_mastered, NA_real_)
-    # grade = case_when(
-    #   grade >= 9 ~ '9th through 12th',
-    #   grade >= 6 ~ '6th through 8th',
-    #   grade >= 3 ~ '3rd through 5th'
-    # )
   ) %>% 
   group_by(system, subgroup, grade)  %>%
   summarise(
@@ -281,7 +233,6 @@ dist_achievement <- dist_totals %>%
 
 dist_success_amo_absolute_value <- dist_achievement %>% 
   left_join(success_value_added_dist, by = c('system', 'subgroup', 'grade', 'indicator')) %>% 
-  # left_join(tcap_participation %>% select(-n_enrolled,-n_tested), by = c('system','system_name', 'subgroup', 'grade')) %>% 
   mutate(
     participation_rate = if_else(n_count == 0, NA_real_, participation_rate)
   ) %>% 
@@ -301,28 +252,12 @@ subgroups <- c("Black/Hispanic/Native American", "Economically Disadvantaged", "
                "Students with Disabilities", "American Indian or Alaska Native", "Asian", "Black or African American",
                "Hispanic", "White")
 
-# grad_rate_student_level_school <- read_csv('N:\\ORP_accountability\\data\\2018_graduation_rate\\student_level.csv') %>% 
-#   select(student_key, system, school, race_ethnicity, el, ed, swd, completion_type) %>% 
-#   filter(completion_type %in% c(1,11,12,13)) %>% 
-#   mutate(
-#     on_time_grad = 1
-#   )
 
 dist_act_participation <- read_csv("N:/ORP_accountability/projects/2019_ready_graduate/Data/ready_graduate_district.csv") %>% 
   rename(participation_rate = act_participation_rate) 
   
 
 # =================================== Graduation Rate =====================================
-# dist_ready_grad_prior <- read_csv('N:\\ORP_accountability\\data\\2018_final_accountability_files\\district_ready_grad.csv') %>% 
-#   transmute(system, subgroup, metric_prior = if_else(grad_cohort >= 30,pct_ready_grad, NA_real_))
-# 
-# dist_ready_grad_current <- read_csv('N:\\ORP_accountability\\projects\\2019_ready_graduate\\Data\\ready_graduate_district.csv') %>% 
-#   transmute(system, subgroup, metric = if_else(n_count >= 30,pct_ready_grad, NA_real_)) %>% 
-#   left_join(dist_ready_grad_prior, by = c('system', 'subgroup')) %>% 
-#   mutate(
-#     value_add_metric = metric - metric_prior
-#   )
-
 value_add_grad <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/district_grad_va.csv")
 
 amo_dist_grad <- read_csv("N:/ORP_accountability/projects/2019_amo/grad_district.csv") %>% 
@@ -346,13 +281,6 @@ dist_grad <- read_csv("N:/ORP_accountability/data/2018_graduation_rate/district_
         )
   ) %>% 
   filter(subgroup %in% c('All Students',subgroups)) %>% 
- #  group_by(system, subgroup) %>%
-  #summarise(
-   # grad_cohort = sum(grad_cohort),
-    #grad_count = sum(grad_count)
-  #) %>%
-  #ungroup() %>%
-  #mutate(grad_rate = round((grad_count/grad_cohort) * 100 +1e-10, 1)) %>%
   transmute(
     system,
     subgroup = case_when(
@@ -380,28 +308,9 @@ dist_grad <- read_csv("N:/ORP_accountability/data/2018_graduation_rate/district_
       ci_bound > metric_prior ~ 1,
       ci_bound <= metric_prior ~ 0,
       TRUE ~ NA_real_
-    )#,
-    #AMO_absolute_pathway = pmax(score_abs, score_target),
-    #value_add_metric = metric - metric_prior
+    )
   ) %>%
   left_join(value_add_grad %>% select(system, subgroup, value_add_metric, value_add_pathway), by = c('system', 'subgroup')) %>% 
-  # group_by(subgroup) %>%
-  # mutate(
-  #   quintile_1 = quantile(value_add_metric, probs = 0.20, na.rm = TRUE, names = FALSE),
-  #   quintile_2 = quantile(value_add_metric, probs = 0.40, na.rm = TRUE, names = FALSE),
-  #   quintile_3 = quantile(value_add_metric, probs = 0.60, na.rm = TRUE, names = FALSE),
-  #   quintile_4 = quantile(value_add_metric, probs = 0.80, na.rm = TRUE, names = FALSE),
-  #   value_add_pathway = case_when(
-  #     value_add_metric >= quintile_4 ~ 4,
-  #     value_add_metric >= quintile_3 ~ 3,
-  #     value_add_metric >= quintile_2 ~ 2,
-  #     value_add_metric >= quintile_1 ~ 1,
-  #     value_add_metric < quintile_1 ~ 0,
-  #     TRUE ~ NA_real_
-  #   )
-  # ) %>%
-  # ungroup() %>%
-  # select(-c(quintile_1:quintile_4)) %>% 
   left_join(system_df,by = 'system') %>% 
   select(system, system_name, everything()) %>% 
   mutate(system_name = if_else(system == 90, 'Carroll County', system_name)) %>% 
@@ -437,8 +346,6 @@ value_add_elpa <- read_csv('N:\\ORP_accountability\\data\\2019_final_accountabil
 elpa <- read_csv('N:/ORP_accountability/data/2019_ELPA/wida_growth_standard_district.csv') %>%
   filter(!is.na(system_name)) %>% 
   mutate(subgroup = if_else(subgroup == 'English Learners', "English Learners with Transitional 1-4", subgroup)) %>% 
-  # rowwise() %>% 
-  # mutate(system_name = simpleCap(system_name)) %>% 
   filter(subgroup %in% c('All Students', subgroups)) %>% 
   transmute(
     system, 
@@ -464,16 +371,11 @@ elpa <- read_csv('N:/ORP_accountability/data/2019_ELPA/wida_growth_standard_dist
       ci_bound > metric_prior ~ 1,
       ci_bound <= metric_prior ~ 0,
       TRUE ~ NA_real_
-    )#,
-    # metric_prior = if_else(n_count == 0, NA_real_, metric_prior)
-    # value_add_metric = metric - metric_prior
-    # AMO_absolute_pathway = pmax(score_abs, score_target)
+    )
   ) %>% 
   # Join value add df
   left_join(value_add_elpa, by = c('system', 'subgroup')) %>% 
   left_join(system_df, by = 'system') %>% 
-  # filter(!is.na(system_name)) %>% 
-  # rename(system_name = system_name.y) %>% 
   select(system, system_name, everything()) 
 
 

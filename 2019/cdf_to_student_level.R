@@ -59,12 +59,6 @@ demos_filtered <- demographics_2019_spring %>%
 
 # EOCs
 # ======================================= Fall EOC ===========================================================
-# fall_eoc_cdf <- read_csv("N:\\ORP_accountability\\data\\2019_cdf\\2019_fall_eoc_cdf.csv", col_types =  'icicccciicccciiiiciiciiciiciiiiicc') %>% 
-#   mutate(
-#     semester = "Fall",
-#     raw_score = as.integer(raw_score)
-#   )
-
 fall_eoc <- read_fwf("N:/Assessment_Data Returns/TCAP_End-of-Course/2018-19/Fall EOC 2018/2018-2019 TN 2019 Fall EOC CDF Final Scores-20190211.txt",
                      col_types = 'icicccciicccciiiiiciic',
                        fwf_cols(system = c(7, 11), system_name = c(12, 86), school = c(87, 90),
@@ -102,16 +96,6 @@ fall_eoc_total <- fall_eoc %>%
   )
 
 # =============================================== TCAP 3-8 ========================================================================
-# grade_3_8_TCAP <- read_fwf("N:\\Assessment_Data Returns\\TCAP_Grades 3-8\\2018-19\\2018-2019 TN 2019 Spring 3-8 CDF Final Scores-20190629\\2018-2019 TN 2019 Spring 3-8 CDF Final Scores-20190629.Txt",
-#                        col_types = 'icicccciicccciiiiiciic',
-#                        fwf_cols(system = c(7, 11), system_name = c(12, 86), school = c(87, 90),
-#                                 school_name = c(91, 165), last_name = c(166, 200), first_name = c(201, 235),
-#                                 middle_initial = c(236, 236), unique_student_id = c(245, 253), grade = c(254, 255),
-#                                 content_area_code = c(258, 260), attempted = c(332, 332), modified_format = c(356, 357),
-#                                 school_type = c(574, 574),teacher_of_record_tln = c(361, 369), reason_not_tested = c(568, 569), ri_status = c(570, 571),
-#                                 raw_score = c(703, 705), scale_score= c(709, 712), performance_level = c(713, 727),
-#                                 scale_score_lb_ci = c(731,733), scale_score_ub_ci = c(728,730), item_response_array=c(748,877)))
-
 grade_3_8_TCAP <- read_fwf("N:\\Assessment_Data Returns\\TCAP_Grades 3-8\\2018-19\\2018-2019 TN 2019 Spring 3-8 CDF Final Scores-20190730_updated2019-08-01.Txt",
                            col_types = 'icicccciicccciiiiiciic', 
                            #n_max = 993639,
@@ -124,22 +108,14 @@ grade_3_8_TCAP <- read_fwf("N:\\Assessment_Data Returns\\TCAP_Grades 3-8\\2018-1
                                     scale_score_lb_ci = c(730,732), scale_score_ub_ci = c(727,729), item_response_array=c(747,876)))
 
 grade_3_8_total <- grade_3_8_TCAP %>%
-  # mutate(
-  #   grade = case_when(
-  #     grade =='K' ~ '0',
-  #     grade == 'T7' ~ '07',
-  #     grade == 'T8' ~ '08',
-  #     TRUE ~ grade
-  #     ),
-  #   grade = as.numeric(grade)
-  # ) %>% 
   mutate(
     school = case_when(
-      system == 961L & school == 961L ~ 5L,
+      system == 961L & school == 961L ~ 5L, # Edit schools mislabeled in CDF
       system == 963L & school == 963L ~ 5L,
       TRUE ~ school
     ),
-    ri_status = if_else(ri_status == 6L & reason_not_tested == 1L, 0L, ri_status)
+    # Change RI status for Failed Attemptedness because most had RI of 1 (Absent)
+    ri_status = if_else(ri_status == 6L & reason_not_tested == 1L, 0L, ri_status) 
   ) %>% 
   left_join(demos_filtered, by = c("system", "school", "unique_student_id")) %>%
   select(system:attempted, gender, reported_race, bhn_group, hispanic, native_american:white, economically_disadvantaged, title_1, gifted, functionally_delayed,
@@ -199,49 +175,6 @@ spring_eoc_total <- spring_eoc %>%
 # spring_eoc <- read_csv('N:/Assessment_Data Returns/TCAP_End-of-Course/2018-19/Spring EOC 2019/2018-2019 TN 2019 Spring EOC CDF Final Scores-20190613.csv')
 
 # ================================= ALT Social Studies =====================================
-# alt_science_ss <- read_fwf("N:\\Assessment_Data Returns\\TCAP ALT_Grades 3-11_Sci and SS\\2017-18\\2017-2018 TN 3-11 Alt CDF Final Scores - 20180816.txt",
-#                            col_types = 'icicccciccccciiiiiciic',
-#                            fwf_cols(system = c(7, 11), system_name = c(12, 86), school = c(87, 90),
-#                                     school_name = c(91, 165), last_name = c(166, 200), first_name = c(201, 235),
-#                                     middle_initial = c(236, 236), unique_student_id = c(245, 253), grade = c(254, 255),
-#                                     content_area_code = c(258, 260), attempted = c(331, 331), modified_format = c(355, 356),
-#                                     school_type = c(573, 573),teacher_of_record_tln = c(369, 388), reason_not_tested = c(567, 568), ri_status = c(569, 570),
-#                                     raw_score = c(702, 704), scale_score= c(708, 711), performance_level = c(712, 726),
-#                                     scale_score_lb_ci = c(730,732), scale_score_ub_ci = c(727,729), item_response_array=c(747,876))) %>% 
-#   mutate(
-#     test = "Alt-Social Studies",
-#     grade = if_else(grade == "HS", "11", grade),
-#     semester = "Spring",
-#     performance_level = case_when(
-#       performance_level == "Level 3" ~ "Mastered",
-#       performance_level == "Level 2" ~ "On Track",
-#       performance_level == "Level 1" ~ "Approaching"
-#     ),
-#     original_subject = case_when(
-#       content_area_code == "SCI" ~ "Science",
-#       content_area_code == "SOC" ~ "Social Studies",
-#       content_area_code == "B1" ~ "Biology I"
-#     ),
-#     absent = if_else(reason_not_tested == 1, 1,0),
-#     not_enrolled = if_else(reason_not_tested == 2, 1,0),
-#     not_scheduled = if_else(reason_not_tested == 3, 1 ,0),
-#     medically_exempt = if_else(reason_not_tested == 4, 1,0),
-#     residential_facility = if_else(reason_not_tested == 5, 1,0),
-#     did_not_submit = if_else(reason_not_tested == 7, 1,0),
-#     breach_adult = if_else(ri_status == 1, 1,0),
-#     breach_student = if_else(ri_status == 2, 1,0),
-#     irregular_admin = if_else(ri_status == 3, 1,0),
-#     incorrect_grade_subject = if_else(ri_status == 4, 1,0),
-#     refused_to_test = if_else(ri_status == 5, 1,0),
-#     failed_attemptedness = if_else(ri_status == 6, 1,0)
-#   ) %>% 
-#   left_join(demos_filtered, by = c("unique_student_id", "system", "school")) %>%
-#   select(system:attempted, gender, race, bhn_group, economically_disadvantaged, title_1:migrant, el,
-#          el_arrived_year_1, el_arrived_year_2, el_t1234, special_ed,modified_format, enrolled_50_pct_district,
-#          enrolled_50_pct_school, teacher_of_record_tln:item_response_array, test, semester, absent:failed_attemptedness, original_subject) %>% 
-#   replace_na(list(race = 'Unknown')) %>% 
-#   mutate(grade = as.numeric(grade))
-# 
 alt_science_ss <- read_csv("N:/ORP_accountability/data/2019_cdf/2019_alt_ss_cdf.csv") %>% 
   mutate(
     test = "Alt-Social Studies",
@@ -328,7 +261,6 @@ msaa <- read_csv("N:\\ORP_accountability\\data\\2019_cdf\\2019_msaa_cdf.csv") %>
     )
   ) %>% 
   filter(!reporting_status %in% c("WDR", "NLE")) %>%
-  # rename(race = reported_race) %>% 
   mutate(
     test = "MSAA",
     semester = "Spring",
@@ -338,12 +270,8 @@ msaa <- read_csv("N:\\ORP_accountability\\data\\2019_cdf\\2019_msaa_cdf.csv") %>
     # enrolled = 1,
     tested = if_else(reporting_status == "DNT", 0, 1)
   ) %>%
-  # mutate_at(c("refused_to_test", "residential_facility"), function(x) x = 0) %>%
-  # mutate_at(c("functionally_delayed"), function(x) x = 0) %>% 
   left_join(demos_filtered %>% select(system, school, unique_student_id, bhn_group), by = c("system", "school", "unique_student_id")) %>%
   replace_na(list(bhn_group = 0)) # %>%reported_race = 'Unknown', 
-  # select( -reporting_status)
-
 
 
 
@@ -426,42 +354,35 @@ student_level <- bind_rows(total_cdf %>% mutate(economically_disadvantaged=if_el
 alt_cte_adult <- read_csv("N:/ORP_accountability/data/2019_tdoe_provided_files/cte_alt_adult_schools.csv") %>%
   transmute(system = as.numeric(DISTRICT_NUMBER), school = as.numeric(SCHOOL_NUMBER), cte_alt_adult = 1)
 
+# Using enrollments to assign school and system for accountability
 acct_system_school <- read_csv("N:\\ORP_accountability\\data\\2019_chronic_absenteeism\\student_chronic_absenteeism_Jul11.csv") %>%
   distinct() %>% 
   group_by(student_id, system, school) %>% 
   mutate(
+    # Sum days across enrollments in the same system and school
     isp_days = sum(isp_days)
   ) %>% 
   ungroup() %>% 
   mutate(
+    # Calculate the percent of the year student was enrolled
     enrolled_pct = round(isp_days/instructional_calendar_days * 100 + 1e-10, 2)
   ) %>% 
+  # only keep students enrolled at least 50% of the year in the school
   filter(enrolled_pct >= 50) %>% 
+  # Drop enrollments in alt, cte, adult schools
   anti_join(alt_cte_adult, by = c('system', 'school')) %>% 
-
-  # 
-  # group_by(system, student_id) %>% 
-  # mutate(
-  #   max_pct = max(enrolled_pct, na.rm = TRUE),
-  #   max_days = max(isp_days, na.rm = TRUE),
-  #   myorder = 1:n()
-  # ) %>% 
-  # ungroup() %>% 
-  # mutate(
-  #   acct_system = case_when(
-  #     isp_days == max_days & max_pct >= 50 ~ system,
-  #     TRUE ~ NA_real_
-  #   )
-  # ) %>% 
   group_by(student_id) %>% 
+  # finding the max pct_enrolled and max days enrolled for each student
   mutate(
     max_pct_school = max(enrolled_pct, na.rm = TRUE),
     max_days_school = max(isp_days, na.rm = TRUE),
     myorder_school = 1:n()
   ) %>% 
   ungroup() %>% 
+  # keep enrollments with most days enrolled
   filter(max_days_school == isp_days) %>% 
   mutate(
+    # assign acct_system and acct_school
     acct_system = case_when(
       isp_days == max_days_school & max_pct_school >= 50 ~ system,
       TRUE ~ NA_real_
@@ -471,28 +392,10 @@ acct_system_school <- read_csv("N:\\ORP_accountability\\data\\2019_chronic_absen
       TRUE ~ NA_real_
     )
   ) %>% 
+  # Filter out enrollments that don't receive an acct_system
   filter(!is.na(acct_system)) %>% 
-  # filter(enrolled_pct == max_pct_school) %>% 
-  # mutate(
-  #   acct_system = case_when(
-  #     isp_days == max_days & max_pct >= 50 ~ system,
-  #     isp_days == max_days & max_pct < 50 ~ system,
-  #     TRUE ~ NA_real_
-  #     # enrolled_pct == max_pct & max_pct >= 50 ~ system,
-  #     # max_pct < 50 & enrolled_pct == max_pct ~ system,
-  #     # TRUE ~ NA_real_
-  #   ),
-  #   acct_school = case_when(
-  #     isp_days == max_days & max_pct >= 50 ~ school,
-#     isp_days == max_days & max_pct < 50  ~ school,
-#     TRUE ~ NA_real_
-#     # enrolled_pct == max_pct & max_pct >= 50 ~ school,
-#     # max_pct < 50 & enrolled_pct == max_pct ~ school,
-#     # TRUE ~ NA_real_
-#   )
-# ) %>% 
-# filter(!is.na(acct_system)) %>% 
   group_by(student_id) %>% 
+  # Consolidating Enrollments
   mutate(
     max_days = max(isp_days, na.rm = TRUE),
     min_days = min(isp_days, na.rm = TRUE),
@@ -503,10 +406,13 @@ acct_system_school <- read_csv("N:\\ORP_accountability\\data\\2019_chronic_absen
     max_count = n()
   ) %>% 
   ungroup() %>% 
-  filter(!(max_days == min_days & max_count > 1 & max_system != min_system), !(max_days == min_days & max_count > 1 & max_school != min_school)) %>% 
+  filter(!(max_days == min_days & max_count > 1 & max_system != min_system), 
+         !(max_days == min_days & max_count > 1 & max_school != min_school)) %>% 
   group_by(student_id, acct_system) %>% 
+  # First enrollment
   mutate(min_count = min(myorder_school, na.rm = TRUE)) %>% 
   ungroup() %>% 
+  # if multiple enrollments still exist, take the first one
   filter(myorder_school == min_count) %>% 
   mutate(
     acct_school = case_when(
@@ -596,13 +502,6 @@ dedup <- student_level %>%
   mutate(valid_test = as.numeric(!is.na(performance_level)))
 
 
-# school_names <- #readxl::read_excel("N:/ORP_accountability/projects/Andrew/Accountability/2019/2018-19 EDFacts School Master File_4-10-19.xlsx",
-# #                                    sheet = '1819 Sch and Grade Info') %>% 
-# #   clean_names() %>% 
-# #   transmute(system = as.integer(dg_4_lea_id_state),
-# #             school = as.integer(dg_5_school_id_state),
-# #             system_name = extra_item_lea_name,
-# #             school_name = dg_7_school_name) %>% 
 school_names <- read_csv("N:\\ORP_accountability\\data\\2019_final_accountability_files\\names.csv") %>% 
   bind_rows(
     tribble(
@@ -677,56 +576,4 @@ diff_df <- setdiff(alex_comp %>% select(-percentile), output %>% select(-teacher
   bind_rows(setdiff(output %>% select(-teacher_of_record_tln, -percentile), alex_comp %>% select(-percentile))) %>% # %>% select(-percentile)   , -percentile                 %>% select(-acct_system, -acct_school)
   arrange(system, school, state_student_id, original_subject)
 
-# Checking Completeness of data
 
-# spring_eoc_2018 <- read_fwf("N:\\Assessment_Data Returns\\TCAP_End-of-Course\\2017-18\\Spring\\2017-2018 TN Spring EOC CDF Final Scores - 20180702 .txt",
-#                        col_types = 'icicccciicccciiiiiciic',
-#                        fwf_cols(system = c(7, 11), system_name = c(12, 86), school = c(87, 90),
-#                                 school_name = c(91, 165), last_name = c(166, 200), first_name = c(201, 235),
-#                                 middle_initial = c(236, 236), unique_student_id = c(245, 253), grade = c(254, 255),
-#                                 content_area_code = c(258, 260), attempted = c(331, 331), modified_format = c(355, 356),
-#                                 school_type = c(573, 573),teacher_of_record_tln = c(369, 388), reason_not_tested = c(567, 568), ri_status = c(569, 570),
-#                                 raw_score = c(702, 704), scale_score= c(708, 711), performance_level = c(712, 726),
-#                                 scale_score_lb_ci = c(730,732), scale_score_ub_ci = c(727,729), item_response_array=c(747,876)))
-# 
-# stats_2018 <- spring_eoc_2018 %>% 
-#   filter(content_area_code %in% c('ENG', 'MAT', 'A1', 'A2', 'E1', 'E2', 'G1', 'M1', 'M2', 'M3')) %>% 
-#   mutate(missing_score = if_else(is.na(scale_score), 1, 0) ) %>% 
-#   summarise(
-#     max_score = max(scale_score, na.rm = TRUE),
-#     min_score = min(scale_score, na.rm = TRUE),
-#     mean_score = round(mean(scale_score, na.rm = TRUE), 1),
-#     missing_score = sum(missing_score, na.rm= TRUE),
-#     n_tests = n(),
-#     n_systems = n_distinct(system),
-#     n_schools = n_distinct(school)
-#   )
-# 
-# stats_2019 <- spring_eoc %>% 
-#   mutate(missing_score = if_else(is.na(scale_score), 1, 0) ) %>% 
-#   summarise(
-#     max_score = max(scale_score, na.rm = TRUE),
-#     min_score = min(scale_score, na.rm = TRUE),
-#     mean_score = round(mean(scale_score, na.rm = TRUE), 1),
-#     missing_score = sum(missing_score, na.rm= TRUE),
-#     n_tests = n(),
-#     n_systems = n_distinct(system),
-#     n_schools = n_distinct(school)
-#   )
-# 
-# spring_eoc_2018 %>% 
-#   filter(!school %in% spring_eoc$school) %>% 
-#   distinct(school_name) %>% 
-#   View()
-# 
-# spring_eoc_2018 %>% 
-#   filter(school_name == "Highland Oaks Middle")
-# 
-# spring_eoc %>% 
-#   filter(system == 190) %>% 
-#   distinct(school_name) %>% 
-#   View()
-# 
-# spring_eoc %>% 
-#   filter(school_name == 'HOME SCHOOL') %>% 
-#   View()

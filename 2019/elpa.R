@@ -2,12 +2,6 @@ library(tidyverse)
 library(janitor)
 library(readstata13)
 
-# demographics_2019 <- read_csv("N:/Assessment_Data Returns/TCAP_End-of-Course/2018-19/Demographic Files/fall_eoc_demographics_snapshot_20181208.csv")
-
-# demographics_2019_spring <- read_csv('N:\\TNReady\\2018-19\\spring\\demographics\\spring_2019_assessment_demographics_20190510.csv')
-
-# demographics_latest <- read_csv('N:\\TNReady\\2018-19\\spring\\demographics\\student_demographics_20190610.csv')
-
 demo_combined <- read_csv('N:/TNReady/2018-19/spring/demographics/spring_2019_assessment_demographics_combined_pull_20190610.csv')
 
 demos_filtered_2019 <- demo_combined %>% 
@@ -370,51 +364,6 @@ elpa_student_level <- elpa_with_demo %>%
 
 # write csv
 write_csv(elpa_student_level, "N:/ORP_accountability/data/2019_ELPA/wida_growth_standard_student_AM.csv")
-
-
-# elpa %>% 
-#   filter(system %in% c(10, 61, 531, 792, 860)) %>% 
-#   group_by(system) %>% 
-#   summarise(
-#     el_count = n()
-#   ) %>% 
-#   View()
-
-# demo_latest_ids_from_first <- demos_filtered_2019 %>% filter(unique_student_id %in% demos_filtered_spring$unique_student_id)
-# 
-# demo_diff <- setdiff(demos_filtered_spring, demo_latest_ids_from_first)
-# demo_diff_latest <- setdiff(demo_latest_ids_from_first, demos_filtered_spring)
-# 
-# colnames(demo_diff)[4:ncol(demo_diff)] <- paste(colnames(demo_diff)[4:ncol(demo_diff)], 'spring', sep = "_")
-# colnames(demo_diff_latest)[4:ncol(demo_diff_latest)] <- paste(colnames(demo_diff_latest)[4:ncol(demo_diff_latest)], 'latest', sep = "_")
-# 
-# total_demo_diff <- demo_diff %>% 
-#   left_join(demo_diff_latest %>% select(unique_student_id:bhn_group_latest), by = 'unique_student_id') %>% 
-#   filter(!is.na(race_latest))
-# 
-# iter_cols <- colnames(demo_latest_ids_from_first)[4:(ncol(demo_latest_ids_from_first))]
-# 
-# for(col_id in iter_cols){
-#   col_spring = paste(col_id, 'spring', sep = '_')
-#   col_latest = paste(col_id, 'latest', sep = '_')
-#   print(col_id)
-#   print(table(total_demo_diff[[col_spring]], total_demo_diff[[col_latest]]))
-# }
-# 
-# demographics_total <- demographics_2019_spring %>% 
-#   bind_rows(demographics_latest %>% 
-#               rename(district_id = district_no, school_id = school_no, instructionalavailability = instructionalavailabilty) %>% 
-#               filter(!student_key %in% demographics_2019_spring$student_key)) %>% 
-#   select(-iselexcluded)
-# 
-# write_csv(demographics_total, 'N:/TNReady/2018-19/spring/demographics/spring_2019_assessment_demographics_combined_pull_20190610.csv')
-# 
-# n_demo <- read_csv('N:/TNReady/2018-19/spring/demographics/spring_2019_assessment_demographics_combined_pull_20190610.csv')
-
-
-
-
-
 
 
 
