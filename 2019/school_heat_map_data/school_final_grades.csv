@@ -1,0 +1,1700 @@
+system,system_name,school,school_name,pool,score_achievement,score_growth,score_absenteeism,score_grad,score_ready_grad,score_elpa,final_score,final_grade
+10,Anderson County,2,Anderson County High School,HS,2.5999999999999996,3.6,4,4,4,NA,3.4,A
+10,Anderson County,5,Andersonville Elementary,K8,4,3.4,3.4,NA,NA,NA,3.7,A
+10,Anderson County,10,Briceville Elementary,K8,2,3.8,4,NA,NA,NA,2.9,B
+10,Anderson County,15,Claxton Elementary,K8,2,2.7333333333333334,4,NA,NA,NA,2.5,B
+10,Anderson County,20,Clinton Middle School,K8,1.7333333333333334,0.5333333333333333,2.4000000000000004,NA,NA,NA,1.3,C
+10,Anderson County,25,Clinton High School,HS,2.8666666666666663,1.7333333333333334,4,3.8,1.7999999999999998,NA,2.5,B
+10,Anderson County,35,Dutch Valley Elementary,K8,2,1.4,4,NA,NA,NA,2,C
+10,Anderson County,40,Fairview Elementary,K8,3.8,3.6,3.8,NA,NA,NA,3.7,A
+10,Anderson County,46,Grand Oaks Elementary,K8,3.6,3.6,4,NA,NA,NA,3.6,A
+10,Anderson County,50,Lake City Elementary,K8,2.8,2.2,3.4,NA,NA,NA,2.6,B
+10,Anderson County,55,Lake City Middle School,K8,1.8,4,4,NA,NA,NA,2.9,B
+10,Anderson County,70,Norris Elementary,K8,4,2,4,NA,NA,NA,3.2,A
+10,Anderson County,75,Norris Middle School,K8,2.5999999999999996,3.8666666666666667,3.4,NA,NA,NA,3.2,A
+10,Anderson County,80,Norwood Elementary,K8,2,2.8,3.6,NA,NA,NA,2.5,B
+10,Anderson County,85,Norwood Middle School,K8,2.8,3.7333333333333334,3.6,NA,NA,NA,3.3,A
+11,Clinton,5,Clinton Elementary,K8,3.6,2.8666666666666663,3,NA,NA,NA,3.2,A
+11,Clinton,10,North Clinton Elementary,K8,2,2,2.4000000000000004,NA,NA,NA,2,C
+11,Clinton,15,South Clinton Elementary,K8,3.2,2,4,NA,NA,NA,2.8,B
+12,Oak Ridge,15,Glenwood Elementary,K8,3.4,3.8666666666666667,3.8666666666666667,NA,NA,NA,3.6,A
+12,Oak Ridge,25,Jefferson Middle School,K8,3,3.5,2.2666666666666666,NA,NA,NA,3.1,A
+12,Oak Ridge,30,Linden Elementary,K8,3,2.5999999999999996,3.1333333333333333,NA,NA,NA,2.9,B
+12,Oak Ridge,35,Oak Ridge High School,HS,2.7333333333333334,3.2,4,1.6,3.3333333333333335,1,2.9,B
+12,Oak Ridge,40,Robertsville Middle School,K8,2.466666666666667,3.7,2.1333333333333333,NA,NA,1,2.7,B
+12,Oak Ridge,45,Willow Brook Elementary,K8,1.4,1.7333333333333334,3.7333333333333334,NA,NA,NA,1.8,C
+12,Oak Ridge,50,Woodland Elementary,K8,3.8,3.9,3.8,NA,NA,4,3.9,A
+20,Bedford County,12,Cascade Elementary,K8,3.6,1.5,4,NA,NA,NA,2.8,B
+20,Bedford County,13,Cascade High School,HS,2,0.8,1.6,3,4,NA,2.1,B
+20,Bedford County,15,Eakin Elementary,K8,1.2666666666666666,0.30000000000000004,3.9,NA,NA,2,1.3,C
+20,Bedford County,17,Cascade Middle School,K8,2.4,2.2666666666666666,2.4000000000000004,NA,NA,NA,2.3,B
+20,Bedford County,20,Shelbyville Central High School,HS,1.1,3.7,3.9,3.8666666666666667,1.3333333333333333,0.9,2.2,B
+20,Bedford County,25,Harris Middle School,K8,1.1,2.2,3.2,NA,NA,0,1.6,C
+20,Bedford County,33,Community Elementary School,K8,2.2,1.2666666666666666,3.7333333333333334,NA,NA,3,2.1,B
+20,Bedford County,35,Community High School,HS,3.2,2,3.8666666666666667,3.4,2.1999999999999997,NA,2.7,B
+20,Bedford County,37,Community Middle School,K8,2,2,1.6666666666666665,NA,NA,NA,2,C
+20,Bedford County,39,Learning Way Elementary,K8,1.2666666666666666,3,3.2,NA,NA,3,2.2,B
+20,Bedford County,40,East Side Elementary,K8,2,1.5,3.8,NA,NA,4,2.2,B
+20,Bedford County,53,Liberty Elementary,K8,2,2.6999999999999997,2.8,NA,NA,2,2.3,B
+20,Bedford County,75,South Side Elementary,K8,1.2666666666666666,0.5333333333333333,3.0999999999999996,NA,NA,4,1.5,C
+20,Bedford County,78,Thomas Magnet Elementary School,K8,4,2,4,NA,NA,NA,3.2,A
+30,Benton County,10,Big Sandy School,K8,1.2,1.2,4,NA,NA,NA,1.5,C
+30,Benton County,15,Briarwood School,K8,2.466666666666667,3.3333333333333335,3.7333333333333334,NA,NA,NA,2.9,B
+30,Benton County,25,Camden Central High School,HS,2.8,1.7333333333333334,2.8666666666666663,4,4,NA,2.8,B
+30,Benton County,27,Camden Jr High School,K8,2.7333333333333334,1.1333333333333333,4,NA,NA,NA,2.2,B
+30,Benton County,30,Holladay Elementary,K8,1.4,2,1.6,NA,NA,NA,1.7,C
+40,Bledsoe County,5,Bledsoe County High School,HS,1.8,2.7333333333333334,3.2,4,3,NA,2.6,B
+40,Bledsoe County,6,Bledsoe County Middle School,K8,2.4,0.26666666666666666,2,NA,NA,NA,1.5,C
+40,Bledsoe County,10,Cecil B Rigsby Elementary,K8,1,0.2,3.6,NA,NA,NA,0.9,D
+40,Bledsoe County,25,Mary V Wheeler Elementary,K8,4,2.8,3,NA,NA,NA,3.4,A
+40,Bledsoe County,30,Pikeville Elementary,K8,2.8,3.4,2.2,NA,NA,NA,3,B
+50,Blount County,22,Carpenters Elementary School,K8,4,1.2000000000000002,3.6,NA,NA,NA,2.8,B
+50,Blount County,23,Carpenters Middle School,K8,2.333333333333333,1.7333333333333334,3.8666666666666667,NA,NA,NA,2.2,B
+50,Blount County,30,Eagleton Middle School,K8,2,0.5,4,NA,NA,NA,1.6,C
+50,Blount County,43,Eagleton Elementary,K8,2.4,1.7333333333333334,3,NA,NA,2.2666666666666666,2.2,B
+50,Blount County,45,Fairview Elementary,K8,3,0,2.5999999999999996,NA,NA,NA,1.8,C
+50,Blount County,55,Friendsville Elementary,K8,3,3.6,2.8,NA,NA,NA,3.2,A
+50,Blount County,61,Heritage Middle School,K8,1.4666666666666666,0.30000000000000004,2.8666666666666663,NA,NA,NA,1.1,C
+50,Blount County,63,Heritage High School,HS,2.466666666666667,1.8666666666666667,4,3.4,1.7999999999999998,0,2.1,B
+50,Blount County,70,Lanier Elementary,K8,2,1.6,2,NA,NA,NA,1.8,C
+50,Blount County,84,Union Grove Middle School,K8,2.1333333333333333,0.8,2.2666666666666666,NA,NA,NA,1.6,C
+50,Blount County,90,Mary Blount Elementary,K8,3.2,3.7,2.5999999999999996,NA,NA,4,3.4,A
+50,Blount County,93,Middlesettlements,K8,2.5999999999999996,3.6,4,NA,NA,NA,3.1,A
+50,Blount County,94,Montvale Elementary,K8,2,3,3.4,NA,NA,NA,2.5,B
+50,Blount County,95,Porter Elementary,K8,3,3,2.5999999999999996,NA,NA,NA,3,B
+50,Blount County,110,Rockford Elementary,K8,2.5999999999999996,3.5,2.6,NA,NA,4,3.1,A
+50,Blount County,123,Samuel Everett School of Innovation,K8,NA,0,NA,NA,NA,NA,0,D
+50,Blount County,125,Townsend Elementary,K8,2,2.5999999999999996,3.4,NA,NA,NA,2.4,B
+50,Blount County,138,Union Grove Elementary School,K8,3,2.8,3.6,NA,NA,NA,3,B
+50,Blount County,145,Walland Elementary School,K8,2,2,2.7333333333333334,NA,NA,NA,2.1,B
+50,Blount County,155,William Blount High School,HS,3,0.8666666666666667,4,3.6,2.4,NA,2.4,B
+50,Blount County,160,Prospect Elementary School,K8,4,3.466666666666667,4,NA,NA,NA,3.8,A
+51,Alcoa,6,Alcoa Middle School,K8,2.1999999999999997,2.8,4,NA,NA,NA,2.6,B
+51,Alcoa,10,Alcoa High School,HS,3.6,2.5999999999999996,3.6,4,3.4,NA,3.3,A
+51,Alcoa,12,Alcoa Intermediate School,K8,3.5,3.9,3.9,NA,NA,4,3.7,A
+52,Maryville,10,John Sevier Elementary,K8,4,2.6999999999999997,3.7,NA,NA,4,3.5,A
+52,Maryville,15,Maryville High School,HS,3.3333333333333335,3.466666666666667,4,3.7333333333333334,3.466666666666667,NA,3.5,A
+52,Maryville,18,Montgomery Ridge Intermediate School,K8,3.7,2.6999999999999997,3.6,NA,NA,NA,3.3,A
+52,Maryville,20,Maryville Junior High School,K8,3.466666666666667,3.3,3.466666666666667,NA,NA,NA,3.4,A
+52,Maryville,25,Sam Houston Elementary,K8,4,4,3.6,NA,NA,NA,4,A
+52,Maryville,30,Foothills Elementary,K8,4,3.3333333333333335,2.8,NA,NA,4,3.6,A
+52,Maryville,35,Coulter Grove Intermediate School,K8,3.8666666666666667,3.7,3.466666666666667,NA,NA,NA,3.8,A
+60,Bradley County,10,Black Fox Elementary School,K8,2.5999999999999996,0.26666666666666666,3.466666666666667,NA,NA,4,2,C
+60,Bradley County,18,Ocoee Middle School,K8,1.8666666666666667,0.7000000000000001,3.7333333333333334,NA,NA,NA,1.6,C
+60,Bradley County,20,Bradley Central High School,HS,1,2,4,3,2.8,0,1.9,C
+60,Bradley County,30,Charleston Elementary School,K8,2.5999999999999996,3.7333333333333334,2.1333333333333333,NA,NA,NA,3,B
+60,Bradley County,40,Hopewell Elementary School,K8,2.5999999999999996,1.8666666666666667,1.8666666666666667,NA,NA,NA,2.2,B
+60,Bradley County,50,Michigan Avenue Elementary School,K8,3.6,2.7333333333333334,2.8666666666666663,NA,NA,NA,3.2,A
+60,Bradley County,55,North Lee Elementary School,K8,3.8,2,4,NA,NA,NA,3.1,A
+60,Bradley County,60,Oak Grove Elementary School,K8,3.2,3.6,3.8666666666666667,NA,NA,NA,3.4,A
+60,Bradley County,65,Prospect Elementary School,K8,2.8,1.3,4,NA,NA,1,2.2,B
+60,Bradley County,70,Taylor Elementary School,K8,2,0.4,2.8,NA,NA,NA,1.4,C
+60,Bradley County,72,Lake Forest Middle School,K8,1.8666666666666667,0.5,4,NA,NA,NA,1.5,C
+60,Bradley County,75,Valley View Elementary School,K8,2.1999999999999997,2,2,NA,NA,NA,2.1,B
+60,Bradley County,78,Walker Valley High School,HS,2.333333333333333,2.8,4,4,3.6,NA,3,B
+60,Bradley County,100,Waterville Community Elementary School,K8,2,0.4,4,NA,NA,3.2,1.8,C
+60,Bradley County,102,Park View Elementary School,K8,2.5999999999999996,3.0666666666666664,3.8666666666666667,NA,NA,NA,2.9,B
+60,Bradley County,105,Bradley County Virtual School,K8,NA,0,4,NA,NA,NA,0.8,D
+61,Cleveland,10,Arnold Memorial Elementary,K8,2.8,2,3.4,NA,NA,4,2.7,B
+61,Cleveland,12,Blythe-Bower Elementary,K8,1.4,3.0999999999999996,2.1,NA,NA,4,2.3,B
+61,Cleveland,18,Cleveland Middle,K8,1.8,3.8,3.4,NA,NA,2.4,2.7,B
+61,Cleveland,20,Cleveland High,HS,2.2,1.3,2.3,4,2.8,1,2.1,B
+61,Cleveland,22,E.L. Ross Elementary,K8,2.3,1.3,3,NA,NA,4,2.2,B
+61,Cleveland,25,G.R. Stuart Elementary,K8,2.8,2.3,4,NA,NA,4,2.9,B
+61,Cleveland,30,Mayfield Elementary,K8,2.2,2.3,2.9,NA,NA,4,2.5,B
+70,Campbell County,3,Campbell County Comprehensive High School,HS,2,0.5333333333333333,3.6,2.4,0,NA,1.3,C
+70,Campbell County,5,Caryville Elementary,K8,1.4,0.2,4,NA,NA,NA,1.2,C
+70,Campbell County,40,Elk Valley Elementary,K8,1.6,1.6,4,NA,NA,NA,1.8,C
+70,Campbell County,60,Jacksboro Elementary,K8,2.5999999999999996,3.8,3.4,NA,NA,NA,3.2,A
+70,Campbell County,65,Jacksboro Middle School,K8,2.5999999999999996,3.7333333333333334,2.4000000000000004,NA,NA,NA,3,B
+70,Campbell County,70,Jellico Elementary,K8,2.5999999999999996,2.8,0,NA,NA,NA,2.4,B
+70,Campbell County,75,Jellico High School,HS,2,3.6,4,3,4,NA,3.1,A
+70,Campbell County,77,LaFollette Elementary School,K8,1,1.9,4,NA,NA,4,1.9,C
+70,Campbell County,80,Lafollette Middle School,K8,1,1.8,3.8,NA,NA,NA,1.6,C
+70,Campbell County,135,Valley View Elementary,K8,2,2.8,2.5999999999999996,NA,NA,NA,2.4,B
+70,Campbell County,140,White Oak Elementary,K8,2.4000000000000004,3.4,4,NA,NA,NA,3,B
+70,Campbell County,150,Wynn Habersham Elementary,K8,3,3,4,NA,NA,NA,3.1,A
+80,Cannon County,5,Auburn Elementary,K8,2,2.4000000000000004,4,NA,NA,NA,2.4,B
+80,Cannon County,16,Cannon County High School,HS,1.4,0.4,4,2.8,3.6,NA,1.9,C
+80,Cannon County,20,East Side Elementary,K8,4,2.5999999999999996,4,NA,NA,NA,3.4,A
+80,Cannon County,30,Short Mountain Elementary,K8,2.4000000000000004,2,4,NA,NA,NA,2.4,B
+80,Cannon County,35,West Side Elementary,K8,0,2,4,NA,NA,NA,1.2,C
+80,Cannon County,40,Woodbury Grammar,K8,1.8,1.8,4,NA,NA,NA,2,C
+80,Cannon County,45,Woodland Elementary,K8,2,1.6,4,NA,NA,NA,2,C
+92,Hollow Rock - Bruceton,5,Central Elementary,K8,2.5999999999999996,0.6666666666666667,4,NA,NA,NA,2,C
+92,Hollow Rock - Bruceton,10,Central High School,HS,2.4000000000000004,2.1333333333333333,3.6,4,4,NA,2.8,B
+93,Huntingdon Special School District,5,Huntingdon Middle School,K8,2.333333333333333,0,4,NA,NA,NA,1.6,C
+93,Huntingdon Special School District,10,Huntingdon High School,HS,2,1.4,4,4,4,NA,2.5,B
+93,Huntingdon Special School District,15,Huntingdon Primary,K8,2.1999999999999997,1,1.8666666666666667,NA,NA,NA,1.7,C
+94,McKenzie,5,McKenzie Elementary,K8,2.8,2,4,NA,NA,NA,2.6,B
+94,McKenzie,10,McKenzie High School,HS,2.8666666666666663,2.466666666666667,4,3.6,4,NA,3.1,A
+94,McKenzie,15,McKenzie Middle School,K8,2.7333333333333334,1.8666666666666667,4,NA,NA,NA,2.5,B
+95,South Carroll,5,Clarksburg School,K8,2.5999999999999996,0.8,4,NA,NA,NA,2,C
+97,West Carroll Sp Dist,5,West Carroll Junior/Senior High School,HS,2,0.5333333333333333,4,4,4,NA,2.3,B
+97,West Carroll Sp Dist,25,West Carroll Elementary School,K8,1.8666666666666667,2.1333333333333333,3,NA,NA,NA,2.1,B
+100,Carter County,5,Central Elementary,K8,2,3.6,1.6,NA,NA,NA,2.6,B
+100,Carter County,13,Cloudland Elementary School,K8,3.2,3,1.8000000000000003,NA,NA,NA,3,B
+100,Carter County,15,Cloudland High School,HS,3,3.2,4,2,1,NA,2.7,B
+100,Carter County,25,Hampton Elementary,K8,2,3.8,2.2,NA,NA,NA,2.7,B
+100,Carter County,30,Hampton High School,HS,1,0.6000000000000001,3.4,3,0,NA,1,D
+100,Carter County,35,Happy Valley Elementary,K8,4,3.6,4,NA,NA,NA,3.8,A
+100,Carter County,40,Happy Valley High School,HS,2.5999999999999996,1.8,4,3,0,NA,2,C
+100,Carter County,43,Happy Valley Middle School,K8,2.7333333333333334,3.3333333333333335,2.8,NA,NA,NA,3,B
+100,Carter County,45,Hunter Elementary,K8,1.8,3.8,2.4000000000000004,NA,NA,NA,2.7,B
+100,Carter County,50,Keenburg Elementary,K8,2.5999999999999996,3,1,NA,NA,NA,2.6,B
+100,Carter County,55,Little Milligan,K8,2,4,1.6,NA,NA,NA,2.8,B
+100,Carter County,85,Unaka Elementary,K8,2,2,3.4,NA,NA,NA,2.1,B
+100,Carter County,90,Unaka High School,HS,3.2,3.8,3.4,4,0,NA,2.8,B
+100,Carter County,95,Valley Forge Elementary,K8,3,4,2.8,NA,NA,NA,3.4,A
+101,Elizabethton,10,East Side Elementary,K8,2.5999999999999996,3.8,4,NA,NA,NA,3.2,A
+101,Elizabethton,15,Elizabethton High School,HS,2.2666666666666666,0.13333333333333333,2.4000000000000004,2.5999999999999996,4,NA,2,C
+101,Elizabethton,20,Harold McCormick Elementary,K8,2.8,1.5333333333333334,2,NA,NA,NA,2.2,B
+101,Elizabethton,25,T A Dugger Junior High School,K8,3.2,2.1333333333333333,2.2666666666666666,NA,NA,NA,2.7,B
+101,Elizabethton,30,West Side Elementary,K8,4,2.4,3.8,NA,NA,NA,3.3,A
+110,Cheatham County,5,Ashland City Elementary,K8,1.6,2,3.8666666666666667,NA,NA,4,2.2,B
+110,Cheatham County,10,Cheatham Co Central,HS,2,1.8666666666666667,2.533333333333333,4,1.4,NA,2,C
+110,Cheatham County,14,Cheatham Middle School,K8,2.333333333333333,1.8666666666666667,4,NA,NA,NA,2.3,B
+110,Cheatham County,15,East Cheatham Elementary,K8,2,0.4,2.4000000000000004,NA,NA,NA,1.4,C
+110,Cheatham County,18,Harpeth Middle School,K8,2.7333333333333334,2,4,NA,NA,NA,2.6,B
+110,Cheatham County,19,Harpeth High School,HS,2.1999999999999997,3.0666666666666664,2,4,4,NA,2.9,B
+110,Cheatham County,20,Kingston Springs Elementary,K8,4,4,4,NA,NA,NA,4,A
+110,Cheatham County,25,Pegram Elementary,K8,3,0,4,NA,NA,NA,1.9,C
+110,Cheatham County,30,Pleasant View Elementary,K8,4,2,3.2,NA,NA,NA,3.1,A
+110,Cheatham County,32,Sycamore Middle School,K8,2.466666666666667,3.466666666666667,2.2666666666666666,NA,NA,NA,2.8,B
+110,Cheatham County,33,Sycamore High School,HS,3,0.8,3.466666666666667,2.1999999999999997,3,NA,2.3,B
+110,Cheatham County,35,West Cheatham Elementary,K8,2.5999999999999996,0.6000000000000001,3.7333333333333334,NA,NA,NA,1.9,C
+120,Chester County,5,Chester County Middle School,K8,3.8666666666666667,3.7333333333333334,3.1333333333333333,NA,NA,NA,3.7,A
+120,Chester County,8,Chester County High School,HS,2.8,2.1999999999999997,2.1333333333333333,3.6,3.2,NA,2.7,B
+120,Chester County,10,Chester County Junior High School,K8,2.8666666666666663,2.2666666666666666,1.5333333333333334,NA,NA,NA,2.5,B
+120,Chester County,15,East Chester Elementary School,K8,4,0.4,2.7333333333333334,NA,NA,NA,2.4,B
+120,Chester County,25,Jacks Creek Elementary,K8,NA,2.5999999999999996,4,NA,NA,NA,2.9,B
+120,Chester County,30,W Chester Elementary School,K8,4,2,2.533333333333333,NA,NA,NA,3.1,A
+130,Claiborne County,35,Clairfield Elementary,K8,1,2,4,NA,NA,NA,1.7,C
+130,Claiborne County,45,Ellen Myers Primary,K8,1,0.8,3.2,NA,NA,NA,1.1,C
+130,Claiborne County,50,Forge Ridge School,K8,1,2.5999999999999996,2.4000000000000004,NA,NA,NA,1.8,C
+130,Claiborne County,67,H. Y. Livesay Middle School,K8,4,3.6,4,NA,NA,NA,3.8,A
+130,Claiborne County,90,Midway Elementary,K8,2.4000000000000004,2,2.8,NA,NA,NA,2.3,B
+130,Claiborne County,93,Cumberland Gap High School,HS,2.5999999999999996,1.9999999999999998,4,4,3.4,NA,2.8,B
+130,Claiborne County,95,Powell Valley Elementary,K8,2,1.8,3.8,NA,NA,NA,2.1,B
+130,Claiborne County,105,Soldiers Memorial Middle School,K8,2.2,1.5333333333333334,4,NA,NA,NA,2.1,B
+130,Claiborne County,110,Claiborne High School,HS,2.5999999999999996,1.5333333333333334,3.8666666666666667,3,3,NA,2.5,B
+130,Claiborne County,115,Springdale Elementary,K8,4,3.8,4,NA,NA,NA,3.9,A
+130,Claiborne County,117,Tazewell-New Tazewell Elementary,K8,1.6,0.8,3.8,NA,NA,NA,1.5,C
+140,Clay County,5,Celina K-8,K8,1.2000000000000002,1.2000000000000002,4,NA,NA,NA,1.5,C
+140,Clay County,12,Clay County High School,HS,2.8,3.8,2.2,4,2.4,NA,3,B
+140,Clay County,20,Hermitage Springs Elementary School,K8,2.5999999999999996,0.4,4,NA,NA,NA,1.9,C
+150,Cocke County,5,Bridgeport Elementary,K8,2.5999999999999996,2,2.4000000000000004,NA,NA,NA,2.3,B
+150,Cocke County,10,Centerview Elementary,K8,2,0.6000000000000001,2.4000000000000004,NA,NA,NA,1.5,C
+150,Cocke County,15,Cocke Co High School,HS,2.1333333333333333,0.26666666666666666,0.8,2,3,NA,1.6,C
+150,Cocke County,25,Cosby Elementary,K8,2.4,1.1333333333333333,2.2666666666666666,NA,NA,NA,1.9,C
+150,Cocke County,27,Cosby High School,HS,1.4,0.4,0.8,4,1.2,NA,1.1,C
+150,Cocke County,30,Del Rio Elementary,K8,2,3.4,1,NA,NA,NA,2.5,B
+150,Cocke County,35,Edgemont Elementary,K8,1.1333333333333333,1.7333333333333334,1.1333333333333333,NA,NA,NA,1.4,C
+150,Cocke County,40,Grassy Fork Elementary,K8,4,1,3.4,NA,NA,NA,2.7,B
+150,Cocke County,52,Northwest Elementary,K8,0.13333333333333333,0.26666666666666666,1.1333333333333333,NA,NA,NA,0.3,D
+150,Cocke County,55,Parrottsville Elementary,K8,1.6,1.2666666666666666,1.4,NA,NA,NA,1.4,C
+150,Cocke County,65,Smoky Mountain Elementary,K8,2.5999999999999996,3,4,NA,NA,NA,2.9,B
+151,Newport,5,Newport Grammar School,K8,2.5999999999999996,1,2.1333333333333333,NA,NA,NA,1.9,C
+160,Coffee County,5,Coffee County Central High School,HS,1.7333333333333334,0.30000000000000004,2.5999999999999996,3.8666666666666667,2.5999999999999996,1,1.7,C
+160,Coffee County,10,Coffee County Middle School,K8,1.6,0.30000000000000004,1.8666666666666667,NA,NA,NA,1.1,C
+160,Coffee County,15,East Coffee Elementary,K8,3.2,1.4,3.4,NA,NA,NA,2.5,B
+160,Coffee County,20,Hickerson Elementary,K8,2.5999999999999996,1,2.8,NA,NA,NA,2,C
+160,Coffee County,25,Hillsboro Elementary,K8,2.5999999999999996,3.7333333333333334,3.1333333333333333,NA,NA,NA,3.1,A
+160,Coffee County,35,New Union Elementary,K8,3.2,0.9333333333333335,3.1333333333333333,NA,NA,4,2.5,B
+160,Coffee County,40,North Coffee Elementary,K8,3,2,3.4,NA,NA,NA,2.6,B
+160,Coffee County,50,Deerfield Elementary School,K8,3,1.8,1.4,NA,NA,NA,2.4,B
+160,Coffee County,55,Coffee County Raider Academy,K8,2.2666666666666666,3.5,1.6,NA,NA,NA,2.7,B
+161,Manchester,5,College Street Elementary,K8,2.4000000000000004,2.2,2.2666666666666666,NA,NA,2.8,2.4,B
+161,Manchester,10,Westwood Elementary,K8,3.8666666666666667,2.1,4,NA,NA,3,3.2,A
+161,Manchester,15,Westwood Middle School,K8,1.9,0,3,NA,NA,NA,1.3,C
+162,Tullahoma,5,Bel Aire Elementary,K8,1.4,2.2666666666666666,1.4,NA,NA,NA,1.7,C
+162,Tullahoma,15,East Middle School,K8,1.8666666666666667,0.4,3.7333333333333334,NA,NA,NA,1.5,C
+162,Tullahoma,20,East Lincoln Elementary,K8,1,1.8666666666666667,3.8666666666666667,NA,NA,NA,1.6,C
+162,Tullahoma,23,Jack T Farrar Elementary,K8,1.8000000000000003,2,2,NA,NA,NA,1.9,C
+162,Tullahoma,25,Robert E Lee Elementary,K8,2.5999999999999996,3,4,NA,NA,NA,2.9,B
+162,Tullahoma,35,Tullahoma High School,HS,3.3333333333333335,3.466666666666667,2,2,3.4,NA,3.2,A
+162,Tullahoma,40,West Middle School,K8,1,0.6666666666666667,2.4000000000000004,NA,NA,NA,1,D
+170,Crockett County,3,Crockett County High School,HS,1.1333333333333333,0.4,3.8666666666666667,4,2.4,0,1.5,C
+170,Crockett County,12,Crockett County Middle School,K8,2.7333333333333334,2.2,3.1333333333333333,NA,NA,3,2.6,B
+170,Crockett County,20,Friendship Elementary,K8,2,3,4,NA,NA,NA,2.6,B
+170,Crockett County,25,Gadsden Elementary,K8,2,3,2.5999999999999996,NA,NA,NA,2.5,B
+170,Crockett County,40,Maury City Elementary,K8,1.7999999999999998,1.4,4,NA,NA,4,2.1,B
+171,Alamo,5,Alamo Elementary,K8,3.6,3.9,3.2,NA,NA,4,3.7,A
+172,Bells,5,Bells Elementary,K8,3.8,2.1,3.8,NA,NA,3,3.1,A
+180,Cumberland County,8,Frank P. Brown Elementary,K8,2.8,1.2000000000000002,2.2,NA,NA,NA,2.1,B
+180,Cumberland County,10,Homestead Elementary School,K8,2.8,3.1333333333333333,4,NA,NA,NA,3.1,A
+180,Cumberland County,15,Crab Orchard Elementary,K8,2.2,0.6000000000000001,3.4,NA,NA,NA,1.7,C
+180,Cumberland County,25,Cumberland County High School,HS,2.5999999999999996,0.4,4,2.5999999999999996,4,NA,2.4,B
+180,Cumberland County,33,Glenn Martin Elementary,K8,3,3.6,2,NA,NA,3.8,3.2,A
+180,Cumberland County,53,North Cumberland Elementary,K8,1.8,0.8,2,NA,NA,NA,1.4,C
+180,Cumberland County,55,Pine View Elementary,K8,3,2.5999999999999996,2.5999999999999996,NA,NA,NA,2.8,B
+180,Cumberland County,60,Pleasant Hill Elementary,K8,2,2.5999999999999996,2.4000000000000004,NA,NA,NA,2.3,B
+180,Cumberland County,73,South Cumberland Elementary,K8,3.4,3.3333333333333335,3.7333333333333334,NA,NA,NA,3.4,A
+180,Cumberland County,74,Stone Elementary,K8,2.466666666666667,3.8,3,NA,NA,4,3.1,A
+180,Cumberland County,79,Stone Memorial High School,HS,2.8666666666666663,2,3,3.8,2.8,0.2,2.4,B
+180,Cumberland County,85,The Phoenix School,HS,2,0.4,4,4,2,NA,1.8,C
+190,Davidson County,1,A. Z. Kelley Elementary,K8,1.9,2.1,4,NA,NA,3,2.3,B
+190,Davidson County,3,MNPS Virtual School,K8,NA,2,4,NA,NA,NA,2.4,B
+190,Davidson County,5,Alex Green Elementary,K8,1.8,2,4,NA,NA,2.2,2.1,B
+190,Davidson County,10,Amqui Elementary,K8,2.1333333333333333,3.8666666666666667,4,NA,NA,3.8666666666666667,3.1,A
+190,Davidson County,15,Andrew Jackson Elementary,K8,2.5999999999999996,3.8666666666666667,4,NA,NA,2.2,3.1,A
+190,Davidson County,20,Antioch High School,HS,1,0.1,4,2.6,2.5999999999999996,0,1.4,C
+190,Davidson County,23,Antioch Middle,K8,1,2,4,NA,NA,1.6,1.7,C
+190,Davidson County,25,Apollo Middle,K8,0.2,0.1,2.4000000000000004,NA,NA,0.9,0.5,D
+190,Davidson County,35,Moses McKissack Middle,K8,1.1333333333333333,0.4,4,NA,NA,1.1333333333333333,1.2,C
+190,Davidson County,40,Bellevue Middle,K8,1.9,0.4,2.3,NA,NA,0.8,1.3,C
+190,Davidson County,45,Bellshire Elementary,K8,2,2.8666666666666663,2,NA,NA,3,2.4,B
+190,Davidson County,53,Nashville Big Picture High School,K8,3.2,1.8666666666666667,3.6,NA,NA,NA,2.7,B
+190,Davidson County,70,Buena Vista Elementary,K8,2,2.1333333333333333,3.7333333333333334,NA,NA,NA,2.2,B
+190,Davidson County,77,Cane Ridge High School,HS,1,0.2,3.2,2.1,2,0.30000000000000004,1.2,C
+190,Davidson County,80,Ida B. Wells Elementary,K8,1.2000000000000002,1.3,4,NA,NA,3.1333333333333333,1.7,C
+190,Davidson County,82,Cane Ridge Elementary,K8,3.1333333333333333,4,4,NA,NA,3.5,3.6,A
+190,Davidson County,105,Chadwell Elementary,K8,1.8,2.1,4,NA,NA,2.8666666666666663,2.2,B
+190,Davidson County,110,Charlotte Park Elementary,K8,2.1333333333333333,2,2.1,NA,NA,4,2.3,B
+190,Davidson County,115,Eagle View Elementary School,K8,NA,3.7333333333333334,NA,NA,NA,4,3.8,A
+190,Davidson County,120,Cockrill Elementary,K8,1.2000000000000002,2.8,3.8,NA,NA,1,2,C
+190,Davidson County,130,Cole Elementary,K8,1.8,2.1,4,NA,NA,3.8,2.3,B
+190,Davidson County,140,Hattie Cotton Elementary,K8,2,3,2.6,NA,NA,4,2.6,B
+190,Davidson County,145,Crieve Hall Elementary,K8,3.4,3,3.9,NA,NA,3.9,3.4,A
+190,Davidson County,148,Croft Middle,K8,1.2000000000000002,0.1,1.2000000000000002,NA,NA,0.9,0.8,D
+190,Davidson County,150,Cumberland Elementary,K8,1.2000000000000002,4,4,NA,NA,NA,2.6,B
+190,Davidson County,160,Dan Mills Elementary,K8,3.2,3.7333333333333334,2.6999999999999997,NA,NA,3,3.3,A
+190,Davidson County,165,Dodson Elementary,K8,1,2.2,4,NA,NA,2.8666666666666663,1.9,C
+190,Davidson County,175,Donelson Middle,K8,1,3.5,3,NA,NA,0.9,2.1,B
+190,Davidson County,180,DuPont Elementary,K8,2.8,1.2000000000000002,4,NA,NA,3,2.4,B
+190,Davidson County,185,DuPont Tyler Middle,K8,0.9,0.4,4,NA,NA,4,1.3,C
+190,Davidson County,190,DuPont Hadley Middle,K8,0.9,2,4,NA,NA,1.2000000000000002,1.6,C
+190,Davidson County,195,Eakin Elementary,K8,3.2,3.7,4,NA,NA,4,3.5,A
+190,Davidson County,203,East Nashville Magnet High School,HS,1.1333333333333333,0.26666666666666666,2.4000000000000004,4,2.8,NA,1.5,C
+190,Davidson County,208,Thomas A. Edison Elementary,K8,1.8666666666666667,3.4,4,NA,NA,2.9,2.7,B
+190,Davidson County,220,Fall-Hamilton Elementary,K8,1,0.6666666666666667,3.9,NA,NA,2.2666666666666666,1.3,C
+190,Davidson County,235,Gateway Elementary,K8,2.2666666666666666,4,2.533333333333333,NA,NA,4,3.1,A
+190,Davidson County,240,Glencliff Elementary,K8,0.8666666666666667,3.8,4,NA,NA,1.7,2.3,B
+190,Davidson County,245,Glencliff High School,HS,0.9,0.30000000000000004,3,2,2.5999999999999996,0.7,1.3,C
+190,Davidson County,250,Glendale Elementary,K8,4,3.2,4,NA,NA,NA,3.7,A
+190,Davidson County,255,Glengarry Elementary,K8,2.2666666666666666,2.6999999999999997,3.8,NA,NA,2.9,2.6,B
+190,Davidson County,265,Glenview Elementary,K8,2.1333333333333333,2.9,2.1,NA,NA,3.9,2.6,B
+190,Davidson County,270,Goodlettsville Elementary,K8,2.6,2.1,3.9,NA,NA,3.1333333333333333,2.6,B
+190,Davidson County,275,Goodlettsville Middle,K8,1.1,0.2,2.9,NA,NA,4,1.3,C
+190,Davidson County,280,Gower Elementary,K8,2.5999999999999996,4,2.6,NA,NA,2.8,3.1,A
+190,Davidson County,285,Gra-Mar Middle,K8,1.3,2.2,4,NA,NA,0.8666666666666667,1.8,C
+190,Davidson County,290,Granbery Elementary,K8,3.6,3.8,3.3,NA,NA,3,3.6,A
+190,Davidson County,295,H. G. Hill Middle,K8,1.1,3.7,4,NA,NA,2,2.4,B
+190,Davidson County,296,East Nashville Middle,K8,1,0.13333333333333333,0.7333333333333333,NA,NA,NA,0.6,D
+190,Davidson County,300,Harpeth Valley Elementary,K8,4,3.1333333333333333,3.3,NA,NA,4,3.6,A
+190,Davidson County,305,Haynes Middle,K8,0.8666666666666667,2.4000000000000004,2,NA,NA,NA,1.6,C
+190,Davidson County,310,Haywood Elementary,K8,1,2,3.2,NA,NA,2.9,1.8,C
+190,Davidson County,315,Head Middle,K8,3.5,1.9,3.6,NA,NA,NA,2.9,B
+190,Davidson County,318,Henry C. Maxwell Elementary,K8,2,3,2.8,NA,NA,2.9,2.5,B
+190,Davidson County,320,Hermitage Elementary,K8,1.4,2.6999999999999997,2.4000000000000004,NA,NA,3,2.1,B
+190,Davidson County,327,Hickman Elementary,K8,0.8666666666666667,0.8,4,NA,NA,4,1.5,C
+190,Davidson County,330,Meigs Middle,K8,4,2.4,4,NA,NA,NA,3.4,A
+190,Davidson County,335,Hillsboro High,HS,1.8666666666666667,0.2,3.6,4,3.3333333333333335,1,1.9,C
+190,Davidson County,340,Hillwood High,HS,1.1,0.4,3.4,3.466666666666667,3.7333333333333334,0.8666666666666667,1.8,C
+190,Davidson County,350,Hull-Jackson Elementary,K8,0.8,0.4,0.8,NA,NA,NA,0.6,D
+190,Davidson County,355,Hume - Fogg High,HS,4,3.8,4,4,4,NA,3.9,A
+190,Davidson County,358,Hunters Lane High,HS,1,0.4,3.0999999999999996,3.1,2.5999999999999996,0,1.4,C
+190,Davidson County,360,Inglewood Elementary,K8,1.8,0,2,NA,NA,NA,1.1,C
+190,Davidson County,365,Isaac Litton Middle,K8,1.6,1.6,3.1333333333333333,NA,NA,0,1.6,C
+190,Davidson County,370,J. E. Moss Elementary,K8,2.8,3,3.9,NA,NA,3,3,B
+190,Davidson County,375,Jere Baxter Middle,K8,1.2000000000000002,0.30000000000000004,3.8,NA,NA,1.1333333333333333,1.1,C
+190,Davidson County,380,Joelton Elementary,K8,3,0.4,3.1333333333333333,NA,NA,NA,2,C
+190,Davidson County,385,Joelton Middle,K8,1,1,2.2666666666666666,NA,NA,NA,1.1,C
+190,Davidson County,386,John Early Middle,K8,1.1333333333333333,1.1333333333333333,4,NA,NA,NA,1.4,C
+190,Davidson County,387,Jones Elementary,K8,0,0,4,NA,NA,NA,0.4,D
+190,Davidson County,390,John B. Whitsitt Elementary,K8,1.8666666666666667,3.9,3,NA,NA,3.9,2.9,B
+190,Davidson County,393,John F. Kennedy Middle,K8,1.1,0.2,3.8,NA,NA,0,0.9,D
+190,Davidson County,395,John Overton High,HS,1.6,0.1,3.9,1.9,2.4,0.8,1.6,C
+190,Davidson County,415,Julia Green Elementary,K8,4,0.4,3.4,NA,NA,NA,2.5,B
+190,Davidson County,420,Robert E. Lillard Elementary,K8,2.2,2.1333333333333333,4,NA,NA,NA,2.4,B
+190,Davidson County,430,Lakeview Elementary,K8,3,3.8,2.8,NA,NA,4,3.4,A
+190,Davidson County,435,Lockeland Elementary,K8,4,4,4,NA,NA,NA,4,A
+190,Davidson County,437,Middle College High,HS,4,2.8,4,4,4,NA,3.6,A
+190,Davidson County,443,Cora Howe School,K8,1,2,2.1333333333333333,NA,NA,NA,1.5,C
+190,Davidson County,445,Maplewood High,HS,1,0.1,1.4,2,1.8666666666666667,0,0.9,D
+190,Davidson County,450,Margaret Allen Middle,K8,0.8,2,2.3,NA,NA,2.9,1.6,C
+190,Davidson County,456,Martin Luther King Jr School,HS,4,3.7333333333333334,4,4,4,NA,3.9,A
+190,Davidson County,465,McGavock Elementary,K8,1.6,2,4,NA,NA,4,2.2,B
+190,Davidson County,470,McGavock High,HS,1,0.30000000000000004,4,2.6999999999999997,3.3,0.1,1.6,C
+190,Davidson County,480,McMurray Middle,K8,1.2000000000000002,4,4,NA,NA,2,2.5,B
+190,Davidson County,490,John Trotwood Moore Middle,K8,2.933333333333333,0.6000000000000001,2.1333333333333333,NA,NA,4,2.1,B
+190,Davidson County,493,Mt. View Elementary,K8,2.3,2,3.3,NA,NA,2.8,2.3,B
+190,Davidson County,505,Murrell at Glenn School,K8,1,2,4,NA,NA,NA,1.7,C
+190,Davidson County,510,Napier Elementary,K8,3,4,4,NA,NA,NA,3.5,A
+190,Davidson County,512,Nashville School Of The Arts,HS,3.2,2.8666666666666663,2.533333333333333,3,3.6,NA,3.1,A
+190,Davidson County,515,Neely's Bend Elementary,K8,1.5333333333333334,3.0999999999999996,3.0999999999999996,NA,NA,2.7333333333333334,2.4,B
+190,Davidson County,525,Norman Binkley Elementary,K8,3,3.8,2.1,NA,NA,3.7,3.3,A
+190,Davidson County,535,Old Center Elementary,K8,1.8,3.0999999999999996,4,NA,NA,3.1333333333333333,2.6,B
+190,Davidson County,538,William Henry Oliver Middle,K8,1.8,0.7000000000000001,4,NA,NA,2.1,1.7,C
+190,Davidson County,540,Paragon Mills Elementary,K8,1.2666666666666666,3.9,4,NA,NA,3,2.6,B
+190,Davidson County,545,Park Avenue Elementary,K8,2.2,3.8666666666666667,3.2666666666666666,NA,NA,NA,3,B
+190,Davidson County,555,Pearl-Cohn High,HS,1,0.5333333333333333,2.4000000000000004,2.2666666666666666,1.8666666666666667,NA,1.2,C
+190,Davidson County,565,Pennington Elementary,K8,3.4,3.466666666666667,2.2666666666666666,NA,NA,1,3.1,A
+190,Davidson County,570,Percy Priest Elementary,K8,4,3,4,NA,NA,NA,3.6,A
+190,Davidson County,595,Rose Park Middle,K8,2.5999999999999996,0.6000000000000001,3.8,NA,NA,NA,1.9,C
+190,Davidson County,600,Rosebank Elementary,K8,1.6,2.2666666666666666,4,NA,NA,NA,2.1,B
+190,Davidson County,607,Ruby Major Elementary,K8,3,3.9,2.5,NA,NA,3,3.3,A
+190,Davidson County,608,May Werthan Shayne Elementary School,K8,3.5,2.2,3.8,NA,NA,3.8,3.1,A
+190,Davidson County,610,Shwab Elementary,K8,3,4,4,NA,NA,3.1333333333333333,3.5,A
+190,Davidson County,612,The Academy at Opry Mills,HS,NA,NA,1,0.2,1.2,NA,1,D
+190,Davidson County,614,The Academy at Old Cockrill,HS,NA,3.6,0,1.6,2.1999999999999997,NA,2.5,B
+190,Davidson County,615,Stanford Elementary,K8,3,4,4,NA,NA,2.8,3.4,A
+190,Davidson County,618,Robert Churchwell Elementary,K8,3,4,2.2666666666666666,NA,NA,NA,3.3,A
+190,Davidson County,620,Stratford STEM Magnet School,HS,1.1,0.8,3.7,4,2,1,1.6,C
+190,Davidson County,622,Madison Middle,K8,1.2000000000000002,3.2,4,NA,NA,0.8666666666666667,2.1,B
+190,Davidson County,625,Stratton Elementary,K8,0.13333333333333333,3.7,0.5,NA,NA,2.9,1.7,C
+190,Davidson County,630,Sylvan Park Elementary,K8,3.4,3.8666666666666667,3.6,NA,NA,NA,3.6,A
+190,Davidson County,633,Thurgood Marshall Middle,K8,1,2.2,3.9,NA,NA,1.8,1.8,C
+190,Davidson County,635,Tom Joy Elementary,K8,1,3.8,4,NA,NA,1.8666666666666667,2.4,B
+190,Davidson County,637,Tulip Grove Elementary,K8,2.1333333333333333,2.9,4,NA,NA,4,2.8,B
+190,Davidson County,645,Tusculum Elementary,K8,2.2666666666666666,3.9,4,NA,NA,3.8,3.2,A
+190,Davidson County,650,Two Rivers Middle,K8,1.1,0.8,2.2,NA,NA,1.8,1.2,C
+190,Davidson County,655,Una Elementary,K8,1.4,2.2,2.4000000000000004,NA,NA,3.8,2,C
+190,Davidson County,670,Carter-Lawrence Elementary,K8,2.2,1.8,4,NA,NA,0.8666666666666667,2.1,B
+190,Davidson County,675,Warner Elementary,K8,2,4,4,NA,NA,3.8666666666666667,3.1,A
+190,Davidson County,690,West End Middle,K8,2.466666666666667,0.6000000000000001,1.7333333333333334,NA,NA,NA,1.6,C
+190,Davidson County,695,Westmeade Elementary,K8,3,3.7,4,NA,NA,2.8666666666666663,3.3,A
+190,Davidson County,700,Isaiah T. Creswell Middle School of the Arts,K8,1,1,3.466666666666667,NA,NA,NA,1.2,C
+190,Davidson County,704,Whites Creek High,HS,0.13333333333333333,0,2.533333333333333,3.7333333333333334,3.6,NA,1.2,C
+190,Davidson County,715,Wright Middle,K8,1,1.6,4,NA,NA,0,1.4,C
+190,Davidson County,720,The Academy at Hickory Hollow,HS,NA,NA,NA,1.1333333333333333,1.7333333333333334,0,1.2,C
+190,Davidson County,745,The Cohn Learning Center,HS,0.8,0.26666666666666666,1.4,1.2000000000000002,NA,NA,0.7,D
+190,Davidson County,750,Smith Springs Elementary School,K8,2.7333333333333334,3.8,4,NA,NA,2.9,3.3,A
+190,Davidson County,755,Waverly-Belmont Elementary School,K8,3.2,1.7333333333333334,3.7333333333333334,NA,NA,NA,2.7,B
+190,Davidson County,8001,Smithson Craighead Academy,K8,2,3.4,2.4000000000000004,NA,NA,3,2.6,B
+190,Davidson County,8002,KIPP Academy Nashville,K8,2.9,4,4,NA,NA,1,3.2,A
+190,Davidson County,8003,Lead Academy,HS,1.3,1.9,1.5,4,4,0.9,2.1,B
+190,Davidson County,8005,Liberty Collegiate Academy,K8,2.8,4,1.1,NA,NA,2.8,3.1,A
+190,Davidson County,8006,STEM Prep Academy,K8,1.9,3.7,4,NA,NA,2.6999999999999997,2.8,B
+190,Davidson County,8008,Nashville Prep,K8,2.2,3.9,1.6,NA,NA,0.8,2.6,B
+190,Davidson County,8009,East End Preparatory School,K8,2.9,1,3.8,NA,NA,3,2.3,B
+190,Davidson County,8010,Cameron College Preparatory,K8,2,4,2.4000000000000004,NA,NA,2.6999999999999997,2.8,B
+190,Davidson County,8011,KIPP Nashville Collegiate High School,HS,2,0.5,4,NA,NA,4,2,C
+190,Davidson County,8012,Knowledge Academy,K8,1.1333333333333333,2.5999999999999996,3.1333333333333333,NA,NA,1.1,1.8,C
+190,Davidson County,8013,LEAD Prep Southeast,K8,1.8,4,3.8,NA,NA,1.9,2.8,B
+190,Davidson County,8042,KIPP Nashville College Prep,K8,3,3.8,4,NA,NA,1,3.2,A
+190,Davidson County,8044,Nashville Classical,K8,4,2,3.7333333333333334,NA,NA,NA,3.2,A
+190,Davidson County,8045,Valor Flagship Academy,K8,3.8,4,4,NA,NA,3.9,3.9,A
+190,Davidson County,8046,Purpose Prep,K8,4,1.4,3.6,NA,NA,NA,2.9,B
+190,Davidson County,8048,Intrepid College Preparatory Charter School,K8,1.7333333333333334,0.30000000000000004,4,NA,NA,3.7,1.7,C
+190,Davidson County,8050,Rocketship Nashville Northeast Elementary,K8,4,4,1.5,NA,NA,2.7333333333333334,3.6,A
+190,Davidson County,8055,Nashville Academy of Computer Science,K8,2.9,3.9,0.4,NA,NA,2,2.9,B
+190,Davidson County,8060,Explore Community School,K8,NA,NA,1.5333333333333334,NA,NA,NA,1.5,C
+190,Davidson County,8065,Knowledge Academies High School,K8,1.1333333333333333,0.30000000000000004,0.4,NA,NA,1.1,0.8,D
+190,Davidson County,8070,Rocketship United,K8,2.7333333333333334,2.1,1.3,NA,NA,2.8,2.4,B
+190,Davidson County,8075,STEM Prep High School,K8,1.1333333333333333,2.6999999999999997,3.2666666666666666,NA,NA,1,1.9,C
+190,Davidson County,8080,Valor Voyager Academy,K8,3.9,4,3.8,NA,NA,3,3.8,A
+190,Davidson County,8090,Strive Collegiate Academy,K8,0.26666666666666666,0.30000000000000004,2,NA,NA,1.1333333333333333,0.5,D
+190,Davidson County,8095,KIPP Academy Nashville Elementary School,K8,3,3.8666666666666667,2.1333333333333333,NA,NA,NA,3.3,A
+190,Davidson County,8100,RePublic High School,K8,0.4,0.2,0,NA,NA,2,0.5,D
+190,Davidson County,8105,KA @ The Crossings,K8,2.2666666666666666,2,3.1333333333333333,NA,NA,0.26666666666666666,2.1,B
+200,Decatur County,3,Riverside High School,HS,3,2.5999999999999996,3.1333333333333333,2,3.4,NA,2.9,B
+200,Decatur County,5,Decaturville Elementary,K8,4,2,4,NA,NA,NA,3.2,A
+200,Decatur County,10,Parsons Elementary,K8,3,2.5999999999999996,2.533333333333333,NA,NA,NA,2.8,B
+200,Decatur County,20,Decatur County Middle School,K8,2.5999999999999996,1.4,2.1333333333333333,NA,NA,NA,2.1,B
+210,DeKalb County,25,De Kalb County High School,HS,1.7333333333333334,0,3.6,3,2.5999999999999996,0,1.6,C
+210,DeKalb County,37,DeKalb Middle School,K8,1.7333333333333334,2.8,4,NA,NA,1,2.3,B
+210,DeKalb County,40,Northside Elementary,K8,0.9,0.4,2.1,NA,NA,3.7333333333333334,1.1,C
+210,DeKalb County,50,DeKalb West Elementary,K8,2.8,1.4,1.6,NA,NA,NA,2.1,B
+220,Dickson County,5,Stuart Burns Elementary,K8,3.6,2.5999999999999996,3.8666666666666667,NA,NA,4,3.3,A
+220,Dickson County,7,Charlotte Elementary,K8,2.8,3.466666666666667,4,NA,NA,NA,3.2,A
+220,Dickson County,8,Centennial Elementary,K8,4,3.7333333333333334,3.8666666666666667,NA,NA,NA,3.9,A
+220,Dickson County,15,Charlotte Middle School,K8,2.8666666666666663,3.6,2.4000000000000004,NA,NA,NA,3.1,A
+220,Dickson County,17,Creek Wood High School,HS,2.8666666666666663,2.7333333333333334,4,3.8,2.5999999999999996,NA,2.9,B
+220,Dickson County,20,Dickson Elementary,K8,2.2,2.3,3.7,NA,NA,3,2.5,B
+220,Dickson County,23,Dickson Middle School,K8,2.5999999999999996,3.4,4,NA,NA,NA,3.1,A
+220,Dickson County,25,Dickson County High School,HS,1.8666666666666667,1,4,2.5999999999999996,2.5999999999999996,4,2.3,B
+220,Dickson County,28,The Discovery School,K8,4,3.4,4,NA,NA,NA,3.8,A
+220,Dickson County,30,Oakmont Elementary,K8,2.333333333333333,0.6000000000000001,2.1333333333333333,NA,NA,3,1.8,C
+220,Dickson County,37,Dickson Intermediate School,K8,2.7333333333333334,0.1,3.1333333333333333,NA,NA,NA,1.7,C
+220,Dickson County,40,Vanleer Elementary,K8,2.1999999999999997,2,2,NA,NA,NA,2.1,B
+220,Dickson County,44,White Bluff Elementary,K8,2.4,2,3.8666666666666667,NA,NA,NA,2.4,B
+220,Dickson County,50,W James Middle School,K8,3.6,2,4,NA,NA,NA,3,B
+230,Dyer County,15,Northview Middle School,K8,2.7333333333333334,0.5333333333333333,3.466666666666667,NA,NA,NA,1.9,C
+230,Dyer County,18,Dyer County High School,HS,3.6,3.466666666666667,3.7333333333333334,2.5999999999999996,4,NA,3.6,A
+230,Dyer County,20,Fifth Consolidated School,K8,4,0.4,1.6,NA,NA,NA,2.3,B
+230,Dyer County,25,Finley Elementary,K8,3.6,1.2000000000000002,4,NA,NA,NA,2.7,B
+230,Dyer County,30,Holice Powell Elementary,K8,4,3.6,4,NA,NA,NA,3.8,A
+230,Dyer County,35,Newbern Elementary School,K8,2.5999999999999996,2,2.2666666666666666,NA,NA,NA,2.3,B
+230,Dyer County,43,Three Oaks Middle School,K8,2.933333333333333,0.6666666666666667,3.4,NA,NA,NA,2.1,B
+230,Dyer County,45,Trimble Elementary,K8,3,3.4,2.8,NA,NA,NA,3.1,A
+231,Dyersburg,12,Dyersburg Intermediate School,K8,2.466666666666667,2.6999999999999997,4,NA,NA,NA,2.7,B
+231,Dyersburg,15,Dyersburg High School,HS,2.5999999999999996,1.7333333333333334,4,2,2.8,4,2.7,B
+231,Dyersburg,21,Dyersburg Middle School,K8,3.2,2.8,4,NA,NA,NA,3.1,A
+240,Fayette County Public Schools,18,East Jr. High School,K8,0.8666666666666667,2.8666666666666663,4,NA,NA,NA,2,C
+240,Fayette County Public Schools,26,Fayette Ware Comprehensive High School,HS,2.5999999999999996,3.8666666666666667,1.8666666666666667,3.6,3,NA,3,B
+240,Fayette County Public Schools,46,La Grange Moscow Elementary,K8,2.5999999999999996,3.7333333333333334,2.6,NA,NA,NA,3.1,A
+240,Fayette County Public Schools,60,Oakland Elementary,K8,4,3.9,1.9,NA,NA,3,3.7,A
+240,Fayette County Public Schools,70,Southwest Elementary,K8,3.2,2.5999999999999996,2.533333333333333,NA,NA,NA,2.9,B
+240,Fayette County Public Schools,90,West Junior High School,K8,1.2666666666666666,0.13333333333333333,1.1333333333333333,NA,NA,NA,0.8,D
+240,Fayette County Public Schools,95,Buckley-Carpenter Elementary School,K8,NA,1.8666666666666667,0.8666666666666667,NA,NA,NA,1.7,C
+250,Fentress County,5,Allardt Elementary,K8,3.2,1.4,4,NA,NA,NA,2.6,B
+250,Fentress County,25,Clarkrange High School,HS,3,2.5999999999999996,3,4,3.6,NA,3.1,A
+250,Fentress County,33,South Fentress Elementary School,K8,2.4000000000000004,2.8,3.4,NA,NA,NA,2.7,B
+250,Fentress County,40,Pine Haven Elementary,K8,2,2,4,NA,NA,NA,2.2,B
+250,Fentress County,60,York Elementary,K8,2,3,4,NA,NA,NA,2.6,B
+260,Franklin County,15,Broadview Elementary,K8,4,2.5999999999999996,4,NA,NA,NA,3.4,A
+260,Franklin County,30,Clark Memorial School,K8,2.7333333333333334,1.8,4,NA,NA,1.8,2.4,B
+260,Franklin County,35,Cowan Elementary,K8,2.5999999999999996,3.2,2,NA,NA,NA,2.8,B
+260,Franklin County,40,Decherd Elementary,K8,1.4,1.4,4,NA,NA,NA,1.7,C
+260,Franklin County,50,Franklin Co High School,HS,1,3.3333333333333335,4,2.7333333333333334,2.1999999999999997,NA,2.3,B
+260,Franklin County,65,Huntland School,HS,1.6,2.8,4,4,3,2,2.6,B
+260,Franklin County,80,North Middle School,K8,1.2666666666666666,1.4,4,NA,NA,NA,1.6,C
+260,Franklin County,82,North Lake Elementary,K8,3,2.8,3.2,NA,NA,NA,2.9,B
+260,Franklin County,87,Rock Creek Elementary,K8,2,0.6000000000000001,4,NA,NA,NA,1.6,C
+260,Franklin County,90,Sewanee Elementary,K8,4,2,4,NA,NA,NA,3.2,A
+260,Franklin County,115,South Middle School,K8,2,0.26666666666666666,4,NA,NA,NA,1.5,C
+271,Humboldt City Schools,20,Humboldt Junior/Senior High School,HS,1.8,0.13333333333333333,2,2.4000000000000004,3,NA,1.6,C
+271,Humboldt City Schools,27,East Elementary School,K8,0,0.26666666666666666,2.2666666666666666,NA,NA,NA,0.3,D
+272,Milan,10,Milan High School,HS,2.5999999999999996,1.8666666666666667,4,3.466666666666667,3.3333333333333335,NA,2.7,B
+272,Milan,15,Milan Middle School,K8,3.3333333333333335,1.5333333333333334,4,NA,NA,NA,2.7,B
+272,Milan,25,Milan Elementary,K8,2.4,1.8666666666666667,4,NA,NA,NA,2.3,B
+273,Trenton,5,Peabody High School,HS,1.6,0.5333333333333333,4,3,3.6,NA,2,C
+273,Trenton,10,Trenton Middle School,K8,1.6,0.30000000000000004,1.7333333333333334,NA,NA,NA,1.1,C
+273,Trenton,15,Trenton Elementary,K8,2,2.6,2.8666666666666663,NA,NA,2,2.3,B
+274,Bradford,5,Bradford High School,HS,3,0.6000000000000001,3.6,4,4,NA,2.6,B
+274,Bradford,10,Bradford Elementary,K8,3.4,2,4,NA,NA,NA,2.9,B
+275,Gibson Co Sp Dist,15,Dyer Elementary,K8,1.7333333333333334,2.1333333333333333,4,NA,NA,NA,2.1,B
+275,Gibson Co Sp Dist,33,Gibson County High School,HS,3,3.2,3.4,1.6,3.2,NA,3.1,A
+275,Gibson Co Sp Dist,37,South Gibson County High School,HS,3.7333333333333334,3.2,4,4,4,NA,3.7,A
+275,Gibson Co Sp Dist,40,South Gibson County Elementary School,K8,NA,NA,3.6,NA,NA,NA,3.6,A
+275,Gibson Co Sp Dist,45,South Gibson County Middle School,K8,3.466666666666667,3.466666666666667,3.7333333333333334,NA,NA,NA,3.5,A
+275,Gibson Co Sp Dist,55,Rutherford Elementary,K8,3.4,2.5999999999999996,3.8666666666666667,NA,NA,NA,3.1,A
+275,Gibson Co Sp Dist,65,Spring Hill Elementary,K8,4,2,4,NA,NA,NA,3.2,A
+275,Gibson Co Sp Dist,85,Yorkville Elementary,K8,3,2,4,NA,NA,NA,2.7,B
+280,Giles County,7,Bridgeforth Middle School,K8,1.8,3.6,1.8000000000000003,NA,NA,NA,2.5,B
+280,Giles County,35,Elkton Elementary,K8,1,0.5333333333333333,4,NA,NA,NA,1.1,C
+280,Giles County,45,Giles Co High School,HS,2.5999999999999996,2.5999999999999996,2.1333333333333333,4,3.4,NA,2.8,B
+280,Giles County,65,Minor Hill School,K8,2.5999999999999996,3.6,2.2,NA,NA,NA,3,B
+280,Giles County,81,Richland Elementary,K8,2.1999999999999997,0.26666666666666666,3,NA,NA,NA,1.5,C
+280,Giles County,84,Richland School,HS,3,3.3333333333333335,3.1333333333333333,2,4,NA,3.3,A
+280,Giles County,87,Southside Elementary,K8,2,3,1.2666666666666666,NA,NA,NA,2.3,B
+290,Grainger County,5,Bean Station Elementary,K8,2.2,3.6,1.2000000000000002,NA,NA,NA,2.7,B
+290,Grainger County,8,Grainger High School,HS,0.8666666666666667,0.26666666666666666,1.4,4,2.5999999999999996,NA,1.2,C
+290,Grainger County,10,Joppa Elementary,K8,2.5999999999999996,1.4,1.8000000000000003,NA,NA,NA,2,C
+290,Grainger County,18,Rutledge Elementary School,K8,2.466666666666667,1.3,1.4,NA,NA,2.8666666666666663,2,C
+290,Grainger County,23,Rutledge Middle School,K8,2,3.4,1.8000000000000003,NA,NA,NA,2.5,B
+290,Grainger County,30,Washburn School,HS,3,3.8,3,4,1,NA,2.9,B
+300,Greene County,5,Baileyton Elementary,K8,3.8,2.8,3,NA,NA,NA,3.3,A
+300,Greene County,10,Camp Creek Elementary,K8,2,2.2,1.8,NA,NA,NA,2.1,B
+300,Greene County,20,Chuckey Elementary,K8,2.5999999999999996,2.5999999999999996,3.6,NA,NA,NA,2.7,B
+300,Greene County,25,Chuckey Doak Middle School,K8,3.7333333333333334,4,4,NA,NA,NA,3.9,A
+300,Greene County,28,Chuckey Doak High School,HS,2,0.4,2.7333333333333334,3,2.4000000000000004,NA,1.7,C
+300,Greene County,30,Debusk Elementary,K8,3,3.6,1.4,NA,NA,NA,3.1,A
+300,Greene County,35,Doak Elementary,K8,2.4,3.5,3.7333333333333334,NA,NA,2,2.9,B
+300,Greene County,40,Glenwood Elementary,K8,4,3.6,4,NA,NA,NA,3.8,A
+300,Greene County,55,McDonald Elementary,K8,1.6,2.2,2,NA,NA,NA,1.9,C
+300,Greene County,60,Mosheim Elementary,K8,1,1.7333333333333334,2.4000000000000004,NA,NA,NA,1.4,C
+300,Greene County,67,Nolachuckey Elementary,K8,3,1.4,3.4,NA,NA,NA,2.4,B
+300,Greene County,70,North Greene High School,HS,2,3.6,4,3.2,1.7999999999999998,NA,2.7,B
+300,Greene County,75,Ottway Elementary,K8,2.5999999999999996,2.5999999999999996,4,NA,NA,NA,2.7,B
+300,Greene County,80,South Greene High School,HS,2.8,3.4,3.8,3.6,3.4,NA,3.2,A
+300,Greene County,95,West Greene High School,HS,1.2000000000000002,1.4,3,4,3.4,NA,2,C
+300,Greene County,100,West Pines Elementary,K8,1.4,2,1.6,NA,NA,NA,1.7,C
+301,Greeneville,8,C Hal Henard Elementary,K8,1.9999999999999998,0.4,3.7333333333333334,NA,NA,NA,1.5,C
+301,Greeneville,15,Eastview Elementary,K8,3.6,2,4,NA,NA,NA,3,B
+301,Greeneville,20,Greeneville High School,HS,3.0666666666666664,3.3333333333333335,3.466666666666667,4,4,NA,3.4,A
+301,Greeneville,25,Greeneville Middle School,K8,2.333333333333333,0.1,4,NA,NA,NA,1.6,C
+301,Greeneville,30,Highland Elementary,K8,2,3.7333333333333334,4,NA,NA,NA,2.9,B
+301,Greeneville,35,Tusculum View Elementary,K8,2.1999999999999997,2,3.8666666666666667,NA,NA,NA,2.3,B
+310,Grundy County,15,Coalmont Elementary,K8,0,0.6000000000000001,2.5999999999999996,NA,NA,NA,0.5,D
+310,Grundy County,25,Grundy County High School,HS,1.7999999999999998,2,2.1999999999999997,3,3.2,NA,2.2,B
+310,Grundy County,35,North Elementary,K8,3,2.8,3.4,NA,NA,NA,3,B
+310,Grundy County,40,Palmer Elementary,K8,1.4,1.8000000000000003,4,NA,NA,NA,1.8,C
+310,Grundy County,45,Pelham Elementary,K8,2,0.8,4,NA,NA,NA,1.7,C
+310,Grundy County,60,Swiss Memorial Elementary,K8,4,4,4,NA,NA,NA,4,A
+310,Grundy County,65,Tracy Elementary,K8,3,2,4,NA,NA,NA,2.7,B
+320,Hamblen County,5,Alpha Elementary,K8,3.7333333333333334,2.5,2.9,NA,NA,1.8,3,B
+320,Hamblen County,7,East Ridge Middle School,K8,2.5999999999999996,1.3,2.5999999999999996,NA,NA,NA,2.1,B
+320,Hamblen County,10,Fairview Marguerite,K8,3,2.9,3.3,NA,NA,3.7,3.1,A
+320,Hamblen County,12,Hillcrest Elementary,K8,2.2,3.8,3.9,NA,NA,2.9,3,B
+320,Hamblen County,14,John Hay Elementary,K8,3.466666666666667,2.533333333333333,4,NA,NA,3,3.1,A
+320,Hamblen County,15,Manley Elementary,K8,2.9,3.8,3.2,NA,NA,3.9,3.3,A
+320,Hamblen County,18,Lincoln Heights Elementary,K8,2.9,4,3.2,NA,NA,3,3.3,A
+320,Hamblen County,20,Russellville Elementary,K8,3.466666666666667,2.5999999999999996,3.7333333333333334,NA,NA,NA,3.1,A
+320,Hamblen County,27,Lincoln Heights Middle School,K8,1.1,3.9,2.4000000000000004,NA,NA,0.9,2.2,B
+320,Hamblen County,30,Union Heights Elementary,K8,2.5999999999999996,1.2666666666666666,2.7333333333333334,NA,NA,NA,2.1,B
+320,Hamblen County,33,West View Middle School,K8,2.4,0.8,2.8666666666666663,NA,NA,0,1.6,C
+320,Hamblen County,35,Whitesburg Elementary,K8,3.6,2,4,NA,NA,NA,3,B
+320,Hamblen County,37,Meadowview Middle School,K8,1.2000000000000002,1.4,3.0999999999999996,NA,NA,1,1.4,C
+320,Hamblen County,40,Witt Elementary,K8,3.6,2.2,2.5999999999999996,NA,NA,NA,2.9,B
+320,Hamblen County,42,Morristown East High,HS,1.8,3.5,3.0999999999999996,2.8666666666666663,3.7333333333333334,0.9,2.7,B
+320,Hamblen County,45,Morristown West High,HS,2.5,3.4,3.0999999999999996,3.8666666666666667,3.7333333333333334,0,2.9,B
+320,Hamblen County,48,West Elementary,K8,3.7,3.8,3.2,NA,NA,4,3.7,A
+330,Hamilton County,5,Allen Elementary,K8,4,3.466666666666667,3.6,NA,NA,NA,3.7,A
+330,Hamilton County,10,Alpine Crest Elementary,K8,2.8,3.8,4,NA,NA,NA,3.3,A
+330,Hamilton County,13,Apison Elementary School,K8,3.8666666666666667,3.6,2.7333333333333334,NA,NA,4,3.7,A
+330,Hamilton County,16,Battle Academy For Teaching  Learning,K8,1.8,0,4,NA,NA,NA,1.3,C
+330,Hamilton County,17,Bess T Shepherd Elementary,K8,2.2,3.8,3.8,NA,NA,3.7,3.1,A
+330,Hamilton County,19,Big Ridge Elementary,K8,4,3.3333333333333335,3,NA,NA,NA,3.6,A
+330,Hamilton County,21,Brainerd High School,HS,1.2666666666666666,1.1333333333333333,2.4000000000000004,3.7333333333333334,0,NA,1.2,C
+330,Hamilton County,33,Tommie F. Brown Academy,K8,2.2,2.2,2.6,NA,NA,NA,2.2,B
+330,Hamilton County,35,Brown Middle School,K8,1.4,0.26666666666666666,1.5333333333333334,NA,NA,NA,1,D
+330,Hamilton County,37,Calvin Donaldson Environmental Science Academy,K8,3,3.7,3.8,NA,NA,4,3.4,A
+330,Hamilton County,40,Central High School,HS,2.1999999999999997,2.1333333333333333,1.7333333333333334,3.6,2.4000000000000004,NA,2.2,B
+330,Hamilton County,41,Normal Park Museum Magnet School,K8,3.2,0.8,3.7333333333333334,NA,NA,NA,2.3,B
+330,Hamilton County,45,Chatt High Center For Creative Arts,HS,3.6,3.7333333333333334,4,4,4,NA,3.8,A
+330,Hamilton County,46,Chattanooga School For Arts And Sciences Upper,HS,3.2,3.8666666666666667,3.8666666666666667,4,4,NA,3.7,A
+330,Hamilton County,47,Chattanooga School For The Arts And Science Lower,K8,3.6,2.1999999999999997,4,NA,NA,NA,3.1,A
+330,Hamilton County,48,Clifton Hills Elementary,K8,3,3.8,2.4000000000000004,NA,NA,2.9,3.2,A
+330,Hamilton County,50,Daisy Elementary,K8,4,3.3333333333333335,2.8,NA,NA,NA,3.6,A
+330,Hamilton County,51,McConnell Elementary,K8,3.2,3.4,3.6,NA,NA,NA,3.3,A
+330,Hamilton County,55,Dalewood Middle School,K8,0.8666666666666667,2,2.4000000000000004,NA,NA,NA,1.5,C
+330,Hamilton County,58,Dupont Elementary,K8,2.8,3.9,3.0999999999999996,NA,NA,4,3.3,A
+330,Hamilton County,59,East Hamilton School,HS,3.7333333333333334,3.8,4,3.8,3.4,NA,3.7,A
+330,Hamilton County,62,East Brainerd Elementary,K8,3.6,4,4,NA,NA,3.6,3.8,A
+330,Hamilton County,63,East Lake Elementary,K8,2.1333333333333333,3.8666666666666667,4,NA,NA,1.8,2.9,B
+330,Hamilton County,64,East Lake Academy Of Fine Arts,K8,1.2000000000000002,2.2,2.5,NA,NA,0.9,1.7,C
+330,Hamilton County,65,East Ridge Elementary,K8,2,3.8,4,NA,NA,3,2.9,B
+330,Hamilton County,70,East Ridge High School,HS,2.7333333333333334,3.6,3.6,3.8,1.6,1.1333333333333333,2.7,B
+330,Hamilton County,75,East Ridge Middle School,K8,1.1,2.8,4,NA,NA,1,2,C
+330,Hamilton County,78,East Side Elementary,K8,2.1333333333333333,3.8,4,NA,NA,2,2.9,B
+330,Hamilton County,85,Middle Valley Elementary,K8,3.6,3.6,2.8666666666666663,NA,NA,4,3.6,A
+330,Hamilton County,86,Hamilton County Collegiate High at Chattanooga State,HS,4,4,4,4,0,NA,3.2,A
+330,Hamilton County,90,Harrison Elementary,K8,2.5999999999999996,2.1333333333333333,3.8666666666666667,NA,NA,NA,2.5,B
+330,Hamilton County,95,Hamilton County High School,HS,2,3.2,4,2,0.4,NA,2.2,B
+330,Hamilton County,97,Barger Academy,K8,2.7333333333333334,1.7333333333333334,3.4,NA,NA,NA,2.4,B
+330,Hamilton County,100,Hunter Middle School,K8,3.6,1.5333333333333334,4,NA,NA,NA,2.8,B
+330,Hamilton County,110,Hardy Elementary School,K8,1,2.5999999999999996,4,NA,NA,NA,1.9,C
+330,Hamilton County,120,Loftis Middle School,K8,3.466666666666667,3.466666666666667,3.8666666666666667,NA,NA,NA,3.5,A
+330,Hamilton County,125,Lookout Mountain Elementary,K8,4,4,4,NA,NA,NA,4,A
+330,Hamilton County,127,Hixson Elementary,K8,2.8,3.5,3.0999999999999996,NA,NA,3,3.1,A
+330,Hamilton County,128,Hixson High School,HS,2.0666666666666664,3.5,2.2666666666666666,2.2,3,3,2.7,B
+330,Hamilton County,129,Hixson Middle School,K8,2.2,3.8,2.2,NA,NA,0.8666666666666667,2.6,B
+330,Hamilton County,133,Hillcrest Elementary,K8,1.8,1.2666666666666666,4,NA,NA,NA,1.8,C
+330,Hamilton County,137,The Howard School,HS,1,0.30000000000000004,4,3.6,0,0,1,D
+330,Hamilton County,147,North Hamilton Elementary,K8,3.4,1.2666666666666666,3.6,NA,NA,NA,2.6,B
+330,Hamilton County,148,Wolftever Creek Elementary,K8,2.8,3.8,2.6999999999999997,NA,NA,1.2666666666666666,3,B
+330,Hamilton County,149,Nolan Elementary,K8,4,3,4,NA,NA,NA,3.6,A
+330,Hamilton County,155,Ooltewah Elementary,K8,3.8666666666666667,3.8666666666666667,3.9,NA,NA,4,3.9,A
+330,Hamilton County,157,Ooltewah Middle School,K8,1.8,0.4,1.4,NA,NA,0.13333333333333333,1.1,C
+330,Hamilton County,159,Lakeside Academy,K8,3.8,3.8666666666666667,3.8,NA,NA,NA,3.8,A
+330,Hamilton County,160,Ooltewah High School,HS,1.7,0.30000000000000004,2.5,2.1333333333333333,3.3333333333333335,0,1.6,C
+330,Hamilton County,162,Chattanooga School For The Liberal Arts,K8,4,3.8,4,NA,NA,NA,3.9,A
+330,Hamilton County,165,Lookout Valley Middle / High School,HS,2,2,4,4,3,NA,2.5,B
+330,Hamilton County,171,Red Bank Elementary,K8,2.5999999999999996,4,1.4,NA,NA,3,3,B
+330,Hamilton County,175,Red Bank High School,HS,2.6999999999999997,3.7,4,3.1333333333333333,0.7333333333333333,1,2.5,B
+330,Hamilton County,180,Red Bank Middle School,K8,3.3333333333333335,4,3.7,NA,NA,0,3.3,A
+330,Hamilton County,183,Rivermont Elementary,K8,2.8,3.7333333333333334,2.1333333333333333,NA,NA,NA,3.1,A
+330,Hamilton County,190,Sale Creek Middle / High School,HS,3,3.8,4,4,4,NA,3.6,A
+330,Hamilton County,194,Orchard Knob Elementary,K8,1,3,4,NA,NA,3,2.2,B
+330,Hamilton County,196,Sequoyah High School,HS,3.8,1.1333333333333333,3.8,4,0,NA,2.3,B
+330,Hamilton County,200,Orchard Knob Middle,K8,1.1333333333333333,0.4,3.0999999999999996,NA,NA,1,1.1,C
+330,Hamilton County,210,Signal Mountain Middle/High School,HS,3.2,0.26666666666666666,3.7333333333333334,4,4,NA,2.6,B
+330,Hamilton County,215,Snow Hill Elementary,K8,2.5999999999999996,3.3333333333333335,4,NA,NA,NA,3,B
+330,Hamilton County,220,Soddy Daisy High School,HS,3.8666666666666667,1.8666666666666667,3.7333333333333334,1.8,2.6,NA,2.9,B
+330,Hamilton County,225,Soddy Daisy Middle School,K8,2.5999999999999996,2,4,NA,NA,NA,2.5,B
+330,Hamilton County,230,Soddy Elementary,K8,3.6,3.4,4,NA,NA,NA,3.6,A
+330,Hamilton County,235,Spring Creek Elementary,K8,3.466666666666667,2,3.2,NA,NA,4,3,B
+330,Hamilton County,237,Tyner Academy,HS,1.4,3.6,3.7333333333333334,4,4,2,2.9,B
+330,Hamilton County,239,Tyner Middle Academy,K8,2.1333333333333333,3.7,3,NA,NA,1,2.7,B
+330,Hamilton County,240,Thrasher Elementary,K8,4,3.6,4,NA,NA,NA,3.8,A
+330,Hamilton County,241,Lookout Valley Elementary,K8,3,2.466666666666667,2.1333333333333333,NA,NA,NA,2.7,B
+330,Hamilton County,245,Woodmore Elementary,K8,1.8,3,2.7333333333333334,NA,NA,NA,2.4,B
+330,Hamilton County,260,Wallace A. Smith Elementary,K8,4,3.7333333333333334,2.333333333333333,NA,NA,NA,3.7,A
+330,Hamilton County,265,Westview Elementary,K8,3.6,3.8666666666666667,3.6,NA,NA,NA,3.7,A
+330,Hamilton County,280,STEM School Chattanooga,HS,3.6,2,3.8,4,4,NA,3.2,A
+330,Hamilton County,8001,Chattanooga Girls Leadership Academy,K8,2.8666666666666663,3.7333333333333334,4,NA,NA,3.1333333333333333,3.3,A
+330,Hamilton County,8002,"Ivy Academy, Inc.",HS,2,2,2.8,4,4,NA,2.6,B
+330,Hamilton County,8003,Chattanooga Charter School of Excellence,K8,3,4,2.8,NA,NA,1.8666666666666667,3.2,A
+330,Hamilton County,8010,Chattanooga Charter School of Excellence Middle,K8,1.1333333333333333,3.8666666666666667,4,NA,NA,0,2.3,B
+330,Hamilton County,8011,Chattanooga Preparatory School,K8,NA,3.8666666666666667,NA,NA,NA,NA,3.9,A
+340,Hancock County,20,Hancock County Elementary,K8,0.4,0,2.2,NA,NA,NA,0.4,D
+340,Hancock County,25,Hancock High School,HS,1,1.4,3.2,4,0,NA,1.3,C
+350,Hardeman County Schools,5,Bolivar Elementary,K8,0.8666666666666667,0.26666666666666666,4,NA,NA,NA,0.9,D
+350,Hardeman County Schools,10,Bolivar Middle School,K8,1.1333333333333333,4,3.1333333333333333,NA,NA,NA,2.5,B
+350,Hardeman County Schools,15,Central High School,HS,2.1999999999999997,1.7333333333333334,4,1.6,2.5999999999999996,NA,2.3,B
+350,Hardeman County Schools,25,Grand Junction Elementary,K8,2.2,3.4,4,NA,NA,NA,2.9,B
+350,Hardeman County Schools,30,Hornsby Elementary,K8,3,1.4,4,NA,NA,NA,2.5,B
+350,Hardeman County Schools,35,Middleton Elementary,K8,2,2,3.6,NA,NA,NA,2.2,B
+350,Hardeman County Schools,40,Middleton High School,HS,1,0.4,4,2.6,2.1999999999999997,NA,1.4,C
+350,Hardeman County Schools,45,Toone Elementary,K8,2,1.4,2,NA,NA,NA,1.8,C
+350,Hardeman County Schools,55,Whiteville Elementary,K8,2,1.2000000000000002,4,NA,NA,NA,1.9,C
+360,Hardin County,15,Hardin County High School,HS,2.466666666666667,2.1999999999999997,3.2666666666666666,3.6,3.6,NA,2.8,B
+360,Hardin County,17,Hardin County Middle School,K8,1.6,3.3333333333333335,4,NA,NA,NA,2.5,B
+360,Hardin County,19,East Hardin Elementary,K8,2.4000000000000004,1.4,4,NA,NA,NA,2.2,B
+360,Hardin County,21,Northside Elementary,K8,2,2.2666666666666666,3,NA,NA,NA,2.2,B
+360,Hardin County,45,Parris South Elementary,K8,1.1333333333333333,0.8666666666666667,1.7333333333333334,NA,NA,NA,1.1,C
+360,Hardin County,50,Pickwick Southside School,K8,2,2.5999999999999996,4,NA,NA,NA,2.4,B
+360,Hardin County,67,West Hardin Elementary,K8,4,2.8,4,NA,NA,NA,3.5,A
+370,Hawkins County,10,Bulls Gap School,K8,1.8,1.2000000000000002,3.6,NA,NA,NA,1.7,C
+370,Hawkins County,15,Carter's Valley Elementary,K8,1.2,2,1.4,NA,NA,NA,1.5,C
+370,Hawkins County,17,Cherokee High School,HS,2.8666666666666663,3.6,2.1333333333333333,3.4,2.1999999999999997,NA,2.9,B
+370,Hawkins County,20,Church Hill Elementary,K8,2.5999999999999996,3.4,4,NA,NA,NA,3.1,A
+370,Hawkins County,23,Church Hill Intermediate School,K8,2.4,0.4,1.4,NA,NA,NA,1.5,C
+370,Hawkins County,25,Church Hill Middle School,K8,3,0.26666666666666666,2.2,NA,NA,NA,1.8,C
+370,Hawkins County,30,Clinch School,K8,2,0.8,4,NA,NA,NA,1.7,C
+370,Hawkins County,45,Keplar Elementary,K8,3,2,2.8,NA,NA,NA,2.6,B
+370,Hawkins County,55,Mt Carmel Elementary,K8,3,1,3.6,NA,NA,NA,2.3,B
+370,Hawkins County,60,McPheeter's Bend Elementary,K8,2,2,4,NA,NA,NA,2.2,B
+370,Hawkins County,65,Mooresburg Elementary,K8,1.2,1.4,2.5999999999999996,NA,NA,NA,1.4,C
+370,Hawkins County,75,Hawkins Elementary,K8,2,0.6000000000000001,2.2,NA,NA,NA,1.5,C
+370,Hawkins County,80,Rogersville Middle School,K8,1,0.13333333333333333,0.4,NA,NA,NA,0.6,D
+370,Hawkins County,90,St Clair Elementary,K8,3,3,4,NA,NA,NA,3.1,A
+370,Hawkins County,95,Surgoinsville Elementary,K8,3,1,2.4000000000000004,NA,NA,NA,2.1,B
+370,Hawkins County,100,Surgoinsville Middle School,K8,2.5999999999999996,0.8666666666666667,3,NA,NA,NA,1.9,C
+370,Hawkins County,105,Volunteer High School,HS,2.7333333333333334,0.13333333333333333,3,3.6,2.4,NA,2,C
+371,Rogersville,5,Rogersville Elementary,K8,2.5999999999999996,3.466666666666667,4,NA,NA,NA,3.1,A
+380,Haywood County,25,East Side Elementary,K8,1.8666666666666667,0.2,2,NA,NA,NA,1.2,C
+380,Haywood County,35,Haywood Elementary,K8,2,0.26666666666666666,1.8666666666666667,NA,NA,2.5999999999999996,1.4,C
+380,Haywood County,40,Haywood High School,HS,2.5999999999999996,3.2,2.5999999999999996,3.6,2,NA,2.7,B
+380,Haywood County,45,Haywood Middle School,K8,1,2.9,4,NA,NA,NA,2.1,B
+390,Henderson County,5,Bargerton Elementary,K8,3,2,3,NA,NA,NA,2.6,B
+390,Henderson County,10,Beaver Elementary,K8,4,4,2.7333333333333334,NA,NA,NA,3.9,A
+390,Henderson County,15,Lexington High School,HS,3.0666666666666664,3.6,4,3.2,3.8,NA,3.5,A
+390,Henderson County,20,Pin Oak Elementary,K8,3.2,0.4,2.4000000000000004,NA,NA,NA,2,C
+390,Henderson County,38,Scotts Hill Elementary,K8,4,1.2000000000000002,4,NA,NA,NA,2.9,B
+390,Henderson County,39,Scotts Hill High School,HS,2.5999999999999996,3.4,4,4,3.2,NA,3.2,A
+390,Henderson County,40,South Haven Elementary,K8,2.5999999999999996,1.7333333333333334,2,NA,NA,NA,2.2,B
+390,Henderson County,45,Westover Elementary,K8,4,3.6,2.8666666666666663,NA,NA,NA,3.7,A
+390,Henderson County,50,South Side Elementary,K8,4,4,4,NA,NA,NA,4,A
+391,Lexington,5,Paul G. Caywood Elementary,K8,2.8,1.7333333333333334,3.7333333333333334,NA,NA,NA,2.5,B
+391,Lexington,10,Lexington Middle School,K8,2.4,2.8,3.6,NA,NA,NA,2.7,B
+400,Henry County,12,Dorothy And Noble Harrelson School,K8,2.5999999999999996,3.2,2,NA,NA,NA,2.8,B
+400,Henry County,15,E. W. Grove School,K8,3.2,1.4,3.7333333333333334,NA,NA,NA,2.5,B
+400,Henry County,20,Henry Elementary,K8,1.6,0.5333333333333333,2.2666666666666666,NA,NA,NA,1.2,C
+400,Henry County,25,Henry Co High School,HS,2.5999999999999996,1.4666666666666666,3,3.8,3,NA,2.4,B
+400,Henry County,33,Lakewood Elementary,K8,2.5999999999999996,2.5999999999999996,3.6,NA,NA,NA,2.7,B
+400,Henry County,34,Lakewood Middle School,K8,1.6,1.4,2.5999999999999996,NA,NA,NA,1.6,C
+401,Paris,10,W O Inman Middle School,K8,2.333333333333333,3.7333333333333334,2,NA,NA,NA,2.9,B
+401,Paris,20,Paris Elementary,K8,2.5999999999999996,1.8666666666666667,2.5999999999999996,NA,NA,NA,2.3,B
+410,Hickman County,7,Centerville Intermediate School,K8,2.1999999999999997,0.26666666666666666,3.8666666666666667,NA,NA,NA,1.6,C
+410,Hickman County,16,East Hickman Intermediate School,K8,2,0.26666666666666666,3.2,NA,NA,NA,1.4,C
+410,Hickman County,17,East Hickman Middle School,K8,1.2000000000000002,0.26666666666666666,4,NA,NA,NA,1.1,C
+410,Hickman County,18,East Hickman High School,HS,1.2000000000000002,0,3.7333333333333334,2,3.6,NA,1.6,C
+410,Hickman County,20,Hickman Co Middle School,K8,2,0.26666666666666666,2.4000000000000004,NA,NA,NA,1.3,C
+410,Hickman County,30,Hickman Co Sr High School,HS,2,2.2,4,3,1.7999999999999998,NA,2.3,B
+420,Houston County,5,Erin Elementary,K8,1.2,0.26666666666666666,3.2,NA,NA,NA,1,D
+420,Houston County,10,Houston Co Middle School,K8,1.4,0.5333333333333333,3.7333333333333334,NA,NA,NA,1.3,C
+420,Houston County,13,Houston Co High School,HS,2.4000000000000004,2,2.8666666666666663,3,3,NA,2.5,B
+420,Houston County,15,Tennessee Ridge Elementary,K8,1.6,2.8,2.2,NA,NA,NA,2.1,B
+430,Humphreys County,5,Lakeview Elementary,K8,3.4,3.8,4,NA,NA,NA,3.6,A
+430,Humphreys County,9,Mc Ewen Elementary,K8,2.5999999999999996,0.6000000000000001,2,NA,NA,NA,1.7,C
+430,Humphreys County,13,McEwen Jr. High School,K8,2.5999999999999996,0,2,NA,NA,NA,1.5,C
+430,Humphreys County,15,Mc Ewen High School,HS,2,1.2000000000000002,2.4000000000000004,3,4,NA,2.3,B
+430,Humphreys County,20,Waverly Central High School,HS,3.6,3.2,2.533333333333333,4,2.8,NA,3.2,A
+430,Humphreys County,25,Waverly Elementary,K8,3.2,3.4,4,NA,NA,NA,3.4,A
+430,Humphreys County,30,Waverly Jr High School,K8,2,0,1.8666666666666667,NA,NA,NA,1.2,C
+440,Jackson County,5,Jackson County High School,HS,2.8,0,3,4,2.5999999999999996,NA,2,C
+440,Jackson County,10,Dodson Branch Elementary,K8,2.4,2.8,4,NA,NA,NA,2.7,B
+440,Jackson County,25,Gainesboro Elementary,K8,2,0.2,4,NA,NA,NA,1.5,C
+440,Jackson County,50,Jackson County Middle School,K8,0.8,0.2,2.2,NA,NA,NA,0.7,D
+450,Jefferson County,10,Dandridge Elementary,K8,1.8,2,2,NA,NA,NA,1.9,C
+450,Jefferson County,15,Jefferson Elementary,K8,1.8,3.9,2.2,NA,NA,4,2.8,B
+450,Jefferson County,17,Jefferson Middle School,K8,1.2000000000000002,0.7000000000000001,2.2666666666666666,NA,NA,0,1,D
+450,Jefferson County,20,Jefferson Co High School,HS,2.5,3.4,1.4,3.2,2.8,1.1,2.6,B
+450,Jefferson County,22,Maury Middle School,K8,2.5999999999999996,4,2.2666666666666666,NA,NA,NA,3.1,A
+450,Jefferson County,30,New Market Elementary,K8,3,3.4,3.4,NA,NA,NA,3.2,A
+450,Jefferson County,35,Piedmont Elementary,K8,3,2,3,NA,NA,NA,2.6,B
+450,Jefferson County,40,Rush Strong Elementary,K8,1.2000000000000002,3,1.8,NA,NA,NA,2,C
+450,Jefferson County,55,Talbott Elementary,K8,2.1999999999999997,1.2000000000000002,3.2,NA,NA,NA,1.9,C
+450,Jefferson County,60,White Pine Elementary,K8,1.2000000000000002,2.4000000000000004,3.8,NA,NA,3,2.1,B
+450,Jefferson County,70,Mount Horeb Elementary School,K8,2.5999999999999996,2.7,3.2,NA,NA,1.1333333333333333,2.5,B
+460,Johnson County,5,Doe Elementary,K8,2.5999999999999996,1.8,1,NA,NA,NA,2.1,B
+460,Johnson County,15,Johnson Co High School,HS,1.8,1.4,3.8,4,3.2,NA,2.3,B
+460,Johnson County,16,Johnson Co Middle School,K8,2,0.26666666666666666,3.8,NA,NA,NA,1.5,C
+460,Johnson County,25,Mountain City Elementary,K8,2.5999999999999996,3,3.4,NA,NA,NA,2.8,B
+460,Johnson County,33,Roan Creek Elementary,K8,2,3.6,3.1333333333333333,NA,NA,3,2.8,B
+470,Knox County,2,Amherst Elementary School,K8,2.6999999999999997,1.4,2.2,NA,NA,4,2.3,B
+470,Knox County,3,Adrian Burnett Elementary,K8,2.2,3.2,2.2,NA,NA,2.8666666666666663,2.6,B
+470,Knox County,9,Austin East High/Magnet,HS,1.1333333333333333,0.5,2.3,2,2,1.7333333333333334,1.4,C
+470,Knox County,10,Ball Camp Elementary,K8,3.2,2,2.1333333333333333,NA,NA,NA,2.6,B
+470,Knox County,12,Bearden Elementary,K8,3.6,2.2666666666666666,2.7333333333333334,NA,NA,4,3.1,A
+470,Knox County,14,Bearden Middle School,K8,2.6999999999999997,4,1.6,NA,NA,1.7,2.9,B
+470,Knox County,15,Blue Grass Elementary,K8,4,3.466666666666667,2.5999999999999996,NA,NA,NA,3.6,A
+470,Knox County,17,Bearden High School,HS,3.2,2.1,2.6,3,3.0666666666666664,1,2.6,B
+470,Knox County,20,Bonny Kate Elementary,K8,2.5999999999999996,0.8,2.2,NA,NA,NA,1.8,C
+470,Knox County,22,Beaumont Elementary/Magnet,K8,2.466666666666667,0.6000000000000001,3.9,NA,NA,3.7333333333333334,2.1,B
+470,Knox County,24,Belle Morris Elementary,K8,1.3,0.5,1.6,NA,NA,1.9,1.1,C
+470,Knox County,25,Brickey McCloud Elementary,K8,3.2,1.8666666666666667,2.533333333333333,NA,NA,3,2.6,B
+470,Knox County,30,Carter Elementary,K8,2.5999999999999996,1.7000000000000002,3.8666666666666667,NA,NA,4,2.6,B
+470,Knox County,35,Carter High School,HS,2.8666666666666663,3.6,3.8666666666666667,4,1.6,NA,3,B
+470,Knox County,37,Carter Middle School,K8,2,3,2.2666666666666666,NA,NA,NA,2.4,B
+470,Knox County,40,Cedar Bluff Elementary,K8,1.9999999999999998,2.1,4,NA,NA,2.9,2.3,B
+470,Knox County,45,Cedar Bluff Middle School,K8,2.3,0.6000000000000001,2.8,NA,NA,0.8666666666666667,1.6,C
+470,Knox County,47,Central High School,HS,1.7,3.4,3.0999999999999996,3.7333333333333334,3.2,1.2666666666666666,2.6,B
+470,Knox County,51,Copper Ridge Elementary,K8,2,2.4000000000000004,4,NA,NA,NA,2.4,B
+470,Knox County,53,Chilhowee Intermediate,K8,1.1333333333333333,0.4,2.533333333333333,NA,NA,NA,1,D
+470,Knox County,55,Corryton Elementary,K8,3,2.5999999999999996,1.4,NA,NA,NA,2.7,B
+470,Knox County,59,Dogwood Elementary,K8,2.8666666666666663,1.3,2.2666666666666666,NA,NA,2,2.2,B
+470,Knox County,61,Christenberry Elementary,K8,3.0999999999999996,3.9,2.7,NA,NA,4,3.4,A
+470,Knox County,65,South Doyle High School,HS,1.7333333333333334,3.7333333333333334,1.8666666666666667,2.1333333333333333,2.0666666666666664,1,2.3,B
+470,Knox County,66,A L Lotts Elementary,K8,3.2,0.4,2.5999999999999996,NA,NA,4,2.2,B
+470,Knox County,67,South Doyle Middle School,K8,1.8666666666666667,2.3,3.8666666666666667,NA,NA,0,2,C
+470,Knox County,68,East Knox Elementary,K8,1.8,1.4,4,NA,NA,NA,1.9,C
+470,Knox County,72,Farragut Intermediate,K8,3.6,3.8,2.8,NA,NA,4,3.6,A
+470,Knox County,75,Farragut Middle School,K8,3.8,4,2.5999999999999996,NA,NA,4,3.8,A
+470,Knox County,80,Farragut High School,HS,3.3333333333333335,3.2,4,4,4,1,3.3,A
+470,Knox County,85,Gap Creek Elementary,K8,3,2,4,NA,NA,NA,2.7,B
+470,Knox County,87,Fountain City Elementary,K8,2.8,2.3,4,NA,NA,4,2.9,B
+470,Knox County,90,Fulton High School,HS,0.9,0.5,3.9,2.2,1.2,1,1.2,C
+470,Knox County,95,Gibbs Elementary,K8,3.2,4,3.1333333333333333,NA,NA,2.8,3.4,A
+470,Knox County,100,Gibbs High School,HS,1,0.5333333333333333,3.4,4,3.2,NA,1.7,C
+470,Knox County,110,Halls Elementary,K8,3.6,3.6,3.466666666666667,NA,NA,NA,3.6,A
+470,Knox County,112,Green Magnet Math And Science Academy,K8,1,0.5,1.3,NA,NA,3,1.1,C
+470,Knox County,115,Halls High School,HS,1.3333333333333333,2.9,4,2.1999999999999997,3.4,0,2.3,B
+470,Knox County,117,Gresham Middle School,K8,2.6999999999999997,2.3,4,NA,NA,0,2.4,B
+470,Knox County,120,Halls Middle School,K8,2.5999999999999996,2.8,2.8,NA,NA,3.6,2.8,B
+470,Knox County,122,Holston Middle School,K8,0.6,0.2,1.7333333333333334,NA,NA,NA,0.6,D
+470,Knox County,124,Hardin Valley Elementary,K8,3.6,0.30000000000000004,3.0999999999999996,NA,NA,3.8,2.4,B
+470,Knox County,126,Hardin Valley Academy,HS,3.2,3.1,3.2,2.7333333333333334,3.3333333333333335,2,3.1,A
+470,Knox County,138,Inskip Elementary,K8,1.2666666666666666,0.5,2.6,NA,NA,3,1.3,C
+470,Knox County,145,Karns Elementary,K8,1.5,0.6000000000000001,3,NA,NA,3.8666666666666667,1.6,C
+470,Knox County,147,Karns Middle School,K8,2.0999999999999996,0.8,1.6666666666666665,NA,NA,1,1.5,C
+470,Knox County,150,Karns High School,HS,1.8,0.30000000000000004,3.0999999999999996,2.8666666666666663,3.466666666666667,0.13333333333333333,1.8,C
+470,Knox County,165,Lonsdale Elementary,K8,1.1333333333333333,1.2000000000000002,3.2666666666666666,NA,NA,2.9,1.5,C
+470,Knox County,168,Maynard Elementary,K8,1,0,2.4000000000000004,NA,NA,NA,0.7,D
+470,Knox County,170,Mt Olive Elementary,K8,2.5999999999999996,3.3333333333333335,3.8666666666666667,NA,NA,NA,3,B
+470,Knox County,172,Mooreland Heights Elementary,K8,1.8666666666666667,2,3.8666666666666667,NA,NA,3.8,2.3,B
+470,Knox County,175,New Hopewell Elementary,K8,2,3.6,3.6,NA,NA,NA,2.8,B
+470,Knox County,177,Norwood Elementary,K8,1,0.7000000000000001,3.7,NA,NA,4,1.5,C
+470,Knox County,180,Powell Elementary,K8,2.3,1.7000000000000002,2.5,NA,NA,3,2.2,B
+470,Knox County,182,Powell Middle School,K8,2.5999999999999996,0.6000000000000001,2.1333333333333333,NA,NA,1,1.7,C
+470,Knox County,185,Powell High School,HS,1.9,1.7000000000000002,3.9,2.7333333333333334,2.933333333333333,0,2.1,B
+470,Knox County,187,Northwest Middle School,K8,0.30000000000000004,0,4,NA,NA,1,0.6,D
+470,Knox County,195,Ritta Elementary,K8,2.7333333333333334,2.5999999999999996,2,NA,NA,NA,2.6,B
+470,Knox County,202,Pleasant Ridge Elementary,K8,0.8,2.8666666666666663,2,NA,NA,NA,1.7,C
+470,Knox County,207,Pond Gap Elementary,K8,2,2.1,3.7,NA,NA,2,2.2,B
+470,Knox County,235,Rocky Hill Elementary,K8,3.8,2.5,3,NA,NA,2.8,3.2,A
+470,Knox County,250,Sarah Moore Greene Magnet Technology Academy,K8,2,4,0.6000000000000001,NA,NA,4,2.8,B
+470,Knox County,255,Sequoyah Elementary,K8,4,2,4,NA,NA,NA,3.2,A
+470,Knox County,260,Shannondale Elementary,K8,4,3.6,2.8666666666666663,NA,NA,NA,3.7,A
+470,Knox County,265,South Knox Elementary,K8,2.5999999999999996,1,4,NA,NA,NA,2.1,B
+470,Knox County,280,Spring Hill Elementary,K8,1.1333333333333333,2.4000000000000004,2.4000000000000004,NA,NA,4,2,C
+470,Knox County,285,Sterchi Elementary,K8,3.3333333333333335,2.1,2.8,NA,NA,4,2.9,B
+470,Knox County,295,Vine Middle/Magnet,K8,0.26666666666666666,0.5,3.7333333333333334,NA,NA,0,0.7,D
+470,Knox County,300,West Haven Elementary,K8,2,0.5,1.5333333333333334,NA,NA,2.1333333333333333,1.4,C
+470,Knox County,305,West High School,HS,2.6999999999999997,3.6,1,3.466666666666667,2.533333333333333,1,2.6,B
+470,Knox County,310,West Hills Elementary,K8,3.0999999999999996,3.5,2.8,NA,NA,4,3.3,A
+470,Knox County,313,West Valley Middle School,K8,3.2,3.7,3.7333333333333334,NA,NA,NA,3.5,A
+470,Knox County,315,West View Elementary,K8,2,3.2,1,NA,NA,2.8666666666666663,2.4,B
+470,Knox County,320,Whittle Springs Middle School,K8,1.2000000000000002,1.5,2.3,NA,NA,0,1.3,C
+470,Knox County,332,Dr. Paul L. Kelley Volunteer Academy,HS,NA,1,4,2.2666666666666666,1.8666666666666667,NA,1.8,C
+470,Knox County,334,L N STEM Academy,HS,3.6,2,4,4,4,NA,3.3,A
+470,Knox County,336,Northshore Elementary School,K8,3.6,3.7,3.7333333333333334,NA,NA,NA,3.7,A
+470,Knox County,345,Career Magnet Academy,HS,1.9999999999999998,2.5999999999999996,2,NA,NA,NA,2.2,B
+470,Knox County,350,Gibbs Middle School,K8,NA,0.1,NA,NA,NA,NA,0.1,D
+470,Knox County,355,Hardin Valley Middle School,K8,NA,4,NA,NA,NA,0,3.1,A
+470,Knox County,8001,Emerald Academy,K8,1.8,1.2666666666666666,2,NA,NA,NA,1.6,C
+480,Lake County,5,Lake Co High School,HS,2,2,1.6666666666666665,2.5999999999999996,2.5999999999999996,NA,2.1,B
+480,Lake County,10,Lara Kendall Elementary,K8,1,2,3.6,NA,NA,NA,1.7,C
+480,Lake County,15,Margaret Newton Elementary,K8,1.8666666666666667,3.3333333333333335,2.533333333333333,NA,NA,NA,2.5,B
+490,Lauderdale County,20,Halls Elementary School,K8,2.466666666666667,1.4,3.8666666666666667,NA,NA,NA,2.2,B
+490,Lauderdale County,23,Halls High School,HS,2.8,0.26666666666666666,3.1333333333333333,4,4,NA,2.4,B
+490,Lauderdale County,24,Halls Junior High School,K8,2,0.5333333333333333,3.8,NA,NA,NA,1.6,C
+490,Lauderdale County,25,Ripley Middle School,K8,1.2666666666666666,0,3.1333333333333333,NA,NA,NA,0.9,D
+490,Lauderdale County,40,Ripley High School,HS,2,0.5333333333333333,4,4,1.6,NA,1.8,C
+490,Lauderdale County,55,Ripley Elementary,K8,1.8666666666666667,2.2666666666666666,4,NA,NA,NA,2.2,B
+500,Lawrence County,13,E O Coffman Middle School,K8,1.8666666666666667,0.4,2,NA,NA,NA,1.3,C
+500,Lawrence County,15,David Crockett Elementary,K8,3.6,3.8666666666666667,2,NA,NA,NA,3.5,A
+500,Lawrence County,20,Ethridge Elementary,K8,3,0,4,NA,NA,NA,1.9,C
+500,Lawrence County,30,Ingram Sowell Elementary,K8,1,0.6000000000000001,0.13333333333333333,NA,NA,3.2,1,D
+500,Lawrence County,40,Lawrence Co High School,HS,2.2666666666666666,1.1333333333333333,1.2666666666666666,4,2.8,NA,2,C
+500,Lawrence County,45,Lawrenceburg Public,K8,3.6,2.8,3.6,NA,NA,NA,3.3,A
+500,Lawrence County,50,Leoma Elementary,K8,2.5999999999999996,2,3.2,NA,NA,NA,2.4,B
+500,Lawrence County,60,South Lawrence Elementary,K8,2.1999999999999997,0.8,1.8,NA,NA,NA,1.6,C
+500,Lawrence County,65,Loretto High School,HS,3,2,4,3,4,NA,3,B
+500,Lawrence County,70,New Prospect Elementary,K8,3.6,2,1.4,NA,NA,NA,2.7,B
+500,Lawrence County,90,Summertown Elementary,K8,3.2,3.8,2.5999999999999996,NA,NA,NA,3.4,A
+500,Lawrence County,95,Summertown High School,HS,3,2,1.8,4,2.4,NA,2.5,B
+510,Lewis County,3,Lewis County Middle School,K8,1.8,2,4,NA,NA,NA,2.1,B
+510,Lewis County,10,Lewis Co High School,HS,1.4,0.4,3.7333333333333334,1.6,1.6,NA,1.4,C
+510,Lewis County,20,Lewis County Intermediate School,K8,2.5999999999999996,0.4,4,NA,NA,NA,1.9,C
+520,Lincoln County,10,Blanche School,K8,3,2.8,2.4000000000000004,NA,NA,NA,2.9,B
+520,Lincoln County,25,Lincoln County Ninth Grade Academy,K8,2.5999999999999996,1.4,1.4,NA,NA,NA,2,C
+520,Lincoln County,45,Flintville School,K8,2.5999999999999996,2,2.2666666666666666,NA,NA,NA,2.3,B
+520,Lincoln County,50,Highland Rim School,K8,2.5999999999999996,0.6666666666666667,2.8,NA,NA,4,2.1,B
+520,Lincoln County,56,Lincoln County High School,HS,2.7333333333333334,1.7333333333333334,2.2666666666666666,4,3.6,NA,2.6,B
+520,Lincoln County,82,South Lincoln School,K8,3.466666666666667,3.8666666666666667,3.7333333333333334,NA,NA,NA,3.7,A
+520,Lincoln County,90,Unity School,K8,2.5999999999999996,0.8,1,NA,NA,NA,1.7,C
+521,Fayetteville,7,Fayetteville Middle School,K8,3.2,3.6,1.2666666666666666,NA,NA,NA,3.2,A
+521,Fayetteville,10,Fayetteville High School,HS,1.2000000000000002,0.26666666666666666,2.8,4,0,NA,1,D
+521,Fayetteville,20,Ralph Askins School,K8,0.8,3.6,2.2666666666666666,NA,NA,NA,2.1,B
+530,Loudon County,15,Eaton Elementary,K8,4,3.6,2.8666666666666663,NA,NA,NA,3.7,A
+530,Loudon County,18,Ft Loudoun Middle School,K8,2.7333333333333334,2.4000000000000004,2.8,NA,NA,0,2.4,B
+530,Loudon County,25,Greenback School,HS,2.5999999999999996,2.5999999999999996,3.2,4,4,NA,3,B
+530,Loudon County,30,Highland Park Elementary,K8,3.2,3.6,3,NA,NA,NA,3.3,A
+530,Loudon County,35,Loudon Elementary,K8,2.1333333333333333,3.9,2.6,NA,NA,4,3,B
+530,Loudon County,40,Loudon High School,HS,2.466666666666667,3.2,2.4000000000000004,4,4,0,2.8,B
+530,Loudon County,48,North Middle School,K8,3.6,3.9,4,NA,NA,NA,3.8,A
+530,Loudon County,50,Philadelphia Elementary,K8,2.7333333333333334,3.466666666666667,3.8666666666666667,NA,NA,NA,3.1,A
+530,Loudon County,55,Steekee Elementary,K8,3,2,2.5999999999999996,NA,NA,NA,2.6,B
+531,Lenoir City,5,Lenoir City High School,HS,3,3.5,2.6,3.6,3.4,2,3.1,A
+531,Lenoir City,10,Lenoir City Intermediate/Middle School,K8,2.6999999999999997,4,4,NA,NA,2,3.2,A
+531,Lenoir City,30,Lenoir City Elementary,K8,4,4,3.8,NA,NA,2.8666666666666663,3.9,A
+540,McMinn County,10,Calhoun Elementary,K8,3.2,1.4,3.7333333333333334,NA,NA,3,2.6,B
+540,McMinn County,15,Central High School,HS,3,2.7333333333333334,4,3,2.4,NA,2.9,B
+540,McMinn County,25,E K Baker Elementary,K8,1.4,0.4,3.466666666666667,NA,NA,NA,1.2,C
+540,McMinn County,30,Englewood Elementary,K8,3,3.8,2,NA,NA,NA,3.2,A
+540,McMinn County,45,McMinn High School,HS,2.7333333333333334,0,2.4000000000000004,3,2.5999999999999996,0.8,1.8,C
+540,McMinn County,50,Mountain View Elementary,K8,2,0.5333333333333333,4,NA,NA,NA,1.6,C
+540,McMinn County,55,Niota Elementary,K8,0.8666666666666667,0.13333333333333333,4,NA,NA,NA,0.9,D
+540,McMinn County,60,Riceville Elementary,K8,2.5999999999999996,2.5999999999999996,3.7333333333333334,NA,NA,0,2.5,B
+540,McMinn County,65,Rogers Creek Elementary,K8,2.5999999999999996,3.4,4,NA,NA,NA,3.1,A
+541,Athens,5,Athens City Middle School,K8,2.7333333333333334,3.8666666666666667,2.533333333333333,NA,NA,NA,3.2,A
+541,Athens,25,North City Elementary,K8,2.5999999999999996,1.2666666666666666,4,NA,NA,NA,2.2,B
+541,Athens,30,Westside Elementary,K8,3.6,2,4,NA,NA,2,2.9,B
+542,Etowah,7,Etowah Elementary,K8,2.8666666666666663,3.466666666666667,3.7333333333333334,NA,NA,NA,3.2,A
+550,McNairy County,5,Adamsville Elementary,K8,2.5999999999999996,2,4,NA,NA,NA,2.5,B
+550,McNairy County,10,Adamsville Junior / Senior High School,HS,2.4000000000000004,0.6666666666666667,4,3.2,0,NA,1.6,C
+550,McNairy County,15,Bethel Springs Elementary,K8,2.8,3.4,4,NA,NA,NA,3.2,A
+550,McNairy County,20,McNairy Central High School,HS,2.8666666666666663,1.8666666666666667,3.8666666666666667,4,3.6,NA,2.9,B
+550,McNairy County,25,Michie Elementary,K8,1.8,0.4,2.4000000000000004,NA,NA,NA,1.3,C
+550,McNairy County,30,Ramer Elementary,K8,3,1.4,3.8,NA,NA,NA,2.4,B
+550,McNairy County,40,Selmer Elementary,K8,2,0.8,4,NA,NA,NA,1.7,C
+550,McNairy County,45,Selmer Middle School,K8,2.5999999999999996,4,4,NA,NA,NA,3.3,A
+560,Macon County,5,Central Elementary,K8,2.5999999999999996,3.6,2.2666666666666666,NA,NA,2.8666666666666663,2.9,B
+560,Macon County,20,Macon County Junior High School,K8,2.333333333333333,2.3,2.4000000000000004,NA,NA,1.7333333333333334,2.3,B
+560,Macon County,21,Macon County High School,HS,1.7333333333333334,0.4,2.533333333333333,2,2.5999999999999996,0,1.5,C
+560,Macon County,22,Lafayette Elementary School,K8,2.333333333333333,1.3,2.2666666666666666,NA,NA,4,2.1,B
+560,Macon County,25,Red Boiling Springs Elementary,K8,1.6,1.7333333333333334,4,NA,NA,NA,1.9,C
+560,Macon County,30,Red Boiling Springs School,HS,1.4,1.6666666666666665,4,4,4,NA,2.4,B
+560,Macon County,35,Westside Elementary,K8,3.6,2,2.4000000000000004,NA,NA,NA,2.8,B
+570,Madison County,6,Alexander Elementary School,K8,2,3.4,3.8666666666666667,NA,NA,NA,2.7,B
+570,Madison County,14,Arlington Elementary School,K8,0.8666666666666667,0.2,4,NA,NA,2.8666666666666663,1.1,C
+570,Madison County,21,Denmark Elementary,K8,2,1.2000000000000002,4,NA,NA,4,2.1,B
+570,Madison County,22,Jackson Central-Merry Early College High,K8,1.6,3.6,0.8,NA,NA,NA,2.3,B
+570,Madison County,24,Rose Hill School,K8,0.26666666666666666,0.26666666666666666,3.8666666666666667,NA,NA,NA,0.6,D
+570,Madison County,38,Isaac Lane Technology Magnet Elementary,K8,2,2.7333333333333334,3.7333333333333334,NA,NA,NA,2.5,B
+570,Madison County,53,Liberty Technology Magnet High School,HS,1,0.13333333333333333,0.26666666666666666,1,0.26666666666666666,0,0.5,D
+570,Madison County,56,Lincoln Elementary School,K8,1.2000000000000002,1.8666666666666667,2.4000000000000004,NA,NA,NA,1.6,C
+570,Madison County,63,Madison Academic Magnet High School,HS,4,3.6,4,4,4,NA,3.9,A
+570,Madison County,71,North Side High School,HS,1,0.5,4,2.4000000000000004,2,2,1.5,C
+570,Madison County,76,Northeast Middle School,K8,1.7,2,3.7,NA,NA,0,1.8,C
+570,Madison County,86,Community Montessori School,K8,3.6,3.6,4,NA,NA,NA,3.6,A
+570,Madison County,100,Pope School,K8,1.8666666666666667,0.4,4,NA,NA,1,1.5,C
+570,Madison County,102,South Elementary,K8,2.2,1.4,4,NA,NA,4,2.3,B
+570,Madison County,105,South Side High School,HS,1,3.466666666666667,4,2,2.2,3.2,2.4,B
+570,Madison County,111,Thelma Barker Elementary,K8,2,0.1,3.8,NA,NA,3.1333333333333333,1.6,C
+570,Madison County,130,West-Bemis Middle School,K8,1.7333333333333334,1.4,4,NA,NA,1,1.8,C
+570,Madison County,140,East Elementary School,K8,1.2666666666666666,0.30000000000000004,3,NA,NA,NA,1.1,C
+570,Madison County,142,North Parkway Middle School,K8,0.9,0.5,4,NA,NA,2,1.2,C
+570,Madison County,144,Jackson Career Technology Magnet Elementary,K8,1.8666666666666667,2.1999999999999997,2.4000000000000004,NA,NA,NA,2.1,B
+570,Madison County,146,Andrew Jackson Elementary School,K8,2,2.8,4,NA,NA,1.6,2.4,B
+580,Marion County,21,Jasper Elementary School,K8,1.6,2.7333333333333334,0.13333333333333333,NA,NA,NA,1.9,C
+580,Marion County,23,Jasper Middle School,K8,1.2666666666666666,1.4,3.1333333333333333,NA,NA,NA,1.5,C
+580,Marion County,25,Marion Co High School,HS,2.7333333333333334,0.26666666666666666,3.8666666666666667,2,4,NA,2.3,B
+580,Marion County,30,Monteagle Elementary,K8,1,2.5999999999999996,0.6,NA,NA,NA,1.6,C
+580,Marion County,50,South Pittsburg Elementary,K8,1.1333333333333333,0.6666666666666667,1,NA,NA,NA,0.9,D
+580,Marion County,55,South Pittsburg High School,HS,1,0.2,2.2666666666666666,3,4,NA,1.6,C
+580,Marion County,63,Whitwell Elementary,K8,4,4,2.4000000000000004,NA,NA,NA,3.8,A
+580,Marion County,65,Whitwell Middle School,K8,1.8,0.8,2,NA,NA,NA,1.4,C
+580,Marion County,70,Whitwell High School,HS,3.4,1.4,2.2,4,4,NA,2.8,B
+581,Richard City,5,Richard Hardy Memorial School,K8,2,3,4,NA,NA,NA,2.6,B
+590,Marshall County,7,Chapel Hill Elementary,K8,4,1,3.466666666666667,NA,NA,NA,2.7,B
+590,Marshall County,18,Cornersville Elementary,K8,2.5999999999999996,3.8,2.5999999999999996,NA,NA,NA,3.1,A
+590,Marshall County,20,Cornersville School,HS,2,1.8666666666666667,3.2,4,4,NA,2.6,B
+590,Marshall County,30,Forrest School,HS,2.5999999999999996,1.2666666666666666,3.1333333333333333,4,4,NA,2.6,B
+590,Marshall County,41,Lewisburg Middle School,K8,1.6,0.8,2.2666666666666666,NA,NA,3,1.5,C
+590,Marshall County,43,Marshall Elementary,K8,3.2,2.2,3.9,NA,NA,3.8666666666666667,3,B
+590,Marshall County,47,Marshall Co High School,HS,2.7333333333333334,1.8666666666666667,2.4000000000000004,2.8,3,NA,2.5,B
+590,Marshall County,60,Westhills Elementary,K8,2.4,3.9,3.8,NA,NA,3.7,3.2,A
+590,Marshall County,65,Delk-Henson Intermediate School,K8,2.5999999999999996,0.8,2.5999999999999996,NA,NA,NA,1.9,C
+600,Maury County,5,J. R. Baker Elementary,K8,3,1.1333333333333333,3.6,NA,NA,4,2.5,B
+600,Maury County,10,J. Brown Elementary,K8,2.2,2.1333333333333333,1.4,NA,NA,1,2,C
+600,Maury County,15,Columbia Central High School,HS,1.2666666666666666,1.8,1.7000000000000002,2,2,0.13333333333333333,1.5,C
+600,Maury County,30,Culleoka Unit School,HS,1.5333333333333334,1.8000000000000003,3.8666666666666667,4,4,2,2.5,B
+600,Maury County,33,E. A. Cox Middle School,K8,1.1,0.6000000000000001,0.5,NA,NA,0.8666666666666667,0.8,D
+600,Maury County,40,Hampshire Unit School,K8,3.4,2,3,NA,NA,NA,2.8,B
+600,Maury County,45,Highland Park Elementary,K8,0.2,0.2,3.4,NA,NA,1,0.6,D
+600,Maury County,50,J E Woodard Elementary,K8,3.2,3.4,2.1333333333333333,NA,NA,4,3.2,A
+600,Maury County,53,Marvin Wright Elementary School,K8,4,0.6000000000000001,2.2666666666666666,NA,NA,4,2.6,B
+600,Maury County,55,McDowell Elementary,K8,3,0.4,1.8000000000000003,NA,NA,3,2,C
+600,Maury County,59,J E Woody Elementary,K8,2.4,3.3333333333333335,2.1333333333333333,NA,NA,NA,2.7,B
+600,Maury County,61,Mt. Pleasant Middle Visual Perform. Arts,K8,1.1333333333333333,0.2,2.1333333333333333,NA,NA,NA,0.9,D
+600,Maury County,65,Mt Pleasant High School,HS,2,1.8666666666666667,1.2666666666666666,2,0,NA,1.5,C
+600,Maury County,68,R Howell Elementary,K8,1.2000000000000002,2,3.4,NA,NA,3,1.9,C
+600,Maury County,70,Riverside Elementary,K8,1,2.2,2,NA,NA,3.2,1.7,C
+600,Maury County,85,Santa Fe Unit School,HS,2.8,3.6,2.5999999999999996,4,3,NA,3.1,A
+600,Maury County,90,Spring Hill Elementary,K8,3.2666666666666666,2.1333333333333333,3.7333333333333334,NA,NA,2,2.8,B
+600,Maury County,95,Spring Hill High School,HS,1.7333333333333334,0.13333333333333333,2.8,3,1.9999999999999998,1,1.5,C
+600,Maury County,100,Whitthorne Middle School,K8,1,0.2,1.3,NA,NA,0.8666666666666667,0.7,D
+600,Maury County,105,Spring Hill Middle School,K8,1.7,0.6000000000000001,1.6666666666666665,NA,NA,1.8,1.3,C
+600,Maury County,110,Northfield Academy,HS,NA,0,4,1,0,NA,0.7,D
+610,Meigs County,5,Meigs South Elementary,K8,2,0.8,3.4,NA,NA,NA,1.7,C
+610,Meigs County,8,Meigs Middle School,K8,2,2,2.4000000000000004,NA,NA,NA,2,C
+610,Meigs County,15,Meigs North Elementary,K8,2.5999999999999996,0.4,4,NA,NA,NA,1.9,C
+610,Meigs County,25,Meigs County High School,HS,2,2.4,4,4,4,NA,2.8,B
+620,Monroe County,10,Coker Creek Elementary,K8,2,3,2,NA,NA,NA,2.4,B
+620,Monroe County,18,Madisonville Intermediate School,K8,2,0.5333333333333333,4,NA,NA,NA,1.6,C
+620,Monroe County,20,Madisonville Middle School,K8,2.1333333333333333,3.466666666666667,4,NA,NA,NA,2.9,B
+620,Monroe County,35,Rural Vale Elementary,K8,1.6,0.8,4,NA,NA,NA,1.5,C
+620,Monroe County,37,Sequoyah High School,HS,2.7333333333333334,3.7333333333333334,4,2.8,2.5999999999999996,NA,3.1,A
+620,Monroe County,40,Sweetwater High School,HS,1.1333333333333333,0.4,2.2666666666666666,2,3,3.2,1.7,C
+620,Monroe County,45,Tellico Plains Elementary,K8,2.5999999999999996,2,4,NA,NA,NA,2.5,B
+620,Monroe County,50,Tellico Plains High School,HS,1.6,3.4,4,4,0,NA,2.2,B
+620,Monroe County,53,Tellico Plains Junior High School,K8,2,2.7333333333333334,4,NA,NA,NA,2.5,B
+620,Monroe County,55,Vonore Elementary,K8,1.4,2.1,4,NA,NA,3,2.1,B
+620,Monroe County,58,Vonore Middle School,K8,2,3.5,4,NA,NA,NA,2.8,B
+621,Sweetwater,5,Brown Intermediate School,K8,1.8666666666666667,0.5,3.2666666666666666,NA,NA,NA,1.5,C
+621,Sweetwater,10,Sweetwater Elementary,K8,2.333333333333333,2.1,3.9,NA,NA,4,2.6,B
+621,Sweetwater,15,Sweetwater Jr High School,K8,1.4,0.6000000000000001,2.4000000000000004,NA,NA,NA,1.2,C
+630,Montgomery County,3,Barkers Mill Elementary,K8,3.2,0.4,3.8666666666666667,NA,NA,4,2.4,B
+630,Montgomery County,5,Barksdale Elementary,K8,3.466666666666667,1.1333333333333333,4,NA,NA,NA,2.6,B
+630,Montgomery County,10,Burt Elementary,K8,1.8666666666666667,1.2666666666666666,2,NA,NA,NA,1.6,C
+630,Montgomery County,15,Byrns Darden Elementary,K8,2.7333333333333334,2.9,3.7,NA,NA,4,3,B
+630,Montgomery County,17,Kenwood Elementary,K8,3.6,0.5,3.7,NA,NA,3.2,2.5,B
+630,Montgomery County,18,Kenwood Middle,K8,1,0.2,2.3,NA,NA,1.8666666666666667,0.9,D
+630,Montgomery County,19,Kenwood High,HS,1.3,0.5,3.8,2,1.8666666666666667,2.1333333333333333,1.6,C
+630,Montgomery County,20,Montgomery Central Elementary,K8,3.4,1.2666666666666666,3.466666666666667,NA,NA,NA,2.6,B
+630,Montgomery County,25,Montgomery Central High,HS,2.5999999999999996,1.7333333333333334,3.7333333333333334,3.1333333333333333,2.7333333333333334,NA,2.5,B
+630,Montgomery County,27,Hazelwood Elementary,K8,3.8666666666666667,0.5,4,NA,NA,3,2.6,B
+630,Montgomery County,30,Clarksville High,HS,3.2,3.7,3.7333333333333334,3.8666666666666667,3.0666666666666664,2,3.3,A
+630,Montgomery County,35,Glenellen Elementary,K8,3.466666666666667,2.4000000000000004,3.8666666666666667,NA,NA,NA,3.1,A
+630,Montgomery County,40,Cumberland Heights Elementary,K8,3.6,0.13333333333333333,2.8666666666666663,NA,NA,NA,2.1,B
+630,Montgomery County,45,East Montgomery Elementary,K8,4,3.8,3.8,NA,NA,4,3.9,A
+630,Montgomery County,49,Liberty Elementary,K8,2.7333333333333334,3.466666666666667,3.2666666666666666,NA,NA,NA,3.1,A
+630,Montgomery County,51,Minglewood Elementary,K8,2,1.9,3.9,NA,NA,0.8,2,C
+630,Montgomery County,52,Montgomery Central Middle,K8,2.333333333333333,0.26666666666666666,2.5999999999999996,NA,NA,NA,1.5,C
+630,Montgomery County,55,Moore Magnet Elementary,K8,2.466666666666667,0.5333333333333333,2.8666666666666663,NA,NA,NA,1.7,C
+630,Montgomery County,60,Norman Smith Elementary,K8,2.8666666666666663,2.8666666666666663,3.1333333333333333,NA,NA,4,3,B
+630,Montgomery County,65,New Providence Middle,K8,1.7333333333333334,0.7000000000000001,3.1333333333333333,NA,NA,4,1.7,C
+630,Montgomery County,66,Northeast Elementary,K8,3,3.0999999999999996,4,NA,NA,3.8,3.2,A
+630,Montgomery County,67,Northeast Middle,K8,1.7,0.2,3.466666666666667,NA,NA,1,1.3,C
+630,Montgomery County,68,Northeast High,HS,3.466666666666667,3.5,4,2.7333333333333334,2.1999999999999997,1,3,B
+630,Montgomery County,70,Northwest High,HS,2.5999999999999996,2.1333333333333333,3.6,2.8666666666666663,2.7333333333333334,NA,2.6,B
+630,Montgomery County,73,Richview Middle,K8,3.6,0.2,3.0999999999999996,NA,NA,2,2.2,B
+630,Montgomery County,75,Ringgold Elementary,K8,3,3.9,3.9,NA,NA,4,3.5,A
+630,Montgomery County,77,Rossview Middle,K8,3.2,0.2,3.7333333333333334,NA,NA,NA,2.1,B
+630,Montgomery County,78,Rossview High,HS,3.6,3.0666666666666664,4,4,2.4,NA,3.3,A
+630,Montgomery County,83,Sango Elementary,K8,3.8,3,4,NA,NA,NA,3.5,A
+630,Montgomery County,84,West Creek Middle,K8,2.4,1.1,3.1333333333333333,NA,NA,0.2,1.8,C
+630,Montgomery County,85,Woodlawn Elementary,K8,3.7333333333333334,0.5333333333333333,3.7333333333333334,NA,NA,NA,2.5,B
+630,Montgomery County,88,Middle College @ Austin Peay State University,HS,4,3.2,4,4,4,NA,3.8,A
+630,Montgomery County,90,West Creek Elementary,K8,3.466666666666667,1.2666666666666666,3.8,NA,NA,3,2.7,B
+630,Montgomery County,95,Carmel Elementary,K8,4,0.4,3.6,NA,NA,NA,2.5,B
+630,Montgomery County,100,West Creek High,HS,2.5,0.1,3.3,2.5999999999999996,2.466666666666667,1,1.8,C
+630,Montgomery County,105,Rossview Elementary,K8,3.8666666666666667,3.0999999999999996,4,NA,NA,3,3.5,A
+630,Montgomery County,110,Pisgah Elementary,K8,3.3333333333333335,2.1333333333333333,4,NA,NA,4,3,B
+630,Montgomery County,115,Oakland Elementary,K8,3.3333333333333335,1.2000000000000002,3.8666666666666667,NA,NA,4,2.7,B
+640,Moore County,10,Lynchburg Elementary,K8,1.8,1.5333333333333334,1.8,NA,NA,NA,1.7,C
+640,Moore County,15,Moore County High School,HS,2.4000000000000004,2.4000000000000004,2.4000000000000004,3,4,NA,2.8,B
+650,Morgan County,10,Central Elementary,K8,2,1.2000000000000002,3.6,NA,NA,NA,1.8,C
+650,Morgan County,13,Central Middle School,K8,0.8,0.4,2.8,NA,NA,NA,0.8,D
+650,Morgan County,15,Central High School,HS,1,0.4,4,4,4,NA,1.9,C
+650,Morgan County,30,Coalfield School,HS,1,1.4,4,4,3,NA,2,C
+650,Morgan County,46,Morgan County Career and Technical Center,HS,NA,NA,NA,4,0,NA,0.8,D
+650,Morgan County,55,Oakdale School,HS,1,1.7333333333333334,4,4,2,NA,1.9,C
+650,Morgan County,60,Petros Joyner Elementary,K8,0,0.4,3.4,NA,NA,NA,0.5,D
+650,Morgan County,70,Sunbright School,HS,2,1.2000000000000002,4,4,3,NA,2.3,B
+660,Obion County,7,Black Oak Elementary,K8,2.5999999999999996,2,3.8,NA,NA,NA,2.5,B
+660,Obion County,12,Hillcrest Elementary,K8,3.6,2.5999999999999996,2.4000000000000004,NA,NA,NA,3.1,A
+660,Obion County,26,Lake Road Elementary,K8,2.1999999999999997,1.4,2.8,NA,NA,NA,1.9,C
+660,Obion County,35,Obion County Central High School,HS,2.4000000000000004,0.26666666666666666,2.8,3.8,2.4,NA,1.9,C
+660,Obion County,38,Ridgemont Elementary,K8,2,2,2.6,NA,NA,1.8,2,C
+660,Obion County,45,South Fulton Elementary,K8,3.6,2.5999999999999996,4,NA,NA,NA,3.2,A
+660,Obion County,50,South Fulton Middle / High School,HS,2.1999999999999997,0.4,1.7333333333333334,4,4,NA,2.1,B
+661,Union City,10,Union City Elementary School,K8,1.8666666666666667,0.5,2.8,NA,NA,4,1.7,C
+661,Union City,12,Union City Middle School,K8,2.5999999999999996,2.3,2.1999999999999997,NA,NA,NA,2.4,B
+661,Union City,15,Union City High School,HS,3.6,3.7333333333333334,3.7333333333333334,4,3.6,NA,3.7,A
+670,Overton County,5,Allons Elementary,K8,2,1.8,2,NA,NA,NA,1.9,C
+670,Overton County,20,Hilham Elementary,K8,2.5999999999999996,2.1999999999999997,4,NA,NA,NA,2.6,B
+670,Overton County,30,Livingston Academy,HS,1.8,0,1.2000000000000002,4,3.6,NA,1.7,C
+670,Overton County,35,Livingston Middle School,K8,1.8,1.2000000000000002,4,NA,NA,NA,1.8,C
+670,Overton County,50,Rickman Elementary,K8,3.4,2.5999999999999996,3.6,NA,NA,NA,3.1,A
+670,Overton County,60,Wilson Elementary,K8,2,2.4000000000000004,2.4000000000000004,NA,NA,NA,2.2,B
+670,Overton County,65,A H Roberts Elementary,K8,2,2.2,2.6,NA,NA,NA,2.1,B
+680,Perry County,15,Linden Elementary,K8,2.1999999999999997,0,2.8,NA,NA,NA,1.4,C
+680,Perry County,20,Lobelville Elementary,K8,2.5999999999999996,2,2.5999999999999996,NA,NA,NA,2.4,B
+680,Perry County,25,Linden Middle School,K8,1.2000000000000002,0.6666666666666667,3.4,NA,NA,NA,1.2,C
+680,Perry County,27,Perry County High School,HS,2,0,2.2,3,4,NA,1.9,C
+690,Pickett County,5,Pickett Co High School,HS,2,2.5999999999999996,2,4,4,NA,2.7,B
+690,Pickett County,10,Pickett County Elementary,K8,1.2000000000000002,1,4,NA,NA,NA,1.4,C
+700,Polk County,5,Benton Elementary,K8,2.5999999999999996,1,2.8,NA,NA,NA,2,C
+700,Polk County,10,Copper Basin Elementary School,K8,3.6,2,2.2,NA,NA,NA,2.8,B
+700,Polk County,15,Copper Basin High School,HS,2.4000000000000004,3.4,3.2,4,3,NA,3,B
+700,Polk County,50,Chilhowee Middle School,K8,3.6,3,4,NA,NA,NA,3.4,A
+700,Polk County,53,Polk County High School,HS,1,0.4,4,3.6,3.2,NA,1.7,C
+700,Polk County,57,South Polk Elementary,K8,3.6,3.6,1.4,NA,NA,NA,3.4,A
+710,Putnam County,5,Algood Elementary,K8,3.2,3.6,2,NA,NA,3,3.2,A
+710,Putnam County,8,Algood Middle School,K8,3,3.7,3,NA,NA,0.8,3,B
+710,Putnam County,15,Cornerstone Elementary,K8,2.5999999999999996,2,4,NA,NA,NA,2.5,B
+710,Putnam County,25,Burks Elementary,K8,3.7,4,2.3,NA,NA,2.8,3.6,A
+710,Putnam County,30,Cane Creek Elementary,K8,1.7999999999999998,1.2666666666666666,2.533333333333333,NA,NA,NA,1.7,C
+710,Putnam County,35,Capshaw Elementary,K8,3.6,2.333333333333333,4,NA,NA,NA,3.1,A
+710,Putnam County,37,Cookeville High School,HS,2.9,3.4,1.8,2.466666666666667,2.533333333333333,0.9,2.6,B
+710,Putnam County,50,Jere Whitson Elementary,K8,2,3.8,4,NA,NA,2.2,2.9,B
+710,Putnam County,55,Monterey High School,HS,1.1333333333333333,3.8,4,1.6,1.6,0.9,2.2,B
+710,Putnam County,57,Northeast Elementary,K8,2.5999999999999996,1.4,3.0999999999999996,NA,NA,2,2.2,B
+710,Putnam County,60,Park View Elementary,K8,2,2.5999999999999996,4,NA,NA,4,2.6,B
+710,Putnam County,65,Avery Trace Middle School,K8,2.4,0.30000000000000004,3.2,NA,NA,0.2,1.5,C
+710,Putnam County,70,Sycamore Elementary,K8,1.6,2.1333333333333333,2.8666666666666663,NA,NA,2,2,C
+710,Putnam County,90,Upperman High School,HS,3.6,3.3333333333333335,3.2666666666666666,2.1999999999999997,2.8,NA,3.3,A
+710,Putnam County,95,Prescott South Elementary,K8,3,2.7333333333333334,3.1333333333333333,NA,NA,2.8,2.9,B
+710,Putnam County,100,Prescott South Middle School,K8,1.9,0.5,3.466666666666667,NA,NA,2,1.6,C
+710,Putnam County,110,Upperman Middle School,K8,1.7333333333333334,2.9,2.4000000000000004,NA,NA,NA,2.3,B
+720,Rhea County,10,Frazier Elementary,K8,3.6,2.2666666666666666,3.6,NA,NA,NA,3.1,A
+720,Rhea County,20,Graysville Elementary School,K8,3.6,2,4,NA,NA,NA,3,B
+720,Rhea County,32,Rhea County High School,HS,2,1.4666666666666666,4,4,2.1333333333333333,3,2.3,B
+720,Rhea County,40,Spring City Elementary,K8,2.5999999999999996,0.13333333333333333,3,NA,NA,NA,1.7,C
+720,Rhea County,50,Spring City Middle School,K8,1.6,2.1333333333333333,2.5999999999999996,NA,NA,NA,1.9,C
+720,Rhea County,65,Rhea Central Elementary,K8,2.5999999999999996,1.4,3.7,NA,NA,4,2.4,B
+720,Rhea County,70,Rhea Middle School,K8,2.7333333333333334,2.5,4,NA,NA,NA,2.8,B
+721,Dayton,5,Dayton City Elementary,K8,2.9,3.9,3.4,NA,NA,3.8666666666666667,3.4,A
+730,Roane County,5,Cherokee Middle School,K8,3.7333333333333334,3.1333333333333333,3.1333333333333333,NA,NA,NA,3.4,A
+730,Roane County,14,Harriman Middle School,K8,1,0.26666666666666666,0.7333333333333333,NA,NA,NA,0.7,D
+730,Roane County,15,Harriman High School,HS,1.2000000000000002,2,2.1333333333333333,3.6,3,NA,2,C
+730,Roane County,28,Bowers Elementary,K8,2.8666666666666663,3.7333333333333334,2.2666666666666666,NA,NA,NA,3.2,A
+730,Roane County,35,Kingston Elementary,K8,3,3.2,3.6,NA,NA,NA,3.1,A
+730,Roane County,45,Midtown Elementary,K8,3.6,4,4,NA,NA,NA,3.8,A
+730,Roane County,47,Midway Elementary,K8,3.6,3.6,3.6,NA,NA,NA,3.6,A
+730,Roane County,48,Midway Middle School,K8,3.2,2.2,4,NA,NA,NA,2.9,B
+730,Roane County,50,Midway High School,HS,3.4,0.8,4,4,4,NA,2.8,B
+730,Roane County,60,Oliver Springs Middle,K8,1.6,0.8,3.2,NA,NA,NA,1.4,C
+730,Roane County,65,Oliver Springs High School,HS,3,3.4,4,3,3,NA,3.2,A
+730,Roane County,77,Ridge View Elementary,K8,1.8666666666666667,3.6,3.3333333333333335,NA,NA,NA,2.7,B
+730,Roane County,80,Roane County High School,HS,2.4,1.1333333333333333,3.8666666666666667,3.6,3.6,NA,2.5,B
+730,Roane County,81,Midtown Educational Center,HS,NA,NA,4,2,3,NA,3.1,A
+730,Roane County,85,Rockwood High School,HS,2,0,3.7333333333333334,3.6,3,NA,1.9,C
+730,Roane County,90,Rockwood Middle School,K8,2.4,3.466666666666667,4,NA,NA,NA,3,B
+730,Roane County,95,Dyllis Springs Elementary,K8,3.6,0.8,2.4000000000000004,NA,NA,NA,2.4,B
+740,Robertson County,15,Crestview Elementary School,K8,2.2,3.9,3.8,NA,NA,3.7,3.1,A
+740,Robertson County,20,Cheatham Park Elementary,K8,0.4,1.8,3.3,NA,NA,3.9,1.5,C
+740,Robertson County,25,Coopertown Elementary,K8,1.6,0.6666666666666667,2.4000000000000004,NA,NA,3.1333333333333333,1.5,C
+740,Robertson County,26,Coopertown Middle School,K8,2.9,4,3.4,NA,NA,3,3.3,A
+740,Robertson County,28,East Robertson Elementary,K8,2.8666666666666663,1.2666666666666666,2.8666666666666663,NA,NA,4,2.4,B
+740,Robertson County,32,East Robertson High School,HS,2.5999999999999996,2.5999999999999996,3.4,4,1,NA,2.4,B
+740,Robertson County,35,Greenbrier Elementary,K8,2.5999999999999996,2.7333333333333334,1.8666666666666667,NA,NA,NA,2.6,B
+740,Robertson County,38,Greenbrier Middle School,K8,1.8,1.7000000000000002,3.7333333333333334,NA,NA,2,2,C
+740,Robertson County,40,Greenbrier High School,HS,2,1.6666666666666665,3.4,3,3.6,NA,2.4,B
+740,Robertson County,45,Jo Byrns High School,HS,1.1333333333333333,1.1,4,4,3,0,1.8,C
+740,Robertson County,48,Jo Byrns Elementary School,K8,1.8,3.7333333333333334,3.6,NA,NA,NA,2.8,B
+740,Robertson County,50,Krisle Elementary,K8,3.4,4,2.6,NA,NA,4,3.6,A
+740,Robertson County,70,Springfield High School,HS,2.4,0.7,2.4000000000000004,2.333333333333333,1.7999999999999998,0.8,1.7,C
+740,Robertson County,75,Springfield Middle School,K8,2.5999999999999996,1.7,3.8,NA,NA,0,2.1,B
+740,Robertson County,80,Watauga Elementary,K8,2.5999999999999996,2,3.7333333333333334,NA,NA,NA,2.5,B
+740,Robertson County,88,White House Heritage Elementary School,K8,2.7333333333333334,3.6,4,NA,NA,NA,3.2,A
+740,Robertson County,90,White House Heritage High School,HS,2.466666666666667,3.3333333333333335,4,4,4,NA,3.3,A
+740,Robertson County,100,Robertson County Alternative Learning Center,K8,NA,2,NA,NA,NA,NA,2,C
+750,Rutherford County,1,Blackman Elementary School,K8,3.7,1.5,3.8,NA,NA,4,3,B
+750,Rutherford County,2,Blackman Middle School,K8,2.5999999999999996,1,2.6999999999999997,NA,NA,0.8,1.9,C
+750,Rutherford County,3,Barfield Elementary,K8,3.3333333333333335,3.8,2.6999999999999997,NA,NA,4,3.5,A
+750,Rutherford County,4,Blackman High School,HS,2.333333333333333,3.1,3.8,3.466666666666667,3.0666666666666664,1.8666666666666667,2.8,B
+750,Rutherford County,5,Buchanan Elementary,K8,2.5999999999999996,1.8,3,NA,NA,4,2.5,B
+750,Rutherford County,8,Cedar Grove Elementary,K8,3.466666666666667,4,4,NA,NA,3.7,3.7,A
+750,Rutherford County,15,Central Magnet School,HS,4,4,3.8,4,4,NA,4,A
+750,Rutherford County,17,Oakland Middle School,K8,2.5999999999999996,3.4,2.2666666666666666,NA,NA,1,2.7,B
+750,Rutherford County,20,Christiana Elementary,K8,3.4,0.8,3.7333333333333334,NA,NA,1,2.3,B
+750,Rutherford County,21,Whitworth-Buchanan Middle School,K8,1,0.4,2.2,NA,NA,2.1,1,D
+750,Rutherford County,23,Christiana Middle School,K8,2.5999999999999996,0.8,2.8666666666666663,NA,NA,2,1.9,C
+750,Rutherford County,25,John Colemon Elementary,K8,3,3.7,3.0999999999999996,NA,NA,4,3.4,A
+750,Rutherford County,28,David Youree Elementary,K8,2.6999999999999997,0.9,3.0999999999999996,NA,NA,4,2.2,B
+750,Rutherford County,35,Eagleville School,HS,3.6,0.9333333333333335,3.8666666666666667,4,4,NA,2.9,B
+750,Rutherford County,37,Holloway High School,HS,1.6,2.8,3.2,4,0,NA,1.9,C
+750,Rutherford County,39,Brown's Chapel Elementary School,K8,3.6,2.2,3.6,NA,NA,1.8666666666666667,2.9,B
+750,Rutherford County,40,Kittrell Elementary,K8,2.2,3.8666666666666667,4,NA,NA,3.2,3.1,A
+750,Rutherford County,50,Lascassas Elementary,K8,4,0.6666666666666667,3.7333333333333334,NA,NA,NA,2.6,B
+750,Rutherford County,55,Rock Springs Elementary,K8,3.7,2.4000000000000004,3,NA,NA,3.7,3.2,A
+750,Rutherford County,58,Rock Springs Middle School,K8,2.4,2.2,3.3,NA,NA,3.7333333333333334,2.6,B
+750,Rutherford County,59,LaVergne Lake Elementary School,K8,2.1,3.7,3,NA,NA,3.8,2.9,B
+750,Rutherford County,62,LaVergne Middle School,K8,2.6999999999999997,4,4,NA,NA,2,3.2,A
+750,Rutherford County,63,Lavergne High School,HS,2.5999999999999996,3.9,3.9,2.7333333333333334,3.7333333333333334,0,3,B
+750,Rutherford County,65,Homer Pittard Campus School,K8,4,2,4,NA,NA,NA,3.2,A
+750,Rutherford County,70,McFadden School Of Excellence,K8,4,0.4,4,NA,NA,NA,2.6,B
+750,Rutherford County,72,Oakland High School,HS,1.6,3.2,2.6,3,3.2,0.8,2.4,B
+750,Rutherford County,74,Riverdale High School,HS,1.8666666666666667,0.2,3.9,3.8666666666666667,2.4,0.7333333333333333,1.7,C
+750,Rutherford County,75,Rockvale Elementary,K8,3.6,0.6000000000000001,2.7333333333333334,NA,NA,3,2.4,B
+750,Rutherford County,77,Roy L Waldron Elementary,K8,2.1,4,3.3,NA,NA,3.6,3,B
+750,Rutherford County,78,Rockvale Middle School,K8,3.2,4,2.5999999999999996,NA,NA,0.8,3.2,A
+750,Rutherford County,90,Smyrna Elementary,K8,2,2.5,2.9,NA,NA,2.9,2.4,B
+750,Rutherford County,95,Smyrna Middle School,K8,1.8,3,2.8,NA,NA,1,2.2,B
+750,Rutherford County,98,Smyrna High School,HS,1.1,2,2.6999999999999997,3.8,0,0.9,1.4,C
+750,Rutherford County,100,Smyrna Primary,K8,1.9,2.9,4,NA,NA,2.8666666666666663,2.6,B
+750,Rutherford County,103,Siegel Middle School,K8,2.5999999999999996,2.3,3.8666666666666667,NA,NA,1,2.5,B
+750,Rutherford County,104,Siegel High School,HS,2.333333333333333,0.30000000000000004,3.2666666666666666,3.8666666666666667,3.2,0,1.9,C
+750,Rutherford County,105,Thurman Francis Arts Academy/Magnet School for the Arts,K8,4,1.9999999999999998,3.8,NA,NA,2.1333333333333333,3.1,A
+750,Rutherford County,110,Walter Hill Elementary,K8,3.2,2,3.6,NA,NA,NA,2.8,B
+750,Rutherford County,150,Wilson Elementary School,K8,3.6,1.3,3.6,NA,NA,NA,2.7,B
+750,Rutherford County,200,Stewartsboro Elementary,K8,2.9,3.8,3.8,NA,NA,3.9,3.4,A
+750,Rutherford County,210,Stewarts Creek Elementary School,K8,4,4,3.4,NA,NA,4,3.9,A
+750,Rutherford County,220,Stewarts Creek Middle School,K8,3.5,3.9,3.7333333333333334,NA,NA,3,3.6,A
+750,Rutherford County,225,Stewarts Creek High School,HS,3.466666666666667,2.1,3.8,3.466666666666667,3.0666666666666664,0.8666666666666667,2.8,B
+750,Rutherford County,230,Rocky Fork Middle School,K8,3.5,4,1.9,NA,NA,2.8666666666666663,3.5,A
+751,Murfreesboro,5,Discovery School,K8,4,2.5999999999999996,4,NA,NA,NA,3.4,A
+751,Murfreesboro,7,Black Fox Elementary,K8,2.8,3.8,3.9,NA,NA,3.6,3.3,A
+751,Murfreesboro,10,Bradley Academy - An Arts Integrated School,K8,1.9,4,4,NA,NA,2,2.9,B
+751,Murfreesboro,15,Cason Lane Academy,K8,2.6999999999999997,3.5,3.7,NA,NA,4,3.2,A
+751,Murfreesboro,18,Erma Siegel Elementary,K8,3.6,3.2,3.8666666666666667,NA,NA,3,3.4,A
+751,Murfreesboro,20,Hobgood Elementary,K8,2.2,3.8,4,NA,NA,3,3,B
+751,Murfreesboro,25,Mitchell-Neilson Elementary,K8,2.6999999999999997,3.5,3.2,NA,NA,3.8666666666666667,3.1,A
+751,Murfreesboro,32,Northfield Elementary,K8,2.5999999999999996,0.5,3.466666666666667,NA,NA,4,2.1,B
+751,Murfreesboro,35,John Pittard Elementary,K8,2.8,4,3.6,NA,NA,3,3.3,A
+751,Murfreesboro,40,Overall Creek Elementary,K8,3.466666666666667,3.3333333333333335,3.7333333333333334,NA,NA,NA,3.4,A
+751,Murfreesboro,45,Reeves-Rogers Elementary,K8,2.7333333333333334,3.6,3.4,NA,NA,4,3.2,A
+751,Murfreesboro,150,Scales Elementary School,K8,3.4,4,4,NA,NA,4,3.7,A
+760,Scott County,5,Burchfield Elementary,K8,2,2,2.8,NA,NA,NA,2.1,B
+760,Scott County,8,Fairview Elementary,K8,3,3.8,4,NA,NA,NA,3.4,A
+760,Scott County,20,Huntsville Elementary,K8,2.5999999999999996,2,2.2,NA,NA,NA,2.3,B
+760,Scott County,25,Huntsville Middle School,K8,2.5999999999999996,3.7333333333333334,3.4,NA,NA,NA,3.1,A
+760,Scott County,40,Robbins Elementary,K8,3.6,3.4,2,NA,NA,NA,3.4,A
+760,Scott County,48,Scott High School,HS,1,0.2,3,4,3,NA,1.5,C
+760,Scott County,55,Winfield Elementary,K8,2,2.4000000000000004,2,NA,NA,NA,2.2,B
+761,Oneida,5,Oneida Elementary,K8,3,2.2,3.6,NA,NA,NA,2.7,B
+761,Oneida,8,Oneida Middle School,K8,1.2,0.8,2.4,NA,NA,NA,1.2,C
+761,Oneida,10,Oneida High School,HS,3,3.2,2.5999999999999996,4,4,NA,3.3,A
+770,Sequatchie County,5,Sequatchie Co Middle School,K8,1.1333333333333333,0.4,3.1333333333333333,NA,NA,4,1.4,C
+770,Sequatchie County,10,Griffith Elementary,K8,1.6,0.7000000000000001,1.4,NA,NA,2.2,1.3,C
+770,Sequatchie County,20,Sequatchie Co High School,HS,1.1333333333333333,2,2.8666666666666663,4,3.2,NA,2.1,B
+780,Sevier County,12,Boyds Creek Elementary School,K8,2.5999999999999996,3.6,3,NA,NA,NA,3,B
+780,Sevier County,13,Catlettsburg Elementary School,K8,2.8,3.7333333333333334,1.8666666666666667,NA,NA,4,3.2,A
+780,Sevier County,15,Catons Chapel Elementary,K8,2.5999999999999996,2,0.4,NA,NA,NA,2.1,B
+780,Sevier County,20,Gatlinburg Pittman High,HS,2.8666666666666663,3.2,4,4,4,2,3.3,A
+780,Sevier County,25,Jones Cove Elementary,K8,3.6,2.4,2.2,NA,NA,NA,3,B
+780,Sevier County,30,Northview Senior Academy,HS,2.5999999999999996,0.13333333333333333,4,4,2.1999999999999997,NA,2,C
+780,Sevier County,31,Northview Junior Academy,K8,1.6,3,3.1333333333333333,NA,NA,NA,2.3,B
+780,Sevier County,32,Northview Elementary,K8,2.4000000000000004,1.2666666666666666,2.4000000000000004,NA,NA,2,2,C
+780,Sevier County,34,Northview Intermediate School,K8,1.8666666666666667,0.5333333333333333,2.4000000000000004,NA,NA,NA,1.4,C
+780,Sevier County,35,New Center Elementary,K8,2.5999999999999996,3.466666666666667,3.7333333333333334,NA,NA,NA,3.1,A
+780,Sevier County,40,Pi Beta Phi Elementary,K8,2.7333333333333334,3.5,2.2,NA,NA,3,3,B
+780,Sevier County,44,Pigeon Forge Primary,K8,0.8666666666666667,1.4,1.5,NA,NA,2.8666666666666663,1.3,C
+780,Sevier County,45,Pigeon Forge Middle School,K8,1.9,2.2,2.1,NA,NA,1,1.9,C
+780,Sevier County,46,Pigeon Forge High School,HS,2.3,2,1.6,4,2.1999999999999997,1.1333333333333333,2.1,B
+780,Sevier County,50,Pittman Center Elementary,K8,3.2,3.2,2.8,NA,NA,NA,3.2,A
+780,Sevier County,52,Gary Hardin Academy,HS,NA,0,4,1,0,NA,0.7,D
+780,Sevier County,55,Sevier County High School,HS,2.5,3.4,2.3,4,2.8,0,2.6,B
+780,Sevier County,61,Sevierville Intermediate,K8,2.1,1.6,3.0999999999999996,NA,NA,4,2.2,B
+780,Sevier County,62,Sevierville Middle School,K8,1.8,1.5,0.8,NA,NA,0,1.4,C
+780,Sevier County,65,Seymour Primary,K8,NA,0.4,4,NA,NA,NA,1.1,C
+780,Sevier County,66,Seymour Middle School,K8,3,3.6,2,NA,NA,NA,3.1,A
+780,Sevier County,68,Seymour Intermediate,K8,2.7333333333333334,2,2.533333333333333,NA,NA,NA,2.4,B
+780,Sevier County,70,Seymour High School,HS,2.5999999999999996,3.6,3.1333333333333333,4,4,NA,3.3,A
+780,Sevier County,80,Wearwood Elementary,K8,1.6,2,2,NA,NA,NA,1.8,C
+792,Shelby County,10,Barret's Chapel Elementary/Middle,K8,1.1333333333333333,0.4,3.1333333333333333,NA,NA,NA,1,D
+792,Shelby County,35,Bolton High,HS,1.1333333333333333,0.4,0.7333333333333333,2.5999999999999996,1.7333333333333334,NA,1.1,C
+792,Shelby County,67,Dexter Elementary,K8,2,2.2666666666666666,2,NA,NA,3,2.2,B
+792,Shelby County,68,Dexter Middle,K8,2.3,2.9,2.1,NA,NA,4,2.7,B
+792,Shelby County,80,E.E. Jeter Elementary/Middle,K8,3.3333333333333335,1.7333333333333334,3,NA,NA,NA,2.7,B
+792,Shelby County,105,Germantown Elementary,K8,2.8,0.26666666666666666,3.0999999999999996,NA,NA,4,2.1,B
+792,Shelby County,107,Germantown Middle,K8,2.9,1.9,2.8666666666666663,NA,NA,1,2.4,B
+792,Shelby County,108,Highland Oaks Elementary,K8,2.8666666666666663,2.8,4,NA,NA,4,3.1,A
+792,Shelby County,110,Germantown High,HS,2.1,3.6,2.9,4,3.0666666666666664,1,2.7,B
+792,Shelby County,115,Lucy Elementary,K8,1,0.13333333333333333,3,NA,NA,1,0.9,D
+792,Shelby County,118,Macon-Hall Elementary,K8,2.9,2.5,3,NA,NA,4,2.9,B
+792,Shelby County,140,Mt. Pisgah Middle,K8,1.1333333333333333,0.30000000000000004,3.466666666666667,NA,NA,NA,1,D
+792,Shelby County,145,Northaven Elementary,K8,1.8,2.5999999999999996,0,NA,NA,NA,1.9,C
+792,Shelby County,175,Southwind Elementary,K8,3,0.6000000000000001,1,NA,NA,4,2.1,B
+792,Shelby County,178,Southwind High,HS,1,0,1.5,1.7333333333333334,0.13333333333333333,0.8666666666666667,0.7,D
+792,Shelby County,185,Woodstock Middle School,K8,1,0,2.2666666666666666,NA,NA,NA,0.7,D
+792,Shelby County,200,Highland Oaks Middle,K8,1,0.6000000000000001,1.7333333333333334,NA,NA,1.8666666666666667,1,D
+792,Shelby County,205,Lowrance Elementary/Middle,K8,2.2,2.5,2.9,NA,NA,2.1333333333333333,2.4,B
+792,Shelby County,300,Belle Forest Community School,K8,3,4,4,NA,NA,4,3.6,A
+792,Shelby County,2005,A. B. Hill Elementary,K8,3,4,2.2666666666666666,NA,NA,NA,3.3,A
+792,Shelby County,2007,Kate Bond Middle School,K8,1,1.4,2.2,NA,NA,1.7,1.3,C
+792,Shelby County,2020,Alton Elementary,K8,2,2,1.2000000000000002,NA,NA,NA,1.9,C
+792,Shelby County,2023,American Way Middle,K8,1.1,0.6000000000000001,0.2,NA,NA,0,0.7,D
+792,Shelby County,2030,B. T. Washington High,HS,1,3.466666666666667,1.2666666666666666,2,2,NA,2,C
+792,Shelby County,2040,Bellevue Middle,K8,1,0.5,2.8,NA,NA,NA,1,D
+792,Shelby County,2045,Berclair Elementary,K8,4,4,2.3,NA,NA,3.7,3.8,A
+792,Shelby County,2049,Chimneyrock Elementary School,K8,2.5999999999999996,3.4,3,NA,NA,3.8666666666666667,3,B
+792,Shelby County,2050,Bethel Grove Elementary,K8,2.2,1.2000000000000002,1.6,NA,NA,NA,1.7,C
+792,Shelby County,2053,William Herbert Brewster Elementary School,K8,1.3,0.4,2.1,NA,NA,3.7333333333333334,1.3,C
+792,Shelby County,2057,Brownsville Road Elementary,K8,3,1.8,1.2666666666666666,NA,NA,NA,2.3,B
+792,Shelby County,2060,Bruce Elementary,K8,1,0.26666666666666666,2.5,NA,NA,0.8666666666666667,0.9,D
+792,Shelby County,2070,Campus Elementary,K8,4,0,4,NA,NA,NA,2.4,B
+792,Shelby County,2090,Central High,HS,2.8,3.8,2,2,2.5999999999999996,3,2.9,B
+792,Shelby County,2095,Charjean Elementary,K8,3,2.1333333333333333,1.4,NA,NA,3.8666666666666667,2.6,B
+792,Shelby County,2100,Cherokee Elementary,K8,1,0.26666666666666666,3.8666666666666667,NA,NA,NA,1,D
+792,Shelby County,2108,Chickasaw Middle,K8,0.5333333333333333,0,0,NA,NA,NA,0.3,D
+792,Shelby County,2115,Colonial Middle,K8,2.5,3.4,2.5,NA,NA,0,2.6,B
+792,Shelby County,2116,Kate Bond Elementary School,K8,3,3.7,3.2,NA,NA,3.7,3.3,A
+792,Shelby County,2117,Cordova Elementary,K8,1.3,0.5,2,NA,NA,4,1.4,C
+792,Shelby County,2118,Cordova Middle,K8,1.5,0.6000000000000001,2.8,NA,NA,2,1.4,C
+792,Shelby County,2119,Cordova High School,HS,1.1,3.5,4,2.1,1.8,2.9,2.4,B
+792,Shelby County,2126,Craigmont High,HS,1.2666666666666666,1.9,0,1.1333333333333333,1.7333333333333334,3,1.6,C
+792,Shelby County,2128,Craigmont Middle,K8,2,2.9,0,NA,NA,2,2.1,B
+792,Shelby County,2130,Cromwell Elementary,K8,1.7333333333333334,0.4,4,NA,NA,4,1.7,C
+792,Shelby County,2133,Crump Elementary,K8,1.1333333333333333,0.7000000000000001,1.8000000000000003,NA,NA,3.8,1.3,C
+792,Shelby County,2135,Cummings Elementary/Middle,K8,1.8,0.6,1.6666666666666665,NA,NA,NA,1.3,C
+792,Shelby County,2145,Delano Elementary,K8,4,3,3.2,NA,NA,NA,3.5,A
+792,Shelby County,2153,Double Tree Elementary,K8,2,0.4,2.533333333333333,NA,NA,NA,1.4,C
+792,Shelby County,2155,Douglass Elementary/Middle,K8,1,0.4,3.2666666666666666,NA,NA,NA,1,D
+792,Shelby County,2160,Douglass High,HS,1,1.1333333333333333,4,2,1.8,4,1.8,C
+792,Shelby County,2162,Downtown Elementary,K8,3,0.4,2,NA,NA,NA,1.9,C
+792,Shelby County,2165,Dunbar Elementary,K8,3,1,2,NA,NA,NA,2.1,B
+792,Shelby County,2180,East High,HS,4,0.8,0.8,2,0.4,1,1.8,C
+792,Shelby County,2183,Egypt Elementary,K8,1.2666666666666666,0.13333333333333333,2.2666666666666666,NA,NA,1.8666666666666667,1,D
+792,Shelby County,2185,Evans Elementary,K8,2,1,2.4000000000000004,NA,NA,3,1.8,C
+792,Shelby County,2210,Ford Road Elementary,K8,0.2,0.4,3.6,NA,NA,NA,0.6,D
+792,Shelby County,2215,Fox Meadows Elementary,K8,1.2000000000000002,2.2,2.2,NA,NA,4,1.9,C
+792,Shelby County,2230,Gardenview Elementary,K8,0.8,0,0.5333333333333333,NA,NA,NA,0.5,D
+792,Shelby County,2245,Geeter School,K8,NA,0.13333333333333333,NA,NA,NA,NA,0.1,D
+792,Shelby County,2255,Georgian Hills Middle,K8,1.2666666666666666,0.26666666666666666,0,NA,NA,NA,0.7,D
+792,Shelby County,2258,Germanshire Elementary,K8,3,2.2,3,NA,NA,2.8666666666666663,2.7,B
+792,Shelby County,2259,Getwell Elementary,K8,2,2.1333333333333333,1,NA,NA,4,2.1,B
+792,Shelby County,2260,Goodlett Elementary,K8,0.26666666666666666,1.1,1.1333333333333333,NA,NA,3,0.9,D
+792,Shelby County,2285,Grahamwood Elementary,K8,3.2,0.6000000000000001,2.8,NA,NA,3.7,2.3,B
+792,Shelby County,2310,Hamilton Elementary,K8,2.2,2.4000000000000004,2.1333333333333333,NA,NA,NA,2.3,B
+792,Shelby County,2315,Hamilton Middle,K8,1,0,4,NA,NA,NA,0.9,D
+792,Shelby County,2317,Hamilton High,HS,0,0,1.6666666666666665,0.13333333333333333,1.7333333333333334,NA,0.5,D
+792,Shelby County,2325,Havenview Middle,K8,1.2666666666666666,3,1.4,NA,NA,NA,2,C
+792,Shelby County,2330,Hawkins Mill Elementary,K8,2,1.7333333333333334,4,NA,NA,NA,2.1,B
+792,Shelby County,2331,Hickory Ridge Elementary,K8,3.8666666666666667,4,4,NA,NA,4,3.9,A
+792,Shelby County,2333,Hickory Ridge Middle,K8,1.2000000000000002,0.4,2,NA,NA,0,0.9,D
+792,Shelby County,2338,Hollis F. Price Middle College,K8,3.2,4,1,NA,NA,NA,3.3,A
+792,Shelby County,2343,Holmes Road Elementary,K8,3.8,3.7333333333333334,3.1333333333333333,NA,NA,NA,3.7,A
+792,Shelby County,2353,Ida B. Wells Academy ES/MS,K8,3,0,2.8,NA,NA,NA,1.8,C
+792,Shelby County,2355,Idlewild Elementary,K8,3.8,2,3.2,NA,NA,NA,3,B
+792,Shelby County,2360,Jackson Elementary,K8,2.1333333333333333,1.1,4,NA,NA,3,2,C
+792,Shelby County,2362,J. P. Freeman Elementary/Middle,K8,4,0,4,NA,NA,NA,2.4,B
+792,Shelby County,2368,Keystone Elementary,K8,1.2666666666666666,0.5333333333333333,2.4000000000000004,NA,NA,NA,1.1,C
+792,Shelby County,2370,Kingsbury Elementary,K8,3.2666666666666666,4,1.1,NA,NA,3.9,3.4,A
+792,Shelby County,2373,Kingsbury Middle,K8,1.1,1,1.3,NA,NA,1,1.1,C
+792,Shelby County,2375,Kingsbury High,HS,1.1,0.1,0,1.2000000000000002,1.6,0.9,0.8,D
+792,Shelby County,2379,Kirby High,HS,1.1,0.2,0,0.4,0,0.13333333333333333,0.4,D
+792,Shelby County,2385,Knight Road Elementary,K8,2,2,3.2,NA,NA,2.6999999999999997,2.2,B
+792,Shelby County,2395,Larose Elementary,K8,0,0,0,NA,NA,NA,0,D
+792,Shelby County,2435,Levi Elementary,K8,4,4,3.1333333333333333,NA,NA,NA,3.9,A
+792,Shelby County,2463,Lucie E. Campbell Elementary,K8,2.533333333333333,3.7333333333333334,3.7333333333333334,NA,NA,NA,3.1,A
+792,Shelby County,2470,Magnolia Elementary,K8,2.2,0.6,0.5333333333333333,NA,NA,NA,1.4,C
+792,Shelby County,2480,Manassas High,HS,1,0.13333333333333333,0.13333333333333333,0,0,NA,0.4,D
+792,Shelby County,2493,Melrose High,HS,1.8666666666666667,1,0,3.8,2,NA,1.5,C
+792,Shelby County,2515,Middle College High,HS,3.8,3.8,3.8,4,4,NA,3.9,A
+792,Shelby County,2520,Mitchell High,HS,1,2,0.6666666666666667,3.4,2,NA,1.6,C
+792,Shelby County,2525,Newberry Elementary,K8,2.8,3.5,3,NA,NA,4,3.2,A
+792,Shelby County,2540,Oakhaven Elementary,K8,0.26666666666666666,0.4,0.30000000000000004,NA,NA,1,0.4,D
+792,Shelby County,2543,Oakhaven Middle,K8,3,3,2,NA,NA,0.13333333333333333,2.6,B
+792,Shelby County,2545,Oakhaven High,HS,2,0,0,2,2,NA,1.2,C
+792,Shelby County,2550,Oakshire Elementary,K8,2,2,0,NA,NA,NA,1.8,C
+792,Shelby County,2565,Overton High,HS,1,0.4,0.4,2,2.466666666666667,1,1.1,C
+792,Shelby County,2570,Peabody Elementary,K8,2.5999999999999996,2,2.8,NA,NA,NA,2.4,B
+792,Shelby County,2597,Raleigh-Bartlett Meadows Elementary,K8,1,1.1333333333333333,2.2666666666666666,NA,NA,4,1.5,C
+792,Shelby County,2598,Raleigh-Egypt High,HS,1.1,2.9,0.9,3,1.6,0.8666666666666667,1.7,C
+792,Shelby County,2600,Richland Elementary,K8,3.7333333333333334,3.7,3.8666666666666667,NA,NA,4,3.8,A
+792,Shelby County,2610,Balmoral/Ridgeway Elementary,K8,2.8,2.5999999999999996,2.8,NA,NA,3,2.8,B
+792,Shelby County,2612,Ridgeway Middle,K8,1.1333333333333333,0.4,4,NA,NA,3,1.4,C
+792,Shelby County,2615,Ridgeway High,HS,1.6666666666666665,1.8666666666666667,0.13333333333333333,2,1.7333333333333334,3,1.7,C
+792,Shelby County,2625,Riverview Elementary/Middle,K8,2.1333333333333333,1.2666666666666666,1.1333333333333333,NA,NA,NA,1.7,C
+792,Shelby County,2626,Robert R. Church Elementary,K8,4,3.7,4,NA,NA,4,3.9,A
+792,Shelby County,2627,Ross Elementary,K8,1.1333333333333333,0.4,2.5,NA,NA,1.8666666666666667,1.1,C
+792,Shelby County,2630,Rozelle Elementary,K8,1.8,0,4,NA,NA,NA,1.3,C
+792,Shelby County,2633,Scenic Hills Elementary,K8,2,0.13333333333333333,1.1333333333333333,NA,NA,NA,1.2,C
+792,Shelby County,2637,Sea Isle Elementary,K8,2.466666666666667,1.8,2,NA,NA,3.6,2.3,B
+792,Shelby County,2640,Shady Grove Elementary,K8,2,1.7,2,NA,NA,4,2.1,B
+792,Shelby County,2650,Sharpe Elementary,K8,1.2666666666666666,2.2666666666666666,2.666666666666667,NA,NA,3,1.9,C
+792,Shelby County,2655,Sheffield Elementary,K8,3,3.9,1.4,NA,NA,3,3.2,A
+792,Shelby County,2660,Sheffield High,HS,1.8,2,4,1.8,1.6,1.4,2,C
+792,Shelby County,2665,Sherwood Elementary,K8,1.2666666666666666,0.6000000000000001,1.3,NA,NA,1.8666666666666667,1.1,C
+792,Shelby County,2670,Sherwood Middle,K8,0.9,0.5,0.6000000000000001,NA,NA,0,0.6,D
+792,Shelby County,2680,Shelby Oaks Elementary,K8,1.2000000000000002,2.8,2.3,NA,NA,4,2.2,B
+792,Shelby County,2690,Snowden Elementary/Middle,K8,1.8,0.30000000000000004,3.8,NA,NA,2.7333333333333334,1.6,C
+792,Shelby County,2692,Oak Forest Elementary,K8,2,3.6,4,NA,NA,3,2.9,B
+792,Shelby County,2695,South Park Elementary,K8,3.1333333333333333,3.8,2,NA,NA,3,3.2,A
+792,Shelby County,2700,Exceptional Children Special Placements,HS,NA,NA,4,2,NA,NA,3.3,A
+792,Shelby County,2705,Springdale Elementary,K8,4,2.8,2,NA,NA,NA,3.3,A
+792,Shelby County,2715,Treadwell Elementary,K8,0.13333333333333333,1.7333333333333334,1.1,NA,NA,3,1.1,C
+792,Shelby County,2717,Riverwood Elementary School,K8,3.8666666666666667,2,3.7,NA,NA,4,3.2,A
+792,Shelby County,2723,Treadwell Middle School,K8,2,4,0.5,NA,NA,0.9,2.4,B
+792,Shelby County,2725,Trezevant High,HS,0.8666666666666667,0,0,1.7333333333333334,0.13333333333333333,NA,0.4,D
+792,Shelby County,2730,Vollentine Elementary,K8,2.8,1.4,3,NA,NA,NA,2.3,B
+792,Shelby County,2740,A. Maceo Walker Middle,K8,1.2000000000000002,2.3,0.26666666666666666,NA,NA,3,1.7,C
+792,Shelby County,2745,Wells Station Elementary,K8,1,1.2000000000000002,1.4,NA,NA,3.6,1.4,C
+792,Shelby County,2750,Westside Elementary,K8,4,4,4,NA,NA,NA,4,A
+792,Shelby County,2770,Westwood High,HS,2,2,0,0,0.4,NA,1.4,C
+792,Shelby County,2777,White Station Elementary,K8,3.7333333333333334,3.7,4,NA,NA,4,3.8,A
+792,Shelby County,2780,White Station High,HS,3.4,2.9,4,2.4000000000000004,3.466666666666667,2.8666666666666663,3.2,A
+792,Shelby County,2783,White Station Middle,K8,3.3,0.7000000000000001,3.8,NA,NA,0.8666666666666667,2.2,B
+792,Shelby County,2785,Whitehaven Elementary,K8,1,0,1,NA,NA,3,0.9,D
+792,Shelby County,2790,Whitehaven High,HS,2.5999999999999996,3.7,0,2,2,1,2.3,B
+792,Shelby County,2800,Willow Oaks Elementary,K8,2,3.5,2.3,NA,NA,4,2.8,B
+792,Shelby County,2805,Winchester Elementary,K8,1.4,1,0.4,NA,NA,4,1.4,C
+792,Shelby County,2810,Winridge Elementary,K8,1.4,1.3,1.3,NA,NA,2.8666666666666663,1.5,C
+792,Shelby County,2815,Wooddale High,HS,1.1,1.7,4,4,2.7333333333333334,1.4,2,C
+792,Shelby County,2824,Northwest Prep Academy,HS,0,0.8,0.4,0,0,NA,0.3,D
+792,Shelby County,2830,Carver College and Career Academy,K8,NA,0,0.5,NA,NA,0,0.1,D
+792,Shelby County,2832,Memphis Virtual School,HS,NA,0,4,2,0,NA,0.8,D
+792,Shelby County,2835,Grandview Heights Middle School,K8,1.1333333333333333,0.8,0.8,NA,NA,NA,1,D
+792,Shelby County,2836,Maxine Smith STEAM Academy,K8,4,0,4,NA,NA,NA,2.4,B
+792,Shelby County,2840,Westhaven Elementary,K8,2.2666666666666666,0.5333333333333333,0.26666666666666666,NA,NA,NA,1.4,C
+792,Shelby County,8110,DuBois Middle of Leadership  Public Policy,K8,3,4,0.8,NA,NA,NA,3.2,A
+792,Shelby County,8115,DuBois Middle School of Arts  Technology,K8,2,2.1333333333333333,2,NA,NA,NA,2.1,B
+792,Shelby County,8135,DuBois Elementary School of Entrepreneurship,K8,2.4000000000000004,2.8,0.2,NA,NA,NA,2.3,B
+792,Shelby County,8140,DuBois Elementary School of Arts  Technology,K8,1.8,0,1.2000000000000002,NA,NA,NA,1,D
+792,Shelby County,8145,City University School Girls Preparatory,K8,3.2,1,4,NA,NA,NA,2.4,B
+792,Shelby County,8155,Freedom Preparatory Academy Elementary School,K8,2.4000000000000004,2,0,NA,NA,2,2,C
+792,Shelby County,8160,Power Center Academy Middle - Southeast,K8,2.4000000000000004,1.8666666666666667,1.8,NA,NA,1,2,C
+792,Shelby County,8165,Memphis STEM Academy,K8,NA,NA,4,NA,NA,2,3,B
+792,Shelby County,8170,Memphis Delta Preparatory Charter School,K8,1.2000000000000002,1.8,3,NA,NA,NA,1.6,C
+792,Shelby County,8175,Aspire East Academy,K8,NA,NA,2.4000000000000004,NA,NA,4,3.2,A
+792,Shelby County,8201,Circles Of Success Learning Academy,K8,2,2,2,NA,NA,NA,2,C
+792,Shelby County,8202,KIPP Memphis Collegiate High School,HS,1.8666666666666667,0.6,0.26666666666666666,4,4,NA,1.9,C
+792,Shelby County,8204,City University School Of Liberal Arts,HS,3,4,1.2000000000000002,2.8,4,NA,3.3,A
+792,Shelby County,8205,Memphis Academy Of Science  Engineering Middle/High,HS,1,2.8,0,4,0,NA,1.4,C
+792,Shelby County,8206,Power Center Academy High School,HS,1.8666666666666667,1.3,4,4,1.8,1,1.9,C
+792,Shelby County,8207,Memphis Business Academy Elementary School,K8,2.8666666666666663,2,1.6666666666666665,NA,NA,4,2.6,B
+792,Shelby County,8210,Memphis Academy Of Health Sciences,K8,1,0.13333333333333333,2,NA,NA,NA,0.8,D
+792,Shelby County,8213,Memphis Academy of Health Sciences High School,HS,2,2.1333333333333333,0,4,3.2,NA,2.2,B
+792,Shelby County,8215,Memphis Business Academy Middle,K8,1.1333333333333333,0.4,0.26666666666666666,NA,NA,1.1333333333333333,0.8,D
+792,Shelby County,8217,Memphis Business Academy High School,HS,1.2000000000000002,1.3,0,4,2.5999999999999996,1,1.5,C
+792,Shelby County,8220,Power Center Academy Middle,K8,2.2,3.8,3,NA,NA,0.8666666666666667,2.7,B
+792,Shelby County,8225,Promise Academy,K8,2.2,0,4,NA,NA,NA,1.5,C
+792,Shelby County,8228,Southern Avenue Charter School Of Academic Excellence  Creative Arts,K8,1.2000000000000002,0,0,NA,NA,NA,0.6,D
+792,Shelby County,8230,Star Academy,K8,0,0,2.2,NA,NA,NA,0.2,D
+792,Shelby County,8232,Soulsville Charter School,HS,1.8,3.2,1.7333333333333334,4,3.2,NA,2.6,B
+792,Shelby County,8234,Freedom Preparatory Academy,HS,1.4,3.7333333333333334,3.8666666666666667,2,2,NA,2.5,B
+792,Shelby County,8236,City University Boys Preparatory,K8,2,1.8,3.8,NA,NA,NA,2.1,B
+792,Shelby County,8238,KIPP Memphis Collegiate Middle,K8,1.1333333333333333,1.6,0,NA,NA,NA,1.2,C
+792,Shelby County,8240,Memphis College Preparatory,K8,2,0.6,4,NA,NA,NA,1.6,C
+792,Shelby County,8252,Memphis School of Excellence,HS,1.8666666666666667,1.6,3.2666666666666666,4,2,2,2.1,B
+792,Shelby County,8254,Veritas College Preparatory,K8,3,2,0,NA,NA,NA,2.3,B
+792,Shelby County,8256,Aurora Collegiate Academy,K8,3.8666666666666667,4,3.4,NA,NA,2,3.7,A
+792,Shelby County,8258,KIPP Memphis Middle Academy,K8,1,1.5,0,NA,NA,3,1.3,C
+792,Shelby County,8260,Memphis Grizzlies Preparatory Charter School,K8,1.2666666666666666,1.1333333333333333,2.7333333333333334,NA,NA,NA,1.4,C
+792,Shelby County,8262,KIPP Memphis Collegiate Elementary,K8,0.2,3.6,0.13333333333333333,NA,NA,NA,1.6,C
+792,Shelby County,8264,Memphis Rise Academy,K8,3.4,4,3.9,NA,NA,0.9,3.4,A
+792,Shelby County,8266,Vision Preparatory Charter School,K8,1,1.7333333333333334,0.6666666666666667,NA,NA,NA,1.3,C
+792,Shelby County,8270,Power Center Academy Elementary School,K8,0,0.4,3,NA,NA,NA,0.5,D
+792,Shelby County,8275,The Excel Center,HS,NA,0,4,1.6,0.4,NA,0.9,D
+792,Shelby County,8280,Granville T. Woods Academy of Innovation Charter School,K8,2.8,2.1333333333333333,0,NA,NA,4,2.4,B
+792,Shelby County,8285,Leadership Preparatory Charter School,K8,2,1.8,2.4000000000000004,NA,NA,NA,2,C
+792,Shelby County,8295,Gateway University,K8,2,0.13333333333333333,0,NA,NA,NA,1.1,C
+792,Shelby County,8300,Kaleidoscope School of Memphis,K8,1,2,2.5999999999999996,NA,NA,NA,1.6,C
+792,Shelby County,8310,Memphis School of Excellence Elementary,K8,NA,2,3.4,NA,NA,3,2.4,B
+792,Shelby County,8320,Southwest Early College High School,K8,2,0,1.8,NA,NA,NA,1.2,C
+792,Shelby County,8325,Crosstown High School,K8,NA,0,NA,NA,NA,NA,0,D
+792,Shelby County,8350,Believe Memphis Academy Charter School,K8,NA,3.6,NA,NA,NA,NA,3.6,A
+792,Shelby County,8355,Freedom Preparatory Academy Charter Schools,K8,NA,3.9,NA,NA,NA,NA,3.9,A
+793,Arlington,1,Arlington High,HS,2.7333333333333334,0.4,3.6,4,3.2,4,2.5,B
+793,Arlington,5,Arlington Elementary,K8,4,3.6,4,NA,NA,4,3.9,A
+793,Arlington,6,Arlington Middle,K8,3.4,0.9,4,NA,NA,NA,2.5,B
+793,Arlington,195,Donelson Elementary,K8,4,3.3,4,NA,NA,4,3.8,A
+794,Bartlett,3,Altruria Elementary,K8,3.7333333333333334,3.8,3.6,NA,NA,4,3.8,A
+794,Bartlett,7,Appling Middle School,K8,3.7333333333333334,2.2,2.2666666666666666,NA,NA,NA,3,B
+794,Bartlett,20,Bartlett Elementary School,K8,4,2.5999999999999996,3.6,NA,NA,NA,3.4,A
+794,Bartlett,25,Bartlett High School,HS,3,3.6,3.7333333333333334,4,3.2,4,3.4,A
+794,Bartlett,30,Bon Lin Elementary School,K8,3.7333333333333334,3.8,3.8,NA,NA,NA,3.8,A
+794,Bartlett,33,Bon Lin Middle School,K8,3.2,2.8,2.8666666666666663,NA,NA,NA,3,B
+794,Bartlett,90,Ellendale Elementary,K8,3.6,1.4,4,NA,NA,NA,2.8,B
+794,Bartlett,95,Elmore Park Middle School,K8,2.4,0.2,3.8666666666666667,NA,NA,NA,1.7,C
+794,Bartlett,150,Oak Elementary,K8,3.466666666666667,3.6,4,NA,NA,NA,3.6,A
+794,Bartlett,155,Rivercrest Elementary,K8,3.6,3.3333333333333335,3.4,NA,NA,NA,3.5,A
+795,Collierville,8,Bailey Station Elementary School,K8,3.8666666666666667,2.8,4,NA,NA,4,3.5,A
+795,Collierville,55,Collierville Elementary School,K8,3.466666666666667,3.7333333333333334,3.7333333333333334,NA,NA,4,3.6,A
+795,Collierville,60,Collierville High School,HS,3.6,3.4,1.9,3.3333333333333335,3.6,4,3.4,A
+795,Collierville,63,Collierville Middle School,K8,3.2,0.30000000000000004,3.466666666666667,NA,NA,NA,2.1,B
+795,Collierville,65,Crosswind Elementary School,K8,3.8,3.2,3.8666666666666667,NA,NA,4,3.6,A
+795,Collierville,165,Schilling Farms Elementary School,K8,NA,3.7333333333333334,NA,NA,NA,4,3.8,A
+795,Collierville,168,West Collierville Middle School,K8,3.6,1,3.9,NA,NA,2,2.6,B
+795,Collierville,183,Sycamore Elementary School,K8,3.8666666666666667,2.5999999999999996,4,NA,NA,4,3.5,A
+795,Collierville,190,Tara Oaks Elementary School,K8,4,2.1,4,NA,NA,NA,3.2,A
+796,Germantown,70,Dogwood Elementary School,K8,4,2.5999999999999996,4,NA,NA,4,3.5,A
+796,Germantown,100,Farmington Elementary School,K8,3.6,3.466666666666667,3.8666666666666667,NA,NA,4,3.6,A
+796,Germantown,109,Houston Middle School,K8,3.466666666666667,1,4,NA,NA,NA,2.5,B
+796,Germantown,111,Houston High School,HS,3.3333333333333335,3.4,3.7333333333333334,3.6,4,3,3.5,A
+796,Germantown,160,Riverdale Elementary School,K8,3.4,1.5,3.8666666666666667,NA,NA,NA,2.7,B
+797,Lakeland,116,Lakeland Elementary School,K8,3.8666666666666667,3.9,3.9,NA,NA,4,3.9,A
+797,Lakeland,120,Lakeland Middle Preparatory School,K8,3.8,3.9,3.9,NA,NA,3.2,3.8,A
+798,Millington Municipal Schools,78,E.A. Harrold Elementary School,K8,2.8,2,1.1333333333333333,NA,NA,4,2.5,B
+798,Millington Municipal Schools,123,Millington Elementary School,K8,1.8666666666666667,1,1,NA,NA,4,1.7,C
+798,Millington Municipal Schools,130,Millington Central High School,HS,2.466666666666667,0.6666666666666667,4,4,2,NA,2.1,B
+798,Millington Municipal Schools,133,Millington Middle School,K8,1.9,1.2000000000000002,3.8666666666666667,NA,NA,NA,1.8,C
+800,Smith County,5,Carthage Elementary,K8,2.5999999999999996,2.5999999999999996,3.7333333333333334,NA,NA,NA,2.7,B
+800,Smith County,15,Defeated Elementary,K8,2.5999999999999996,2,4,NA,NA,NA,2.5,B
+800,Smith County,20,Forks River Elementary,K8,3,1.4,3,NA,NA,NA,2.4,B
+800,Smith County,25,Gordonsville High School,HS,2.5999999999999996,3.0666666666666664,4,4,4,NA,3.2,A
+800,Smith County,30,Gordonsville Elementary School,K8,3.6,2.2666666666666666,4,NA,NA,NA,3.1,A
+800,Smith County,45,Smith County High School,HS,2.7333333333333334,0.26666666666666666,3.8666666666666667,4,3.4,NA,2.3,B
+800,Smith County,51,Smith County Middle School,K8,2.5999999999999996,3.6,3.1333333333333333,NA,NA,NA,3.1,A
+800,Smith County,60,Union Heights Elementary,K8,1.6,2.1333333333333333,4,NA,NA,NA,2.1,B
+810,Stewart County,10,Stewart County Middle School,K8,2.1999999999999997,1.8666666666666667,3.4,NA,NA,NA,2.2,B
+810,Stewart County,15,Dover Elementary,K8,4,4,3.6,NA,NA,NA,4,A
+810,Stewart County,17,North Stewart Elementary,K8,2.1999999999999997,1.6,3.8,NA,NA,NA,2.1,B
+810,Stewart County,25,Stewart Co High School,HS,2,0,4,4,3.6,NA,2,C
+820,Sullivan County,25,Blountville Elementary,K8,2,1,2,NA,NA,NA,1.6,C
+820,Sullivan County,30,Blountville Middle School,K8,1.2000000000000002,0.4,3.6,NA,NA,NA,1.1,C
+820,Sullivan County,35,Bluff City Elementary,K8,2,2.8666666666666663,4,NA,NA,NA,2.5,B
+820,Sullivan County,40,Bluff City Middle School,K8,2,2,3.6,NA,NA,NA,2.2,B
+820,Sullivan County,55,Central Heights Elementary,K8,3.4,3.6,4,NA,NA,NA,3.5,A
+820,Sullivan County,60,Sullivan Central High School,HS,2,1.8,1.4,3.4,2.8,NA,2.1,B
+820,Sullivan County,75,Colonial Heights Middle,K8,2.8,1.7333333333333334,3.6,NA,NA,NA,2.5,B
+820,Sullivan County,80,Sullivan East High School,HS,1.6,2.1999999999999997,4,3.6,3.2,NA,2.4,B
+820,Sullivan County,85,Emmett Elementary,K8,1.6,2,4,NA,NA,NA,2,C
+820,Sullivan County,95,Holston Elementary,K8,3.6,3.8,3.6,NA,NA,NA,3.7,A
+820,Sullivan County,100,Holston Middle School,K8,3,3.4,3,NA,NA,NA,3.2,A
+820,Sullivan County,110,Holston Valley Middle School,K8,1.6,0.4,4,NA,NA,NA,1.4,C
+820,Sullivan County,115,Indian Springs Elementary,K8,2.1999999999999997,0.8,3.6,NA,NA,NA,1.8,C
+820,Sullivan County,150,Mary Hughes School,K8,1.8,3.466666666666667,2.8,NA,NA,NA,2.6,B
+820,Sullivan County,155,Miller Perry Elementary,K8,3.6,3.8,3.4,NA,NA,NA,3.7,A
+820,Sullivan County,170,Rock Springs Elementary,K8,4,3.8,4,NA,NA,NA,3.9,A
+820,Sullivan County,175,Sullivan Gardens K-8,K8,2,3.4,4,NA,NA,NA,2.8,B
+820,Sullivan County,182,Sullivan North High School,HS,1,0.5333333333333333,2.4000000000000004,4,1.2,NA,1.2,C
+820,Sullivan County,183,Sullivan South High School,HS,3,3.2,2.6,4,4,NA,3.3,A
+820,Sullivan County,210,North Middle School,K8,1.2000000000000002,1.4,4,NA,NA,NA,1.6,C
+820,Sullivan County,215,Ketron Elementary School,K8,3.6,3.8,1.4,NA,NA,NA,3.5,A
+820,Sullivan County,220,Innovation Academy,K8,4,0.6000000000000001,4,NA,NA,NA,2.6,B
+821,Bristol,5,Anderson Elementary,K8,2.4000000000000004,3.6,3.7333333333333334,NA,NA,NA,3,B
+821,Bristol,7,Avoca Elementary,K8,3.6,2.8,3.8666666666666667,NA,NA,NA,3.3,A
+821,Bristol,20,Fairmount Elementary,K8,1.8666666666666667,2.5999999999999996,2.8666666666666663,NA,NA,NA,2.3,B
+821,Bristol,25,Haynesfield Elementary,K8,4,2.5999999999999996,4,NA,NA,NA,3.4,A
+821,Bristol,30,Holston View Elementary,K8,3.2,2.466666666666667,3.6,NA,NA,NA,2.9,B
+821,Bristol,35,Vance Middle School,K8,2.5999999999999996,1,4,NA,NA,NA,2.1,B
+821,Bristol,45,Tennessee High School,HS,2.7333333333333334,3.2,2.5999999999999996,3.6,3.6,NA,3.1,A
+821,Bristol,50,Tennessee Online Public School,HS,4,4,4,3,4,NA,4,A
+822,Kingsport,10,Dobyns - Bennett High School,HS,3.6,3.3333333333333335,3.7333333333333334,3.6,3.0666666666666664,0,3.1,A
+822,Kingsport,15,Andrew Jackson Elementary School,K8,3.1333333333333333,2,3.7333333333333334,NA,NA,NA,2.7,B
+822,Kingsport,20,Thomas Jefferson Elementary School,K8,3.6,2.8666666666666663,2.8666666666666663,NA,NA,NA,3.2,A
+822,Kingsport,25,Andrew Johnson Elementary School,K8,3.4,3.466666666666667,3.1333333333333333,NA,NA,NA,3.4,A
+822,Kingsport,28,John F. Kennedy Elementary School,K8,3.6,4,3.7333333333333334,NA,NA,NA,3.8,A
+822,Kingsport,30,Abraham Lincoln Elementary School,K8,2.8666666666666663,1.4,4,NA,NA,NA,2.4,B
+822,Kingsport,32,John Adams Elementary School,K8,3.2,1.8666666666666667,2.8666666666666663,NA,NA,NA,2.6,B
+822,Kingsport,40,Ross N. Robinson Middle School,K8,3.2,0.9,1.2666666666666666,NA,NA,NA,2.1,B
+822,Kingsport,45,John Sevier Middle School,K8,2.5999999999999996,1.4,3.7333333333333334,NA,NA,NA,2.2,B
+822,Kingsport,50,George Washington Elementary School,K8,3.4,3.2,2.7333333333333334,NA,NA,NA,3.3,A
+822,Kingsport,55,Theodore Roosevelt Elementary School,K8,2.8,3.8666666666666667,2.1333333333333333,NA,NA,NA,3.2,A
+830,Sumner County,3,Jack Anderson Elementary,K8,4,3.7,3.8666666666666667,NA,NA,NA,3.9,A
+830,Sumner County,5,Beech Elementary,K8,3.6,1.8666666666666667,3.8,NA,NA,NA,2.9,B
+830,Sumner County,7,Beech Sr High School,HS,2.7333333333333334,0.4,3.1333333333333333,3.4,2.8,NA,2.1,B
+830,Sumner County,10,Bethpage Elementary,K8,3.6,0.4,4,NA,NA,NA,2.4,B
+830,Sumner County,15,Robert E Ellis Middle,K8,3.8666666666666667,3.466666666666667,3.0666666666666664,NA,NA,NA,3.6,A
+830,Sumner County,25,Gallatin Senior High School,HS,2.1,3.5,4,3,0,1,2.2,B
+830,Sumner County,30,Guild Elementary,K8,2.1333333333333333,3.8,3.5,NA,NA,2.1,2.9,B
+830,Sumner County,35,Gene W. Brown Elementary,K8,2.5999999999999996,0.5,2.5999999999999996,NA,NA,3.8666666666666667,2,C
+830,Sumner County,40,Hendersonville High School,HS,3.0666666666666664,2.466666666666667,3.2666666666666666,2.466666666666667,2.6666666666666665,0,2.5,B
+830,Sumner County,50,Howard Elementary,K8,2.5999999999999996,2.8,2.1,NA,NA,4,2.8,B
+830,Sumner County,51,T. W. Hunter Middle School,K8,3.7333333333333334,3.8666666666666667,4,NA,NA,NA,3.8,A
+830,Sumner County,52,Indian Lake Elementary,K8,4,0.8,4,NA,NA,NA,2.7,B
+830,Sumner County,53,Merrol Hyde Magnet School,HS,4,4,4,4,4,NA,4,A
+830,Sumner County,54,J W Wiseman Elementary,K8,2.7333333333333334,2.2,4,NA,NA,4,2.8,B
+830,Sumner County,55,Lakeside Park Elementary,K8,4,3.6,3,NA,NA,NA,3.7,A
+830,Sumner County,56,Station Camp Middle School,K8,3.8666666666666667,0.8,3.7333333333333334,NA,NA,3,2.7,B
+830,Sumner County,57,Madison Creek Elementary,K8,3.8,0.4,4,NA,NA,NA,2.5,B
+830,Sumner County,60,Millersville Elementary,K8,2.5999999999999996,1.2000000000000002,3,NA,NA,3.8,2.3,B
+830,Sumner County,65,Nannie Berry Elementary,K8,3.6,3.7,3.6,NA,NA,NA,3.6,A
+830,Sumner County,70,Watt Hardison Elementary,K8,2.5999999999999996,2.7333333333333334,4,NA,NA,NA,2.8,B
+830,Sumner County,75,North Sumner Elementary,K8,3,2.8,0.8,NA,NA,NA,2.7,B
+830,Sumner County,80,Oakmont Elementary,K8,4,2.2,4,NA,NA,NA,3.3,A
+830,Sumner County,85,Portland High School,HS,1.4,0.4,2.8,3.6,3.2,NA,1.7,C
+830,Sumner County,90,Portland East Middle School,K8,2.5999999999999996,0.4,3.7333333333333334,NA,NA,NA,1.8,C
+830,Sumner County,93,E B Wilson,HS,2,1,4,4,0,NA,1.6,C
+830,Sumner County,95,Clyde Riggs Elementary,K8,4,4,2,NA,NA,NA,3.8,A
+830,Sumner County,97,Joe Shafer Middle School,K8,2.1999999999999997,3.4,3.4,NA,NA,2,2.7,B
+830,Sumner County,100,Rucker Stewart Middle,K8,1.7333333333333334,0.4,2.4000000000000004,NA,NA,1,1.3,C
+830,Sumner County,101,Station Camp Elementary,K8,3.8,2.1,3.7333333333333334,NA,NA,4,3.2,A
+830,Sumner County,102,Station Camp High School,HS,3.3333333333333335,3.6,3.2666666666666666,4,2.933333333333333,NA,3.4,A
+830,Sumner County,104,Benny C. Bills Elementary School,K8,2,2,3.4,NA,NA,2,2.1,B
+830,Sumner County,105,Union Elementary School,K8,3.6,1.2666666666666666,3.8666666666666667,NA,NA,NA,2.7,B
+830,Sumner County,107,V G Hawkins Middle School,K8,2.333333333333333,1.2666666666666666,3.1333333333333333,NA,NA,NA,2,C
+830,Sumner County,109,Vena Stuart Elementary,K8,2.8,2.9,1.6,NA,NA,3,2.7,B
+830,Sumner County,112,Walton Ferry Elementary,K8,3.8666666666666667,2.7333333333333334,4,NA,NA,NA,3.4,A
+830,Sumner County,113,George A Whitten Elementary,K8,2.466666666666667,3.3,3.8,NA,NA,4,3,B
+830,Sumner County,115,Westmoreland Elementary,K8,3.6,2.1333333333333333,4,NA,NA,NA,3.1,A
+830,Sumner County,117,Westmoreland Middle School,K8,2.1999999999999997,2,3.2,NA,NA,NA,2.2,B
+830,Sumner County,120,Westmoreland High School,HS,3,3.2,2.4000000000000004,2.5999999999999996,0,NA,2.4,B
+830,Sumner County,125,White House High School,HS,2.7333333333333334,1.8666666666666667,3.1333333333333333,2.1999999999999997,2.4,NA,2.4,B
+830,Sumner County,130,White House Middle School,K8,3.2,1.1,3.7333333333333334,NA,NA,NA,2.4,B
+830,Sumner County,135,Knox Doss Middle School at Drakes Creek,K8,3.466666666666667,3.9,3.7333333333333334,NA,NA,NA,3.7,A
+830,Sumner County,140,Portland West Middle School,K8,2.5999999999999996,0.7000000000000001,4,NA,NA,4,2.2,B
+830,Sumner County,150,Harold B. Williams Elementary School,K8,3.6,0.6666666666666667,4,NA,NA,NA,2.5,B
+830,Sumner County,152,Portland Gateview Elementary School,K8,2.7333333333333334,1,3,NA,NA,NA,2.1,B
+830,Sumner County,155,Sumner County Middle College High School,HS,NA,NA,4,NA,NA,NA,4,A
+830,Sumner County,160,Dr. William Burrus Elementary at Drakes Creek,K8,3.8,3.3333333333333335,4,NA,NA,NA,3.6,A
+840,Tipton County,2,Austin Peay Elementary School,K8,2.8666666666666663,1.2666666666666666,3.8666666666666667,NA,NA,NA,2.3,B
+840,Tipton County,4,Atoka Elementary School,K8,3.7333333333333334,3.6,3.7333333333333334,NA,NA,NA,3.7,A
+840,Tipton County,7,Brighton Elementary,K8,3.6,3,3.7333333333333334,NA,NA,NA,3.4,A
+840,Tipton County,11,Brighton High School,HS,2.5999999999999996,1.8666666666666667,4,3.8,3.2,NA,2.7,B
+840,Tipton County,12,Brighton Middle School,K8,3.3333333333333335,1.8666666666666667,2.8666666666666663,NA,NA,NA,2.7,B
+840,Tipton County,13,Crestview Middle School,K8,1.8666666666666667,2.1333333333333333,4,NA,NA,NA,2.2,B
+840,Tipton County,14,Covington Integrated Arts Academy,K8,2,2.1333333333333333,2.1333333333333333,NA,NA,NA,2.1,B
+840,Tipton County,15,Covington High School,HS,2.7333333333333334,3.8666666666666667,3.4,4,0,NA,2.7,B
+840,Tipton County,17,Crestview Elementary,K8,1.8666666666666667,1.6,3,NA,NA,NA,1.9,C
+840,Tipton County,20,Drummonds Elementary,K8,2.333333333333333,0.13333333333333333,3.4,NA,NA,NA,1.6,C
+840,Tipton County,45,Munford Elementary,K8,3.7333333333333334,3.6,3.7333333333333334,NA,NA,NA,3.7,A
+840,Tipton County,48,Munford Middle School,K8,3.6,4,4,NA,NA,NA,3.8,A
+840,Tipton County,50,Munford High School,HS,3.466666666666667,3.6,4,4,2.933333333333333,NA,3.5,A
+850,Trousdale County,5,Trousdale Co Elementary,K8,3.7333333333333334,3.9,2.7333333333333334,NA,NA,NA,3.7,A
+850,Trousdale County,10,Trousdale Co High School,HS,3.2,2,4,3,4,NA,3.1,A
+850,Trousdale County,15,Jim Satterfield Middle School,K8,3.3333333333333335,3.8666666666666667,4,NA,NA,NA,3.6,A
+860,Unicoi County,5,Unicoi Co Middle School,K8,1.7333333333333334,0.2,2.533333333333333,NA,NA,NA,1.2,C
+860,Unicoi County,15,Love Chapel Elementary,K8,3.4,1.8666666666666667,4,NA,NA,4,3,B
+860,Unicoi County,25,Rock Creek Elementary,K8,3.4,2.8666666666666663,2.4000000000000004,NA,NA,NA,3.1,A
+860,Unicoi County,30,Temple Hill Elementary,K8,3,2,4,NA,NA,NA,2.7,B
+860,Unicoi County,35,Unicoi Co High School,HS,1.2666666666666666,1.7333333333333334,2.1333333333333333,4,3.2,2,2.1,B
+860,Unicoi County,40,Unicoi Elementary,K8,2,2.2666666666666666,2.2666666666666666,NA,NA,NA,2.1,B
+870,Union County,5,Big Ridge Elementary,K8,2,2.2,4,NA,NA,NA,2.3,B
+870,Union County,25,H Maynard Middle School,K8,2,2.2666666666666666,4,NA,NA,NA,2.3,B
+870,Union County,35,Luttrell Elementary,K8,2,2,2.5999999999999996,NA,NA,NA,2.1,B
+870,Union County,40,Maynardville Elementary,K8,1,0.8,1.8,NA,NA,NA,1,D
+870,Union County,45,Sharps Chapel Elementary,K8,2.5999999999999996,2,3.4,NA,NA,NA,2.4,B
+870,Union County,55,Union County High School,HS,2.4,1.9999999999999998,2.4000000000000004,4,0.6,NA,2,C
+870,Union County,57,Paulette Elementary School,K8,1,0.4,2.8,NA,NA,NA,0.9,D
+870,Union County,60,Tennessee Virtual Academy,K8,0.4,0,3.8666666666666667,NA,NA,NA,0.6,D
+870,Union County,70,Tennessee Virtual High School,K8,NA,0.5333333333333333,NA,NA,NA,NA,0.5,D
+880,Van Buren County,30,Spencer Elementary,K8,3.4,2,3,NA,NA,NA,2.8,B
+880,Van Buren County,35,Van Buren Co High School,HS,2.1999999999999997,3.6,2.5999999999999996,4,2,NA,2.7,B
+890,Warren County,10,Centertown Elementary,K8,2.5999999999999996,0,3.6,NA,NA,NA,1.7,C
+890,Warren County,20,Dibrell Elementary,K8,0.8666666666666667,0.4,3.9,NA,NA,1,1,D
+890,Warren County,30,Eastside Elementary,K8,1.8,0.6666666666666667,3.1333333333333333,NA,NA,2,1.6,C
+890,Warren County,38,Hickory Creek School,K8,2.5999999999999996,2.5,1.7,NA,NA,2.7333333333333334,2.5,B
+890,Warren County,40,Irving College Elementary,K8,2,1.4,3.2,NA,NA,NA,1.9,C
+890,Warren County,50,Morrison Elementary,K8,2.1333333333333333,1.8666666666666667,4,NA,NA,NA,2.2,B
+890,Warren County,63,Bobby Ray Memorial,K8,1.2000000000000002,1.1,2.3,NA,NA,3.1333333333333333,1.5,C
+890,Warren County,75,Warren County Middle School,K8,1.5,0.2,4,NA,NA,0.7333333333333333,1.2,C
+890,Warren County,80,Warren County High School,HS,2.5,0.2,3.8,3.7333333333333334,3.1333333333333333,0.1,2,C
+890,Warren County,85,West Elementary,K8,2.2666666666666666,2.2,2.5,NA,NA,4,2.4,B
+900,Washington County,25,Boones Creek Elementary,K8,2.4,2.2,1.4,NA,NA,NA,2.2,B
+900,Washington County,30,Boones Creek Middle School,K8,3.4,2.8666666666666663,1.1333333333333333,NA,NA,NA,3,B
+900,Washington County,37,Daniel Boone High School,HS,3,1.4,3.7333333333333334,2.5999999999999996,2.6,NA,2.5,B
+900,Washington County,38,David Crockett High School,HS,2.7333333333333334,2.1999999999999997,3.6,3.6,2.1999999999999997,NA,2.6,B
+900,Washington County,45,Fall Branch Elementary,K8,2,1.6,2,NA,NA,NA,1.8,C
+900,Washington County,50,Grandview Elementary School,K8,2.5999999999999996,2,2.1333333333333333,NA,NA,NA,2.3,B
+900,Washington County,55,Gray Elementary School,K8,3.8,3.8666666666666667,3.4,NA,NA,NA,3.8,A
+900,Washington County,60,Jonesborough Elementary,K8,2.4,2,3,NA,NA,NA,2.3,B
+900,Washington County,65,Jonesborough Middle School,K8,3.6,3.8666666666666667,1.4,NA,NA,NA,3.5,A
+900,Washington County,75,Lamar Elementary,K8,2.8,2.8666666666666663,2.8666666666666663,NA,NA,NA,2.8,B
+900,Washington County,80,Ridgeview Elementary School,K8,3.2,2,2.5999999999999996,NA,NA,NA,2.7,B
+900,Washington County,90,South Central Elementary,K8,1.8,0.4,2.2,NA,NA,NA,1.3,C
+900,Washington County,95,Sulphur Springs Elementary,K8,3.6,3.2,1.6,NA,NA,NA,3.2,A
+900,Washington County,105,University School,HS,4,2,4,4,4,NA,3.4,A
+900,Washington County,110,West View School,K8,3,3.7333333333333334,2.8,NA,NA,NA,3.3,A
+901,Johnson City,7,Cherokee Elementary,K8,3.8,3.8,4,NA,NA,4,3.8,A
+901,Johnson City,15,Fairmont Elementary,K8,3.8666666666666667,0.6000000000000001,3.7333333333333334,NA,NA,4,2.7,B
+901,Johnson City,16,Indian Trail Intermediate School,K8,3.6,0.4,3.6,NA,NA,0,2.1,B
+901,Johnson City,18,Lake Ridge Elementary,K8,3.6,3.5,3.3333333333333335,NA,NA,4,3.6,A
+901,Johnson City,20,Woodland Elementary,K8,3.6,3.3,3.4,NA,NA,4,3.5,A
+901,Johnson City,35,Liberty Bell Middle School,K8,3.2,3.5,1,NA,NA,0.9,2.9,B
+901,Johnson City,37,Mountain View Elementary,K8,2,3.3333333333333335,3.8666666666666667,NA,NA,4,2.9,B
+901,Johnson City,40,North Side Elementary,K8,2.4,2.1,2.5999999999999996,NA,NA,4,2.5,B
+901,Johnson City,45,Science Hill High School,HS,3.2,3.5,2.1,3.7333333333333334,2.933333333333333,2,3,B
+901,Johnson City,55,South Side Elementary,K8,4,4,4,NA,NA,4,4,A
+901,Johnson City,65,Towne Acres Elementary,K8,4,3.7333333333333334,4,NA,NA,NA,3.9,A
+910,Wayne County,5,Collinwood Elementary,K8,1.8000000000000003,2.2,2.4000000000000004,NA,NA,NA,2,C
+910,Wayne County,10,Collinwood High School,HS,2,2.5999999999999996,1.4,3,3,NA,2.4,B
+910,Wayne County,15,Collinwood Middle School,K8,2.4,3.6,2.6,NA,NA,NA,2.9,B
+910,Wayne County,25,Frank Hughes School,HS,1,1.8000000000000003,4,NA,NA,NA,1.7,C
+910,Wayne County,35,Wayne County High School,HS,3,2,4,4,4,NA,3.1,A
+910,Wayne County,40,Waynesboro Elementary,K8,2.1999999999999997,3.6,4,NA,NA,NA,2.9,B
+910,Wayne County,45,Waynesboro Middle School,K8,2.4,1.6,2.4000000000000004,NA,NA,NA,2.1,B
+920,Weakley County,5,Dresden Elementary,K8,4,3.8666666666666667,4,NA,NA,NA,3.9,A
+920,Weakley County,7,Dresden Middle School,K8,2.5999999999999996,3.2,4,NA,NA,NA,3,B
+920,Weakley County,10,Dresden High School,HS,1.8000000000000003,1.8,4,3.2,3.6,NA,2.5,B
+920,Weakley County,15,Gleason School,HS,2,3,4,4,4,NA,3,B
+920,Weakley County,25,Greenfield School,HS,2.5999999999999996,2.5999999999999996,3.6,4,4,NA,3.1,A
+920,Weakley County,35,Martin Elementary,K8,3.6,1.1,3.8666666666666667,NA,NA,NA,2.6,B
+920,Weakley County,40,Westview High School,HS,3.8666666666666667,2.5999999999999996,4,3.4,3.6,NA,3.4,A
+920,Weakley County,45,Martin Middle School,K8,3,1.1333333333333333,4,NA,NA,NA,2.4,B
+920,Weakley County,60,Sharon School,K8,2.5999999999999996,0,2.2,NA,NA,NA,1.5,C
+930,White County,10,Bon De Croft Elementary,K8,2,2,3.6,NA,NA,NA,2.2,B
+930,White County,15,Cassville Elementary,K8,3,2.8,2.4,NA,NA,NA,2.9,B
+930,White County,25,Doyle Elementary,K8,2.1999999999999997,0.8,2,NA,NA,NA,1.6,C
+930,White County,35,Findlay Elementary,K8,4,1,4,NA,NA,NA,2.8,B
+930,White County,37,Northfield Elementary School,K8,2.5999999999999996,2,2.5999999999999996,NA,NA,NA,2.4,B
+930,White County,40,White County High School,HS,2.7333333333333334,2.7333333333333334,4,2.8,3,NA,2.9,B
+930,White County,50,White Co Middle School,K8,1.7333333333333334,0.4,3.4,NA,NA,NA,1.4,C
+930,White County,60,Woodland Park Elementary,K8,1.4,2.8666666666666663,2.1333333333333333,NA,NA,NA,2.1,B
+940,Williamson County,4,Allendale Elementary School,K8,4,2.4,4,NA,NA,NA,3.4,A
+940,Williamson County,5,Bethesda Elementary,K8,4,2.4,3.8,NA,NA,NA,3.3,A
+940,Williamson County,12,Brentwood High School,HS,3.6,0.4,2.5999999999999996,3.4,4,NA,2.6,B
+940,Williamson County,17,Centennial High School,HS,3.7,0.1,3.5,3.3333333333333335,2.933333333333333,1.8,2.4,B
+940,Williamson County,20,College Grove Elementary,K8,4,0.4,4,NA,NA,NA,2.6,B
+940,Williamson County,22,Clovercroft Elementary School,K8,4,3.8666666666666667,4,NA,NA,NA,3.9,A
+940,Williamson County,23,Chapman's Retreat Elementary,K8,3.6,1.5333333333333334,3.8,NA,NA,NA,2.8,B
+940,Williamson County,27,Edmondson Elementary,K8,4,2,4,NA,NA,NA,3.2,A
+940,Williamson County,28,Crockett Elementary,K8,4,0.6000000000000001,4,NA,NA,NA,2.6,B
+940,Williamson County,30,Fairview Elementary,K8,4,1.8000000000000003,3.3333333333333335,NA,NA,NA,3.1,A
+940,Williamson County,33,Fairview Middle School,K8,3.6,3,3.7333333333333334,NA,NA,NA,3.4,A
+940,Williamson County,35,Fairview High School,HS,2.0666666666666664,1.4,3.7333333333333334,3,4,NA,2.5,B
+940,Williamson County,40,Franklin High School,HS,3.6,3.6,2.7333333333333334,4,4,2,3.5,A
+940,Williamson County,41,Fred J Page Middle School,K8,3.4,3.1,3.8,NA,NA,NA,3.3,A
+940,Williamson County,42,Fred J Page High School,HS,3.6,2,4,4,4,NA,3.3,A
+940,Williamson County,45,Grassland Elementary,K8,4,1.6,4,NA,NA,NA,3,B
+940,Williamson County,46,Grassland Middle School,K8,4,3.6,4,NA,NA,NA,3.8,A
+940,Williamson County,48,Heritage Elementary,K8,3.6,2.5999999999999996,4,NA,NA,3.8,3.3,A
+940,Williamson County,49,Heritage Middle School,K8,3.4,3.9,3.8,NA,NA,NA,3.6,A
+940,Williamson County,50,Hillsboro Elementary/ Middle School,K8,3.8,3.466666666666667,3.6,NA,NA,NA,3.6,A
+940,Williamson County,52,Independence High School,HS,3.6,3.6,3.6,4,4,NA,3.7,A
+940,Williamson County,54,Spring Station Middle School,K8,3.6,3.7,4,NA,NA,NA,3.7,A
+940,Williamson County,57,Hunters Bend Elementary,K8,4,1.6,3.8,NA,NA,NA,3,B
+940,Williamson County,58,Jordan Elementary School,K8,NA,3.4,NA,NA,NA,NA,3.4,A
+940,Williamson County,59,Kenrose Elementary,K8,4,0.9333333333333335,3.8666666666666667,NA,NA,4,2.9,B
+940,Williamson County,60,Lipscomb Elementary,K8,4,3.2,4,NA,NA,NA,3.7,A
+940,Williamson County,61,Longview Elementary School,K8,3.4,2,4,NA,NA,NA,2.9,B
+940,Williamson County,63,Renaissance High School,HS,4,0.8,4,4,4,NA,3,B
+940,Williamson County,64,Pearre Creek Elementary School,K8,4,1.8,3.8,NA,NA,NA,3.1,A
+940,Williamson County,65,Nolensville Elementary,K8,4,2.2666666666666666,4,NA,NA,4,3.4,A
+940,Williamson County,66,Nolensville High School,K8,3.6,3.6,2.5999999999999996,NA,NA,NA,3.5,A
+940,Williamson County,67,Brentwood Middle School,K8,4,3.8666666666666667,4,NA,NA,NA,3.9,A
+940,Williamson County,68,Oak View Elem School,K8,2.4,1.6,4,NA,NA,NA,2.2,B
+940,Williamson County,71,Mill Creek Elementary School,K8,4,3.8,4,NA,NA,NA,3.9,A
+940,Williamson County,72,Mill Creek Middle School,K8,3.6,3.5,4,NA,NA,NA,3.6,A
+940,Williamson County,74,Ravenwood High School,HS,4,3.6,4,3.4,4,NA,3.9,A
+940,Williamson County,76,Scales Elementary,K8,4,1.4,4,NA,NA,NA,3,B
+940,Williamson County,77,Sunset Elementary School,K8,4,2.4000000000000004,4,NA,NA,4,3.4,A
+940,Williamson County,78,Sunset Middle School,K8,4,3.6,4,NA,NA,NA,3.8,A
+940,Williamson County,79,Summit High School,HS,3.4,1.8666666666666667,2.5999999999999996,3.8,2.4,NA,2.7,B
+940,Williamson County,80,Trinity Elementary,K8,4,3,4,NA,NA,NA,3.6,A
+940,Williamson County,81,Thompson's Station Elementary School,K8,NA,1.8666666666666667,NA,NA,NA,NA,1.9,C
+940,Williamson County,82,Thompson's Station Middle School,K8,NA,2.8,NA,NA,NA,NA,2.8,B
+940,Williamson County,83,Walnut Grove Elementary,K8,3.6,1.4,4,NA,NA,NA,2.8,B
+940,Williamson County,84,Woodland Middle School,K8,4,3.6,3.4,NA,NA,NA,3.8,A
+940,Williamson County,88,Westwood Elementary School,K8,4,2.7333333333333334,4,NA,NA,4,3.6,A
+940,Williamson County,89,Winstead Elementary School,K8,3.2,0.4,4,NA,NA,NA,2.2,B
+941,Franklin SSD,5,Johnson Elementary,K8,4,1.2000000000000002,2.8,NA,NA,3.8,2.9,B
+941,Franklin SSD,10,Franklin Elementary,K8,3.6,3.2,3.8666666666666667,NA,NA,4,3.5,A
+941,Franklin SSD,21,Freedom Intermediate,K8,3.6,3.6,3.8,NA,NA,4,3.7,A
+941,Franklin SSD,22,Freedom Middle School,K8,3.0666666666666664,0.9,4,NA,NA,2.8,2.4,B
+941,Franklin SSD,25,Liberty Elementary,K8,4,1.5,4,NA,NA,4,3.1,A
+941,Franklin SSD,30,Moore Elementary,K8,4,3.6,4,NA,NA,3.7333333333333334,3.8,A
+941,Franklin SSD,35,Poplar Grove K-4,K8,2.6,3.1,4,NA,NA,3.8,3,B
+941,Franklin SSD,40,Poplar Grove 5-8,K8,3.2,0.5,4,NA,NA,0.8,2.1,B
+950,Wilson County,5,Carroll Oakland Elementary,K8,1.6,3.8,3.8666666666666667,NA,NA,2.2666666666666666,2.7,B
+950,Wilson County,10,Gladeville Elementary,K8,2.5999999999999996,0.8,3.466666666666667,NA,NA,NA,2,C
+950,Wilson County,15,Springdale Elementary School,K8,4,3.3,3.7333333333333334,NA,NA,4,3.7,A
+950,Wilson County,20,Lakeview Elementary School,K8,3.8,2.5999999999999996,3.6,NA,NA,NA,3.3,A
+950,Wilson County,25,Lebanon High School,HS,2.5,2,2.9,3,3.2,1,2.4,B
+950,Wilson County,30,Mt. Juliet High School,HS,3.3333333333333335,3.9,4,3.6,3.7333333333333334,4,3.7,A
+950,Wilson County,32,Mt. Juliet Middle School,K8,3.8,2.9,3.7333333333333334,NA,NA,0,3.1,A
+950,Wilson County,33,West Wilson Middle School,K8,3.2,3.0999999999999996,3.9,NA,NA,2.2666666666666666,3.1,A
+950,Wilson County,35,Mt. Juliet Elementary,K8,3.4,2.4000000000000004,3.3333333333333335,NA,NA,4,3.1,A
+950,Wilson County,46,Rutland Elementary,K8,3.9,3.7,3.8,NA,NA,4,3.8,A
+950,Wilson County,50,Southside Elementary,K8,2.466666666666667,1.8666666666666667,3.7333333333333334,NA,NA,NA,2.4,B
+950,Wilson County,52,Stoner Creek Elementary,K8,3.4,0.6000000000000001,3.8,NA,NA,4,2.5,B
+950,Wilson County,55,Tuckers Crossroads Elementary,K8,2,2.2666666666666666,4,NA,NA,NA,2.3,B
+950,Wilson County,60,Watertown High School,HS,2.2666666666666666,3.6,3.8666666666666667,4,4,NA,3.3,A
+950,Wilson County,63,Watertown Elementary,K8,3.2,3.7333333333333334,3.6,NA,NA,NA,3.5,A
+950,Wilson County,65,West Elementary,K8,3.7333333333333334,3.7,3.466666666666667,NA,NA,4,3.7,A
+950,Wilson County,73,Wilson Central High School,HS,3.9,4,3.8,2.8666666666666663,3.0666666666666664,3.2,3.6,A
+950,Wilson County,80,W A Wright Elementary,K8,3.7333333333333334,3.8,3.8666666666666667,NA,NA,4,3.8,A
+950,Wilson County,87,Tennessee Virtual On-Line School,K8,2,0,2,NA,NA,NA,1.2,C
+950,Wilson County,90,Elzie D Patton Elementary School,K8,3.2,1.9,4,NA,NA,4,2.9,B
+950,Wilson County,95,Watertown Middle School,K8,0.8,0.4,4,NA,NA,NA,1,D
+951,Lebanon,5,Byars Dowdy Elementary,K8,2.8666666666666663,2.3,4,NA,NA,2.7333333333333334,2.8,B
+951,Lebanon,7,Coles Ferry Elementary,K8,2.5999999999999996,3.5,3.2,NA,NA,2.8666666666666663,3,B
+951,Lebanon,30,Sam Houston Elementary,K8,3.2,0.6000000000000001,4,NA,NA,4,2.5,B
+951,Lebanon,35,Walter J. Baird Middle School,K8,3.466666666666667,2.9,3.6,NA,NA,NA,3.3,A
+951,Lebanon,40,Castle Heights Elementary,K8,3.3333333333333335,0.7000000000000001,2.6999999999999997,NA,NA,4,2.4,B
+951,Lebanon,45,Winfree Bryant Middle School,K8,1.7,0.30000000000000004,3.4,NA,NA,2.8,1.5,C
+961,Alvin C York Institute,5,Alvin C. York Institute,HS,3,3.8,3,2.5999999999999996,3,NA,3.2,A
+963,Tennessee School for Blind,5,Tenn School For Blind,K8,NA,2,NA,NA,NA,NA,2,C
+964,Tennessee School for the Deaf,10,Tennessee School for the Deaf Upper School,K8,2,0.26666666666666666,4,NA,NA,NA,1.5,C
+970,Department Of Children's Services Education Division,45,Wilder Youth Development Center,HS,NA,0.13333333333333333,4,1.2666666666666666,0,NA,0.8,D
+970,Department Of Children's Services Education Division,140,DCS Affiliated Schools,HS,NA,NA,4,1,0,NA,1.3,C
+985,Achievement School District,5,Corning Achievement Elementary,K8,3,2,0.4,NA,NA,NA,2.3,B
+985,Achievement School District,10,Westside Middle School,K8,0.4,2,0.26666666666666666,NA,NA,NA,1,D
+985,Achievement School District,15,Frayser Achievement Elementary,K8,1.8,2,1.4,NA,NA,NA,1.8,C
+985,Achievement School District,20,Whitney Achievement Elementary School,K8,2.2,2.8666666666666663,4,NA,NA,NA,2.6,B
+985,Achievement School District,25,Georgian Hills Achievement Elementary School,K8,1,3,4,NA,NA,NA,2.1,B
+985,Achievement School District,45,Pathways in Education - TN,HS,2,2,4,2.2,0.2,NA,1.9,C
+985,Achievement School District,50,Pathways in Education - Whitehaven,HS,1,0.4,4,1.2000000000000002,0,NA,0.9,D
+985,Achievement School District,8005,Brick Church: A LEAD Public School,K8,1.3,4,2.2666666666666666,NA,NA,3.1333333333333333,2.5,B
+985,Achievement School District,8010,Cornerstone Prep - Lester Campus,K8,0,1.1,0.6000000000000001,NA,NA,4,0.8,D
+985,Achievement School District,8015,Humes Preparatory Academy Middle  School,K8,1,0.26666666666666666,1.8666666666666667,NA,NA,NA,0.8,D
+985,Achievement School District,8020,KIPP Memphis Preparatory Middle,K8,1,0.13333333333333333,3,NA,NA,NA,0.9,D
+985,Achievement School District,8024,Aspire Hanley Middle School,K8,2.2666666666666666,2.5999999999999996,2.4000000000000004,NA,NA,NA,2.4,B
+985,Achievement School District,8025,Aspire Hanley Elementary,K8,1.4,3,0,NA,NA,NA,1.9,C
+985,Achievement School District,8040,KIPP Memphis Academy Elementary,K8,1.2000000000000002,0.4,0.26666666666666666,NA,NA,NA,0.8,D
+985,Achievement School District,8050,Aspire Coleman,K8,0,0.13333333333333333,1.4,NA,NA,NA,0.2,D
+985,Achievement School District,8055,Fairley High School,HS,0.8666666666666667,0.26666666666666666,2.1333333333333333,2,0,NA,0.7,D
+985,Achievement School District,8060,Promise Academy - Spring Hill,K8,0,0.26666666666666666,2.4000000000000004,NA,NA,NA,0.3,D
+985,Achievement School District,8065,Martin Luther King Preparatory High School,HS,1.1333333333333333,0.13333333333333333,0.26666666666666666,3.4,0,NA,0.6,D
+985,Achievement School District,8070,Lester Prep,K8,1,3.8,0,NA,NA,2,2,C
+985,Achievement School District,8075,Freedom Preparatory Academy Charter Elementary School,K8,3,2.1333333333333333,0.5333333333333333,NA,NA,2,2.4,B
+985,Achievement School District,8090,Neely's Bend: A LEAD Public School,K8,1.1,2.9,3.0999999999999996,NA,NA,0.8,1.9,C
+985,Achievement School District,8095,Libertas School,K8,2,3.8666666666666667,3.7333333333333334,NA,NA,NA,2.9,B
+985,Achievement School District,8105,Wooddale Middle School,K8,1,0.4,2.4000000000000004,NA,NA,1,0.9,D
+985,Achievement School District,8110,KIPP Memphis Preparatory Elementary,K8,1,1,4,NA,NA,2.8,1.5,C
+985,Achievement School District,8115,Cornerstone Prep Denver Campus,K8,2.7333333333333334,3.7333333333333334,0,NA,NA,NA,2.9,B
+985,Achievement School District,8120,Memphis Scholars Florida Kansas,K8,1.8,0,4,NA,NA,NA,1.3,C
+985,Achievement School District,8125,Memphis Scholars Caldwell-Guthrie,K8,1.2000000000000002,3,0,NA,NA,NA,1.8,C
+985,Achievement School District,8130,Memphis Scholars Raleigh-Egypt,K8,1,0.8666666666666667,2,NA,NA,NA,1,D
+985,Achievement School District,8135,Kirby Middle School,K8,1.1,2,0.4,NA,NA,1,1.3,C
+985,Achievement School District,8140,Hillcrest High School,HS,1.1333333333333333,1.2666666666666666,3.466666666666667,0,0,NA,1.1,C
+986,Tennessee State Board of Education,8005,Bluff City High School,K8,1.7333333333333334,3.6,0,NA,NA,4,2.4,B

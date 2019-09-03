@@ -1,0 +1,630 @@
+---
+date: "2018-19"
+output: 
+  pdf_document:
+params:
+  district: 650
+  school_ind: 6
+  set_title: "School Heat Map"
+
+title: "`r params$set_title`"
+
+
+header-includes:
+# - \usepackage[head=30pt,foot=40pt]{geometry}
+- \usepackage{booktabs}
+- \usepackage{longtable}
+- \usepackage{array}
+- \usepackage{multirow}
+- \usepackage{wrapfig}
+- \usepackage{float}
+- \usepackage{colortbl}
+- \usepackage{pdflscape}
+- \usepackage{tabu}
+- \usepackage{threeparttable}
+- \usepackage{threeparttablex}
+- \usepackage[normalem]{ulem}
+- \usepackage{makecell}
+- \usepackage{xcolor}
+- \usepackage{fancyhdr}
+- \usepackage{hyperref}
+- \usepackage{caption}
+
+# - \pagestyle{fancy}
+# - \fancyhead[L]{\includegraphics[height=1.2cm]{logo.png}}
+# - \fancyfoot[C]{For more information regarding indicators and weights for school accountability results, please see section 6.4 of the}
+# - \fancyfoot[L]{\thepage}
+# - \fancypagestyle{plain}{\pagestyle{fancy}}
+
+---
+
+\addtolength{\headheight}{1.0cm}
+
+\pagestyle{fancyplain}
+\lhead{\includegraphics[height=1.2cm]{logo.png}}
+\renewcommand{\headrulewidth}{2pt}
+
+
+
+\captionsetup[table]{labelformat=empty}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+<!-- \fancyfoot{For more information regarding indicators and weights for school accountability results, please see section 6.4 of the      \hyperlink{protocol}{https://www.tn.gov/content/dam/tn/education/accountability/Accountability_Protocol_2019.pdf}.} -->
+
+
+```{r setup, include=FALSE}
+# ![Caption](smallorb.png) 
+# knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(janitor)
+library(readxl)
+library(readstata13)
+library(broman)
+library(knitr)
+library(kableExtra)
+library(pander)
+library(formattable)
+
+final_score = c("3.1-4.0", "2.1-3.0", "1.1-2.0", "0-1.0", "Priority School")
+grade = c("A", "B", "C", "D", "F")
+grade_tbl <- data.frame(`Final Score` = final_score, "Grade" = grade) %>% 
+  rename("Final Score" = Final.Score)
+
+sub_score = c("4", "3", "2", "1", "0")
+color = c(" ", " ", " ", " ", " ")
+color_key <- data.frame(`Subgroup Score` = sub_score, "Color" = color) %>% 
+  rename("Subgroup Score" = Subgroup.Score) %>% 
+    mutate(
+    Color = case_when(
+          `Subgroup Score` == 4 ~ cell_spec(Color, "latex", background = '#009900'),
+          `Subgroup Score` == 3 ~ cell_spec(Color, "latex", background = '#80ffaa'),
+          `Subgroup Score` == 2 ~ cell_spec(Color, "latex", background = '#ffff66'),
+          `Subgroup Score` == 1 ~ cell_spec(Color, "latex", background = '#ff9999'),
+          `Subgroup Score` == 0 ~ cell_spec(Color, "latex", background = '#ff0000'),
+          TRUE ~ cell_spec(Color, "latex", background = 'white')
+    )
+  ) %>% 
+  rename("Subgroup Indicator Score" = `Subgroup Score`)
+
+heat_map_weightings <- read_csv("N:/ORP_accountability/projects/Andrew/Accountability/2019/school_heat_map_data/heat_map_weightings_Aug15.csv")
+
+total_acct <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/school_accountability_file_aug14.csv")
+
+school_acct <- read_csv("N:/ORP_accountability/projects/Andrew/Accountability/2019/school_heat_map_data/school_report_scores_Aug15.csv") %>% 
+  filter(!is.na(pool)) %>% 
+  left_join(total_acct %>% select(system, school, designation_ineligible) %>% distinct(), by = c('system', 'school')) %>% 
+  filter(designation_ineligible == 0) %>% 
+  select(-designation_ineligible)
+# district <- 10
+# school_10_2 <- school_acct %>% 
+# filter(system == district, school == 2) %>% 
+# select(Indicator:`Indicator Score (60-40)`)
+
+heat_map_df_list <- function(base_df, system_no) {
+dist_acct <- base_df %>% 
+  filter(system == system_no) %>% 
+  arrange(desc(pool), school_name)
+dist_schools <- unique(dist_acct$school)
+df_list <- list()
+
+for (school_no in dist_schools) {
+out_df <- dist_acct %>%
+filter(school == school_no)
+df_list <- c(df_list, list(out_df))
+}
+return(df_list)
+}
+
+dist_dfs <- heat_map_df_list(school_acct, params$district)
+
+dist_pool_school <- school_acct %>% 
+  filter(system == params$district) %>% 
+  group_by(school, school_name, pool) %>% 
+  summarise(temp = max(`Indicator Score (60-40)`)) %>% 
+  ungroup() %>% 
+  arrange(desc(pool), school_name)
+dist_10_school_list <- dist_pool_school$school_name
+dist_school_nos <- dist_pool_school$school
+dist_pools <- dist_pool_school$pool
+
+school_num <- params$school_ind
+
+# tcap_rates <- read_rds("N:/ORP_accountability/projects/Andrew/Pre-Coding-2019/data/school_tcap_rates.rds")
+tcap_rates <- total_acct %>% 
+  filter(system == params$district, school == dist_school_nos[[params$school_ind]], indicator=='Achievement') %>% 
+    mutate(
+    subgroup = case_when(
+      subgroup == "Black/Hispanic/Native American" ~ "BHN",
+      subgroup == "Economically Disadvantaged" ~ "ED",
+      subgroup == "Students with Disabilities" ~ "SWD",
+      subgroup == "English Learners with Transitional 1-4" ~ "EL",
+      TRUE ~ subgroup
+    ),
+    participation_rate = if_else(is.na(score), NA_real_, participation_rate)
+  ) %>% 
+  filter(subgroup %in% c('All Students', 'BHN', 'ED', 'SWD', 'EL')) %>% 
+  select(system, subgroup, participation_rate)
+
+tcap_school <- tcap_rates %>% 
+  rename(Percent = participation_rate) %>% 
+  mutate(Met = ifelse(Percent >= 95, 'Y', 'N')) %>% 
+  gather(key = 'Measure', value = 'metric', Percent:Met) %>% 
+  spread(subgroup, metric) 
+
+if (!"BHN" %in% colnames(tcap_school)){
+  tcap_school <- tcap_school %>% 
+    mutate(BHN = NA_real_)
+}
+if (!"ED" %in% colnames(tcap_school)){
+  tcap_school <- tcap_school %>% 
+    mutate(ED = NA_real_)
+}
+if (!"EL" %in% colnames(tcap_school)){
+  tcap_school <- tcap_school %>% 
+    mutate(EL = NA_real_)
+}
+if (!"SWD" %in% colnames(tcap_school)){
+  tcap_school <- tcap_school %>% 
+    mutate(SWD = NA_real_)
+}
+
+
+tcap_school <-  tcap_school %>%
+  select(Measure, `All Students`, BHN, ED, EL, SWD) %>% 
+ # select(Measure:SWD) %>%
+  arrange(desc(Measure)) %>%
+  rename(' ' = Measure)
+
+# tcap_school <- tcap_rates %>%
+#   select(system:EL, SWD) %>%
+#   filter(system == params$district, school == dist_school_nos[[school_num]]) %>%
+#   gather(key = 'subgroup', value = 'Percent', `All Students`:SWD) %>%
+#   mutate(Met = ifelse(Percent >= 95, 'Y', 'N')) %>%
+#   gather(key = 'Measure', value = 'metric', Percent:Met) %>%
+#   spread(subgroup, metric) %>%
+#   select(Measure:SWD) %>%
+#   arrange(desc(Measure)) %>%
+#   rename(' ' = Measure)
+
+# act_sat_participation <- read_rds("N:/ORP_accountability/projects/Andrew/Pre-Coding-2019/data/school_act_sat_rates.rds")
+act_sat <- total_acct %>% 
+  filter(system == params$district, school == dist_school_nos[[params$school_ind]], indicator=='Ready Graduates') %>% 
+    mutate(
+    subgroup = case_when(
+      subgroup == "Black/Hispanic/Native American" ~ "BHN",
+      subgroup == "Economically Disadvantaged" ~ "ED",
+      subgroup == "Students with Disabilities" ~ "SWD",
+      subgroup == "English Learners with Transitional 1-4" ~ "EL",
+      TRUE ~ subgroup
+    ),
+   participation_rate = if_else(is.na(score), NA_real_, participation_rate)
+  ) %>% 
+  filter(subgroup %in% c('All Students', 'BHN', 'ED', 'SWD', 'EL')) %>% 
+  select(system, subgroup, participation_rate)
+
+if(dist_pools[[school_num]] == 'HS') {
+
+  act_sat_school <- act_sat %>% 
+    rename(Percent = participation_rate) %>% 
+    mutate(Met = ifelse(Percent >= 95, 'Y', 'N')) %>% 
+    gather(key = 'Measure', value = 'metric', Percent:Met) %>% 
+    spread(subgroup, metric) 
+  
+  if (!"BHN" %in% colnames(act_sat_school)){
+    act_sat_school <- act_sat_school %>% 
+      mutate(BHN = NA_real_)
+  }
+  if (!"ED" %in% colnames(act_sat_school)){
+    act_sat_school <- act_sat_school %>% 
+      mutate(ED = NA_real_)
+  }
+  if (!"EL" %in% colnames(act_sat_school)){
+    act_sat_school <- act_sat_school %>% 
+      mutate(EL = NA_real_)
+  }
+  if (!"SWD" %in% colnames(act_sat_school)){
+    act_sat_school <- act_sat_school %>% 
+      mutate(SWD = NA_real_)
+  }
+
+  
+  act_sat_school <-  act_sat_school %>%
+    select(Measure, `All Students`, BHN, ED, EL, SWD) %>%
+    arrange(desc(Measure)) %>%
+    rename(' ' = Measure)
+}
+
+school_weighting <- heat_map_weightings %>% 
+  filter(system == params$district, school == dist_school_nos[[school_num]])
+
+school_final_grades <- read_csv("N:/ORP_accountability/projects/Andrew/Accountability/2019/school_heat_map_data/school_final_grades_Aug15.csv") %>% 
+  filter(system == params$district, school == dist_school_nos[[params$school_ind]])
+
+# school_acct_df <- total_acct %>%
+#   filter(system == params$district, school == dist_school_nos[[school_num]], subgroup %in% c('All Students', "Black/Hispanic/Native American",
+#                                   "Economically Disadvantaged", "Students with Disabilities", "English Learners with Transitional 1-4")) %>%
+#   mutate(
+#     subgroup = case_when(
+#       subgroup == "Black/Hispanic/Native American" ~ "BHN",
+#       subgroup == "Economically Disadvantaged" ~ "ED",
+#       subgroup == "Students with Disabilities" ~ "SWD",
+#       subgroup == "English Learners with Transitional 1-4" ~ "EL",
+#       TRUE ~ subgroup
+#     )
+#   ) %>%
+#   select(indicator, subgroup, score_abs:grade)
+
+```
+
+
+
+```{r echo = FALSE}
+school_base_df <- dist_dfs[[school_num]] %>% 
+  select(Indicator:`Indicator Score (60-40)`) 
+if (!"BHN" %in% colnames(school_base_df)){
+  school_base_df <- school_base_df %>% 
+    mutate(BHN = NA_real_)
+}
+if (!"ED" %in% colnames(school_base_df)){
+  school_base_df <- school_base_df %>% 
+    mutate(ED = NA_real_)
+}
+if (!"EL" %in% colnames(school_base_df)){
+  school_base_df <- school_base_df %>% 
+    mutate(EL = NA_real_)
+}
+if (!"SWD" %in% colnames(school_base_df)){
+  school_base_df <- school_base_df %>% 
+    mutate(BHN = NA_real_)
+}
+
+super_sub_check_df <- school_base_df %>% 
+  select(BHN, ED, EL, SWD)
+
+if(ncol(super_sub_check_df[,colSums(is.na(super_sub_check_df)) == 7]) == 4){
+  school_base_df <- school_base_df %>% 
+  select(Indicator, `All Students`, BHN, ED, EL, SWD, `Super Subgroup`, `Indicator Score (60-40)`) %>% 
+  replace(is.na(.), '') %>% 
+  mutate_at(
+    .vars = c("All Students","BHN","ED","EL", "SWD", "Super Subgroup"),
+    .f = ~ case_when(
+          . == 4 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#009900'),
+          . == 3 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#80ffaa'),
+          . == 2 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#ffff66'),
+          . == 1 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#ff9999'),
+          . == 0 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#ff0000'),
+          TRUE ~ cell_spec(., "latex", background = 'white')
+  )
+) %>% 
+  mutate(
+    `All Students` = paste0('\\hyperlink{allstudents}{',`All Students`,'}'),
+    BHN = paste0('\\hyperlink{BHN}{',BHN,'}'),
+    ED = paste0('\\hyperlink{ED}{',ED,'}'),
+    EL = paste0('\\hyperlink{EL}{',EL,'}'),
+    SWD = paste0('\\hyperlink{SWD}{',SWD,'}')
+  )
+} else {
+  school_base_df <- school_base_df %>% 
+    select(Indicator, `All Students`, BHN, ED, EL, SWD, `Indicator Score (60-40)`) %>% 
+    replace(is.na(.), '') %>% 
+    mutate_at(
+      .vars = c("All Students","BHN","ED","EL", "SWD"),
+      .f = ~ case_when(
+            . == 4 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#009900'),
+            . == 3 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#80ffaa'),
+            . == 2 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#ffff66'),
+            . == 1 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#ff9999'),
+            . == 0 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#ff0000'),
+            TRUE ~ cell_spec(., "latex", background = 'white')
+    )
+  ) %>% 
+    mutate(
+      `All Students` = paste0('\\hyperlink{allstudents}{',`All Students`,'}'),
+      BHN = paste0('\\hyperlink{BHN}{',BHN,'}'),
+      ED = paste0('\\hyperlink{ED}{',ED,'}'),
+      EL = paste0('\\hyperlink{EL}{',EL,'}'),
+      SWD = paste0('\\hyperlink{SWD}{',SWD,'}')
+    )
+}
+
+if(dist_pools[[school_num]] == 'K8') {
+  school_base_df <- school_base_df %>% 
+    filter(! Indicator %in% c('Graduation Rate', 'Ready Graduate'))
+}
+
+if(ncol(super_sub_check_df[,colSums(is.na(super_sub_check_df)) == 7]) == 4) {
+school_base_df %>%
+  #rename(`Indicator Score (60-40 Weighting)` = `Indicator Score (60-40)`) %>% 
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "", align = c('l', 'c', 'c', 'c', 'c', 'c', 'c', 'c')) %>% 
+  kable_styling(position = 'center') # %>% 
+  #column_spec(ncol(school_base_df), width = "8em")
+} else {
+school_base_df %>%
+  #rename(`Indicator Score (60-40 Weighting)` = `Indicator Score (60-40)`) %>% 
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "", align = c('l', 'c', 'c', 'c', 'c', 'c', 'c')) %>% 
+  kable_styling(position = 'center')
+}
+
+ith_school_df <- dist_dfs[[school_num]]
+
+school_final_score <- school_final_grades$final_score
+# school_final_grade <- school_final_grades$final_grade
+
+```
+<!-- \href{run:N:/ORP_accountability/projects/Andrew/Pre-Coding-2019/heat_maps/dist_10/HS_Clinton High School_25_2019.pdf}{LINK TO PDF} -->
+
+\vspace{10pt}
+
+<!-- Use this \hyperlink{test}{link} to jump to the 4th page -->
+<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Final Score:** `r school_final_score`  -->
+
+
+<!-- \vspace{10pt} -->
+
+```{r echo=FALSE, results='asis'}
+# final_score_df <- data.frame("Final Score", as.character(school_final_score), stringsAsFactors = FALSE) %>% 
+#   rename(`Final Score` = Final.Score)
+
+#t1 <- kable(final_score_df, format = 'latex',escape = F, booktabs = T, align = 'c')
+
+t2 <- kable(color_key, format = 'latex',escape = F, booktabs = T, align = 'c') %>% 
+  column_spec(1, width = "9em")
+
+#    \\begin{minipage}{.5\\linewidth}
+    #   \\caption{}
+    #   \\centering",
+    #     t1,
+    # "\\end{minipage}%
+cat(c("\\begin{table}[h]
+    \\begin{minipage}{.5\\linewidth}
+       \\caption{}
+       \\centering",
+         paste0("{\\large \\textbf{ Final Score}: ", as.character(school_final_score), '}'),
+    "\\end{minipage}
+    \\begin{minipage}{0.5\\linewidth}
+      \\centering
+        \\caption{Color Key}",
+        t2,
+    "\\end{minipage} 
+\\end{table}"
+)) 
+```
+\vspace{2pt}
+
+### TNReady Participation Rate
+
+```{r echo=FALSE}
+if(ncol(super_sub_check_df[,colSums(is.na(super_sub_check_df)) == 7]) == 4) {
+tcap_table <- tcap_school %>% 
+  mutate(`Super Subgroup` = NA) %>% 
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "")
+} else {
+tcap_table <- tcap_school %>% 
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "")
+}
+# tcap_table <- tcap_school %>% 
+#   kable(format = 'latex',escape = F, booktabs = T, linesep = "") 
+tcap_table
+  
+```
+
+
+
+``` {r pool_if, echo = FALSE} 
+flag <- dist_pools[[school_num]] == 'HS'
+```
+
+`r if(flag){"### ACT/SAT Participation Rate"}`
+
+``` {r echo = FALSE, eval = flag}
+
+if(ncol(super_sub_check_df[,colSums(is.na(super_sub_check_df)) == 7]) == 4) {
+  act_table <- act_sat_school %>% 
+    mutate(`Suber Subgroup` = NA) %>% 
+    kable(format = 'latex',escape = F, booktabs = T, linesep = "") 
+} else {
+ act_table <- act_sat_school %>% 
+    kable(format = 'latex',escape = F, booktabs = T, linesep = "") 
+}
+
+# if (dist_pools[[school_num]] == 'HS') {
+#   act_table <- act_sat_school %>% 
+#     kable(format = 'latex',escape = F, booktabs = T, linesep = "") 
+# } else {
+#   act_table <- ' ' 
+# }
+act_table
+  
+```
+<!-- &nbsp; -->
+
+
+\vspace{90pt}
+
+`r if(!flag){"\\vspace{120pt}"}`
+
+For more information regarding indicators and weights for school accountability results, please see section 6.4 of the protocol ([here](https://www.tn.gov/content/dam/tn/education/accountability/Accountability_Protocol_2019.pdf#page=40)).
+
+
+\newpage
+
+\hypertarget{allstudents}{ }
+
+## All Students
+
+
+
+``` {r echo = FALSE}
+
+base_all_weight <- school_weighting %>% 
+  filter(subgroup == 'All Students', Indicator != 'Final Score') %>% 
+  select(`Indicator`:`Adjusted Weight`, `N Count`) 
+
+if(dist_pools[[school_num]] == 'K8') {
+  base_all_weight <- base_all_weight %>% 
+    filter(! Indicator %in% c('Graduation Rate', 'Ready Graduate'))
+}
+
+base_all_weight %>% 
+  kable(format = 'latex',escape = F, booktabs = T,linesep = "")
+
+final_score_all_students <- school_weighting %>% 
+  filter(subgroup == 'All Students', Indicator == 'Final Score')
+print_score <- final_score_all_students$`Final Score`
+  
+```
+
+**Final Score:** `r print_score`
+
+
+\newpage
+
+\hypertarget{BHN}{ }
+
+## BHN
+
+
+``` {r echo = FALSE}
+
+base_bhn_weight <- school_weighting %>% 
+  filter(subgroup == 'BHN', Indicator != 'Final Score') %>% 
+  select(`Indicator`:`Adjusted Weight`, `N Count`)
+
+if(dist_pools[[school_num]] == 'K8') {
+  base_bhn_weight <- base_bhn_weight %>% 
+    filter(! Indicator %in% c('Graduation Rate', 'Ready Graduate'))
+}
+
+base_bhn_weight %>% 
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "") 
+
+final_score_all_students <- school_weighting %>% 
+  filter(subgroup == 'BHN', Indicator == 'Final Score')
+print_score <- final_score_all_students$`Final Score`
+  
+```
+
+**Final Score:** `r print_score`
+
+\hypertarget{ED}{ }
+
+## ED
+
+``` {r echo = FALSE}
+
+base_ed_weight <- school_weighting %>% 
+  filter(subgroup == 'ED', Indicator != 'Final Score') %>% 
+  select(`Indicator`:`Adjusted Weight`, `N Count`)
+
+if(dist_pools[[school_num]] == 'K8') {
+  base_ed_weight <- base_ed_weight %>% 
+    filter(! Indicator %in% c('Graduation Rate', 'Ready Graduate'))
+}
+base_ed_weight %>% 
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "") 
+
+final_score_all_students <- school_weighting %>% 
+  filter(subgroup == 'ED', Indicator == 'Final Score')
+print_score <- final_score_all_students$`Final Score`
+  
+```
+
+
+**Final Score:** `r print_score`
+
+\hypertarget{EL}{ }
+
+## EL
+
+``` {r echo = FALSE}
+
+base_ell_weight <- school_weighting %>% 
+  filter(subgroup == 'EL', Indicator != 'Final Score') %>% 
+  select(`Indicator`:`Adjusted Weight`, `N Count`)
+
+if(dist_pools[[school_num]] == 'K8') {
+  base_ell_weight <- base_ell_weight %>% 
+    filter(! Indicator %in% c('Graduation Rate', 'Ready Graduate'))
+}
+base_ell_weight %>% 
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "")
+
+final_score_all_students <- school_weighting %>% 
+  filter(subgroup == 'EL', Indicator == 'Final Score')
+print_score <- final_score_all_students$`Final Score`
+  
+```
+
+
+**Final Score:** `r print_score`
+
+\hypertarget{SWD}{ }
+
+## SWD
+
+
+``` {r echo = FALSE}
+
+base_swd_weight <- school_weighting %>% 
+  filter(subgroup == 'SWD', Indicator != 'Final Score') %>% 
+  select(`Indicator`:`Adjusted Weight`, `N Count`)
+
+if(dist_pools[[school_num]] == 'K8') {
+  base_swd_weight <- base_swd_weight %>% 
+    filter(! Indicator %in% c('Graduation Rate', 'Ready Graduate'))
+}
+
+base_swd_weight %>% 
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "")
+
+final_score_all_students <- school_weighting %>% 
+  filter(subgroup == 'SWD', Indicator == 'Final Score')
+print_score <- final_score_all_students$`Final Score`
+  
+```
+
+**Final Score:** `r print_score`
+
+
+
+``` {r super sub weight, echo = FALSE} 
+flag_2 <- ncol(super_sub_check_df[,colSums(is.na(super_sub_check_df)) == 7]) == 4
+```
+
+`r if(flag_2){'\\newpage'}`
+
+`r if(flag_2){"## Super Subgroup"}`
+
+``` {r super sub display weights, echo = FALSE, eval = flag_2}
+
+base_super_sub_weight <- school_weighting %>% 
+  filter(subgroup == 'Super Subgroup', Indicator != 'Final Score') %>% 
+  select(`Indicator`:`Adjusted Weight`, `N Count`)
+
+if(dist_pools[[school_num]] == 'K8') {
+  base_super_sub_weight <- base_super_sub_weight %>% 
+    filter(! Indicator %in% c('Graduation Rate', 'Ready Graduate'))
+}
+
+base_super_sub_weight %>% 
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "")
+
+final_score_all_students <- school_weighting %>% 
+  filter(subgroup == 'Super Subgroup', Indicator == 'Final Score')
+print_score <- final_score_all_students$`Final Score`
+  
+```
+
+```{r conditional_block, echo=FALSE, results='asis', eval=flag_2}
+cat("**Final Score:** ", print_score)
+```
+
+
+<!-- **Final Score:** `r print_score` -->
+
