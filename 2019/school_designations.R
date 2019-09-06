@@ -1,4 +1,4 @@
-# Designation Pre Code
+# Designation File
 # Andrew Marsee
 # 7/24/2019
 
@@ -7,20 +7,9 @@ library(janitor)
 library(readxl)
 library(readstata13)
 
-# Read in final ACCT file (the rds file is a temporary placeholder)
-# total_accountability <- readRDS("N:/ORP_accountability/projects/Andrew/Pre-Coding-2019/school_rds.rds")
+# Read in final ACCT file
 #total_accountability <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/school_accountability_file.csv")
-total_accountability <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/school_accountability_file_AM_Aug14_stitched.csv")
-# Check Maury County (600/40 score)
-# total_accountability <- read_csv("N:/ORP_accountability/projects/Andrew/Accountability/2019/appeal data/maury_appeal_full_data_hs_n_20.csv") %>%
-#   mutate(
-#     score = case_when(
-#       indicator == 'Graduation Rate' & system == 600 & school == 40 ~ score_abs,
-#       indicator == 'Ready Graduates' & system == 600 & school == 40 ~ score_abs,
-#       indicator == 'Achievement' & subgroup == 'Black/Hispanic/Native American' & system == 600 & school == 40 ~ score_abs,
-#       TRUE ~ score
-#     )
-#   )
+total_accountability <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/school_accountability_file_AM_Aug16_stitched.csv")
 
 # Historically Underserved groups
 historic_underserved_subgroups <- c('All Students', 'Black/Hispanic/Native American', 'Economically Disadvantaged', 
@@ -76,14 +65,9 @@ school_designations <- total_accountability %>%
   mutate(
     total_weight = sum(f_elpa_weight, f_achievement_weight, f_growth_weight, f_ready_grad_weight, 
                        f_grad_weight, f_chronic_absent_weight, na.rm = TRUE)
-    
-    # final_score = case_when(
-    #   TRUE ~ NA_real_
-    # )
   ) %>% 
   mutate_at(.vars = c ('f_elpa_weight', 'f_achievement_weight', 'f_growth_weight', 'f_ready_grad_weight', 
                  'f_grad_weight', 'f_chronic_absent_weight'), .funs = ~(round(./total_weight, 2))) %>% 
-  # replace(is.na(.), 0) %>% 
   mutate(
     final_score = if_else(is.na(elpa_growth_standard_score * f_elpa_weight),0,elpa_growth_standard_score * f_elpa_weight) + 
       if_else(is.na(achievement_score * f_achievement_weight),0,achievement_score * f_achievement_weight) + 
@@ -95,12 +79,7 @@ school_designations <- total_accountability %>%
       is.na(elpa_growth_standard_score) & is.na(achievement_score) & is.na(chronic_absenteeism_score) & 
         is.na(graduation_rate_score) & is.na(growth_score) & is.na(ready_graduates_score) ~ NA_real_,
       TRUE ~ round(final_score + 1e-5, 1)
-    )#,
-    # subgroup = case_when(
-    #   subgroup %in% c('Black/Hispanic/Native American', 'Economically Disadvantaged', 
-    #                   'English Learners with Transitional 1-4', 'Students with Disabilities') ~ 'Historically Underserved',
-    #   TRUE ~ subgroup
-    # )
+    )
   ) %>% 
   replace_na(list(f_elpa_weight = NA_real_, f_achievement_weight = NA_real_, f_growth_weight = NA_real_,
                   f_ready_grad_weight = NA_real_, f_grad_weight = NA_real_, f_chronic_absent_weight = NA_real_)) %>% 
@@ -158,37 +137,31 @@ school_final_scores <- school_designations %>%
   mutate(
     score_achievement = case_when(
       !is.na(all_students_achievement_score) & !is.na(historically_underserved_achievement_score) ~ 0.6*all_students_achievement_score + 0.4*historically_underserved_achievement_score,
-      #!is.na(all_students_achievement_score) & !is.na(super_subgroup_achievement_score) ~ 0.6*all_students_achievement_score + 0.4*super_subgroup_achievement_score,
       !is.na(all_students_achievement_score) ~ all_students_achievement_score,
       TRUE ~ NA_real_
     ),
     score_growth = case_when(
       !is.na(all_students_growth_score) & !is.na(historically_underserved_growth_score) ~ 0.6*all_students_growth_score + 0.4*historically_underserved_growth_score,
-      #!is.na(all_students_growth_score) & !is.na(super_subgroup_growth_score) ~ 0.6*all_students_growth_score + 0.4*super_subgroup_growth_score,
       !is.na(all_students_growth_score) ~ all_students_growth_score,
       TRUE ~ NA_real_
     ),
     score_absenteeism = case_when(
       !is.na(all_students_chronic_absenteeism_score) & !is.na(historically_underserved_chronic_absenteeism_score) ~ 0.6*all_students_chronic_absenteeism_score + 0.4*historically_underserved_chronic_absenteeism_score,
-      #!is.na(all_students_chronic_absenteeism_score) & !is.na(super_subgroup_chronic_absenteeism_score) ~ 0.6*all_students_chronic_absenteeism_score + 0.4*super_subgroup_chronic_absenteeism_score,
       !is.na(all_students_chronic_absenteeism_score) ~ all_students_chronic_absenteeism_score,
       TRUE ~ NA_real_
     ),
     score_grad = case_when(
       !is.na(all_students_graduation_rate_score) & !is.na(historically_underserved_graduation_rate_score) ~ 0.6*all_students_graduation_rate_score + 0.4*historically_underserved_graduation_rate_score,
-      #!is.na(all_students_graduation_rate_score) & !is.na(super_subgroup_graduation_rate_score) ~ 0.6*all_students_graduation_rate_score + 0.4*super_subgroup_graduation_rate_score,
       !is.na(all_students_graduation_rate_score) ~ all_students_graduation_rate_score,
       TRUE ~ NA_real_
     ),
     score_ready_grad = case_when(
       !is.na(all_students_ready_graduates_score) & !is.na(historically_underserved_ready_graduates_score) ~ 0.6*all_students_ready_graduates_score + 0.4*historically_underserved_ready_graduates_score,
-      #!is.na(all_students_ready_graduates_score) & !is.na(super_subgroup_ready_graduates_score) ~ 0.6*all_students_ready_graduates_score + 0.4*super_subgroup_ready_graduates_score,
       !is.na(all_students_ready_graduates_score) ~ all_students_ready_graduates_score,
       TRUE ~ NA_real_
     ),
     score_elpa = case_when(
       !is.na(all_students_elpa_growth_standard_score) & !is.na(historically_underserved_elpa_growth_standard_score) ~ 0.6*all_students_elpa_growth_standard_score + 0.4*historically_underserved_elpa_growth_standard_score,
-      #!is.na(all_students_elpa_growth_standard_score) & !is.na(super_subgroup_elpa_growth_standard_score) ~ 0.6*all_students_elpa_growth_standard_score + 0.4*super_subgroup_elpa_growth_standard_score,
       !is.na(all_students_elpa_growth_standard_score) ~ all_students_elpa_growth_standard_score,
       TRUE ~ NA_real_
     )
@@ -209,19 +182,12 @@ school_final_scores <- school_designations %>%
   mutate(
     total_weight = sum(f_elpa_weight, f_achievement_weight, f_growth_weight, f_ready_grad_weight, 
                        f_grad_weight, f_chronic_absent_weight, na.rm = TRUE)
-    # final_score = case_when(
-    #   TRUE ~ NA_real_
-    # )
   ) %>% 
   ungroup() %>% 
-  # Divide by total weight to redistribute
+  # Divide by total weight to redistribute weightings
 mutate_at(vars(f_elpa_weight, f_achievement_weight, f_growth_weight, f_ready_grad_weight,
                f_grad_weight, f_chronic_absent_weight),
           .funs = ~ ./total_weight) %>%
-# Round the scores to one decimal place
-# mutate_at(vars(score_achievement, score_growth,
-#                score_absenteeism, score_elpa, score_grad, score_ready_grad),
-#           .funs = ~ round(.+1e-10, 10)) %>%
  ungroup() %>%
   # Add everything together not using rowwise
   mutate(
@@ -237,34 +203,10 @@ mutate_at(vars(f_elpa_weight, f_achievement_weight, f_growth_weight, f_ready_gra
         is.na(score_grad) & is.na(score_growth) & is.na(score_ready_grad) ~ NA_real_,
       TRUE ~ round(final_score + 1e-10, 1)
     )
-  ) # %>% 
+  )
 
 school_final_weighted <- school_final_scores %>% 
   select(system:pool, score_achievement:score_elpa, final_score)
-  # group_by(system, system_name, school, school_name, pool, subgroup) %>% 
-  # summarise(
-  #   subgroup_score = max(final_subgroup_score)
-  # ) %>% 
-  # ungroup() %>% 
-  # spread(subgroup, subgroup_score) %>% 
-  # mutate(
-  #   `Historically Underserved` = round(`Historically Underserved` + 1e-5, 1),
-  #   `All Students` = round(`All Students` + 1e-5, 1),
-  #   final_average = round(`All Students` * 0.6 + `Historically Underserved` * 0.4 + 1e-5, 1)
-  # )
-
-# No grades this year
-# school_final_grades <- school_final_weighted %>%
-#   clean_names() %>%
-#   mutate(
-#     final_grade = case_when(
-#       final_score >= 3.1 ~ 'A',
-#       final_score >= 2.1 ~ 'B',
-#       final_score >= 1.1 ~ 'C',
-#       final_score >= 0 ~ 'D',
-#       TRUE ~ NA_character_
-#     )
-#   )
 
 # write_csv(school_final_weighted, "N:/ORP_accountability/projects/Andrew/Accountability/2019/school_heat_map_data/school_final_grades_Aug15.csv")
 
@@ -273,8 +215,6 @@ school_final_weighted <- school_final_scores %>%
 school_designations_all_subgroups <- total_accountability %>% 
   filter(!is.na(pool)) %>% # designation_ineligible == 0,  | (is.na(pool) & !is.na(designation_ineligible))
   select(system, system_name, school, school_name, pool, designation_ineligible, indicator, subgroup, score) %>% 
-  # spread(indicator, score) %>%
-  # clean_names() %>% 
   mutate(
     base_weighting = case_when(
       indicator == 'ELPA Growth Standard' ~ 0.10,
@@ -319,15 +259,11 @@ school_designations_all_subgroups <- total_accountability %>%
   mutate(
     total_weight = sum(f_elpa_weight, f_achievement_weight, f_growth_weight, f_ready_grad_weight, 
                        f_grad_weight, f_chronic_absent_weight, na.rm = TRUE)
-    # final_score = case_when(
-    #   TRUE ~ NA_real_
-    # )
   ) %>% 
   ungroup() %>% 
   mutate_at(.vars = c('f_elpa_weight', 'f_achievement_weight', 'f_growth_weight', 'f_ready_grad_weight', 
                  'f_grad_weight', 'f_chronic_absent_weight'), 
             .funs = ~ (round(./total_weight + 1e-10, 4))) %>% 
-  # replace(is.na(.), 0) %>% 
   mutate(
     final_score = if_else(is.na(elpa_growth_standard_score * f_elpa_weight),0,elpa_growth_standard_score * f_elpa_weight) + 
       if_else(is.na(achievement_score * f_achievement_weight),0,achievement_score * f_achievement_weight) + 
@@ -339,12 +275,7 @@ school_designations_all_subgroups <- total_accountability %>%
       is.na(elpa_growth_standard_score) & is.na(achievement_score) & is.na(chronic_absenteeism_score) & 
         is.na(graduation_rate_score) & is.na(growth_score) & is.na(ready_graduates_score) ~ NA_real_,
       TRUE ~ round(final_score + 1e-10, 1)
-    )#,
-    # subgroup = case_when(
-    #   subgroup %in% c('Black/Hispanic/Native American', 'Economically Disadvantaged', 
-    #                   'English Learners with Transitional 1-4', 'Students with Disabilities') ~ 'Historically Underserved',
-    #   TRUE ~ subgroup
-    # )
+    )
   ) %>% 
   mutate_at(.vars = c('f_elpa_weight', 'f_achievement_weight', 'f_growth_weight', 'f_ready_grad_weight', 
                       'f_grad_weight', 'f_chronic_absent_weight'), 
@@ -374,38 +305,6 @@ school_metric_write_out <- school_designations_all_subgroups %>%
 # write_csv(school_metric_write_out, "N:/ORP_accountability/projects/Andrew/Accountability/2019/appeal data/school_grading_metrics_maury_hs_bhn.csv", na='')
 #write_csv(school_metric_write_out, "N:/ORP_accountability/projects/2019_school_accountability/school_grading_metrics_AM_Aug14.csv", na ='')
 
-# compare Alex's file
-alex_comp <- read_csv("N:/ORP_accountability/projects/2019_school_accountability/school_grading_metrics.csv") %>% 
-  select(system:subgroup, score_achievement, score_growth, score_grad, score_ready_grad, score_absenteeism, 
-         score_elpa, total_weight_ap = total_weight, subgroup_average_ap = subgroup_average, -designation_ineligible, -pool) %>% 
-  mutate(score_elpa = as.numeric(score_elpa)) %>% 
-  filter(subgroup != 'Subgroups')
-
-am_comp <- school_metric_write_out %>% 
-  select(system:subgroup, score_achievement, score_growth, score_grad, score_ready_grad, score_absenteeism, 
-         score_elpa, total_weight_am = total_weight, subgroup_average_am = subgroup_average, -designation_ineligible, -pool)
-
-comp_joining <- alex_comp %>% 
-  left_join(am_comp, by = c('system', 'school', 'subgroup',
-                           'score_achievement', 'score_growth', 'score_grad', 'score_ready_grad', 'score_absenteeism', 
-                           'score_elpa')) %>% 
-  mutate(
-    total_weight_diff = total_weight_ap - total_weight_am,
-    sub_avg_diff = subgroup_average_ap - subgroup_average_am
-  )
-
-comp_joining_subgroup <- (am_comp %>% select(system:subgroup, total_weight_am, subgroup_average_am)) %>% 
-  left_join(alex_comp %>% select(system:subgroup, total_weight_ap, subgroup_average_ap), by = c('system', 'school', 'pool', 'designation_ineligible', 'subgroup')) %>% 
-  mutate(
-    total_weight_diff = total_weight_ap - total_weight_am,
-    sub_avg_diff = subgroup_average_ap - subgroup_average_am
-  )
-# 
-comp_total <- setdiff(am_comp %>% select(-total_weight_am, -subgroup_average_am), alex_comp %>% select(-total_weight_ap, -subgroup_average_ap)) %>% #  %>% select(system:overall_average)
-  bind_rows(setdiff(alex_comp %>% select(-total_weight_ap, -subgroup_average_ap), am_comp %>% select(-total_weight_am, -subgroup_average_am))) %>% 
-  #filter(is.na(pool), designation_ineligible == 0) %>% 
-  arrange(system, school, subgroup)
-
 # ====================================== Identifying TSI Schools ====================================================
 # Read in Priority because they are not eligible for TSI
 priority_current_tsi <- read_csv("N:/ORP_accountability/projects/2019_school_accountability/priority_exit.csv") %>% 
@@ -428,7 +327,6 @@ tsi_df <- school_designations_all_subgroups %>%
     final_score = if_else(tsi_eligible == 0, NA_real_, final_score)
   ) %>% 
   select(system:subgroup, final_score, tsi_eligible) %>% 
-  # filter(tsi_eligible == 1) %>% 
   group_by(system, system_name, school, school_name, pool) %>% 
   mutate(tsi_eligible = max(tsi_eligible)) %>% 
   ungroup() %>% 
@@ -441,8 +339,7 @@ tsi_df <- school_designations_all_subgroups %>%
     vars(all_students:White),
     .funs = list(
     rank = ~ if_else(!is.na(.) & designation_ineligible == 0, rank(., ties.method = "min"), NA_integer_),
-    denom = ~ sum(!is.na(.)) #,
-    # percentile = round(100 * rank/denom + 1e-10, 1)
+    denom = ~ sum(!is.na(.))
     )
   ) %>% 
   mutate_at(
@@ -572,19 +469,6 @@ tsi_df <- tsi_df %>%
   ungroup() %>% 
   mutate(targeted_support = if_else(targeted_support_subgroups > 0, 1, 0))
 
-# Impact of removal of safe harbor
-# no_safe_harbor <- tsi_df %>% 
-#   summarise_at(
-#     vars(targeted_support_Native:targeted_support_White),
-#     .funs = ~sum(., na.rm = TRUE)
-#   )
-# 
-# safe_harbor <- tsi_df %>% 
-#   summarise_at(
-#     vars(targeted_support_Native:targeted_support_White),
-#     .funs = ~sum(., na.rm = TRUE)
-#   )
-
 school_grading_grades <- tsi_df %>% 
   select(-system_name, - school_name) %>% 
   left_join(school_final_weighted %>% select(system, school, score_achievement:score_elpa, final_average = final_score), by = c('system', 'school')) %>% 
@@ -592,51 +476,6 @@ school_grading_grades <- tsi_df %>%
 
 # write_csv(school_grading_grades, "N:/ORP_accountability/projects/Andrew/Accountability/2019/appeal data/school_grading_grades_maury_hs_n_20.csv", na='')
 # write_csv(school_grading_grades, "N:/ORP_accountability/projects/2019_school_accountability/school_grading_grades_AM_Aug14.csv", na='')
-
-alex_comp <- read_csv("N:/ORP_accountability/projects/2019_school_accountability/school_grading_grades_aug14.csv") %>%
-  select(system:designation_ineligible, score_achievement:final_average, targeted_support) %>%
-  mutate(targeted_support_Native = as.numeric(targeted_support_Native), targeted_support_HPI = as.numeric(targeted_support_HPI))
-
-# alex_comp <- read_csv("N:/ORP_accountability/projects/2019_school_accountability/school_grading_grades_AM.csv") %>% 
-#   mutate(targeted_support_Native = as.numeric(targeted_support_Native), targeted_support_HPI = as.numeric(targeted_support_HPI))
-
-am_comp <- read_csv("N:/ORP_accountability/projects/2019_school_accountability/school_grading_grades_AM_Aug16_stitched.csv") %>% 
-  mutate(targeted_support_Native = as.numeric(targeted_support_Native), targeted_support_HPI = as.numeric(targeted_support_HPI))
-
-comp_indicator_scores <- dplyr::setdiff(am_comp %>% select(-final_average), alex_comp %>% select(-final_average)) %>% #  %>% select(system:overall_average)
-  bind_rows(dplyr::setdiff(alex_comp %>% select(-final_average), am_comp %>% select(-final_average))) %>% 
-  # group_by(system, school) %>% 
-  # mutate_at(
-  #   .vars = c('score_achievement','score_growth', 'score_absenteeism', 'score_grad', 'score_ready_grad', 'score_elpa'),
-  #   .funs = ~ max(.) - min(.)
-  # ) %>% 
-  # ungroup() %>% 
-  #filter(is.na(pool), designation_ineligible == 0) %>% 
-  arrange(system, school)
-
-comp_targeted_support <- dplyr::setdiff(am_comp %>% select(system, school, pool, designation_ineligible, targeted_support_BHN:targeted_support_White, targeted_support), 
-                                        alex_comp %>% select(system, school, pool, designation_ineligible, targeted_support_BHN:targeted_support_White, targeted_support)) %>% #  %>% select(system:overall_average)
-  bind_rows(dplyr::setdiff(alex_comp %>% select(system, school, pool, designation_ineligible, targeted_support_BHN:targeted_support_White, targeted_support), 
-                           am_comp %>% select(system, school, pool, designation_ineligible, targeted_support_BHN:targeted_support_White, targeted_support))) %>% 
-  arrange(system, school)
-
-comp_final_scores <- dplyr::setdiff(am_comp %>% select(system, school, pool, designation_ineligible, final_average), alex_comp %>% select(system, school, pool, designation_ineligible, final_average)) %>% #  %>% select(system:overall_average)
-  bind_rows(dplyr::setdiff(alex_comp %>% select(system, school, pool, designation_ineligible, final_average), am_comp %>% select(system, school, pool, designation_ineligible, final_average))) %>% 
-  arrange(system, school)
-
-school_names <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/names.csv")
-
-changed_score <- comp_final_scores %>% 
-  select(system, school, pool, designation_ineligible) %>% 
-  distinct() %>% 
-  left_join(school_names, by = c('system', 'school')) %>%
-  left_join(school_grading_grades %>% select(system, school, final_average), by = c('system', 'school')) %>% 
-  mutate(
-    designation = if_else(final_average >= 3.1 & designation_ineligible == 0, 'Reward', NA_character_)
-  ) %>% 
-  transmute(system, system_name, school, school_name, pool, designation_ineligible, final_average, designation)
-  
-write_csv(changed_score, "N:/ORP_accountability/projects/Andrew/Accountability/2019/appeal data/score_changes.csv", na = '')
 
 # ========================================= Priority Exit ============================================================
 
@@ -683,8 +522,6 @@ priority_exit_tvaas_prior <- read_excel("N:/ORP_accountability/data/2018_tvaas/S
   mutate(
       tvaas_total_4_5 = sum(tvaas_4_5_current, na.rm = TRUE),
       tvaas_total_subgroups = sum(!is.na(tvaas_4_5_current))
-    # tvaas_4_5_2018 = if_else(growth >= 4, 1, 0),
-    # grad_rate_67_2018 = if_else(graduation_rate >= 67, 1, 0)
   ) %>% 
   ungroup() %>% 
   mutate(
@@ -703,7 +540,6 @@ priority_exit_success_prior <- read_csv("N:\\ORP_accountability\\data\\2018_fina
     denom = sum(!is.na(achievement)),
     percentile = round(100 * rank/denom + 1e-10, 1),
     success_10th_percentile_prior = if_else(percentile > 10, 1, 0),
-    # tvaas_4_5_2018 = if_else(growth >= 4, 1, 0),
     grad_rate_67_prior = if_else(graduation_rate >= 67, 1, 0)
   )
 
