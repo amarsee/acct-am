@@ -20,7 +20,7 @@ Below is a brief summary of the purpose of each file in the top level of 2019:
 - **reward_schools_with_core**: Creating list of Reward schools with the CORE region included
 - **school_accountability**: Producing school accountability with business rules described in Section 6 of the [protocol](https://www.tn.gov/content/dam/tn/education/accountability/Accountability_Protocol_2019.pdf)
 - **school_assessment**: School level assessment file. This can be seen in the State Assessment section of [Data Downloads](https://www.tn.gov/education/data/data-downloads.html)
-- **school_designations**: Applying business rules to assign designations to the appropriate schools. Designations can be found in the [2019 School Accountability website] (https://www.tn.gov/content/tn/education/data/accountability/2019-school-accountability.html)
+- **school_designations**: Applying business rules to assign designations to the appropriate schools. Designations can be found in the [2019 School Accountability website](https://www.tn.gov/content/tn/education/data/accountability/2019-school-accountability.html)
 - **school_information_pull**: Querying the school directory database to identify closed, alternate, new, or SPED schools
 - **state_assessment**: Proudcing the state level assessment file which can be seen in the State Assessment section of [Data Downloads](https://www.tn.gov/education/data/data-downloads.html)
 - **zip_split_files**: Code to zip together the split files in case it was needed
