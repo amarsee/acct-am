@@ -67,7 +67,7 @@ school_designations <- total_accountability %>%
                        f_grad_weight, f_chronic_absent_weight, na.rm = TRUE)
   ) %>% 
   mutate_at(.vars = c ('f_elpa_weight', 'f_achievement_weight', 'f_growth_weight', 'f_ready_grad_weight', 
-                 'f_grad_weight', 'f_chronic_absent_weight'), .funs = ~(round(./total_weight, 2))) %>% 
+                       'f_grad_weight', 'f_chronic_absent_weight'), .funs = ~(round(./total_weight, 2))) %>% 
   mutate(
     final_score = if_else(is.na(elpa_growth_standard_score * f_elpa_weight),0,elpa_growth_standard_score * f_elpa_weight) + 
       if_else(is.na(achievement_score * f_achievement_weight),0,achievement_score * f_achievement_weight) + 
@@ -111,7 +111,7 @@ school_final_scores <- school_designations %>%
   mutate(
     at_least_one_score = case_when(
       (!is.na(achievement_score) | !is.na(growth_score) | !is.na(chronic_absenteeism_score) | 
-        !is.na(elpa_growth_standard_score) | !is.na(graduation_rate_score) | !is.na(ready_graduates_score)) & subgroup != 'All Students' ~ 1,
+         !is.na(elpa_growth_standard_score) | !is.na(graduation_rate_score) | !is.na(ready_graduates_score)) & subgroup != 'All Students' ~ 1,
       TRUE ~ 0
     )
   ) %>% 
@@ -123,7 +123,7 @@ school_final_scores <- school_designations %>%
   mutate(
     subgroup = if_else(sub_super_subgroup < 2 & subgroup != 'All Students' & 
                          (!is.na(achievement_score) | !is.na(growth_score) | !is.na(chronic_absenteeism_score) | 
-                      !is.na(elpa_growth_standard_score) | !is.na(graduation_rate_score) | !is.na(ready_graduates_score)), 'Historically Underserved', subgroup)
+                            !is.na(elpa_growth_standard_score) | !is.na(graduation_rate_score) | !is.na(ready_graduates_score)), 'Historically Underserved', subgroup)
   ) %>% 
   filter(subgroup != 'Super Subgroup') %>% 
   select(-sub_super_subgroup, -at_least_one_score) %>% 
@@ -185,18 +185,18 @@ school_final_scores <- school_designations %>%
   ) %>% 
   ungroup() %>% 
   # Divide by total weight to redistribute weightings
-mutate_at(vars(f_elpa_weight, f_achievement_weight, f_growth_weight, f_ready_grad_weight,
-               f_grad_weight, f_chronic_absent_weight),
-          .funs = ~ ./total_weight) %>%
- ungroup() %>%
+  mutate_at(vars(f_elpa_weight, f_achievement_weight, f_growth_weight, f_ready_grad_weight,
+                 f_grad_weight, f_chronic_absent_weight),
+            .funs = ~ ./total_weight) %>%
+  ungroup() %>%
   # Add everything together not using rowwise
   mutate(
     final_score = if_else(is.na(score_elpa * f_elpa_weight),0,score_elpa * f_elpa_weight) + 
-                  if_else(is.na(score_achievement * f_achievement_weight),0,score_achievement * f_achievement_weight) + 
-                  if_else(is.na(score_absenteeism * f_chronic_absent_weight),0,score_absenteeism * f_chronic_absent_weight) +
-                  if_else(is.na(score_grad * f_grad_weight),0,score_grad * f_grad_weight) +
-                  if_else(is.na(score_growth * f_growth_weight),0,score_growth * f_growth_weight) +
-                  if_else(is.na(score_ready_grad * f_ready_grad_weight),0,score_ready_grad * f_ready_grad_weight),
+      if_else(is.na(score_achievement * f_achievement_weight),0,score_achievement * f_achievement_weight) + 
+      if_else(is.na(score_absenteeism * f_chronic_absent_weight),0,score_absenteeism * f_chronic_absent_weight) +
+      if_else(is.na(score_grad * f_grad_weight),0,score_grad * f_grad_weight) +
+      if_else(is.na(score_growth * f_growth_weight),0,score_growth * f_growth_weight) +
+      if_else(is.na(score_ready_grad * f_ready_grad_weight),0,score_ready_grad * f_ready_grad_weight),
     # If a school is missing everything, make it NA instead of 0. Otherwise round to one decimal place
     final_score = case_when(
       is.na(score_elpa) & is.na(score_achievement) & is.na(score_absenteeism) & 
@@ -262,7 +262,7 @@ school_designations_all_subgroups <- total_accountability %>%
   ) %>% 
   ungroup() %>% 
   mutate_at(.vars = c('f_elpa_weight', 'f_achievement_weight', 'f_growth_weight', 'f_ready_grad_weight', 
-                 'f_grad_weight', 'f_chronic_absent_weight'), 
+                      'f_grad_weight', 'f_chronic_absent_weight'), 
             .funs = ~ (round(./total_weight + 1e-10, 4))) %>% 
   mutate(
     final_score = if_else(is.na(elpa_growth_standard_score * f_elpa_weight),0,elpa_growth_standard_score * f_elpa_weight) + 
@@ -338,8 +338,8 @@ tsi_df <- school_designations_all_subgroups %>%
   mutate_at(
     vars(all_students:White),
     .funs = list(
-    rank = ~ if_else(!is.na(.) & designation_ineligible == 0, rank(., ties.method = "min"), NA_integer_),
-    denom = ~ sum(!is.na(.))
+      rank = ~ if_else(!is.na(.) & designation_ineligible == 0, rank(., ties.method = "min"), NA_integer_),
+      denom = ~ sum(!is.na(.))
     )
   ) %>% 
   mutate_at(
@@ -362,28 +362,28 @@ tsi_df <- school_designations_all_subgroups %>%
   ) %>% 
   mutate_at(vars(all_students_percentile:White_percentile),
             .funs = list(targeted_support = ~case_when(
-            is.na(.) ~ NA_real_,
-            . <= 5 ~ 1, # TSI if in bottom 5 percent for subgroup and less than 1.1
-            TRUE ~ 0
+              is.na(.) ~ NA_real_,
+              . <= 5 ~ 1, # TSI if in bottom 5 percent for subgroup and less than 1.1
+              TRUE ~ 0
             )
-          )
+            )
   ) %>% 
   rename_at( vars( contains( "_targeted_support") ), list( ~paste("targeted_support", gsub("_percentile_targeted_support", "", .), sep = "_") ) ) #%>% 
-  # Uncomment to see change if 1.1 safe harbor is used 
-  # mutate(
-  #   targeted_support_all_students = if_else(all_students >= 1.1, 0, targeted_support_all_students),
-  #   targeted_support_Native = if_else(Native >= 1.1, 0, targeted_support_Native),
-  #   targeted_support_Aisan = if_else(Asian >= 1.1, 0, targeted_support_Asian),
-  #   targeted_support_Black = if_else(Black >= 1.1, 0, targeted_support_Black),
-  #   targeted_support_BHN = if_else(BHN >= 1.1, 0, targeted_support_BHN),
-  #   targeted_support_ED = if_else(ED >= 1.1, 0, targeted_support_ED),
-  #   targeted_support_EL = if_else(EL >= 1.1, 0, targeted_support_EL),
-  #   targeted_support_Hispanic = if_else(Hispanic >= 1.1, 0, targeted_support_Hispanic),
-  #   targeted_support_HPI = if_else(HPI >= 1.1, 0, targeted_support_HPI),
-  #   targeted_support_SWD = if_else(SWD >= 1.1, 0, targeted_support_SWD),
-  #   targeted_support_super_subgroup = if_else(super_subgroup >= 1.1, 0, targeted_support_super_subgroup),
-  #   targeted_support_White = if_else(White >= 1.1, 0, targeted_support_White)
-  # ) %>%
+# Uncomment to see change if 1.1 safe harbor is used 
+# mutate(
+#   targeted_support_all_students = if_else(all_students >= 1.1, 0, targeted_support_all_students),
+#   targeted_support_Native = if_else(Native >= 1.1, 0, targeted_support_Native),
+#   targeted_support_Aisan = if_else(Asian >= 1.1, 0, targeted_support_Asian),
+#   targeted_support_Black = if_else(Black >= 1.1, 0, targeted_support_Black),
+#   targeted_support_BHN = if_else(BHN >= 1.1, 0, targeted_support_BHN),
+#   targeted_support_ED = if_else(ED >= 1.1, 0, targeted_support_ED),
+#   targeted_support_EL = if_else(EL >= 1.1, 0, targeted_support_EL),
+#   targeted_support_Hispanic = if_else(Hispanic >= 1.1, 0, targeted_support_Hispanic),
+#   targeted_support_HPI = if_else(HPI >= 1.1, 0, targeted_support_HPI),
+#   targeted_support_SWD = if_else(SWD >= 1.1, 0, targeted_support_SWD),
+#   targeted_support_super_subgroup = if_else(super_subgroup >= 1.1, 0, targeted_support_super_subgroup),
+#   targeted_support_White = if_else(White >= 1.1, 0, targeted_support_White)
+# ) %>%
 tsi_cut_scores <- tsi_df %>% 
   select(system:White, all_students_percentile:White_percentile, targeted_support_all_students:targeted_support_White, 
          -all_students, -super_subgroup,-all_students_percentile, -super_subgroup_percentile, -targeted_support_all_students, -targeted_support_super_subgroup) %>% 
@@ -520,8 +520,8 @@ priority_exit_tvaas_prior <- read_excel("N:/ORP_accountability/data/2018_tvaas/S
   ) %>% 
   group_by(system, school) %>% 
   mutate(
-      tvaas_total_4_5 = sum(tvaas_4_5_current, na.rm = TRUE),
-      tvaas_total_subgroups = sum(!is.na(tvaas_4_5_current))
+    tvaas_total_4_5 = sum(tvaas_4_5_current, na.rm = TRUE),
+    tvaas_total_subgroups = sum(!is.na(tvaas_4_5_current))
   ) %>% 
   ungroup() %>% 
   mutate(
@@ -674,9 +674,9 @@ total_three_year_success_rate <- acct_2019 %>%
     grad_count_2017 = if_else(grad_count_2017 < 30, 0L, as.integer(grad_count_2017)),
     grad_count_2016 = if_else(grad_count_2016 < 30, 0L, as.integer(grad_count_2016)),
     three_year_numerator = n_on_track_mastered_2019 + n_on_track_mastered_2018 + n_on_track_mastered_2017 +
-                            n_21_or_higher_2018 + n_21_or_higher_2017 + n_21_orhigher_2016,
+      n_21_or_higher_2018 + n_21_or_higher_2017 + n_21_orhigher_2016,
     three_year_denominator = n_count_2019 + n_count_2018 + n_count_2017 + 
-                              grad_count_2018 + grad_count_2017 + grad_count_2016,
+      grad_count_2018 + grad_count_2017 + grad_count_2016,
     success_rate = round(three_year_numerator/three_year_denominator * 100 + 1e-10, 1)
   )
 
