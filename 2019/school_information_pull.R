@@ -279,25 +279,4 @@ esl_inspection_primary <- as.tbl(
   )
 )
 
-# PRIMARY_DISTRICT_ID,
-# ENGLISH_LANGUAGE_BACKGROUND,
-# SCHOOL_YEAR                                         and SCHOOL_YEAR = '2018'
-#    and instructional_program_num = '1'
-
-
-
-test_sde <- as.tbl(
-  dbGetQuery(
-    sde_con,
-    "SELECT 
-    *
-    
-    from instructional_service_period
-
-    WHERE ROWNUM <= 5
-    "
-  )
-  )
-
-
 
