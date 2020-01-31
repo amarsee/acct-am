@@ -11,13 +11,13 @@ library(haven)
 library(RJDBC)
 setwd("N:/")
 eis_con = dbConnect(
-  JDBC("oracle.jdbc.OracleDriver", classPath="C:/Users/CA20593/Downloads/ojdbc6.jar"),
+  JDBC("oracle.jdbc.OracleDriver", classPath="N:/ORP_accountability/ojdbc6.jar"),
   readRegistry("Environment", hive = "HCU")$EIS_MGR_CXN_STR[1],
   "EIS_MGR",
   readRegistry("Environment", hive = "HCU")$EIS_MGR_PWD[1]
 ) 
 sde_con = dbConnect(
-  JDBC("oracle.jdbc.OracleDriver", classPath="C:/Users/CA20593/Downloads/ojdbc6.jar"),
+  JDBC("oracle.jdbc.OracleDriver", classPath="N:/ORP_accountability/ojdbc6.jar"),
   readRegistry("Environment", hive = "HCU")$SDE_DIR_CXN_STR[1],
   "SDE_DIR",
   readRegistry("Environment", hive = "HCU")$SDE_DIR_PWD[1]

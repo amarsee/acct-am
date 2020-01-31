@@ -408,28 +408,6 @@ tsi_cut_scores <- tsi_df %>%
     tsi_df %>% 
       select(system:White, all_students_percentile:White_percentile, targeted_support_all_students:targeted_support_White, 
              -all_students, -super_subgroup,-all_students_percentile, -super_subgroup_percentile, -targeted_support_all_students, -targeted_support_super_subgroup) %>% 
-      gather(subgroup, percentile, Native_percentile:White_percentile) %>% 
-      select(system, school, subgroup, percentile) %>% 
-      mutate(
-        subgroup = case_when(
-          str_detect(subgroup, 'Asian') ~ 'Asian',# subgroup == 'targeted_support_Asian' ~ 'Asian',
-          str_detect(subgroup, 'Black') ~ 'Black or African American',
-          str_detect(subgroup, 'BHN') ~ 'Black/Hispanic/Native American',
-          str_detect(subgroup, 'EL') ~ 'English Learners with Transitional 1-4',
-          str_detect(subgroup, 'Hispanic') ~ 'Hispanic',
-          str_detect(subgroup, 'White') ~ 'White',
-          str_detect(subgroup, 'Native') ~ 'American Indian or Alaska Native',
-          str_detect(subgroup, 'ED') ~ 'Economically Disadvantaged',
-          str_detect(subgroup, 'SWD') ~ 'Students with Disabilities',
-          TRUE ~ NA_character_
-        )
-      ),
-    by = c('system', 'school', 'subgroup')
-  ) %>% 
-  left_join(
-    tsi_df %>% 
-      select(system:White, all_students_percentile:White_percentile, targeted_support_all_students:targeted_support_White, 
-             -all_students, -super_subgroup,-all_students_percentile, -super_subgroup_percentile, -targeted_support_all_students, -targeted_support_super_subgroup) %>% 
       gather(subgroup, subgroup_score, Native:White) %>% 
       select(system, school, subgroup, subgroup_score) %>% 
       mutate(
