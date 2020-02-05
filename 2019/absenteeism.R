@@ -6,18 +6,11 @@ library(janitor)
 library(lubridate)
 library(RJDBC)
 
-# con <- dbConnect(
-#     JDBC("oracle.jdbc.OracleDriver", classPath = Sys.getenv("JAVA_PATH")),
-#     Sys.getenv("CONNECTION_STRING"),
-#     Sys.getenv("SCHEMA_NAME"),
-#     Sys.getenv("DB_PASSWORD")
-# )
-
 con <- dbConnect(
-    JDBC("oracle.jdbc.OracleDriver", classPath="C:/Users/CA20593/Downloads/ojdbc6.jar"),
-    readRegistry("Environment", hive = "HCU")$EIS_MGR_CXN_STR[1],
-    "EIS_MGR",
-    readRegistry("Environment", hive = "HCU")$EIS_MGR_PWD[1]
+    JDBC("oracle.jdbc.OracleDriver", classPath=Sys.getenv("CLASS_PATH")),
+    Sys.getenv("EIS_MGR_CXN_STR"),
+    Sys.getenv("SCHEMA_NAME_EIS"),
+    Sys.getenv("EIS_MGR_PWD")
 )
 # 
 # # Pull attendance from database
