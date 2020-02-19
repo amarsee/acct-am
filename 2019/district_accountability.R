@@ -118,38 +118,38 @@ ci_lower_bound <- function(df) {
 }
 
 
-all_students <- sl %>% 
-  bind_rows(act_sub) %>% 
-  mutate(subgroup = "All Students") %>% 
-  total_by_subgroup_dist()
-
-
-cat_subgroups <- function(student_df, students_grouped ){
-  base_df = students_grouped
-  subgroups <- c("Black/Hispanic/Native American", "Economically Disadvantaged", "English Learners with Transitional 1-4", "Students with Disabilities")
-  for (subgroup in subgroups){
-    if (subgroup == "Black/Hispanic/Native American"){
-      hist_df <- student_df %>% 
-        filter(bhn_group > 0) %>% 
-        mutate(subgroup = "Black/Hispanic/Native American")
-    } else if (subgroup == "Economically Disadvantaged") {
-      hist_df <- student_df %>% 
-        filter(economically_disadvantaged > 0) %>% 
-        mutate(subgroup = "Economically Disadvantaged")
-    }else if (subgroup == "English Learners with Transitional 1-4") {
-      hist_df <- student_df %>% 
-        filter(t1234 > 0 | el > 0) %>% 
-        mutate(subgroup = "English Learners with Transitional 1-4")
-    }else {
-      hist_df <- student_df %>% 
-        filter(special_ed > 0) %>% 
-        mutate(subgroup = "Students with Disabilities")
-    }
-    hist_grouped <- total_by_subgroup_dist(hist_df)
-    base_df <- rbind(base_df, hist_grouped)
-  }
-  return(base_df)
-}
+# all_students <- sl %>% 
+#   bind_rows(act_sub) %>% 
+#   mutate(subgroup = "All Students") %>% 
+#   total_by_subgroup_dist()
+# 
+# 
+# cat_subgroups <- function(student_df, students_grouped ){
+#   base_df = students_grouped
+#   subgroups <- c("Black/Hispanic/Native American", "Economically Disadvantaged", "English Learners with Transitional 1-4", "Students with Disabilities")
+#   for (subgroup in subgroups){
+#     if (subgroup == "Black/Hispanic/Native American"){
+#       hist_df <- student_df %>% 
+#         filter(bhn_group > 0) %>% 
+#         mutate(subgroup = "Black/Hispanic/Native American")
+#     } else if (subgroup == "Economically Disadvantaged") {
+#       hist_df <- student_df %>% 
+#         filter(economically_disadvantaged > 0) %>% 
+#         mutate(subgroup = "Economically Disadvantaged")
+#     }else if (subgroup == "English Learners with Transitional 1-4") {
+#       hist_df <- student_df %>% 
+#         filter(t1234 > 0 | el > 0) %>% 
+#         mutate(subgroup = "English Learners with Transitional 1-4")
+#     }else {
+#       hist_df <- student_df %>% 
+#         filter(special_ed > 0) %>% 
+#         mutate(subgroup = "Students with Disabilities")
+#     }
+#     hist_grouped <- total_by_subgroup_dist(hist_df)
+#     base_df <- rbind(base_df, hist_grouped)
+#   }
+#   return(base_df)
+# }
 
 # ======================================= Success Rate ================================================
 
@@ -185,12 +185,22 @@ success_value_added_dist <- read_excel("N:/ORP_accountability/data/2019_tvaas/20
             )
   )
 
-dist_totals <- cat_subgroups(sl, all_students) %>%
-  # rbind(all_students) %>% 
-  #rbind(all_students, super_subgroup) %>% 
-  arrange(system, subject, subgroup) %>% 
-  rename(subject = subject)
-  
+dist_totals <- bind_rows(
+    sl %>% bind_rows(act_sub) %>% mutate(subgroup = "All Students"),
+    sl %>% filter(bhn_group > 0) %>% mutate(subgroup = "Black/Hispanic/Native American"),
+    sl %>% filter(economically_disadvantaged > 0) %>% mutate(subgroup = "Economically Disadvantaged"),
+    sl %>% filter(t1234 > 0 | el > 0) %>% mutate(subgroup = "English Learners with Transitional 1-4"),
+    sl %>% filter(special_ed > 0) %>% mutate(subgroup = "Students with Disabilities")
+  ) %>% 
+  total_by_subgroup_dist() %>% 
+  arrange(system, subject, subgroup)
+
+# dist_totals <- cat_subgroups(sl, all_students) %>%
+#   # rbind(all_students) %>% 
+#   #rbind(all_students, super_subgroup) %>% 
+#   arrange(system, subject, subgroup) %>% 
+#   rename(subject = subject)
+#   
 
 dist_achievement <- dist_totals %>% 
   mutate(
