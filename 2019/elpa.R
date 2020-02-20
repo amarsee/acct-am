@@ -172,78 +172,94 @@ elpa_with_demo <- elpa_total %>%
   mutate(el = 1) # %>% 
   # replace_na(list(ed=0, swd=0))
 
-out_df <- elpa_with_demo %>% 
-  mutate(subgroup = 'All Students')
-# super_sub <- elpa_with_demo %>% 
-#   mutate(subgroup = 'Super Subgroup')
-# out_df <- out_df %>% 
-#   rbind(super_sub)
+# out_df <- elpa_with_demo %>% 
+#   mutate(subgroup = 'All Students')
+# # super_sub <- elpa_with_demo %>% 
+# #   mutate(subgroup = 'Super Subgroup')
+# # out_df <- out_df %>% 
+# #   rbind(super_sub)
+# 
+# for (subgroup in subgroups){
+#   student_df <- elpa_with_demo
+#   if (subgroup == "American Indian or Alaska Native"){
+#     hist_df <- student_df %>% 
+#       filter(native_american == 1) %>% 
+#       mutate(subgroup = "American Indian or Alaska Native")
+#     non_hist_df <- 0
+#   }else if (subgroup == "Asian"){
+#     hist_df <- student_df %>% 
+#       filter(asian == 1) %>% 
+#       mutate(subgroup = "Asian")
+#     non_hist_df <- 0
+#   }else if (subgroup == "Black or African American"){
+#     hist_df <- student_df %>% 
+#       filter(black == 1) %>% 
+#       mutate(subgroup = "Black or African American")
+#     non_hist_df <- 0
+#   }else if (subgroup == "Black/Hispanic/Native American"){
+#     hist_df <- student_df %>% 
+#       filter(bhn_group == 1) %>% 
+#       mutate(subgroup = "Black/Hispanic/Native American")
+#     non_hist_df <- 0
+#   } else if (subgroup == "Economically Disadvantaged") {
+#     hist_df <- student_df %>% 
+#       filter(ed == 1) %>% 
+#       mutate(subgroup = "Economically Disadvantaged")
+#     non_hist_df <- student_df %>% 
+#       filter(ed == 0 | is.na(ed)) %>% 
+#       mutate(subgroup = "Non-Economically Disadvantaged")
+#   }else if (subgroup == "English Learners") {
+#     hist_df <- student_df %>% 
+#       filter(el == 1) %>% 
+#       mutate(subgroup = "English Learners")
+#       # mutate(subgroup = "English Learners with Transitional 1-4")
+#     non_hist_df <- 0
+#   }else if (subgroup == "Hispanic"){
+#     hist_df <- student_df %>% 
+#       filter(hispanic == 'Y') %>% 
+#       mutate(subgroup = "Hispanic")
+#     non_hist_df <- 0
+#   }else if (subgroup == "Native Hawaiian or Other Pacific Islander"){
+#     hist_df <- student_df %>% 
+#       filter(hawaiian_pi == 1) %>% 
+#       mutate(subgroup = "Native Hawaiian or Other Pacific Islander")
+#     non_hist_df <- 0
+#   }else if (subgroup == "White"){
+#     hist_df <- student_df %>% 
+#       filter(white == 1) %>% 
+#       mutate(subgroup = "White")
+#     non_hist_df <- 0
+#   }else {
+#     hist_df <- student_df %>% 
+#       filter(special_ed == 1) %>% 
+#       mutate(subgroup = "Students with Disabilities")
+#     non_hist_df <- student_df %>% 
+#       filter(special_ed == 0 | is.na(special_ed))%>% 
+#       mutate(subgroup = "Non-Students with Disabilities")
+#   }
+#   # hist_grouped <- total_by_subgroup(hist_df)
+#   out_df <- rbind(out_df, hist_df)
+#   if (is.data.frame(non_hist_df)){
+#     #non_hist_grouped <- total_by_subgroup(non_hist_df)
+#     out_df <- rbind(out_df, non_hist_df)
+#   }
+# }
 
-for (subgroup in subgroups){
-  student_df <- elpa_with_demo
-  if (subgroup == "American Indian or Alaska Native"){
-    hist_df <- student_df %>% 
-      filter(native_american == 1) %>% 
-      mutate(subgroup = "American Indian or Alaska Native")
-    non_hist_df <- 0
-  }else if (subgroup == "Asian"){
-    hist_df <- student_df %>% 
-      filter(asian == 1) %>% 
-      mutate(subgroup = "Asian")
-    non_hist_df <- 0
-  }else if (subgroup == "Black or African American"){
-    hist_df <- student_df %>% 
-      filter(black == 1) %>% 
-      mutate(subgroup = "Black or African American")
-    non_hist_df <- 0
-  }else if (subgroup == "Black/Hispanic/Native American"){
-    hist_df <- student_df %>% 
-      filter(bhn_group == 1) %>% 
-      mutate(subgroup = "Black/Hispanic/Native American")
-    non_hist_df <- 0
-  } else if (subgroup == "Economically Disadvantaged") {
-    hist_df <- student_df %>% 
-      filter(ed == 1) %>% 
-      mutate(subgroup = "Economically Disadvantaged")
-    non_hist_df <- student_df %>% 
-      filter(ed == 0 | is.na(ed)) %>% 
-      mutate(subgroup = "Non-Economically Disadvantaged")
-  }else if (subgroup == "English Learners") {
-    hist_df <- student_df %>% 
-      filter(el == 1) %>% 
-      mutate(subgroup = "English Learners")
-      # mutate(subgroup = "English Learners with Transitional 1-4")
-    non_hist_df <- 0
-  }else if (subgroup == "Hispanic"){
-    hist_df <- student_df %>% 
-      filter(hispanic == 'Y') %>% 
-      mutate(subgroup = "Hispanic")
-    non_hist_df <- 0
-  }else if (subgroup == "Native Hawaiian or Other Pacific Islander"){
-    hist_df <- student_df %>% 
-      filter(hawaiian_pi == 1) %>% 
-      mutate(subgroup = "Native Hawaiian or Other Pacific Islander")
-    non_hist_df <- 0
-  }else if (subgroup == "White"){
-    hist_df <- student_df %>% 
-      filter(white == 1) %>% 
-      mutate(subgroup = "White")
-    non_hist_df <- 0
-  }else {
-    hist_df <- student_df %>% 
-      filter(special_ed == 1) %>% 
-      mutate(subgroup = "Students with Disabilities")
-    non_hist_df <- student_df %>% 
-      filter(special_ed == 0 | is.na(special_ed))%>% 
-      mutate(subgroup = "Non-Students with Disabilities")
-  }
-  # hist_grouped <- total_by_subgroup(hist_df)
-  out_df <- rbind(out_df, hist_df)
-  if (is.data.frame(non_hist_df)){
-    #non_hist_grouped <- total_by_subgroup(non_hist_df)
-    out_df <- rbind(out_df, non_hist_df)
-  }
-}
+out_df <- bind_rows(
+  elpa_with_demo %>% mutate(subgroup = 'All Students'),
+  elpa_with_demo %>% filter(native_american == 1) %>% mutate(subgroup = "American Indian or Alaska Native"),
+  elpa_with_demo %>% filter(asian == 1) %>% mutate(subgroup = "Asian"),
+  elpa_with_demo %>% filter(black == 1) %>% mutate(subgroup = "Black or African American"),
+  elpa_with_demo %>% filter(bhn_group == 1) %>% mutate(subgroup = "Black/Hispanic/Native American"),
+  elpa_with_demo %>% filter(ed == 1) %>% mutate(subgroup = "Economically Disadvantaged"),
+  elpa_with_demo %>% filter(ed == 0 | is.na(ed)) %>% mutate(subgroup = "Non-Economically Disadvantaged"),
+  elpa_with_demo %>% filter(el == 1) %>% mutate(subgroup = "English Learners"),
+  elpa_with_demo %>% filter(hispanic == 'Y') %>% mutate(subgroup = "Hispanic"),
+  elpa_with_demo %>% filter(hawaiian_pi == 1) %>% mutate(subgroup = "Native Hawaiian or Other Pacific Islander"),
+  elpa_with_demo %>% filter(white == 1) %>% mutate(subgroup = "White"),
+  elpa_with_demo %>% filter(special_ed == 1) %>% mutate(subgroup = "Students with Disabilities"),
+  elpa_with_demo %>% filter(special_ed == 0 | is.na(special_ed)) %>% mutate(subgroup = "Non-Students with Disabilities")
+)
 
 
 # ================================= State Level ========================================

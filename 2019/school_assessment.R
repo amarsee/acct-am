@@ -6,17 +6,18 @@ library(tidyverse)
 # sped_schools <- read_csv("N:/ORP_accountability/data/2019_tdoe_provided_files/sped_schools.csv")
 # new_schools <- read_csv("N:/ORP_accountability/data/2019_tdoe_provided_files/new_schools.csv")
 
-student_level <- read_csv("N://ORP_accountability/projects/2019_student_level_file/2019_student_level_AM.csv")
-sl <- student_level
-sl$grade[sl$grade == 0] <- "Missing Grade"
+student_level <- read_csv("N://ORP_accountability/projects/2019_student_level_file/2019_student_level_file.csv")
+# sl <- student_level
+# sl$grade[sl$grade == 0] <- "Missing Grade"
 
 names <- read_csv("N:\\ORP_accountability\\data\\2019_final_accountability_files\\names.csv")
 
-sl <- sl %>% 
+sl <- student_level %>% 
   # select(-system, - school) %>% 
   # rename(system = acct_system, school = acct_school) %>% 
   mutate(
-    grade = as.character(grade),
+    grade = if_else(grade == 0, "Missing Grade", as.character(grade)),
+    # grade = as.character(grade),
     below = case_when(
       performance_level == "Below" | performance_level == "Below Basic" ~ 1,
       TRUE                      ~ 0
@@ -55,112 +56,141 @@ total_by_subgroup <- function(df) {
   return(out_df)
 }
 
-grouped_by_race <- total_by_subgroup(sl)
+# grouped_by_race <- total_by_subgroup(sl)
+# 
+# all_students <- sl %>% 
+#   mutate(subgroup = "All Students") %>% 
+#   total_by_subgroup()
+# 
+# all_students_all_grades <- sl %>% 
+#   mutate(subgroup = "All Students", grade = "All Grades") %>%
+#   total_by_subgroup()
+# 
+# super_subgroup <- sl %>% 
+#   filter(bhn_group > 0 | economically_disadvantaged > 0 | t1234 > 0 | el > 0 | special_ed > 0) %>% 
+#   mutate(subgroup = "Super Subgroup") %>% 
+#   total_by_subgroup()
+# 
+# cat_subgroups <- function(student_df, students_grouped ){
+#   base_df = students_grouped
+#   subgroups <- c("Black/Hispanic/Native American", "Economically Disadvantaged","English Learners", "English Learner Transitional 1-4", 
+#                  "English Learners with Transitional 1-4", "Students with Disabilities", 'Female', 'Gifted', 'Migrant')
+#   for (subgroup in subgroups){
+#     if (subgroup == "Black/Hispanic/Native American"){
+#       hist_df <- student_df %>% 
+#         filter(bhn_group > 0) %>% 
+#         mutate(subgroup = "Black/Hispanic/Native American")
+#       non_hist_df <- student_df %>% 
+#         filter(bhn_group == 0 | is.na(bhn_group))%>% 
+#         mutate(subgroup = "Non-Black/Hispanic/Native American")
+#     } else if (subgroup == "Economically Disadvantaged") {
+#       hist_df <- student_df %>% 
+#         filter(economically_disadvantaged > 0) %>% 
+#         mutate(subgroup = "Economically Disadvantaged")
+#       non_hist_df <- student_df %>% 
+#         filter(economically_disadvantaged == 0 | is.na(economically_disadvantaged)) %>% 
+#         mutate(subgroup = "Non-Economically Disadvantaged")
+#     }else if (subgroup == "English Learners") {
+#       hist_df <- student_df %>% 
+#         filter(el > 0) %>% 
+#         mutate(subgroup = "English Learners")
+#       non_hist_df <- 0
+#     }else if (subgroup == "English Learner Transitional 1-4") {
+#       hist_df <- student_df %>% 
+#         filter(t1234 > 0) %>% 
+#         mutate(subgroup = "English Learner Transitional 1-4")
+#       non_hist_df <- 0
+#     }else if (subgroup == "English Learners with Transitional 1-4") {
+#       hist_df <- student_df %>% 
+#         filter(t1234 > 0 | el > 0) %>% 
+#         mutate(subgroup = "English Learners with Transitional 1-4")
+#       non_hist_df <- student_df %>% 
+#         filter((t1234 == 0 | is.na(t1234)) & (el == 0 | is.na(el)))%>% 
+#         mutate(subgroup = "Non-English Learners/Transitional 1-4")
+#     }else if (subgroup == "Female") {
+#       hist_df <- student_df %>% 
+#         filter(gender == 'F') %>% 
+#         mutate(subgroup = "Female")
+#       non_hist_df <- student_df %>% 
+#         filter(gender == 'M')%>% 
+#         mutate(subgroup = "Male")
+#     }else if (subgroup == "Gifted") {
+#       hist_df <- student_df %>% 
+#         filter(gifted == 1) %>% 
+#         mutate(subgroup = "Gifted")
+#       non_hist_df <- 0
+#     }else if (subgroup == "Migrant") {
+#       hist_df <- student_df %>% 
+#         filter(migrant == 1) %>% 
+#         mutate(subgroup = "Migrant")
+#       non_hist_df <- 0
+#     }else {
+#       hist_df <- student_df %>% 
+#         filter(special_ed > 0) %>% 
+#         mutate(subgroup = "Students with Disabilities")
+#       non_hist_df <- student_df %>% 
+#         filter(special_ed == 0 | is.na(special_ed))%>% 
+#         mutate(subgroup = "Non-Students with Disabilities")
+#     }
+#     hist_grouped <- total_by_subgroup(hist_df)
+#     base_df <- rbind(base_df, hist_grouped)
+#     if (is.data.frame(non_hist_df)){
+#       non_hist_grouped <- total_by_subgroup(non_hist_df)
+#       base_df <- rbind(base_df, non_hist_grouped)
+#     }
+#   }
+#   return(base_df)
+# }
+# 
+# all_grades <- cat_subgroups(sl, grouped_by_race) %>% 
+#   rbind(super_subgroup) %>%
+#   mutate(grade = "All Grades") %>% 
+#   group_by(system, school, test, original_subject, grade, subgroup) %>% 
+#   summarise(
+#     enrolled = sum(enrolled),
+#     tested = sum(tested),
+#     valid_tests = sum( valid_tests),
+#     n_below = sum(n_below),
+#     n_approaching = sum(n_approaching),
+#     n_on_track = sum(n_on_track),
+#     n_mastered = sum(n_mastered)
+#   ) %>% 
+#   ungroup() %>% 
+#   filter(subgroup != "Unknown")
+# 
+# state_totals <- cat_subgroups(sl, grouped_by_race) %>% 
+#   filter(subgroup != "Unknown") %>% 
+#   rbind(all_students, super_subgroup, all_grades, all_students_all_grades) %>% 
+#   arrange(system, original_subject, grade, subgroup)
 
-all_students <- sl %>% 
-  mutate(subgroup = "All Students") %>% 
-  total_by_subgroup()
+state_demos <- bind_rows(
+  sl,
+  sl %>% filter(bhn_group > 0) %>% mutate(subgroup = "Black/Hispanic/Native American"),
+  sl %>% filter(bhn_group == 0 | is.na(bhn_group)) %>% mutate(subgroup = "Non-Black/Hispanic/Native American"),
+  sl %>% filter(economically_disadvantaged > 0) %>% mutate(subgroup = "Economically Disadvantaged"),
+  sl %>% filter(economically_disadvantaged == 0 | is.na(economically_disadvantaged)) %>% mutate(subgroup = "Non-Economically Disadvantaged"),
+  sl %>% filter(el > 0) %>% mutate(subgroup = "English Learners"),
+  sl %>% filter(t1234 > 0) %>% mutate(subgroup = "English Learner Transitional 1-4"),
+  sl %>% filter(t1234 > 0 | el > 0) %>% mutate(subgroup = "English Learners with Transitional 1-4"),
+  sl %>% filter((t1234 == 0 | is.na(t1234)) & (el == 0 | is.na(el))) %>% mutate(subgroup = "Non-English Learners/Transitional 1-4"),
+  sl %>% filter(gender == 'F') %>% mutate(subgroup = "Female"),
+  sl %>% filter(gender == 'M') %>% mutate(subgroup = "Male"),
+  sl %>% filter(gifted == 1) %>% mutate(subgroup = "Gifted"),
+  sl %>% filter(migrant == 1) %>% mutate(subgroup = "Migrant"),
+  sl %>% filter(special_ed > 0) %>% mutate(subgroup = "Students with Disabilities"),
+  sl %>% filter(special_ed == 0 | is.na(special_ed)) %>% mutate(subgroup = "Non-Students with Disabilities"),
+  sl %>% mutate(subgroup = "All Students"),
+  # sl %>% mutate(subgroup = "All Students", grade = "All Grades"),
+  sl %>% filter(bhn_group > 0 | economically_disadvantaged > 0 | t1234 > 0 | el > 0 | special_ed > 0) %>% mutate(subgroup = "Super Subgroup")
+)
 
-all_students_all_grades <- sl %>% 
-  mutate(subgroup = "All Students", grade = "All Grades") %>%
-  total_by_subgroup()
-
-super_subgroup <- sl %>% 
-  filter(bhn_group > 0 | economically_disadvantaged > 0 | t1234 > 0 | el > 0 | special_ed > 0) %>% 
-  mutate(subgroup = "Super Subgroup") %>% 
-  total_by_subgroup()
-
-cat_subgroups <- function(student_df, students_grouped ){
-  base_df = students_grouped
-  subgroups <- c("Black/Hispanic/Native American", "Economically Disadvantaged","English Learners", "English Learner Transitional 1-4", 
-                 "English Learners with Transitional 1-4", "Students with Disabilities", 'Female', 'Gifted', 'Migrant')
-  for (subgroup in subgroups){
-    if (subgroup == "Black/Hispanic/Native American"){
-      hist_df <- student_df %>% 
-        filter(bhn_group > 0) %>% 
-        mutate(subgroup = "Black/Hispanic/Native American")
-      non_hist_df <- student_df %>% 
-        filter(bhn_group == 0 | is.na(bhn_group))%>% 
-        mutate(subgroup = "Non-Black/Hispanic/Native American")
-    } else if (subgroup == "Economically Disadvantaged") {
-      hist_df <- student_df %>% 
-        filter(economically_disadvantaged > 0) %>% 
-        mutate(subgroup = "Economically Disadvantaged")
-      non_hist_df <- student_df %>% 
-        filter(economically_disadvantaged == 0 | is.na(economically_disadvantaged)) %>% 
-        mutate(subgroup = "Non-Economically Disadvantaged")
-    }else if (subgroup == "English Learners") {
-      hist_df <- student_df %>% 
-        filter(el > 0) %>% 
-        mutate(subgroup = "English Learners")
-      non_hist_df <- 0
-    }else if (subgroup == "English Learner Transitional 1-4") {
-      hist_df <- student_df %>% 
-        filter(t1234 > 0) %>% 
-        mutate(subgroup = "English Learner Transitional 1-4")
-      non_hist_df <- 0
-    }else if (subgroup == "English Learners with Transitional 1-4") {
-      hist_df <- student_df %>% 
-        filter(t1234 > 0 | el > 0) %>% 
-        mutate(subgroup = "English Learners with Transitional 1-4")
-      non_hist_df <- student_df %>% 
-        filter((t1234 == 0 | is.na(t1234)) & (el == 0 | is.na(el)))%>% 
-        mutate(subgroup = "Non-English Learners/Transitional 1-4")
-    }else if (subgroup == "Female") {
-      hist_df <- student_df %>% 
-        filter(gender == 'F') %>% 
-        mutate(subgroup = "Female")
-      non_hist_df <- student_df %>% 
-        filter(gender == 'M')%>% 
-        mutate(subgroup = "Male")
-    }else if (subgroup == "Gifted") {
-      hist_df <- student_df %>% 
-        filter(gifted == 1) %>% 
-        mutate(subgroup = "Gifted")
-      non_hist_df <- 0
-    }else if (subgroup == "Migrant") {
-      hist_df <- student_df %>% 
-        filter(migrant == 1) %>% 
-        mutate(subgroup = "Migrant")
-      non_hist_df <- 0
-    }else {
-      hist_df <- student_df %>% 
-        filter(special_ed > 0) %>% 
-        mutate(subgroup = "Students with Disabilities")
-      non_hist_df <- student_df %>% 
-        filter(special_ed == 0 | is.na(special_ed))%>% 
-        mutate(subgroup = "Non-Students with Disabilities")
-    }
-    hist_grouped <- total_by_subgroup(hist_df)
-    base_df <- rbind(base_df, hist_grouped)
-    if (is.data.frame(non_hist_df)){
-      non_hist_grouped <- total_by_subgroup(non_hist_df)
-      base_df <- rbind(base_df, non_hist_grouped)
-    }
-  }
-  return(base_df)
-}
-
-all_grades <- cat_subgroups(sl, grouped_by_race) %>% 
-  rbind(super_subgroup) %>%
-  mutate(grade = "All Grades") %>% 
-  group_by(system, school, test, original_subject, grade, subgroup) %>% 
-  summarise(
-    enrolled = sum(enrolled),
-    tested = sum(tested),
-    valid_tests = sum( valid_tests),
-    n_below = sum(n_below),
-    n_approaching = sum(n_approaching),
-    n_on_track = sum(n_on_track),
-    n_mastered = sum(n_mastered)
-  ) %>% 
-  ungroup() %>% 
-  filter(subgroup != "Unknown")
-
-state_totals <- cat_subgroups(sl, grouped_by_race) %>% 
+state_totals <- bind_rows(
+  state_demos %>% total_by_subgroup(),
+  state_demos %>% mutate(grade = 'All Grades') %>% total_by_subgroup()
+) %>% 
   filter(subgroup != "Unknown") %>% 
-  rbind(all_students, super_subgroup, all_grades, all_students_all_grades) %>% 
   arrange(system, original_subject, grade, subgroup)
+
 
 school_assessment <- state_totals %>% 
   # select(-school_name, -system_name) %>% 
