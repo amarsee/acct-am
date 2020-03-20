@@ -59,12 +59,6 @@ demos_filtered <- demographics_2019_spring %>%
 
 # EOCs
 # ======================================= Fall EOC ===========================================================
-# fall_eoc_cdf <- read_csv("N:\\ORP_accountability\\data\\2019_cdf\\2019_fall_eoc_cdf.csv", col_types =  'icicccciicccciiiiciiciiciiciiiiicc') %>% 
-#   mutate(
-#     semester = "Fall",
-#     raw_score = as.integer(raw_score)
-#   )
-
 fall_eoc <- read_fwf("N:/Assessment_Data Returns/TCAP_End-of-Course/2019-2020/fall EOC 2019/2019_TN_Fall_2019_EOC_CDF_20200128.txt",
                      col_types = 'icicccciicccciiiiiciic',
                      fwf_cols(system = c(33, 37), system_name = c(38, 112), school = c(113, 116),
@@ -103,16 +97,6 @@ fall_eoc_total <- fall_eoc %>%
   )
 
 # =============================================== TCAP 3-8 ========================================================================
-# grade_3_8_TCAP <- read_fwf("N:\\Assessment_Data Returns\\TCAP_Grades 3-8\\2018-19\\2018-2019 TN 2019 Spring 3-8 CDF Final Scores-20190629\\2018-2019 TN 2019 Spring 3-8 CDF Final Scores-20190629.Txt",
-#                        col_types = 'icicccciicccciiiiiciic',
-#                        fwf_cols(system = c(7, 11), system_name = c(12, 86), school = c(87, 90),
-#                                 school_name = c(91, 165), last_name = c(166, 200), first_name = c(201, 235),
-#                                 middle_initial = c(236, 236), unique_student_id = c(245, 253), grade = c(254, 255),
-#                                 content_area_code = c(258, 260), attempted = c(332, 332), modified_format = c(356, 357),
-#                                 school_type = c(574, 574),teacher_of_record_tln = c(361, 369), reason_not_tested = c(568, 569), ri_status = c(570, 571),
-#                                 raw_score = c(703, 705), scale_score= c(709, 712), performance_level = c(713, 727),
-#                                 scale_score_lb_ci = c(731,733), scale_score_ub_ci = c(728,730), item_response_array=c(748,877)))
-
 grade_3_8_TCAP <- read_fwf("N:\\Assessment_Data Returns\\TCAP_Grades 3-8\\2018-19\\2018-2019 TN 2019 Spring 3-8 CDF Final Scores-20190730_updated2019-08-01.Txt",
                            col_types = 'icicccciicccciiiiiciici', 
                            #n_max = 993639,
@@ -201,49 +185,6 @@ spring_eoc_total <- spring_eoc %>%
 # spring_eoc <- read_csv('N:/Assessment_Data Returns/TCAP_End-of-Course/2018-19/Spring EOC 2019/2018-2019 TN 2019 Spring EOC CDF Final Scores-20190613.csv')
 
 # ================================= ALT Social Studies =====================================
-# alt_science_ss <- read_fwf("N:\\Assessment_Data Returns\\TCAP ALT_Grades 3-11_Sci and SS\\2017-18\\2017-2018 TN 3-11 Alt CDF Final Scores - 20180816.txt",
-#                            col_types = 'icicccciccccciiiiiciic',
-#                            fwf_cols(system = c(7, 11), system_name = c(12, 86), school = c(87, 90),
-#                                     school_name = c(91, 165), last_name = c(166, 200), first_name = c(201, 235),
-#                                     middle_initial = c(236, 236), unique_student_id = c(245, 253), grade = c(254, 255),
-#                                     content_area_code = c(258, 260), attempted = c(331, 331), modified_format = c(355, 356),
-#                                     school_type = c(573, 573),teacher_of_record_tln = c(369, 388), reason_not_tested = c(567, 568), ri_status = c(569, 570),
-#                                     raw_score = c(702, 704), scale_score= c(708, 711), performance_level = c(712, 726),
-#                                     scale_score_lb_ci = c(730,732), scale_score_ub_ci = c(727,729), item_response_array=c(747,876))) %>% 
-#   mutate(
-#     test = "Alt-Social Studies",
-#     grade = if_else(grade == "HS", "11", grade),
-#     semester = "Spring",
-#     performance_level = case_when(
-#       performance_level == "Level 3" ~ "Mastered",
-#       performance_level == "Level 2" ~ "On Track",
-#       performance_level == "Level 1" ~ "Approaching"
-#     ),
-#     original_subject = case_when(
-#       content_area_code == "SCI" ~ "Science",
-#       content_area_code == "SOC" ~ "Social Studies",
-#       content_area_code == "B1" ~ "Biology I"
-#     ),
-#     absent = if_else(reason_not_tested == 1, 1,0),
-#     not_enrolled = if_else(reason_not_tested == 2, 1,0),
-#     not_scheduled = if_else(reason_not_tested == 3, 1 ,0),
-#     medically_exempt = if_else(reason_not_tested == 4, 1,0),
-#     residential_facility = if_else(reason_not_tested == 5, 1,0),
-#     did_not_submit = if_else(reason_not_tested == 7, 1,0),
-#     breach_adult = if_else(ri_status == 1, 1,0),
-#     breach_student = if_else(ri_status == 2, 1,0),
-#     irregular_admin = if_else(ri_status == 3, 1,0),
-#     incorrect_grade_subject = if_else(ri_status == 4, 1,0),
-#     refused_to_test = if_else(ri_status == 5, 1,0),
-#     failed_attemptedness = if_else(ri_status == 6, 1,0)
-#   ) %>% 
-#   left_join(demos_filtered, by = c("unique_student_id", "system", "school")) %>%
-#   select(system:attempted, gender, race, bhn_group, economically_disadvantaged, title_1:migrant, el,
-#          el_arrived_year_1, el_arrived_year_2, el_t1234, special_ed,modified_format, enrolled_50_pct_district,
-#          enrolled_50_pct_school, teacher_of_record_tln:item_response_array, test, semester, absent:failed_attemptedness, original_subject) %>% 
-#   replace_na(list(race = 'Unknown')) %>% 
-#   mutate(grade = as.numeric(grade))
-# 
 alt_science_ss <- read_csv("N:/ORP_accountability/data/2019_cdf/2019_alt_ss_cdf.csv") %>% 
   mutate(
     test = "Alt-Social Studies",
@@ -597,14 +538,6 @@ dedup <- student_level %>%
   # Valid test if there is a performance level
   mutate(valid_test = as.numeric(!is.na(performance_level)))
 
-
-# school_names <- #readxl::read_excel("N:/ORP_accountability/projects/Andrew/Accountability/2019/2018-19 EDFacts School Master File_4-10-19.xlsx",
-# #                                    sheet = '1819 Sch and Grade Info') %>% 
-# #   clean_names() %>% 
-# #   transmute(system = as.integer(dg_4_lea_id_state),
-# #             school = as.integer(dg_5_school_id_state),
-# #             system_name = extra_item_lea_name,
-# #             school_name = dg_7_school_name) %>% 
 school_names <- read_csv("N:\\ORP_accountability\\data\\2019_final_accountability_files\\names.csv") %>% 
   bind_rows(
     tribble(
