@@ -301,7 +301,7 @@ if(press == T) {
 
 # ========================== Dropouts =================================
 if(dropouts == T) {
-  scd = read_csv("N:/ORP_accountability/projects/2020_graduation_rate/Data/studentcohortdata_20200420.csv",
+  scd = read_csv("N:/ORP_accountability/projects/2020_graduation_rate/Data/studentcohortdata_20200422.csv",
                  col_types = "iiccccTcicTiccccccccciciiiciiccciccccccicccTcccTcccccTcTc") %>% 
     rename(system = district_no, school = school_no)
   enr = read_csv("N:/ORP_accountability/data/2020_graduation_rate/enrollment20200421.csv")
@@ -336,6 +336,9 @@ if(dropouts == T) {
            MIG = migrant == 'Y',
            M = gender == "M", `F` = gender == "F") %>% 
     mutate_at(vars(grad_cohort:`F`), .funs = ~(as.integer(.)))
+  
+  students_withdrawn <- a %>% 
+    filter(dropout_count == TRUE)
   
   # Summarize to school, district, and state level files
   collapse = tibble()
