@@ -100,7 +100,7 @@ con <- dbConnect(
 # # Export pull so we don't have to run it each time
 # write_csv(attendance, "N:/ORP_accountability/data/2020_chronic_absenteeism/absenteeism_pull_Mar30.csv", na = '')
 
-attendance <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/absenteeism_pull_Mar24.csv")
+attendance <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/absenteeism_pull_Mar30.csv")
 
 # # Pull instructional calendar days from database
 # instructional_days <- dbGetQuery(con,
@@ -127,7 +127,7 @@ attendance <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/abse
 
 instructional_days <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/instructional_days_ending_02Mar2020.csv")
 
-demographics <-  read_csv("N:/TNReady/2019-20/spring/demographics/student_demographics_20200327.csv") %>%
+demographics <-  read_csv("N:/TNReady/2019-20/spring/demographics/student_demographics_20200527.csv") %>%
   # Student IDs should be 7 digits
   filter(str_length(student_key) == 7) %>%
   transmute(
@@ -380,10 +380,10 @@ student <- absenteeism %>%
 setwd(str_c("N:/ORP_accountability/data/", year(today()), "_chronic_absenteeism"))
 
 # State, district, school, and student output
-write_csv(student, str_c("student_chronic_absenteeism_through_Mar2_", month(today(), label = TRUE), day(today()), ".csv"), na = "")
-write_csv(state, str_c("state_chronic_absenteeism_through_Mar2_", month(today(), label = TRUE), day(today()), ".csv"), na = "")
-write_csv(district, str_c("district_chronic_absenteeism_through_Mar2_", month(today(), label = TRUE), day(today()), ".csv"), na = "")
-write_csv(school, str_c("school_chronic_absenteeism_through_Mar2_", month(today(), label = TRUE), day(today()), ".csv"), na = "")
+write_csv(student, str_c("student_chronic_absenteeism_", month(today(), label = TRUE), day(today()), ".csv"), na = "")
+write_csv(state, str_c("state_chronic_absenteeism_", month(today(), label = TRUE), day(today()), ".csv"), na = "")
+write_csv(district, str_c("district_chronic_absenteeism_", month(today(), label = TRUE), day(today()), ".csv"), na = "")
+write_csv(school, str_c("school_chronic_absenteeism_", month(today(), label = TRUE), day(today()), ".csv"), na = "")
 
 # Split Files
 district_numbers <- sort(unique(student$system))

@@ -11,6 +11,7 @@ library(andrewacct)
 library(ggplot2)
 library(scales)
 library(lemon)
+library(networkD3)
 
 # ============== Current Method =======================
 ach_current <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/school_accountability_file.csv") %>% 
@@ -285,6 +286,7 @@ ach_ovr_score <- bind_rows(
   summarise(
     subgroup_score = mean(score)
   ) %>% 
+  ungroup() %>% 
   pivot_wider(
     names_from = subgroup,
     values_from = subgroup_score
@@ -312,7 +314,65 @@ ovr_score_dist <- ach_ovr_score %>%
   mutate(
     pct_schools = round(n_schools / denom * 100 + 1e-10, 0)
   )
+# ============= Change of grade from current =================
+grade_change <- ach_ovr_score %>% filter(method == 'Current') %>% select(system:indicator, grade_current = grade) %>% 
+  left_join(
+    ach_ovr_score %>% filter(method == '2 Year Avg.') %>% select(system, school, grade_2_year_avg = grade),
+    by = c('system', 'school')
+  ) %>% 
+  left_join(
+    ach_ovr_score %>% filter(method == '3 Year Avg.') %>% select(system, school, grade_3_year_avg = grade),
+    by = c('system', 'school')
+  ) %>% 
+  left_join(
+    ach_ovr_score %>% filter(method == 'Weighted Average') %>% select(system, school, grade_weighted_avg = grade),
+    by = c('system', 'school')
+  )
 
+grade_pct_move <- grade_change %>% 
+  group_by(indicator, grade_current, grade_2_year_avg) %>% 
+  summarise(
+    n_count = n()
+  ) %>% 
+  ungroup() %>% 
+  transmute(indicator, grade_current, method = '2 Year Avg', 
+            new_grade = grade_2_year_avg, n_count) %>% 
+  bind_rows(
+    grade_change %>% 
+      group_by(indicator, grade_current, grade_3_year_avg) %>% 
+      summarise(
+        n_count = n()
+      ) %>% 
+      ungroup() %>% 
+      transmute(indicator, grade_current, method = '3 Year Avg', 
+                new_grade = grade_3_year_avg, n_count),
+    grade_change %>% 
+      group_by(indicator, grade_current, grade_weighted_avg) %>% 
+      summarise(
+        n_count = n()
+      ) %>% 
+      ungroup() %>% 
+      transmute(indicator, grade_current, method = 'Weighted Avg', 
+                new_grade = grade_weighted_avg, n_count)
+  )
+
+grade_move_sankey <- grade_pct_move %>% 
+  mutate(
+    method_starting = paste0('Starting ', method, ' - ', grade_current),
+    method_final = paste0('Final ', method, ' - ', new_grade)
+  )
+# From these flows we need to create a node data frame: it lists every entities involved in the flow
+nodes <- data.frame(name=c(as.character(grade_move_sankey$method_starting), as.character(grade_move_sankey$method_final)) %>% unique())
+
+# With networkD3, connection must be provided using id, not using real name like in the links dataframe.. So we need to reformat it.
+grade_move_sankey$IDsource=match(grade_move_sankey$method_starting, nodes$name)-1 
+grade_move_sankey$IDtarget=match(grade_move_sankey$method_final, nodes$name)-1
+
+# Make the Network
+sankeyNetwork(Links = grade_move_sankey, Nodes = nodes,
+              Source = "IDsource", Target = "IDtarget",
+              Value = "n_count", NodeID = "name", 
+              sinksRight=FALSE, nodeWidth=40, fontSize=13, nodePadding=20)
 # =============== Plots =======================
 score_dist <- bind_rows(
   ach_current %>% filter(!is.na(score)) %>% mutate(method = 'Current'),
