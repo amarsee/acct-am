@@ -26,7 +26,7 @@ ready_grad_student_level_total <- read_csv('N:/ORP_accountability/projects/2020_
     # Indicate that the student took a test if they have a valid composite score
     completed_act_sat = if_else((sat_total > 0 | act_composite > 0) & included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13), 1, 0),
     on_time_grad = if_else(included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13), 1, 0)
-    )
+  )
 
 # ================================== Ready Grad Subgroups ===========================================================
 
@@ -124,6 +124,48 @@ state_level_ready_grad <- out_df_ready_grad %>%
   arrange(subgroup)
 
 write_csv(state_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_state_AM.csv")
+
+# =================== Split Files ======================
+# Split district file
+district_numbers <- sort(unique(ready_grad_student_level_total$system))
+
+district_level_ready_grad %>%
+  group_split(system) %>%
+  walk2(
+    .x = .,
+    .y = district_numbers,
+    .f = ~ write_csv(.x, path = paste0(
+      "N:/ORP_accountability/projects/2020_ready_graduate/Data/split/", .y,
+      "_2020_ReadyGraduate_District_Level_", format(Sys.Date(), "%d%b%Y"),
+      ".csv"
+    ), na = "")
+  )
+
+
+# Split school file
+school_level_ready_grad %>%
+  group_split(system) %>%
+  walk2(
+    .x = .,
+    .y = district_numbers,
+    .f = ~ write_csv(.x, path = paste0(
+      "N:/ORP_accountability/projects/2020_ready_graduate/Data/split/", .y,
+      "_2020_ReadyGraduate_School_Level_", format(Sys.Date(), "%d%b%Y"), ".csv"
+    ), na = "")
+  )
+
+# Split student level file
+ready_grad_student_level_total %>%
+  group_split(system) %>%
+  walk2(
+    .x = .,
+    .y = district_numbers,
+    .f = ~ write_csv(.x, path = paste0(
+      "N:/ORP_accountability/projects/2020_ready_graduate/Data/split/", .y,
+      "_2020_ReadyGraduate_Student_Level_", format(Sys.Date(), "%d%b%Y"), ".csv"
+    ), na = "")
+  )
+
 
 
 # ================================== Analysis ============================

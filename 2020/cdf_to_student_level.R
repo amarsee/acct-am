@@ -538,16 +538,16 @@ dedup <- student_level %>%
   # Valid test if there is a performance level
   mutate(valid_test = as.numeric(!is.na(performance_level)))
 
-school_names <- read_csv("N:\\ORP_accountability\\data\\2020_final_accountability_files\\names.csv") %>% 
-  bind_rows(
-    tribble(
-      ~system, ~system_name, ~school, ~school_name,
-      970, "Department of Children's Services", 25, "Gateway to Independence",
-      # 970, "Department of Children's Services", 45, "Wilder Youth Development Center",
-      970, "Department of Children's Services", 65, "Mountain View Youth Development Center"# ,
-      # 970, "Department of Children's Services", 140, "DCS Affiliated Schools"
-    )
-  )
+school_names <- read_csv("N:\\ORP_accountability\\data\\2020_final_accountability_files\\names.csv") # %>% 
+  # bind_rows(
+  #   tribble(
+  #     ~system, ~system_name, ~school, ~school_name,
+  #     970, "Department of Children's Services", 25, "Gateway to Independence",
+  #     970, "Department of Children's Services", 45, "Wilder Youth Development Center",
+  #     970, "Department of Children's Services", 65, "Mountain View Youth Development Center",
+  #     970, "Department of Children's Services", 140, "DCS Affiliated Schools"
+  #   )
+  # )
 
 # read in WIDA ACCESS file
 # wida_current <- read_csv("N:/ORP_accountability/data/2019_ELPA/wida_growth_standard_student.csv")

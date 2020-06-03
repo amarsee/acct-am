@@ -1,6 +1,7 @@
 # Assessment Files
 
 library(tidyverse)
+library(lubridate)
 
 # ============= Functions ================
 total_by_subgroup <- function(grouped_df) {
@@ -125,6 +126,9 @@ district_assessment_previous <- read_csv("N:/ORP_accountability/data/2019_final_
 district_assessment_final <- dist_totals %>% 
   bind_rows(district_assessment_previous %>% filter(year %in% c(2019, 2018), subject %in% unique(dist_totals$subject))) %>% 
   filter(!(grade %in% c(3,4,5) & subject == 'Social Studies')) %>% 
+  group_by(system) %>%
+  filter(max(year) == 2020) %>%
+  ungroup() %>%
   select(year, system:n_mastered, pct_below, pct_approaching, pct_on_track, pct_mastered, pct_on_mastered) %>% 
   mutate_at(
     .vars = vars(pct_below:pct_on_mastered),
@@ -168,6 +172,47 @@ state_assessment_final <- state_totals %>%
 
 # Write csv
 write_csv(state_assessment_final, "N:/ORP_accountability/data/2020_final_accountability_files/state_assessment_file.csv", na = '')
+
+# =============== Split Files ==================
+# Split district file
+district_numbers <- sort(unique(student$system))
+
+district_assessment_final %>%
+  group_split(system) %>%
+  walk2(
+    .x = .,
+    .y = district_numbers,
+    .f = ~ write_csv(.x, path = paste0(
+      "N:/ORP_accountability/data/2020_final_accountability_files/split/", .y,
+      "_2020_DistrictAssessmentFile_", format(Sys.Date(), "%d%b%Y"), ".csv"
+    ), na = "")
+  )
+
+
+# Split school file
+school_assessment_final %>%
+  group_split(system) %>%
+  walk2(
+    .x = .,
+    .y = district_numbers,
+    .f = ~ write_csv(.x, path = paste0(
+      "N:/ORP_accountability/data/2020_final_accountability_files/split/", .y,
+      "_2020_SchoolAssessmentFile_", format(Sys.Date(), "%d%b%Y"), ".csv"
+    ), na = "")
+  )
+
+student_split <- read_csv('N:/ORP_accountability/projects/2020_student_level_file/2020_student_level_file.csv')
+# Split student level file
+student_split %>%
+  group_split(system) %>%
+  walk2(
+    .x = .,
+    .y = district_numbers,
+    .f = ~ write_csv(.x, path = paste0(
+      "N:/ORP_accountability/data/2020_final_accountability_files/split/", .y,
+      "_2020_StudentLevelFiles_", format(Sys.Date(), "%d%b%Y"), ".csv"
+    ), na = "")
+  )
 
 
 
