@@ -203,6 +203,12 @@ absenteeism <- attendance %>%
   ) %>%
   left_join(demographics, by = c("system", "school", "student_key"))
 
+sch_names <- read_csv('N:/ORP_accountability/data/2020_final_accountability_files/names.csv')
+
+dist_names <- sch_names %>% 
+  select(system, system_name) %>% 
+  distinct()
+
 # Function to calculate chronic absenteeism by student group and school/district/state level
 groups <- list(quo(All), quo(BHN), quo(ED), quo(SWD), quo(EL), quo(Black), quo(Hispanic), quo(Native), quo(HPI), quo(Asian), quo(White))
 
@@ -309,6 +315,8 @@ students_district <- absenteeism %>%
 
 district <- groups %>%
   map_dfr(~ collapse(students_district, !!., system, system_name)) %>%
+  select(-system_name) %>% 
+  left_join(dist_names, by = 'system') %>% 
   transmute(
     system,
     system_name,
@@ -338,6 +346,8 @@ students_school <- absenteeism %>% filter(isp_days/instructional_days >= 0.5)
 school <- groups %>%
   map_dfr(~ collapse(students_school, !!., system, system_name, school, school_name)) %>%
   filter(grade_band == "All Grades") %>%
+  select(-system_name, -school_name) %>% 
+  left_join(sch_names, by = c('system', 'school')) %>% 
   transmute(
     system,
     system_name,
@@ -365,6 +375,8 @@ school <- groups %>%
 
 # Student
 student <- absenteeism %>%
+  select(-system_name, -school_name) %>% 
+  left_join(sch_names, by = c('system', 'school')) %>% 
   transmute(
     system, system_name, school, school_name,
     student_id = student_key, first_name, middle_name, last_name, grade,
@@ -444,6 +456,27 @@ test_query <- dbGetQuery(con,
   as.tbl()
 
 
+dist_absenteeism <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/district_chronic_absenteeism_Jun3.csv")
 
+school_absenteeism <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/school_chronic_absenteeism_Jun3.csv")
+
+school_names <- read_csv("N:/ORP_accountability/data/2020_final_accountability_files/names.csv")
+
+dist_names <- school_names %>% 
+  select(system, system_name) %>% 
+  distinct()
+
+dplyr::setdiff(
+  school_absenteeism %>% select(system, system_name, school, school_name) %>% distinct(),
+  school_names
+) %>% 
+  bind_rows(
+    dplyr::setdiff(
+      school_names,
+      school_absenteeism %>% select(system, system_name, school, school_name) %>% distinct()
+    )
+  ) %>% 
+  arrange(system, school) %>% 
+  View()
 
 
