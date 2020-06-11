@@ -354,6 +354,14 @@ grade_pct_move <- grade_change %>%
       ungroup() %>% 
       transmute(indicator, grade_current, method = 'Weighted Avg', 
                 new_grade = grade_weighted_avg, n_count)
+  ) %>% 
+  group_by(grade_current, method) %>% 
+  mutate(
+    grade_current_count = sum(n_count)
+  ) %>% 
+  ungroup() %>% 
+  mutate(
+    pct_schools = round(n_count / grade_current_count * 100 + 1e-10, 1)
   )
 
 grade_move_sankey <- grade_pct_move %>% 
