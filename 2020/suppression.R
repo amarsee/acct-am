@@ -47,6 +47,7 @@ district <- assessment_files[[1]] %>%
 school <- assessment_files[[2]] %>% 
   suppress_assessment(threshold = 5)
 
+write_csv(state, 'N:/ORP_accountability/data/2020_final_accountability_files/state_assessment_file_suppressed.csv', na = '')
 
 
 
