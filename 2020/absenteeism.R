@@ -20,86 +20,86 @@ con <- dbConnect(
 
 
 # Pull attendance from database
-attendance <- dbGetQuery(con,
-                         "SELECT
-                         TO_CHAR(ISP.SCHOOL_YEAR) || '-' || TO_CHAR(ISP.SCHOOL_YEAR+1) AS SCHOOL_YEAR,
-                         S.DISTRICT_NO,
-                         S.SCHOOL_NO,
-                         ISP.INSTRUCTIONAL_PROGRAM_NUM,
-                         ISP.ISP_ID,
-                         ISP.STUDENT_KEY,
-                         ISP.FIRST_NAME,
-                         ISP.MIDDLE_NAME,
-                         ISP.LAST_NAME,
-                         ISP.BEGIN_DATE,
-                         ISP.END_DATE,
-                         ISP.ENROLLMENT_REASON,
-                         ISP.WITHDRAWAL_REASON,
-                         ISP.TYPE_OF_SERVICE,
-                         STU.DATE_OF_BIRTH,
-                         STU.ETHNIC_ORIGIN,
-                         STU.GENDER,
-                         S.SCHOOL_BU_ID,
-                         D.DISTRICT_BU_ID,
-                         NVL (IG.ASSIGNMENT, ' ') AS GRADE,
-                         DECODE(STU.ETHNICITY,'H','Hispanic','Non Hispanic') ETHNICITY,
-                         STU.RACE_I,
-                         STU.RACE_A,
-                         STU.RACE_P,
-                         STU.RACE_B,
-                         STU.RACE_W,
-                         (CASE WHEN TRUANTS.CNT_UNEXCUSED = 0 THEN NULL ELSE TRUANTS.CNT_UNEXCUSED END) AS CNT_UNEXCUSED,
-                         (CASE WHEN TRUANTS.CNT_UNEXCUSED_TRANS = 0 THEN NULL ELSE TRUANTS.CNT_UNEXCUSED_TRANS END) AS CNT_UNEXCUSED_TRANS,
-                         (CASE WHEN TRUANTS.CNT_EXCUSED = 0 THEN NULL ELSE TRUANTS.CNT_EXCUSED END) AS CNT_EXCUSED,
-                         (CASE WHEN TRUANTS.CNT_EXCUSED_TRANS = 0 THEN NULL ELSE TRUANTS.CNT_EXCUSED_TRANS END) AS CNT_EXCUSED_TRANS,
-                         TRUANTS.CNT_TOTAL,
-                         (SELECT COUNT(SCAL.ID_DATE) AS ISP_DAYS_1
-                         FROM EIS_MGR.SCAL_ID_DAYS SCAL
-                         WHERE SCAL.SCHOOL_BU_ID = ISP.SCHOOL_BU_ID
-                         AND SCAL.SCHOOL_YEAR = ISP.SCHOOL_YEAR
-                         AND SCAL.INSTRUCTIONAL_PROGRAM_NUM = ISP.INSTRUCTIONAL_PROGRAM_NUM
-                         AND SCAL.ID_DATE >= ISP.BEGIN_DATE
-                         AND SCAL.ID_DATE <= NVL(ISP.END_DATE, DATE '2020-03-02')
-                         ) AS ISP_DAYS
-                         FROM ISP
-                         JOIN EIS_MGR.STUDENT_NEW STU ON STU.STUDENT_KEY = ISP.STUDENT_KEY
-                         JOIN EIS_MGR.SCHOOL S ON ISP.SCHOOL_BU_ID = S.SCHOOL_BU_ID
-                         LEFT JOIN EIS_MGR.INSTRUCTIONAL_GRADE IG ON ISP.ISP_ID = IG.ISP_ID
-                         JOIN EIS_MGR.DISTRICT D ON S.DISTRICT_NO = D.DISTRICT_NO
-                         LEFT JOIN (
-                         SELECT ISP.ISP_ID,
-                         COUNT(CASE WHEN ATTENDANCE_TYPE = 'U' THEN 1 END) AS CNT_UNEXCUSED,
-                         COUNT(CASE WHEN ATTENDANCE_TYPE = 'X' THEN 1 END) AS CNT_UNEXCUSED_TRANS,
-                         COUNT(CASE WHEN ATTENDANCE_TYPE = 'A' THEN 1 END) AS CNT_EXCUSED,
-                         COUNT(CASE WHEN ATTENDANCE_TYPE = 'T' THEN 1 END) AS CNT_EXCUSED_TRANS,
-                         COUNT(CASE WHEN ATTENDANCE_TYPE <> 'P' THEN 1 END) AS CNT_TOTAL
-                         FROM EIS_MGR.INSTRUCTIONAL_SERVICE_PERIOD ISP
-                         JOIN EIS_MGR.STUDENT_ABSENCES SA  ON ISP.ISP_ID = SA.ISP_ID
-                         WHERE ISP.SCHOOL_YEAR = EXTRACT(YEAR FROM SYSDATE) - 1
-                         AND SA.ATTENDANCE_DATE >= ISP.BEGIN_DATE
-                         AND (SA.ATTENDANCE_DATE <= NVL(ISP.END_DATE, DATE '2020-03-02') ) --DATE '2020-03-02'
-                         GROUP BY ISP.ISP_ID
-                         ) TRUANTS ON ISP.ISP_ID = TRUANTS.ISP_ID
-                         WHERE ISP.SCHOOL_YEAR = EXTRACT(YEAR FROM SYSDATE) - 1
-                         AND IG.ASSIGNMENT NOT IN ('P3', 'P4')
-                         AND ISP.TYPE_OF_SERVICE = 'P'
-                         ORDER BY S.DISTRICT_NO, S.SCHOOL_NO, ISP.LAST_NAME, ISP.FIRST_NAME") %>%
-  as.tbl() %>%
-  clean_names() %>%
-  mutate_at(
-    .vars = c("instructional_program_num", "district_no", "school_no", "student_key", "isp_days", "cnt_total"),
-    .f = as.numeric
-  ) %>%
-  select(
-    instructional_program_num, system = district_no, school = school_no, grade, student_key,
-    first_name, middle_name, last_name,
-    gender, ethnicity, race_i, race_a,
-    race_p, race_b, race_w,
-    begin_date, end_date, isp_days, cnt_total
-  )
-
-# Export pull so we don't have to run it each time
-write_csv(attendance, str_c("N:/ORP_accountability/data/2020_chronic_absenteeism/absenteeism_pull_", format(Sys.Date(), "%b%d"), ".csv"), na = '')
+# attendance <- dbGetQuery(con,
+#                          "SELECT
+#                          TO_CHAR(ISP.SCHOOL_YEAR) || '-' || TO_CHAR(ISP.SCHOOL_YEAR+1) AS SCHOOL_YEAR,
+#                          S.DISTRICT_NO,
+#                          S.SCHOOL_NO,
+#                          ISP.INSTRUCTIONAL_PROGRAM_NUM,
+#                          ISP.ISP_ID,
+#                          ISP.STUDENT_KEY,
+#                          ISP.FIRST_NAME,
+#                          ISP.MIDDLE_NAME,
+#                          ISP.LAST_NAME,
+#                          ISP.BEGIN_DATE,
+#                          ISP.END_DATE,
+#                          ISP.ENROLLMENT_REASON,
+#                          ISP.WITHDRAWAL_REASON,
+#                          ISP.TYPE_OF_SERVICE,
+#                          STU.DATE_OF_BIRTH,
+#                          STU.ETHNIC_ORIGIN,
+#                          STU.GENDER,
+#                          S.SCHOOL_BU_ID,
+#                          D.DISTRICT_BU_ID,
+#                          NVL (IG.ASSIGNMENT, ' ') AS GRADE,
+#                          DECODE(STU.ETHNICITY,'H','Hispanic','Non Hispanic') ETHNICITY,
+#                          STU.RACE_I,
+#                          STU.RACE_A,
+#                          STU.RACE_P,
+#                          STU.RACE_B,
+#                          STU.RACE_W,
+#                          (CASE WHEN TRUANTS.CNT_UNEXCUSED = 0 THEN NULL ELSE TRUANTS.CNT_UNEXCUSED END) AS CNT_UNEXCUSED,
+#                          (CASE WHEN TRUANTS.CNT_UNEXCUSED_TRANS = 0 THEN NULL ELSE TRUANTS.CNT_UNEXCUSED_TRANS END) AS CNT_UNEXCUSED_TRANS,
+#                          (CASE WHEN TRUANTS.CNT_EXCUSED = 0 THEN NULL ELSE TRUANTS.CNT_EXCUSED END) AS CNT_EXCUSED,
+#                          (CASE WHEN TRUANTS.CNT_EXCUSED_TRANS = 0 THEN NULL ELSE TRUANTS.CNT_EXCUSED_TRANS END) AS CNT_EXCUSED_TRANS,
+#                          TRUANTS.CNT_TOTAL,
+#                          (SELECT COUNT(SCAL.ID_DATE) AS ISP_DAYS_1
+#                          FROM EIS_MGR.SCAL_ID_DAYS SCAL
+#                          WHERE SCAL.SCHOOL_BU_ID = ISP.SCHOOL_BU_ID
+#                          AND SCAL.SCHOOL_YEAR = ISP.SCHOOL_YEAR
+#                          AND SCAL.INSTRUCTIONAL_PROGRAM_NUM = ISP.INSTRUCTIONAL_PROGRAM_NUM
+#                          AND SCAL.ID_DATE >= ISP.BEGIN_DATE
+#                          AND SCAL.ID_DATE <= NVL(ISP.END_DATE, DATE '2020-03-02')
+#                          ) AS ISP_DAYS
+#                          FROM ISP
+#                          JOIN EIS_MGR.STUDENT_NEW STU ON STU.STUDENT_KEY = ISP.STUDENT_KEY
+#                          JOIN EIS_MGR.SCHOOL S ON ISP.SCHOOL_BU_ID = S.SCHOOL_BU_ID
+#                          LEFT JOIN EIS_MGR.INSTRUCTIONAL_GRADE IG ON ISP.ISP_ID = IG.ISP_ID
+#                          JOIN EIS_MGR.DISTRICT D ON S.DISTRICT_NO = D.DISTRICT_NO
+#                          LEFT JOIN (
+#                          SELECT ISP.ISP_ID,
+#                          COUNT(CASE WHEN ATTENDANCE_TYPE = 'U' THEN 1 END) AS CNT_UNEXCUSED,
+#                          COUNT(CASE WHEN ATTENDANCE_TYPE = 'X' THEN 1 END) AS CNT_UNEXCUSED_TRANS,
+#                          COUNT(CASE WHEN ATTENDANCE_TYPE = 'A' THEN 1 END) AS CNT_EXCUSED,
+#                          COUNT(CASE WHEN ATTENDANCE_TYPE = 'T' THEN 1 END) AS CNT_EXCUSED_TRANS,
+#                          COUNT(CASE WHEN ATTENDANCE_TYPE <> 'P' THEN 1 END) AS CNT_TOTAL
+#                          FROM EIS_MGR.INSTRUCTIONAL_SERVICE_PERIOD ISP
+#                          JOIN EIS_MGR.STUDENT_ABSENCES SA  ON ISP.ISP_ID = SA.ISP_ID
+#                          WHERE ISP.SCHOOL_YEAR = EXTRACT(YEAR FROM SYSDATE) - 1
+#                          AND SA.ATTENDANCE_DATE >= ISP.BEGIN_DATE
+#                          AND (SA.ATTENDANCE_DATE <= NVL(ISP.END_DATE, DATE '2020-03-02') ) --DATE '2020-03-02'
+#                          GROUP BY ISP.ISP_ID
+#                          ) TRUANTS ON ISP.ISP_ID = TRUANTS.ISP_ID
+#                          WHERE ISP.SCHOOL_YEAR = EXTRACT(YEAR FROM SYSDATE) - 1
+#                          AND IG.ASSIGNMENT NOT IN ('P3', 'P4')
+#                          AND ISP.TYPE_OF_SERVICE = 'P'
+#                          ORDER BY S.DISTRICT_NO, S.SCHOOL_NO, ISP.LAST_NAME, ISP.FIRST_NAME") %>%
+#   as.tbl() %>%
+#   clean_names() %>%
+#   mutate_at(
+#     .vars = c("instructional_program_num", "district_no", "school_no", "student_key", "isp_days", "cnt_total"),
+#     .f = as.numeric
+#   ) %>%
+#   select(
+#     instructional_program_num, system = district_no, school = school_no, grade, student_key,
+#     first_name, middle_name, last_name,
+#     gender, ethnicity, race_i, race_a,
+#     race_p, race_b, race_w,
+#     begin_date, end_date, isp_days, cnt_total
+#   )
+# 
+# # Export pull so we don't have to run it each time
+# write_csv(attendance, str_c("N:/ORP_accountability/data/2020_chronic_absenteeism/absenteeism_pull_", format(Sys.Date(), "%b%d"), ".csv"), na = '')
 
 attendance <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/absenteeism_pull_Jun16.csv")
 
@@ -160,29 +160,42 @@ demographics <-  read_csv("N:/TNReady/2019-20/spring/demographics/student_demogr
 
 # Absenteeism
 absenteeism <- attendance %>%
+  # Start with 1,181,433 records
   filter(grade %in% c("K", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")) %>%
   mutate(count_total = if_else(is.na(cnt_total), 0, cnt_total)) %>%
   # For students with same system, school, student ID, enrollment dates,
   # take maximum instructional program days
+  # 1,181,433
+  # 0 records dropped
   group_by(system, school, student_key, grade, begin_date, end_date) %>%
   mutate(count = n(), temp = max(isp_days)) %>%
   filter(count == 1 | isp_days == temp) %>%
   # For students with same system, school, student ID, enrollment dates, instructional program days,
   # take maximum number of absences
+  # 1,181,430
+  # 3 records dropped
   group_by(system, school, student_key, grade, begin_date, end_date, isp_days) %>%
   mutate(count = n(), temp = max(count_total)) %>%
   filter(count == 1 | count_total == temp) %>%
   # For students with same system, school, student ID, enrollment dates, instructional program days, absences,
   # take maximum instructional program number
+  # 1,181,430 
+  # 0 records dropped
   group_by(system, school, student_key, grade, begin_date, end_date, isp_days, count_total) %>%
   mutate(count = n(), temp = max(instructional_program_num)) %>%
   filter(count == 1 | instructional_program_num == temp) %>%
   # Drop duplicates on system, school, student ID, enrollment dates, instructional program days, absences, instructional program
+  # 1,178,334
+  # 3,096 records dropped
   group_by(system, school, student_key, grade, begin_date, end_date, isp_days, count_total, instructional_program_num) %>%
   mutate(count = 1, temp = cumsum(count)) %>%
   filter(temp == 1) %>%
   # dedup by grade? 
-  # Drops 1,013 records
+  # 1,177,696
+  # Drops 638 records
+  # group_by(system, school, student_key, begin_date, end_date, isp_days, count_total, instructional_program_num) %>%
+  # mutate(count = n(), temp = max(grade)) %>%
+  # filter(count == 1 | grade == temp) %>%
   # Collapse multiple enrollments at the same school
   rename(n_absences = count_total) %>%
   group_by(system, school, grade, student_key) %>%
