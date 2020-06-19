@@ -11,6 +11,10 @@ library(tidyverse)
 suppress_assessment <- function(file, threshold = 1) {
   
   file %>%
+    mutate_at(
+      vars(pct_below, pct_approaching, pct_on_track, pct_mastered),
+      ~ round(. + 1e-10, 1)
+    ) %>% 
     rowwise() %>%
     mutate(
       temp = any(
@@ -48,6 +52,8 @@ school <- assessment_files[[2]] %>%
   suppress_assessment(threshold = 5)
 
 write_csv(state, 'N:/ORP_accountability/data/2020_final_accountability_files/state_assessment_file_suppressed.csv', na = '')
+write_csv(district, 'N:/ORP_accountability/data/2020_final_accountability_files/district_assessment_file_suppressed.csv', na = '')
+write_csv(school, 'N:/ORP_accountability/data/2020_final_accountability_files/school_assessment_file_suppressed.csv', na = '')
 
 
 

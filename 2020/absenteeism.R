@@ -472,9 +472,9 @@ test_query <- dbGetQuery(con,
   as.tbl()
 
 
-dist_absenteeism <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/district_chronic_absenteeism_Jun3.csv")
+dist_absenteeism <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/district_chronic_absenteeism_Jun16.csv")
 
-school_absenteeism <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/school_chronic_absenteeism_Jun3.csv")
+school_absenteeism <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/school_chronic_absenteeism_Jun16.csv")
 
 school_names <- read_csv("N:/ORP_accountability/data/2020_final_accountability_files/names.csv")
 

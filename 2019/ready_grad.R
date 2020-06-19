@@ -11,7 +11,7 @@ library(haven)
 # # ============================== Pull In Data =============================
 # # Data
 # con = dbConnect(
-#   JDBC("oracle.jdbc.OracleDriver", classPath="C:/Users/CA20593/Downloads/ojdbc6.jar"), 
+#   JDBC("oracle.jdbc.OracleDriver", classPath="N:/ORP_accountability/ojdbc6.jar"), 
 #   readRegistry("Environment", "HCU")$EIS_MGR_CXN_STR,
 #   "EIS_MGR",
 #   readRegistry("Environment", "HCU")$EIS_MGR_PWD
@@ -41,7 +41,7 @@ library(haven)
 # 
 # write_csv(ready_grad_student , 'N:/ORP_accountability/projects/2019_ready_graduate/Data/ready_graduate_student_level_06182019.csv')
 
-school_names <- read_csv("N:\\ORP_accountability\\data\\2019_final_accountability_files\\names.csv")
+school_names <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/names.csv")
 
 dist_names <- school_names %>% 
   select(system, system_name) %>% 
