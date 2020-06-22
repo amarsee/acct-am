@@ -293,7 +293,7 @@ ach_ovr_score <- bind_rows(
   ) %>% 
   janitor::clean_names() %>% 
   mutate(
-    ovr_ach_score = if_else(!is.na(historically_underserved), round((all_students * 0.6) + (historically_underserved * 0.4) + 1e-10, 1), all_students),
+    ovr_ach_score = if_else(!is.na(historically_underserved), (all_students * 0.6) + (historically_underserved * 0.4), all_students),
     grade = case_when(
       ovr_ach_score >= 3.1 ~ 'A',
       ovr_ach_score >= 2.1 ~ 'B',
@@ -364,23 +364,89 @@ grade_pct_move <- grade_change %>%
     pct_schools = round(n_count / grade_current_count * 100 + 1e-10, 1)
   )
 
-grade_move_sankey <- grade_pct_move %>% 
+# grade_move_sankey <- grade_pct_move %>% 
+#   mutate(
+#     method_starting = paste0('Starting ', method, ' - ', grade_current),
+#     method_final = paste0('Final ', method, ' - ', new_grade)
+#   )
+# # From these flows we need to create a node data frame: it lists every entities involved in the flow
+# nodes <- data.frame(name=c(as.character(grade_move_sankey$method_starting), as.character(grade_move_sankey$method_final)) %>% unique())
+# 
+# # With networkD3, connection must be provided using id, not using real name like in the links dataframe.. So we need to reformat it.
+# grade_move_sankey$IDsource=match(grade_move_sankey$method_starting, nodes$name)-1 
+# grade_move_sankey$IDtarget=match(grade_move_sankey$method_final, nodes$name)-1
+# 
+# # Make the Network
+# sankeyNetwork(Links = grade_move_sankey, Nodes = nodes,
+#               Source = "IDsource", Target = "IDtarget",
+#               Value = "n_count", NodeID = "name", 
+#               sinksRight=FALSE, nodeWidth=40, fontSize=13, nodePadding=20)
+
+# =================== Difference in overall grades ================
+acct_scores <- read_csv("N:/ORP_accountability/projects/2019_school_accountability/school_grading_grades.csv") %>% 
+  select(-(targeted_support_BHN:additional_targeted_support_White))
+
+comparison_final_scores <- bind_rows(
+  acct_scores %>% filter(!is.na(score_achievement)) %>% select(system, school, pool, score_achievement:final_average) %>% mutate(method = 'Current'),
+  acct_scores %>% filter(!is.na(score_achievement)) %>% 
+    select(system, school, pool, score_growth:final_average) %>% 
+    mutate(method = '2 Year Avg.') %>% 
+    left_join(ach_ovr_score %>% filter(method == '2 Year Avg.') %>% select(system, school, score_achievement = ovr_ach_score),
+              by = c('system', 'school')),
+  acct_scores %>% filter(!is.na(score_achievement)) %>% 
+    select(system, school, pool, score_growth:final_average) %>% 
+    mutate(method = '3 Year Avg.') %>% 
+    left_join(ach_ovr_score %>% filter(method == '3 Year Avg.') %>% select(system, school, score_achievement = ovr_ach_score),
+              by = c('system', 'school')),
+  acct_scores %>% filter(!is.na(score_achievement)) %>% 
+    select(system, school, pool, score_growth:final_average) %>% 
+    mutate(method = 'Weighted Avg.') %>% 
+    left_join(ach_ovr_score %>% filter(method == 'Weighted Average') %>% select(system, school, score_achievement = ovr_ach_score),
+              by = c('system', 'school'))
+) %>% 
+  select(system, school, pool, method, everything()) %>% 
+  arrange(system, school, method) %>% 
   mutate(
-    method_starting = paste0('Starting ', method, ' - ', grade_current),
-    method_final = paste0('Final ', method, ' - ', new_grade)
+    weighting_ach = case_when(
+      pool == 'K8' & !is.na(score_elpa) ~ 0.45,
+      pool == 'K8' & is.na(score_elpa)  ~ 0.50,
+      pool == 'HS' & !is.na(score_elpa) ~ 0.30,
+      pool == 'HS' & is.na(score_elpa)  ~ 0.35,
+      TRUE ~ NA_real_
+    ),
+    weighting_growth = case_when(
+      pool == 'K8' & !is.na(score_elpa) & !is.na(score_growth) ~ 0.35,
+      pool == 'K8' & is.na(score_elpa) & !is.na(score_growth)  ~ 0.40,
+      pool == 'HS' & !is.na(score_elpa) & !is.na(score_growth) ~ 0.25,
+      pool == 'HS' & is.na(score_elpa) & !is.na(score_growth)  ~ 0.30,
+      TRUE ~ NA_real_
+    ),
+    weighting_absenteeism = if_else(!is.na(score_absenteeism), 0.10, NA_real_),
+    weighting_grad = if_else(pool == 'HS' & !is.na(score_grad), 0.05, NA_real_),
+    weighting_ready_grad = if_else(pool == 'HS' & !is.na(score_ready_grad), 0.20, NA_real_),
+    weighting_elpa = if_else(!is.na(score_elpa), 0.10, NA_real_)
+  ) %>% 
+  rowwise() %>% 
+  mutate(
+    weighting_total = sum(weighting_ach, weighting_growth, weighting_absenteeism,
+                          weighting_grad, weighting_ready_grad, weighting_elpa,
+                          na.rm = TRUE)
+  ) %>% 
+  ungroup() %>% 
+  mutate_at(
+    vars(weighting_ach:weighting_elpa),
+    ~ . / weighting_total
+  ) %>% 
+  mutate(
+    final_score = round(if_else(!is.na(score_achievement), score_achievement * weighting_ach, 0) +
+                  if_else(!is.na(score_growth), score_growth * weighting_growth, 0) + 
+                  if_else(!is.na(score_absenteeism), score_absenteeism * weighting_absenteeism, 0) + 
+                  if_else(!is.na(score_grad), score_grad * weighting_grad, 0) +
+                  if_else(!is.na(score_ready_grad), score_ready_grad * weighting_ready_grad, 0) +
+                  if_else(!is.na(score_elpa), score_elpa * weighting_elpa, 0) +
+                    1e-5, 1)
   )
-# From these flows we need to create a node data frame: it lists every entities involved in the flow
-nodes <- data.frame(name=c(as.character(grade_move_sankey$method_starting), as.character(grade_move_sankey$method_final)) %>% unique())
 
-# With networkD3, connection must be provided using id, not using real name like in the links dataframe.. So we need to reformat it.
-grade_move_sankey$IDsource=match(grade_move_sankey$method_starting, nodes$name)-1 
-grade_move_sankey$IDtarget=match(grade_move_sankey$method_final, nodes$name)-1
-
-# Make the Network
-sankeyNetwork(Links = grade_move_sankey, Nodes = nodes,
-              Source = "IDsource", Target = "IDtarget",
-              Value = "n_count", NodeID = "name", 
-              sinksRight=FALSE, nodeWidth=40, fontSize=13, nodePadding=20)
 # =============== Plots =======================
 score_dist <- bind_rows(
   ach_current %>% filter(!is.na(score)) %>% mutate(method = 'Current'),
