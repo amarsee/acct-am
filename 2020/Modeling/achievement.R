@@ -444,9 +444,72 @@ comparison_final_scores <- bind_rows(
                   if_else(!is.na(score_grad), score_grad * weighting_grad, 0) +
                   if_else(!is.na(score_ready_grad), score_ready_grad * weighting_ready_grad, 0) +
                   if_else(!is.na(score_elpa), score_elpa * weighting_elpa, 0) +
-                    1e-5, 1)
+                    1e-5, 1),
+    final_grade = case_when(
+      final_score >= 3.1 ~ 'A',
+      final_score >= 2.1 ~ 'B',
+      final_score >= 1.1 ~ 'C',
+      final_score >= 0 ~ 'D',
+      TRUE ~ NA_character_
+    )
   )
 
+final_grade_dist <- comparison_final_scores %>% 
+  group_by(method, final_grade) %>% 
+  summarise(
+    n_schools = n()
+  ) %>% 
+  ungroup() %>% 
+  group_by(method) %>% 
+  mutate(
+    denom = sum(n_schools)
+  ) %>% 
+  ungroup() %>% 
+  mutate(
+    pct_schools = round(n_schools / denom * 100 + 1e-5, 0)
+  )
+
+final_grade_change <- comparison_final_scores %>% 
+  filter(method == 'Current') %>% 
+  rename(final_grade_current = final_grade) %>% 
+  left_join(
+    comparison_final_scores %>% 
+      filter(method == '2 Year Avg.') %>% 
+      select(system, school, final_grade_2_year_avg = final_grade),
+    by = c('system', 'school')
+  ) %>% 
+  left_join(
+    comparison_final_scores %>% 
+      filter(method == '3 Year Avg.') %>% 
+      select(system, school, final_grade_3_year_avg = final_grade),
+    by = c('system', 'school')
+  ) %>% 
+  left_join(
+    comparison_final_scores %>% 
+      filter(method == 'Weighted Avg.') %>% 
+      select(system, school, final_grade_weighted_avg = final_grade),
+    by = c('system', 'school')
+  ) %>% 
+  select(system:pool, final_grade_current:final_grade_weighted_avg) %>% 
+  mutate_at(
+    vars(final_grade_2_year_avg:final_grade_weighted_avg),
+    .funs = list(
+      grade_diff = ~ if_else(. != final_grade_current, 1, 0)
+    )
+  )
+
+grade_change_abs <- final_grade_change %>% 
+  summarise_at(
+    .vars = vars(final_grade_2_year_avg_grade_diff:final_grade_weighted_avg_grade_diff),
+    .funs = ~ sum(.)
+  ) %>% 
+  bind_cols(tibble(denom = nrow(final_grade_change))) %>% 
+  mutate_at(
+    .vars = vars(final_grade_2_year_avg_grade_diff:final_grade_weighted_avg_grade_diff),
+    .funs = list(
+      pct = ~ round(. / denom * 100 + 1e-5,0)
+    )
+  )
 # =============== Plots =======================
 score_dist <- bind_rows(
   ach_current %>% filter(!is.na(score)) %>% mutate(method = 'Current'),
@@ -532,4 +595,17 @@ ovr_score_dist %>%
   theme(panel.grid.major.y = element_line(size = 0.5, color = 'gray'),
         text = element_text(size=12), legend.position="bottom")
 
+final_grade_dist %>%
+  ggplot(aes(x = factor(method, levels = c('Current', 'Weighted Avg.', '2 Year Avg.', '3 Year Avg.')), y = pct_schools, 
+             label = paste0(pct_schools, '%') ,fill =  factor(final_grade))) +
+  geom_bar(stat='identity', position = position_dodge(width=0.9), width = 0.85) +
+  geom_text(size = 3.5, position = position_dodge(width = 0.90), aes(vjust=-0.25)) +
+  labs(x = "Method", y = "Percentage of Eligible Schools", title = "Final Grade Comparison",
+       fill = "") +
+  scale_y_continuous(breaks = c(0,20,40, 60, 80, 100), limits=c(0, 100)) +
+  # scale_fill_tdoe() +
+  scale_fill_manual(values = c("A" = "#3FD222", "B" = "#ADF591", "C" = "#F3FC2F", "D" = "#FF9F9F")) +
+  theme_bw() +
+  theme(panel.grid.major.y = element_line(size = 0.5, color = 'gray'),
+        text = element_text(size=12), legend.position="bottom")
 
