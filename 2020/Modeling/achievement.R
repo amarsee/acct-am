@@ -510,6 +510,19 @@ grade_change_abs <- final_grade_change %>%
       pct = ~ round(. / denom * 100 + 1e-5,0)
     )
   )
+
+pct_shifted_grade <- final_grade_change %>% 
+  select(system:final_grade_weighted_avg) %>% 
+  pivot_longer(final_grade_2_year_avg:final_grade_weighted_avg,
+               names_to = 'method',
+               values_to = 'new_grade') %>% 
+  mutate(
+    method = str_to_title(gsub('_', ' ', gsub('final_grade_', '', method)))
+  ) %>% 
+  group_by(final_grade_current, method, new_grade) %>% 
+  summarise(
+    n_schools = n()
+  )
 # =============== Plots =======================
 score_dist <- bind_rows(
   ach_current %>% filter(!is.na(score)) %>% mutate(method = 'Current'),

@@ -105,6 +105,7 @@ xts(df[,-1])
 library(randomForest)
 library(rsample)
 library(caret)
+library(ranger)
 set.seed(123)
 
 att_model <- function(df) {
@@ -163,17 +164,103 @@ error <- p - anderson_high$attendance_rate
 rmse_xval <- mean(abs(error/anderson_high$attendance_rate)*100) ## xval mape
 rmse_xval
 
+hyper_grid <- expand.grid(
+  mtry       = seq(1, 7, by = 1),
+  node_size  = seq(3, 9, by = 2),
+  sampe_size = c(.55, .632, .70, .80),
+  OOB_RMSE  = 0
+)
+
+# perform grid search
+for(i in 1:nrow(hyper_grid)) {
+  
+  # train model
+  model <- ranger(
+    formula         = attendance_rate ~ ., 
+    data            = anderson_high, 
+    num.trees       = 500,
+    mtry            = hyper_grid$mtry[i],
+    min.node.size   = hyper_grid$node_size[i],
+    sample.fraction = hyper_grid$sampe_size[i],
+    seed            = 123
+  )
+  
+  # add OOB error to grid
+  hyper_grid$OOB_RMSE[i] <- sqrt(model$prediction.error)
+}
+
+hyper_grid %>% 
+  dplyr::arrange(OOB_RMSE) %>%
+  head(10)
+# Top 5
+#     mtry node_size sampe_size OOB_RMSE
+# 1     7         5      0.550 2.503394
+# 2     7         3      0.550 2.504548
+# 3     6         5      0.632 2.506372
+# 4     7         5      0.632 2.506917
+# 5     6         3      0.632 2.507762
+
+optimal_ranger <- ranger(
+  formula = attendance_rate ~ .,
+  data = anderson_high,
+  mtry = 6,
+  min.node.size = 5,
+  splitrule = 'extratrees',
+  sample.fraction = 0.632,
+  importance = 'impurity'
+)
+
+optimal_ranger$variable.importance %>% 
+  tidy() %>%
+  dplyr::arrange(desc(x)) %>%
+  dplyr::top_n(25) %>%
+  ggplot(aes(reorder(names, x), x)) +
+  geom_col() +
+  coord_flip() +
+  ggtitle("Top 25 important variables")
+
+final_model <- function(df) {
+  ranger(
+    formula = attendance_rate ~ .,
+    data = df,
+    mtry = 6,
+    min.node.size = 5,
+    splitrule = 'extratrees',
+    sample.fraction = 0.632,
+    importance = 'impurity'
+  )
+}
+
 daily_att_rf_nest <- daily_attendance_w_features %>% 
   filter(id_date <= as.Date('2020-03-02')) %>% 
   select(system, school, attendance_rate:cal_month) %>% 
   group_by(system, school) %>% 
   nest() 
-  
+
+current_schools <- read_csv('N:/ORP_accountability/data/2020_final_accountability_files/names.csv')
+
+# system.time(
 rf_nested_models <- daily_att_rf_nest %>%
-  filter(system == 10) %>% 
+  inner_join(
+    current_schools %>% select(system, school),
+    by = c('system', 'school')
+  ) %>% 
+  # filter(system == 190) %>%
   mutate(fit_rf = map(.x  = data, 
-                       .f = att_model))
+                       .f = final_model))
+# )
 
-
-
+out_df <- tibble()
+for (dist in unique(daily_att_rf_nest$system)) {
+  out_df <- bind_rows(out_df, 
+                      daily_att_rf_nest %>%
+    inner_join(
+      current_schools %>% select(system, school),
+      by = c('system', 'school')
+    ) %>% 
+    filter(system == dist) %>%
+    mutate(fit_rf = map(.x  = data, 
+                        .f = final_model))
+  )
+}
 
