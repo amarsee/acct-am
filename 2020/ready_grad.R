@@ -6,10 +6,30 @@ library(readxl)
 library(haven)
 library(RJDBC)
 
+# ============ Function to calculate rates ===========
+calc_counts <- function(grouped_df){
+  grouped_df %>% 
+    summarise(
+      grad_cohort = sum(grad_indicator, na.rm = TRUE),
+      n_ready_grad = sum(ready_grad_indicator, na.rm = TRUE),
+      n_completed_act_sat = sum(completed_act_sat, na.rm = TRUE),
+      n_count = n()
+    ) %>% 
+    ungroup()
+}
+
+calc_pcts <- function(df){
+  df %>% 
+    mutate(
+      pct_ready_grad = round(n_ready_grad / n_count * 100 + 1e-5, 1),
+      act_participation_rate = round(n_completed_act_sat / grad_cohort * 100 + 1e-5, 0)
+    )
+}
+
 # ================== Pull Data ===============
 # # Data
 # con = dbConnect(
-#   JDBC("oracle.jdbc.OracleDriver", classPath="C:/Users/CA20593/Downloads/ojdbc6.jar"), 
+#   JDBC("oracle.jdbc.OracleDriver", classPath="N:/ORP_accountability/ojdbc6.jar"), 
 #   readRegistry("Environment", "HCU")$EIS_MGR_CXN_STR,
 #   "EIS_MGR",
 #   readRegistry("Environment", "HCU")$EIS_MGR_PWD
@@ -37,31 +57,26 @@ library(RJDBC)
 #     .funs = as.integer
 #   )
 # 
-# write_csv(ready_grad_student , 'N:/ORP_accountability/projects/2019_ready_graduate/Data/ready_graduate_student_level_06182019.csv')
+# write_csv(ready_grad_student , 'N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_student_level_06182019.csv')
 
 
 school_names <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/names.csv")
 
 dist_names <- school_names %>% 
   select(system, system_name) %>% 
-  unique()
-
-subgroups <- c("American Indian or Alaska Native", "Asian", "Black or African American", "Black/Hispanic/Native American",
-               "Economically Disadvantaged", "English Language Learners", "Hispanic", 
-               "Native Hawaiian or Other Pacific Islander", "Students with Disabilities", "Super Subgroup", "White")
+  distinct()
 
 # =================================== Student Level and filtering duplicates ==========================================
 
 ready_grad_student_level_total <- read_csv('N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_student_level.csv',
                                      col_types = 'icccciccciiciiiiiiiiiiiiiiiiiiic') %>% 
   filter(included_in_cohort == 'Y') %>% 
-  rename(system = district_no, school = school_no) %>% 
+  rename(system = district_no, school = school_no) %>%
   mutate(
-    cohort_indicator = if_else(included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13), 1, 0),
+    grad_indicator = if_else(included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13), 1, 0),
     ready_grad_indicator = if_else(ready_graduate == 'Y' & completion_type %in% c(1, 11, 12, 13), 1, 0), 
     # Indicate that the student took a test if they have a valid composite score
-    completed_act_sat = if_else((sat_total > 0 | act_composite > 0) & included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13), 1, 0),
-    on_time_grad = if_else(included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13), 1, 0)
+    completed_act_sat = if_else((sat_total > 0 | act_composite > 0) & included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13), 1, 0)
   )
 
 # ================================== Ready Grad Subgroups ===========================================================
@@ -91,17 +106,8 @@ out_df_ready_grad <- bind_rows(
 
 district_level_ready_grad <- out_df_ready_grad %>% 
   group_by(system, subgroup) %>% 
-  summarise(
-    grad_cohort = sum(cohort_indicator, na.rm = TRUE),
-    n_ready_grad = sum(ready_grad_indicator, na.rm = TRUE),
-    n_completed_act_sat = sum(completed_act_sat, na.rm = TRUE),
-    n_count = n()
-  ) %>% 
-  ungroup() %>% 
-  mutate(
-    pct_ready_grad = round(n_ready_grad / n_count * 100 + 1e-5, 1),
-    act_participation_rate = round(n_completed_act_sat / grad_cohort * 100 + 1e-5, 0)
-  ) %>% 
+  calc_counts() %>% 
+  calc_pcts() %>% 
   left_join(dist_names, by = "system")%>% 
   transmute(
     # year = 2018,
@@ -115,18 +121,9 @@ write_csv(district_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_
 
 school_level_ready_grad <- out_df_ready_grad %>% 
   group_by(system, school, subgroup) %>% 
-  summarise(
-    grad_cohort = sum(cohort_indicator, na.rm = TRUE),
-    n_ready_grad = sum(ready_grad_indicator, na.rm = TRUE),
-    n_completed_act_sat = sum(completed_act_sat, na.rm = TRUE),
-    n_count = n()
-  ) %>% 
-  ungroup() %>% 
+  calc_counts() %>%
   filter(grad_cohort > 0) %>% 
-  mutate(
-    pct_ready_grad = round(n_ready_grad / n_count * 100 + 1e-5, 1),
-    act_participation_rate = round(n_completed_act_sat / grad_cohort * 100 + 1e-5, 0)
-  ) %>% 
+  calc_pcts() %>% 
   left_join(school_names, by = c("system", 'school')) %>% 
   transmute(
     # year = 2018,
@@ -140,19 +137,9 @@ write_csv(school_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_gr
 # =============================== State Level ==========================================
 state_level_ready_grad <- out_df_ready_grad %>% 
   group_by(subgroup) %>% 
-  summarise(
-    grad_cohort = sum(cohort_indicator, na.rm = TRUE),
-    n_ready_grad = sum(ready_grad_indicator, na.rm = TRUE),
-    n_completed_act_sat = sum(completed_act_sat, na.rm = TRUE),
-    n_count = n()
-  ) %>% 
-  ungroup() %>% 
-  filter(grad_cohort > 0) %>% 
-  mutate(
-    pct_ready_grad = round(n_ready_grad / n_count * 100 + 1e-5, 1),
-    act_participation_rate = round(n_completed_act_sat / grad_cohort * 100 + 1e-5, 0)
-  ) %>% 
-  # left_join(school_names, by = c("system", 'school')) %>% 
+  calc_counts() %>%
+  # filter(grad_cohort > 0) %>% 
+  calc_pcts() %>% 
   transmute(
     # year = 2018,
     subgroup, act_participation_rate, n_count, n_ready_grad, pct_ready_grad

@@ -108,12 +108,14 @@ library(caret)
 library(ranger)
 set.seed(123)
 
+# Model to find appropriate parameters
 att_model <- function(df) {
   caret::train(attendance_rate ~ .,
         data = df,
         method = "ranger")
 }
 
+# Using anderson high school as an example
 anderson_high <- daily_attendance_w_features %>% 
   filter(system == 10, school == 2, id_date <= as.Date('2020-03-02')) %>% 
   mutate_at(
@@ -121,22 +123,22 @@ anderson_high <- daily_attendance_w_features %>%
     .funs = ~ as.factor(.)
   ) %>% 
   select(attendance_rate:cal_month)
-
+# Split the data into train and test sets
 and_split <- initial_split(anderson_high, prop = .7)
 and_train <- training(and_split)
 and_test  <- testing(and_split)
-
+# Random forest model
 rf_and <- randomForest(
   formula = attendance_rate ~ .,
   data    = and_train
 )
-
+# Inspect model
 rf_and
-
+# Look at variable importance
 varImpPlot(rf_and)
-
+# Predictions
 test_prediction <- predict(rf_and, and_test[,-1])
-
+# Model
 model <- train(attendance_rate ~ .,
                data = and_train,
                method = "ranger")
@@ -145,7 +147,7 @@ print(model)
 preds <- predict(model, and_test[,-1])
 
 test_w_preds <- bind_cols(and_test, tibble(predicted = preds))
-
+# Grid for hyperparameter tuning
 myGrid <- expand.grid(mtry = 1:19,
                       splitrule = c("variance", "extratrees"),
                       min.node.size = 5) ## Minimal node size; default 1 for classification
@@ -162,8 +164,8 @@ print(model)
 p <- predict(model, anderson_high)
 error <- p - anderson_high$attendance_rate
 rmse_xval <- mean(abs(error/anderson_high$attendance_rate)*100) ## xval mape
-rmse_xval
-
+rmse_xval # RMSE 
+# Different approach
 hyper_grid <- expand.grid(
   mtry       = seq(1, 7, by = 1),
   node_size  = seq(3, 9, by = 2),
@@ -174,7 +176,7 @@ hyper_grid <- expand.grid(
 # perform grid search
 for(i in 1:nrow(hyper_grid)) {
   
-  # train model
+  # train model (ranger)
   model <- ranger(
     formula         = attendance_rate ~ ., 
     data            = anderson_high, 
@@ -200,6 +202,7 @@ hyper_grid %>%
 # 4     7         5      0.632 2.506917
 # 5     6         3      0.632 2.507762
 
+# Model using best performing parameters
 optimal_ranger <- ranger(
   formula = attendance_rate ~ .,
   data = anderson_high,
@@ -209,7 +212,7 @@ optimal_ranger <- ranger(
   sample.fraction = 0.632,
   importance = 'impurity'
 )
-
+# Plotting variable importance
 optimal_ranger$variable.importance %>% 
   tidy() %>%
   dplyr::arrange(desc(x)) %>%
@@ -218,7 +221,7 @@ optimal_ranger$variable.importance %>%
   geom_col() +
   coord_flip() +
   ggtitle("Top 25 important variables")
-
+# The final model to be applied across schools
 final_model <- function(df) {
   ranger(
     formula = attendance_rate ~ .,
@@ -240,18 +243,20 @@ daily_att_rf_nest <- daily_attendance_w_features %>%
 current_schools <- read_csv('N:/ORP_accountability/data/2020_final_accountability_files/names.csv')
 
 # system.time(
-rf_nested_models <- daily_att_rf_nest %>%
-  inner_join(
-    current_schools %>% select(system, school),
-    by = c('system', 'school')
-  ) %>% 
-  # filter(system == 190) %>%
-  mutate(fit_rf = map(.x  = data, 
-                       .f = final_model))
+# rf_nested_models <- daily_att_rf_nest %>%
+#   inner_join(
+#     current_schools %>% select(system, school),
+#     by = c('system', 'school')
+#   ) %>% 
+#   # filter(system == 190) %>%
+#   mutate(fit_rf = map(.x  = data, 
+#                        .f = final_model))
 # )
 
+# looping over df because applying the model took too long
 out_df <- tibble()
 for (dist in unique(daily_att_rf_nest$system)) {
+  system.time(
   out_df <- bind_rows(out_df, 
                       daily_att_rf_nest %>%
     inner_join(
@@ -262,5 +267,13 @@ for (dist in unique(daily_att_rf_nest$system)) {
     mutate(fit_rf = map(.x  = data, 
                         .f = final_model))
   )
+  )
+  print(str_c('Completed District ', dist))
 }
+# Saving as RDS (~ 3 GB)
+saveRDS(out_df, 'N:/ORP_accountability/projects/Andrew/acct-am/2020/Modeling/attendance/data/fit_school_models.rds')
+
+
+nested_models <- readRDS('N:/ORP_accountability/projects/Andrew/acct-am/2020/Modeling/attendance/data/fit_school_models.rds')
+
 
