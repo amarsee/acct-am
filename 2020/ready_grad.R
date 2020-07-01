@@ -27,36 +27,36 @@ calc_pcts <- function(df){
 }
 
 # ================== Pull Data ===============
-# # Data
-# con = dbConnect(
-#   JDBC("oracle.jdbc.OracleDriver", classPath="N:/ORP_accountability/ojdbc6.jar"), 
-#   readRegistry("Environment", "HCU")$EIS_MGR_CXN_STR,
-#   "EIS_MGR",
-#   readRegistry("Environment", "HCU")$EIS_MGR_PWD
-# ) 
-# # SQL Pull
-# rg = as.tbl(
-#   dbGetQuery(
-#     con, 
-#     "select * 
-#     from student_ready_grads"
-#   )
-#   ) %>% 
-#   janitor::clean_names() 
-# 
-# ready_grad_student <- rg %>% 
-#   select(
-#     student_key:ncrc_work_keys, participate_clg_lvl_pgm, n_cambridge,
-#     n_ap = n_adv_placement, n_ib = n_inter_baccalaureate, n_sdc = n_statewide_dual_credit,
-#     n_ldc = n_local_dual_credit, n_de = n_dual_enrollment, ready_graduate
-#   ) %>% 
-#   mutate_at(
-#     .vars = c('student_key', 'cohortyear', 'district_no', 'school_no', 'completion_type', 'sat_math', 'sat_critical_reading',
-#               'sat_total', 'act_english', 'act_math', 'act_reading', 'act_science', 'act_composite', 'industry_cert_earned',
-#               'asvab', 'ncrc_work_keys', 'participate_clg_lvl_pgm', 'n_cambridge', 'n_ap', 'n_ib', 'n_sdc', 'n_ldc', 'n_de'),
-#     .funs = as.integer
-#   )
-# 
+# Data
+con = dbConnect(
+  JDBC("oracle.jdbc.OracleDriver", classPath="N:/ORP_accountability/ojdbc6.jar"),
+  readRegistry("Environment", "HCU")$EIS_MGR_CXN_STR,
+  "EIS_MGR",
+  readRegistry("Environment", "HCU")$EIS_MGR_PWD
+)
+# SQL Pull
+rg = as.tbl(
+  dbGetQuery(
+    con,
+    "select *
+    from student_ready_grads"
+  )
+  ) %>%
+  janitor::clean_names()
+
+ready_grad_student <- rg %>%
+  select(
+    student_key:ncrc_work_keys, participate_clg_lvl_pgm, n_cambridge,
+    n_ap = n_adv_placement, n_ib = n_inter_baccalaureate, n_sdc = n_statewide_dual_credit,
+    n_ldc = n_local_dual_credit, n_de = n_dual_enrollment, ready_graduate
+  ) %>%
+  mutate_at(
+    .vars = c('student_key', 'cohortyear', 'district_no', 'school_no', 'completion_type', 'sat_math', 'sat_critical_reading',
+              'sat_total', 'act_english', 'act_math', 'act_reading', 'act_science', 'act_composite', 'industry_cert_earned',
+              'asvab', 'ncrc_work_keys', 'participate_clg_lvl_pgm', 'n_cambridge', 'n_ap', 'n_ib', 'n_sdc', 'n_ldc', 'n_de'),
+    .funs = as.integer
+  )
+
 # write_csv(ready_grad_student , 'N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_student_level_06182019.csv')
 
 

@@ -55,6 +55,35 @@ write_csv(state, 'N:/ORP_accountability/data/2020_final_accountability_files/sta
 write_csv(district, 'N:/ORP_accountability/data/2020_final_accountability_files/district_assessment_file_suppressed.csv', na = '')
 write_csv(school, 'N:/ORP_accountability/data/2020_final_accountability_files/school_assessment_file_suppressed.csv', na = '')
 
+# ==================== Suppress Absenteeism ========================
+suppress_abs <- function(file, threshold = 1) {
+  
+  file %>%
+    mutate_at(
+      .vars = c('n_chronically_absent', 'pct_chronically_absent'),
+      .funs = ~ if_else(pct_chronically_absent < threshold, '**', as.character(.))
+    ) %>% 
+    mutate_at(
+      .vars = c('n_chronically_absent', 'pct_chronically_absent'),
+      .funs = ~ if_else(n_students < 10, '*', as.character(.))
+    )
+  
+}
+
+state_abs <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/state_chronic_absenteeism_Jun16.csv")
+district_abs <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/district_chronic_absenteeism_Jun16.csv")
+school_abs <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/school_chronic_absenteeism_Jun16.csv")
+
+write_csv(state_abs %>% suppress_abs(), "N:/ORP_accountability/data/2020_chronic_absenteeism/state_chronic_absenteeism_suppressed.csv", na = '')
+write_csv(district_abs %>% suppress_abs(), "N:/ORP_accountability/data/2020_chronic_absenteeism/district_chronic_absenteeism_suppressed.csv", na = '')
+write_csv(school_abs %>% suppress_abs(threshold = 5), "N:/ORP_accountability/data/2020_chronic_absenteeism/school_chronic_absenteeism_suppressed.csv", na = '')
+
+
+
+
+
+
+
 
 
 
