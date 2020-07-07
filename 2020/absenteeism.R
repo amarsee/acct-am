@@ -128,7 +128,7 @@ attendance <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/abse
 
 instructional_days <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/instructional_days_ending_02Mar2020.csv")
 
-demographics <-  read_csv("N:/TNReady/2019-20/spring/demographics/student_demographics_20200527.csv") %>%
+demographics <-  read_csv("N:/TNReady/2019-20/spring/demographics/student_demographics_20200707.csv") %>%
   # Student IDs should be 7 digits
   filter(str_length(student_key) == 7) %>%
   transmute(
