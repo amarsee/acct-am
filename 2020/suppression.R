@@ -70,9 +70,9 @@ suppress_abs <- function(file, threshold = 1) {
   
 }
 
-state_abs <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/state_chronic_absenteeism_Jun16.csv")
-district_abs <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/district_chronic_absenteeism_Jun16.csv")
-school_abs <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/school_chronic_absenteeism_Jun16.csv")
+state_abs <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/state_chronic_absenteeism_Jul7.csv")
+district_abs <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/district_chronic_absenteeism_Jul7.csv")
+school_abs <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/school_chronic_absenteeism_Jul7.csv")
 
 write_csv(state_abs %>% suppress_abs(), "N:/ORP_accountability/data/2020_chronic_absenteeism/state_chronic_absenteeism_suppressed.csv", na = '')
 write_csv(district_abs %>% suppress_abs(), "N:/ORP_accountability/data/2020_chronic_absenteeism/district_chronic_absenteeism_suppressed.csv", na = '')

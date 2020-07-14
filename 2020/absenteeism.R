@@ -13,9 +13,9 @@ library(RJDBC)
 
 con <- dbConnect(
   JDBC("oracle.jdbc.OracleDriver", classPath="N:/ORP_accountability/ojdbc6.jar"),
-  readRegistry("Environment", hive = "HCU")$EIS_MGR_CXN_STR[1],
+  Sys.getenv('EIS_MGR_CXN_STR'),
   "EIS_MGR",
-  readRegistry("Environment", hive = "HCU")$EIS_MGR_PWD[1]
+  Sys.getenv('EIS_MGR_PWD')
 )
 
 
@@ -103,26 +103,26 @@ con <- dbConnect(
 
 attendance <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/absenteeism_pull_Jun16.csv")
 
-# # Pull instructional calendar days from database
-# instructional_days <- dbGetQuery(con,
-#     "SELECT
-#     SID.SCHOOL_BU_ID,
-#     SID.SCHOOL_YEAR AS YEAR,
-#     D.DISTRICT_NAME AS SYSTEM_NAME,
-#     D.DISTRICT_NO AS SYSTEM,
-#     S.SCHOOL_NAME,
-#     S.SCHOOL_NO AS SCHOOL,
-#     COUNT(DISTINCT SID.ID_DATE) AS INSTRUCTIONAL_DAYS
-#     FROM EIS_MGR.SCAL_ID_DAYS SID
-#     JOIN EIS_MGR.SCHOOL S ON SID.SCHOOL_BU_ID = S.SCHOOL_BU_ID
-#     JOIN EIS_MGR.DISTRICT D ON S.DISTRICT_NO = D.DISTRICT_NO
-#     WHERE SCHOOL_YEAR = EXTRACT(YEAR FROM SYSDATE) - 1
-#         AND SID.ID_DATE <= DATE '2020-03-02'
-#     GROUP BY SID.SCHOOL_BU_ID, SID.SCHOOL_YEAR, D.DISTRICT_NAME, D.DISTRICT_NO, S.SCHOOL_NAME, S.SCHOOL_NO
-#     ORDER BY SID.SCHOOL_BU_ID"
-# ) %>%
-#     as.tbl() %>%
-#     clean_names()
+# Pull instructional calendar days from database
+instructional_days <- dbGetQuery(con,
+    "SELECT
+    SCAL.SCHOOL_BU_ID,
+    SCAL.SCHOOL_YEAR AS YEAR,
+    D.DISTRICT_NAME AS SYSTEM_NAME,
+    D.DISTRICT_NO AS SYSTEM,
+    S.SCHOOL_NAME,
+    S.SCHOOL_NO AS SCHOOL,
+    COUNT(DISTINCT SCAL.ID_DATE) AS INSTRUCTIONAL_DAYS
+    FROM EIS_MGR.SCAL_ID_DAYS SCAL
+    JOIN EIS_MGR.SCHOOL S ON SCAL.SCHOOL_BU_ID = S.SCHOOL_BU_ID
+    JOIN EIS_MGR.DISTRICT D ON S.DISTRICT_NO = D.DISTRICT_NO
+    WHERE SCHOOL_YEAR = EXTRACT(YEAR FROM SYSDATE) - 1
+        AND SCAL.ID_DATE <= DATE '2020-03-02'
+    GROUP BY SCAL.SCHOOL_BU_ID, SCAL.SCHOOL_YEAR, D.DISTRICT_NAME, D.DISTRICT_NO, S.SCHOOL_NAME, S.SCHOOL_NO
+    ORDER BY SCAL.SCHOOL_BU_ID"
+) %>%
+    as_tibble() %>%
+    clean_names()
 # 
 # write_csv(instructional_days, "N:/ORP_accountability/data/2020_chronic_absenteeism/instructional_days_ending_02Mar2020.csv", na = '')
 

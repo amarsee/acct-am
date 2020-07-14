@@ -5,7 +5,7 @@ library(readstata13)
 
 # demographics <- read_csv("N:/Assessment_Data Returns/TCAP_End-of-Course/2018-19/Demographic Files/fall_eoc_demographics_snapshot_20181208.csv")
 
-demographics_2020_spring <- read_csv("N:/TNReady/2019-20/spring/demographics/student_demographics_20200706.csv")
+demographics_2020_spring <- read_csv("N:/TNReady/2019-20/spring/demographics/student_demographics_20200707.csv")
 
 demos_filtered <- demographics_2020_spring %>% 
   filter(str_length(student_key) == 7) %>% 
