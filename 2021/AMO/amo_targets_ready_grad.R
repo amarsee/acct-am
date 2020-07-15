@@ -3,7 +3,7 @@ library(tidyverse)
 subgroups <- c(  "All Students", "Black/Hispanic/Native American", "Economically Disadvantaged", 
                  "English Learners with Transitional 1-4", "Students with Disabilities")
 
-school_targets <- read_csv("N:/ORP_accountability/projects/2019_ready_graduate/Data/ready_graduate_school.csv") %>%
+school_targets <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_school.csv") %>%
   filter(!str_detect(subgroup, 'Non'), !subgroup %in% c('Female', 'Migrant', 'Homeless', 'Male')) %>% 
   mutate(
     AMO_target = if_else(
@@ -23,4 +23,4 @@ school_targets <- read_csv("N:/ORP_accountability/projects/2019_ready_graduate/D
   ) %>% 
   arrange(system, school, subgroup)
 
-write_csv(school_targets, "N:/ORP_accountability/projects/2020_amo/ready_grad_targets_school_AM.csv", na = "")
+write_csv(school_targets, "N:/ORP_accountability/projects/2021_amo/ready_grad_targets_school.csv", na = "")
