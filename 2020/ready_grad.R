@@ -57,7 +57,7 @@ ready_grad_student <- rg %>%
     .funs = as.integer
   )
 
-# write_csv(ready_grad_student , 'N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_student_level_06182019.csv')
+write_csv(ready_grad_student , 'N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_student_level.csv')
 
 
 school_names <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/names.csv")
@@ -87,15 +87,15 @@ out_df_ready_grad <- bind_rows(
     ready_grad_student_level_total %>% filter(race_ethnicity == 'A') %>% mutate(subgroup = "Asian"),
     ready_grad_student_level_total %>% filter(race_ethnicity == 'B') %>% mutate(subgroup = "Black or African American"),
     ready_grad_student_level_total %>% filter(race_ethnicity == 'B' | race_ethnicity == 'H' | race_ethnicity == 'I') %>% mutate(subgroup = "Black/Hispanic/Native American"),
-    ready_grad_student_level_total %>% filter(ed == 'Y') %>% mutate(subgroup = "Economically Disadvantaged"),
-    ready_grad_student_level_total %>% filter(ed == 'N') %>% mutate(subgroup = "Non-Economically Disadvantaged"),
-    ready_grad_student_level_total %>% filter(el == 'Y') %>% mutate(subgroup = "English Learners with Transitional 1-4"),
-    ready_grad_student_level_total %>% filter(el == 'N') %>% mutate(subgroup = "Non-English Learners"),
+    ready_grad_student_level_total %>% filter(econ_dis == 'Y') %>% mutate(subgroup = "Economically Disadvantaged"),
+    ready_grad_student_level_total %>% filter(econ_dis == 'N') %>% mutate(subgroup = "Non-Economically Disadvantaged"),
+    ready_grad_student_level_total %>% filter(elb == 'Y') %>% mutate(subgroup = "English Learners with Transitional 1-4"),
+    ready_grad_student_level_total %>% filter(elb == 'N') %>% mutate(subgroup = "Non-English Learners"),
     ready_grad_student_level_total %>% filter(race_ethnicity == 'H') %>% mutate(subgroup = "Hispanic"),
     ready_grad_student_level_total %>% filter(race_ethnicity == 'P') %>% mutate(subgroup = "Native Hawaiian or Other Pacific Islander"),
     ready_grad_student_level_total %>% filter(race_ethnicity == 'W') %>% mutate(subgroup = "White"),
     ready_grad_student_level_total %>% 
-      filter(race_ethnicity == 'B' | race_ethnicity == 'H' | race_ethnicity == 'I' | el == 'Y' | ed == 'Y' | swd == 'Y') %>% 
+      filter(race_ethnicity == 'B' | race_ethnicity == 'H' | race_ethnicity == 'I' | elb == 'Y' | econ_dis == 'Y' | swd == 'Y') %>% 
       mutate(subgroup = "Super Subgroup"),
     ready_grad_student_level_total %>% filter(swd == 'Y') %>% mutate(subgroup = "Students with Disabilities"),
     ready_grad_student_level_total %>% filter(swd == 'N')%>% mutate(subgroup = "Non-Students with Disabilities")
@@ -116,7 +116,7 @@ district_level_ready_grad <- out_df_ready_grad %>%
   ) %>% 
   arrange(system, subgroup)
 
-write_csv(district_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_district_AM.csv")
+write_csv(district_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_district.csv")
 # ===================================== School Level =====================================
 
 school_level_ready_grad <- out_df_ready_grad %>% 
@@ -132,7 +132,7 @@ school_level_ready_grad <- out_df_ready_grad %>%
   ) %>% 
   arrange(system, school, subgroup)
 
-write_csv(school_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_school_AM.csv")
+write_csv(school_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_school.csv")
 
 # =============================== State Level ==========================================
 state_level_ready_grad <- out_df_ready_grad %>% 
@@ -146,7 +146,7 @@ state_level_ready_grad <- out_df_ready_grad %>%
   ) %>% 
   arrange(subgroup)
 
-write_csv(state_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_state_AM.csv")
+write_csv(state_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_state.csv")
 
 # =================== Split Files ======================
 # Split district file
