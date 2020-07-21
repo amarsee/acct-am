@@ -6,6 +6,10 @@ library(readxl)
 library(haven)
 library(RJDBC)
 
+# first 2 Shelby 
+# 792/2335 for 3457589
+# 792/178  for 3309224
+
 # ============ Function to calculate rates ===========
 calc_counts <- function(grouped_df){
   grouped_df %>% 
@@ -35,7 +39,7 @@ con = dbConnect(
   readRegistry("Environment", "HCU")$EIS_MGR_PWD
 )
 # SQL Pull
-rg = as.tbl(
+rg = as_tibble(
   dbGetQuery(
     con,
     "select *

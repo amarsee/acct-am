@@ -1,5 +1,10 @@
 library(tidyverse)
 
+school_names <- read_csv('N:/ORP_accountability/data/2020_final_accountability_files/names.csv')
+dist_names <- school_names %>% 
+  select(system, system_name) %>% 
+  distinct()
+
 # ================= School Success Rate ====================
 # 2019
 success_2019 <- read_csv("N:/ORP_accountability/projects/2020_amo/success_rate_targets_school.csv")
@@ -42,6 +47,19 @@ group_by(difference_success_amo, subgroup) %>% summarise(mean_diff = mean(differ
 # 8 Students with Disabilities                -0.676
 # 9 Super Subgroup                            -1.39 
 # 10 White                                    -1.31 
+
+pct_school_success_change <- group_by(difference_success_amo, subgroup, movement) %>% 
+  summarise(n_schools = n()) %>% 
+  group_by(subgroup) %>% 
+  mutate(
+    denom = sum(n_schools)
+  ) %>% 
+  ungroup() %>% 
+  mutate(
+    pct_schools = round(n_schools / denom * 100 + 1e-5, 1)
+  )
+
+group_by(difference_success_amo %>% filter(difference < 0), subgroup) %>% summarise(mean_diff = mean(difference))
 
 # ================= District Success Rate ====================
 # 2019
@@ -90,6 +108,17 @@ group_by(district_difference_success_amo, grade, subgroup) %>% summarise(mean_di
 # 13 9th through 12th Economically Disadvantaged                -2.29 
 # 14 9th through 12th English Learners with Transitional 1-4    -1.08 
 # 15 9th through 12th Students with Disabilities                -0.430
+
+pct_district_success_change <- group_by(district_difference_success_amo, subgroup, grade, movement) %>% 
+  summarise(n_districts = n()) %>% 
+  group_by(subgroup, grade) %>% 
+  mutate(
+    denom = sum(n_districts)
+  ) %>% 
+  ungroup() %>% 
+  mutate(
+    pct_districts = round(n_districts / denom * 100 + 1e-5, 1)
+  )
 
 # ================= School Absenteeism ====================
 # 2019
@@ -207,6 +236,7 @@ difference_district_elpa_amo <- compare_elpa_district %>%
 
 mean((difference_district_elpa_amo %>% filter(subgroup == 'All Students'))$difference) # On average, -3.6 points
 group_by(difference_district_elpa_amo, subgroup) %>% summarise(mean_diff = mean(difference))
+group_by(difference_district_elpa_amo, subgroup, movement) %>% summarise(n_schools = n())
 
 # subgroup                       mean_diff
 # <chr>                              <dbl>

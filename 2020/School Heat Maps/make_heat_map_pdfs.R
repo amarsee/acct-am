@@ -62,7 +62,7 @@ for (dist in district_list) {
                                 as.character(month(Sys.Date(), label = TRUE)), format(Sys.Date(), "%d"), '.pdf')
       absolute_school_path <- paste0(dist_dir_str, "/", school_filename)
       # Render Rmd with the parameters passed in
-      rmarkdown::render("N:/ORP_accountability/projects/Andrew/Accountability/2019/school_heat_map_code/school_heat_map_rmd.Rmd", params = list(
+      rmarkdown::render("N:/ORP_accountability/projects/Andrew/Accountability/2020/school_heat_map_code/school_heat_map_rmd.Rmd", params = list(
         district_id = dist,
         school_id = school_num,
         set_title = dist_school_list[[school_index]]
