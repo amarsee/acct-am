@@ -59,12 +59,31 @@ ready_grad_student <- rg %>%
               'sat_total', 'act_english', 'act_math', 'act_reading', 'act_science', 'act_composite', 'industry_cert_earned',
               'asvab', 'ncrc_work_keys', 'participate_clg_lvl_pgm', 'n_cambridge', 'n_ap', 'n_ib', 'n_sdc', 'n_ldc', 'n_de'),
     .funs = as.integer
+  ) %>% 
+  mutate(
+    district_no = if_else(
+      student_key %in% c(3457589, 3309224), 792L, district_no
+    ),
+    school_no = case_when(
+      student_key == 3457589 ~ 2335L,
+      student_key == 3309224 ~ 178L,
+      TRUE ~ school_no
+    )
   )
 
 write_csv(ready_grad_student , 'N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_student_level.csv')
 
 
-school_names <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/names.csv")
+school_names_current <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/names.csv")
+school_names_prior <- read_csv("N:/ORP_accountability/data/2018_final_accountability_files/school_names.csv")
+
+school_names <- school_names_current %>% 
+  bind_rows(
+    school_names_prior %>% 
+      mutate(system_name = if_else(system == 970, "Department Of Children's Services Education Division", system_name)) %>% 
+      filter(!paste(system, school, sep = '/') %in% paste(school_names_current$system, school_names_current$school, sep = '/'))
+  ) %>% 
+  arrange(system, school)
 
 dist_names <- school_names %>% 
   select(system, system_name) %>% 
@@ -109,6 +128,7 @@ out_df_ready_grad <- bind_rows(
 # ===================================== District Level =====================================
 
 district_level_ready_grad <- out_df_ready_grad %>% 
+  filter(!is.na(system)) %>% 
   group_by(system, subgroup) %>% 
   calc_counts() %>% 
   calc_pcts() %>% 
@@ -124,10 +144,12 @@ write_csv(district_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_
 # ===================================== School Level =====================================
 
 school_level_ready_grad <- out_df_ready_grad %>% 
+  filter(!is.na(system)) %>%
   group_by(system, school, subgroup) %>% 
   calc_counts() %>%
-  filter(grad_cohort > 0) %>% 
+  # filter(grad_cohort > 0) %>%
   calc_pcts() %>% 
+  # filter(!is.na(act_participation_rate)) %>% 
   left_join(school_names, by = c("system", 'school')) %>% 
   transmute(
     # year = 2018,
@@ -142,7 +164,6 @@ write_csv(school_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_gr
 state_level_ready_grad <- out_df_ready_grad %>% 
   group_by(subgroup) %>% 
   calc_counts() %>%
-  # filter(grad_cohort > 0) %>% 
   calc_pcts() %>% 
   transmute(
     # year = 2018,
@@ -183,6 +204,37 @@ school_level_ready_grad %>%
 
 # Split student level file
 ready_grad_student_level_total %>%
+  filter(!is.na(system), !is.na(school)) %>% 
+  rename(
+    EL = elb,
+    ED = econ_dis,
+    SWD = swd
+  ) %>%
+  mutate(
+    All = TRUE,
+    Asian = race_ethnicity == "A",
+    BHN = race_ethnicity %in% c("B", "H", "I"),
+    Black = race_ethnicity == "B",
+    ED = ED == "Y",
+    EL = EL == "Y",
+    Hispanic = race_ethnicity == "H",
+    HPI = race_ethnicity == "P",
+    Native = race_ethnicity == "I",
+    Non_ED = !ED,
+    Non_EL = !EL,
+    SWD = SWD == "Y",
+    Non_SWD = !SWD,
+    Super = BHN | ED | EL | SWD,
+    White = race_ethnicity == "W"
+  ) %>%
+  arrange(system, school, student_key) %>%
+  left_join(school_names, by = c("system", "school")) %>%
+  select(
+    system, system_name, school, school_name, student_id = student_key, first_name, last_name, included_in_cohort, completion_type,
+    sat_math, sat_critical_reading, sat_total, act_english, act_math, act_reading, act_science, act_composite,
+    industry_cert_earned, asvab, ncrc_work_keys, participate_clg_lvl_pgm, n_cambridge, n_ap, n_ib, n_sdc, n_ldc,
+    n_de, ready_graduate, All, BHN, ED, SWD, EL, Asian, Black, Hispanic, HPI, Native, White, Non_ED, Non_EL, Non_SWD, Super
+  ) %>% 
   group_split(system) %>%
   walk2(
     .x = .,

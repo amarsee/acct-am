@@ -69,10 +69,53 @@ compare_school <- bind_rows(
   arrange(system, school, subgroup, grade_band, person)
 
 
+# =============== Compare Ready Grad =================================
+student_ready_grad_am <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_student_level.csv",
+                                  col_types = 'icccciccciiciiiiiiiiiiiiiiiiiiic')
+student_ready_grad_sm <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_grad_student_sm.csv",
+                                  col_types = 'icccciccciiciiiiiiiiiiiiiiiiiiic')
 
+compare_student <- bind_rows(
+  setdiff(student_ready_grad_am, student_ready_grad_sm) %>% mutate(person = 'AM'),
+  setdiff(student_ready_grad_sm, student_ready_grad_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(student_key, district_no, school_no, person)
 
+state_ready_grad_am <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_state.csv")
+state_ready_grad_sm <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_grad_state_sm.csv")
 
+compare_state <- bind_rows(
+  setdiff(state_ready_grad_am, state_ready_grad_sm) %>% mutate(person = 'AM'),
+  setdiff(state_ready_grad_sm, state_ready_grad_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(subgroup, person)
 
+dist_ready_grad_am <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_district.csv")
+dist_ready_grad_sm <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_grad_district_sm.csv")
+
+compare_district <- bind_rows(
+  setdiff(dist_ready_grad_am, dist_ready_grad_sm) %>% mutate(person = 'AM'),
+  setdiff(dist_ready_grad_sm, dist_ready_grad_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(system, subgroup, person)
+
+school_ready_grad_am <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_school.csv")
+school_ready_grad_sm <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_grad_school_sm.csv")
+
+compare_school <- bind_rows(
+  setdiff(school_ready_grad_am, school_ready_grad_sm) %>% mutate(person = 'AM'),
+  setdiff(school_ready_grad_sm, school_ready_grad_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(system, school, subgroup, person)
+
+school_targets_ready_grad_am <- read_csv("N:/ORP_accountability/projects/2021_amo/ready_grad_targets_school.csv")
+school_targets_ready_grad_sm <- read_csv("N:/ORP_accountability/projects/Sophie/schooltargets2020.csv")
+
+compare_targets <- bind_rows(
+  setdiff(school_targets_ready_grad_am, school_targets_ready_grad_sm) %>% mutate(person = 'AM'),
+  setdiff(school_targets_ready_grad_sm, school_targets_ready_grad_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(system, school, subgroup, person)
 
 
 
