@@ -71,7 +71,7 @@ ready_grad_student <- rg %>%
     )
   )
 
-write_csv(ready_grad_student , 'N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_student_level.csv')
+write_csv(ready_grad_student , 'N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_student_level.csv', na = '')
 
 
 school_names_current <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/names.csv")
@@ -136,11 +136,13 @@ district_level_ready_grad <- out_df_ready_grad %>%
   transmute(
     # year = 2018,
     system, system_name,
-    subgroup, act_participation_rate, n_count, n_ready_grad, pct_ready_grad
+    subgroup, 
+    act_participation_rate = if_else(is.na(act_participation_rate), NA_real_, act_participation_rate), 
+    n_count, n_ready_grad, pct_ready_grad
   ) %>% 
   arrange(system, subgroup)
 
-write_csv(district_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_district.csv")
+write_csv(district_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_district.csv", na = '')
 # ===================================== School Level =====================================
 
 school_level_ready_grad <- out_df_ready_grad %>% 
@@ -154,11 +156,13 @@ school_level_ready_grad <- out_df_ready_grad %>%
   transmute(
     # year = 2018,
     system, system_name, school, school_name,
-    subgroup, act_participation_rate, n_count, n_ready_grad, pct_ready_grad
+    subgroup, 
+    act_participation_rate = if_else(is.na(act_participation_rate), NA_real_, act_participation_rate), #  
+    n_count, n_ready_grad, pct_ready_grad
   ) %>% 
   arrange(system, school, subgroup)
 
-write_csv(school_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_school.csv")
+write_csv(school_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_school.csv", na = '')
 
 # =============================== State Level ==========================================
 state_level_ready_grad <- out_df_ready_grad %>% 
@@ -166,12 +170,11 @@ state_level_ready_grad <- out_df_ready_grad %>%
   calc_counts() %>%
   calc_pcts() %>% 
   transmute(
-    # year = 2018,
     subgroup, act_participation_rate, n_count, n_ready_grad, pct_ready_grad
   ) %>% 
   arrange(subgroup)
 
-write_csv(state_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_state.csv")
+write_csv(state_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_state.csv", na = '')
 
 # =================== Split Files ======================
 # Split district file

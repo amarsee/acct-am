@@ -79,6 +79,34 @@ write_csv(district_abs %>% suppress_abs(), "N:/ORP_accountability/data/2020_chro
 write_csv(school_abs %>% suppress_abs(threshold = 5), "N:/ORP_accountability/data/2020_chronic_absenteeism/school_chronic_absenteeism_suppressed.csv", na = '')
 
 
+# ================== Ready Grade =====================
+suppress_rg <- function(file, threshold = 1) {
+  
+  file %>%
+    mutate_at(
+      .vars = vars(n_ready_grad, pct_ready_grad),
+      .funs = ~ if_else(pct_ready_grad < threshold | pct_ready_grad > (100 - threshold), "**", as.character(.))
+    ) %>%
+    mutate_at(
+      .vars = vars(n_ready_grad, pct_ready_grad),
+      .funs = ~ if_else(n_count < 10, "*", as.character(.))
+    )
+  
+}
+
+state <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_state.csv") %>% 
+  select(-act_participation_rate) %>%
+  suppress_rg()
+district <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_district.csv") %>% 
+  select(-act_participation_rate) %>%
+  suppress_rg()
+school <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_school.csv") %>% 
+  select(-act_participation_rate) %>%
+  suppress_rg(threshold = 5)
+
+write_csv(state, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_state_suppressed.csv", na = '')
+write_csv(district, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_district_suppressed.csv", na = '')
+write_csv(school, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_school_suppressed.csv", na = '')
 
 
 
