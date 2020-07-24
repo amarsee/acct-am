@@ -21,7 +21,7 @@ district_targets <- read_csv("N:/ORP_accountability/data/2019_graduation_rate/di
   ) %>% 
   transmute(
     system, system_name, subgroup, grad_cohort_prior = grad_cohort,
-    grad_rate = if_else(grad_cohort_prior < 30, NA_real_, grad_rate), AMO_target, AMO_target_double
+    grad_rate_prior = if_else(grad_cohort_prior < 30, NA_real_, grad_rate), AMO_target, AMO_target_double
   )
 
 write_csv(district_targets, "N:/ORP_accountability/projects/2021_amo/grad_targets_district.csv", na = "")
@@ -42,7 +42,7 @@ school_targets <- read_csv("N:/ORP_accountability/data/2019_graduation_rate/scho
   ) %>% 
   transmute(
     system, system_name, school, school_name, subgroup, grad_cohort_prior = grad_cohort,
-    grad_rate = if_else(grad_cohort_prior < 30, NA_real_, grad_rate), AMO_target, AMO_target_double
+    grad_rate_prior = if_else(grad_cohort_prior < 30, NA_real_, grad_rate), AMO_target, AMO_target_double
   )
 
 write_csv(school_targets, "N:/ORP_accountability/projects/2021_amo/grad_targets_school.csv", na = "")

@@ -109,7 +109,7 @@ compare_school <- bind_rows(
   arrange(system, school, subgroup, person)
 
 school_targets_ready_grad_am <- read_csv("N:/ORP_accountability/projects/2021_amo/ready_grad_targets_school.csv")
-school_targets_ready_grad_sm <- read_csv("N:/ORP_accountability/projects/Sophie/schooltargets2020.csv")
+school_targets_ready_grad_sm <- read_csv("N:/ORP_accountability/projects/Sophie/Ready Grad 2020/readygradtargets.csv")
 
 compare_targets <- bind_rows(
   setdiff(school_targets_ready_grad_am, school_targets_ready_grad_sm) %>% mutate(person = 'AM'),
@@ -117,8 +117,18 @@ compare_targets <- bind_rows(
 ) %>% 
   arrange(system, school, subgroup, person)
 
+# ===================== Compare RG to Grad Rate ====================
+school_rg <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_school.csv") %>% 
+  select(system, school, subgroup, n_count)
+school_grad_rate_2019 <- read_csv("N:/ORP_accountability/data/2019_graduation_rate/school_grad_rate.csv") %>% 
+  select(system, school, subgroup, n_count = grad_cohort) %>% 
+  filter(subgroup %in% unique(school_rg$subgroup))
 
-
+compare_rg_and_grad <- bind_rows(
+  setdiff(school_rg, school_grad_rate_2019) %>% mutate(person = 'RG'),
+  setdiff(school_grad_rate_2019, school_rg) %>% mutate(person = 'Grad')
+) %>% 
+  arrange(system, school, subgroup, person)
 
 
 

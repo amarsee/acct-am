@@ -59,17 +59,17 @@ ready_grad_student <- rg %>%
               'sat_total', 'act_english', 'act_math', 'act_reading', 'act_science', 'act_composite', 'industry_cert_earned',
               'asvab', 'ncrc_work_keys', 'participate_clg_lvl_pgm', 'n_cambridge', 'n_ap', 'n_ib', 'n_sdc', 'n_ldc', 'n_de'),
     .funs = as.integer
-  ) %>% 
-  mutate(
-    district_no = if_else(
-      student_key %in% c(3457589, 3309224), 792L, district_no
-    ),
-    school_no = case_when(
-      student_key == 3457589 ~ 2335L,
-      student_key == 3309224 ~ 178L,
-      TRUE ~ school_no
-    )
-  )
+  ) # %>% 
+  # mutate(
+  #   district_no = if_else(
+  #     student_key %in% c(3457589, 3309224), 792L, district_no
+  #   ),
+  #   school_no = case_when(
+  #     student_key == 3457589 ~ 2335L,
+  #     student_key == 3309224 ~ 178L,
+  #     TRUE ~ school_no
+  #   )
+  # )
 
 write_csv(ready_grad_student , 'N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_student_level.csv', na = '')
 
@@ -166,6 +166,7 @@ write_csv(school_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_gr
 
 # =============================== State Level ==========================================
 state_level_ready_grad <- out_df_ready_grad %>% 
+  filter(!is.na(system), !is.na(school)) %>% 
   group_by(subgroup) %>% 
   calc_counts() %>%
   calc_pcts() %>% 
