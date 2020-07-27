@@ -58,6 +58,7 @@ demos_filtered <- demographics_2020_spring %>%
 
 # EOCs
 # ======================================= Fall EOC ===========================================================
+# Set to blank if test code = TNSCIEBI, TNBRSCIEBI, TNSOCSUH, TNBRSOCSUH, or TNALTSCBI
 fall_eoc <- read_fwf("N:/Assessment_Data Returns/TCAP_End-of-Course/2019-2020/fall EOC 2019/2019_TN_Fall_2019_EOC_CDF_20200128.txt",
                      col_types = 'icicccciicccciiiiiciic',
                      fwf_cols(system = c(33, 37), system_name = c(38, 112), school = c(113, 116),

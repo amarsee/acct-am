@@ -49,54 +49,54 @@ daily_attendance_w_features <- daily_attendance %>%
     cal_month = months(id_date)
   )
 
-daily_attendance %>% 
-  filter(system == 10, school == 20) %>% 
-  ggplot(aes(x = id_date, y = attendance_rate)) +
-  geom_line()
-
-daily_attendance %>% stl(s.window='periodic') %>% seasadj() -> eeadj
-autoplot(eeadj)
-
-daily_att_nest <- daily_attendance %>% 
-  filter(id_date >= as.Date('2012-08-15'),
-         id_date <= as.Date('2020-03-02')) %>% 
-  select(system, school, id_date, attendance_rate) %>% 
-  group_by(system, school) %>% 
-  nest()
-
-daily_att_nest_ts <- daily_att_nest %>%
-  mutate(data_ts = map(.x       = data, 
-                       .f       = tk_ts, 
-                       select   = -id_date, 
-                       start    = as.Date('2012-08-15'),
-                       freq     = 5))
-
-
-
-test_ts <- daily_att_nest_ts[[1,4]]
-
-fit_basic1<- auto.arima(test_ts)
-
-futurVal <- forecast(fit_basic1,h=30, level=c(99.5))
-plot(futurVal)
-
-acf(test_ts)
-pacf(test_ts)
+# daily_attendance %>% 
+#   filter(system == 10, school == 20) %>% 
+#   ggplot(aes(x = id_date, y = attendance_rate)) +
+#   geom_line()
+# 
+# daily_attendance %>% stl(s.window='periodic') %>% seasadj() -> eeadj
+# autoplot(eeadj)
+# 
+# daily_att_nest <- daily_attendance %>% 
+#   filter(id_date >= as.Date('2012-08-15'),
+#          id_date <= as.Date('2020-03-02')) %>% 
+#   select(system, school, id_date, attendance_rate) %>% 
+#   group_by(system, school) %>% 
+#   nest()
+# 
+# daily_att_nest_ts <- daily_att_nest %>%
+#   mutate(data_ts = map(.x       = data, 
+#                        .f       = tk_ts, 
+#                        select   = -id_date, 
+#                        start    = as.Date('2012-08-15'),
+#                        freq     = 5))
+# 
+# 
+# 
+# test_ts <- daily_att_nest_ts[[1,4]]
+# 
+# fit_basic1<- auto.arima(test_ts)
+# 
+# futurVal <- forecast(fit_basic1,h=30, level=c(99.5))
+# plot(futurVal)
+# 
+# acf(test_ts)
+# pacf(test_ts)
 
 # =============== testing functions ====================
-anderson_high <- daily_attendance_w_features %>% 
-  filter(system == 10, school == 2, id_date <= as.Date('2020-03-02')) %>% 
-  select(id_date, attendance_rate)
-
-z <- read.zoo(anderson_high)
-fit <- auto.arima(z)
-fore <- forecast(fit, h = 150)
-fore_df <- as_tibble(fore, rownames = 'epoch')
-fore_df$epoch <- as.POSIXct(as.numeric(fore_df$epoch), origin = '1970-01-01')
-
-ts_and <- as.ts(z)
-
-xts(df[,-1])
+# anderson_high <- daily_attendance_w_features %>% 
+#   filter(system == 10, school == 2, id_date <= as.Date('2020-03-02')) %>% 
+#   select(id_date, attendance_rate)
+# 
+# z <- read.zoo(anderson_high)
+# fit <- auto.arima(z)
+# fore <- forecast(fit, h = 150)
+# fore_df <- as_tibble(fore, rownames = 'epoch')
+# fore_df$epoch <- as.POSIXct(as.numeric(fore_df$epoch), origin = '1970-01-01')
+# 
+# ts_and <- as.ts(z)
+# 
+# xts(df[,-1])
 
 
 
@@ -242,6 +242,42 @@ daily_att_rf_nest <- daily_attendance_w_features %>%
 
 current_schools <- read_csv('N:/ORP_accountability/data/2020_final_accountability_files/names.csv')
 
+for (system_school in unique(paste0(daily_attendance_w_features$system, '/', daily_attendance_w_features$school))) {
+  
+  if (system_school %in% paste0(current_schools$system, '/', current_schools$school)) {
+    system_no <- as.numeric(gsub('/.+', '', system_school))
+    school_no <- as.numeric(gsub('.+/', '', system_school))
+    
+    school_name <- gsub(' ', '_', (current_schools %>% 
+      filter(system == system_no, school == school_no))$school_name)
+    school_name <- gsub('/', '_', school_name)
+    
+    print(system_school)
+    
+    school_attendance <- daily_attendance_w_features %>%
+      filter(system == system_no, school == school_no, id_date <= as.Date('2020-03-02')) %>%
+      mutate_at(
+        .vars = c('day_of_week', 'cal_month'),
+        .funs = ~ as.factor(.)
+      ) %>%
+      select(attendance_rate:cal_month)
+    
+    att_model <- ranger(
+      formula = attendance_rate ~ .,
+      data = school_attendance,
+      mtry = 6,
+      min.node.size = 5,
+      splitrule = 'extratrees',
+      sample.fraction = 0.632,
+      importance = 'impurity'
+    )
+    
+    saveRDS(att_model, paste0("N:/ORP_accountability/projects/Andrew/acct-am/2020/Modeling/attendance/data/Models/", 
+                              system_no, '-', school_no, '_', school_name, '_attendance_model.rds'))
+  }
+  
+}
+
 # system.time(
 # rf_nested_models <- daily_att_rf_nest %>%
 #   inner_join(
@@ -254,26 +290,27 @@ current_schools <- read_csv('N:/ORP_accountability/data/2020_final_accountabilit
 # )
 
 # looping over df because applying the model took too long
-out_df <- tibble()
-for (dist in unique(daily_att_rf_nest$system)) {
-  system.time(
-  out_df <- bind_rows(out_df, 
-                      daily_att_rf_nest %>%
-    inner_join(
-      current_schools %>% select(system, school),
-      by = c('system', 'school')
-    ) %>% 
-    filter(system == dist) %>%
-    mutate(fit_rf = map(.x  = data, 
-                        .f = final_model))
-  )
-  )
-  print(str_c('Completed District ', dist))
-}
-# Saving as RDS (~ 3 GB)
-saveRDS(out_df, 'N:/ORP_accountability/projects/Andrew/acct-am/2020/Modeling/attendance/data/fit_school_models.rds')
-
-
-nested_models <- readRDS('N:/ORP_accountability/projects/Andrew/acct-am/2020/Modeling/attendance/data/fit_school_models.rds')
+# out_df <- tibble()
+# for (dist in unique(daily_att_rf_nest$system)) {
+#   # system.time(
+#   temp <- daily_att_rf_nest %>%
+#     inner_join(
+#       current_schools %>% select(system, school),
+#       by = c('system', 'school')
+#     ) %>% 
+#     filter(system == dist) %>%
+#     mutate(fit_rf = map(.x  = data, 
+#                         .f = final_model))
+#   
+#   saveRDS(temp %>% select(-data), str_c("N:/ORP_accountability/projects/Andrew/acct-am/2020/Modeling/attendance/data/", dist,"_fit_school_model.rds"))
+#   # out_df <- bind_rows(out_df, temp)
+#   # )
+#   print(str_c('Completed District ', dist))
+# }
+# # Saving as RDS (~ 3 GB)
+# saveRDS(out_df, 'N:/ORP_accountability/projects/Andrew/acct-am/2020/Modeling/attendance/data/fit_school_models.rds')
+# 
+# 
+# nested_models <- readRDS('N:/ORP_accountability/projects/Andrew/acct-am/2020/Modeling/attendance/data/fit_school_models.rds')
 
 

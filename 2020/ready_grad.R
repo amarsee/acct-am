@@ -237,8 +237,9 @@ ready_grad_student_level_total %>%
     system, system_name, school, school_name, student_id = student_key, first_name, last_name, included_in_cohort, completion_type,
     sat_math, sat_critical_reading, sat_total, act_english, act_math, act_reading, act_science, act_composite,
     industry_cert_earned, asvab, ncrc_work_keys, participate_clg_lvl_pgm, n_cambridge, n_ap, n_ib, n_sdc, n_ldc,
-    n_de, ready_graduate, All, BHN, ED, SWD, EL, Asian, Black, Hispanic, HPI, Native, White, Non_ED, Non_EL, Non_SWD, Super
-  ) %>% 
+    n_de, ready_graduate, BHN, ED, SWD, EL, Asian, Black, Hispanic, HPI, Native, White
+  ) %>%
+  mutate_at(vars(BHN:White), .funs = as.numeric) %>% 
   group_split(system) %>%
   walk2(
     .x = .,

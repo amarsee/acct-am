@@ -130,6 +130,26 @@ compare_rg_and_grad <- bind_rows(
 ) %>% 
   arrange(system, school, subgroup, person)
 
+# ============ Compare Grad Rate AMOs =================
+school_targets_grad_am <- read_csv("N:/ORP_accountability/projects/2021_amo/grad_targets_school.csv")
+school_targets_grad_sm <- read_csv("N:/ORP_accountability/projects/Sophie/Grad Rate 2020/gradrates_school_SM.csv")
+
+compare_targets_school <- bind_rows(
+  setdiff(school_targets_grad_am, school_targets_grad_sm) %>% mutate(person = 'AM'),
+  setdiff(school_targets_grad_sm, school_targets_grad_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(system, school, subgroup, person)
+
+district_targets_grad_am <- read_csv("N:/ORP_accountability/projects/2021_amo/grad_targets_district.csv")
+district_targets_grad_sm <- read_csv("N:/ORP_accountability/projects/Sophie/Grad Rate 2020/gradrates_district_SM.csv")
+
+compare_targets_district <- bind_rows(
+  setdiff(district_targets_grad_am, district_targets_grad_sm) %>% mutate(person = 'AM'),
+  setdiff(district_targets_grad_sm, district_targets_grad_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(system, subgroup, person)
+
+
 
 
 
