@@ -149,7 +149,42 @@ compare_targets_district <- bind_rows(
 ) %>% 
   arrange(system, subgroup, person)
 
+# ====================== Compare ELPA =======================
+student_elpa_am <- read_csv("N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_student.csv")
+student_elpa_sm <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_grad_student_sm.csv")
 
+compare_student <- bind_rows(
+  setdiff(student_elpa_am, student_elpa_sm) %>% mutate(person = 'AM'),
+  setdiff(student_elpa_sm, student_elpa_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(student_id, system, school, person)
+
+state_elpa_am <- read_csv("N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_state.csv")
+state_elpa_sm <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_grad_state_sm.csv")
+
+compare_state <- bind_rows(
+  setdiff(state_elpa_am, state_elpa_sm) %>% mutate(person = 'AM'),
+  setdiff(state_elpa_sm, state_elpa_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(subgroup, person)
+
+dist_elpa_am <- read_csv("N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_district.csv")
+dist_elpa_sm <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_grad_district_sm.csv")
+
+compare_district <- bind_rows(
+  setdiff(dist_elpa_am, dist_elpa_sm) %>% mutate(person = 'AM'),
+  setdiff(dist_elpa_sm, dist_elpa_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(system, subgroup, person)
+
+school_elpa_am <- read_csv("N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_school.csv")
+school_elpa_sm <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_grad_school_sm.csv")
+
+compare_school <- bind_rows(
+  setdiff(school_elpa_am, school_elpa_sm) %>% mutate(person = 'AM'),
+  setdiff(school_elpa_sm, school_elpa_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(system, school, subgroup, person)
 
 
 

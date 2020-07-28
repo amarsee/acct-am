@@ -243,7 +243,7 @@ daily_att_rf_nest <- daily_attendance_w_features %>%
 current_schools <- read_csv('N:/ORP_accountability/data/2020_final_accountability_files/names.csv')
 
 for (system_school in unique(paste0(daily_attendance_w_features$system, '/', daily_attendance_w_features$school))) {
-  
+  # Stopped at 792/2626
   if (system_school %in% paste0(current_schools$system, '/', current_schools$school)) {
     system_no <- as.numeric(gsub('/.+', '', system_school))
     school_no <- as.numeric(gsub('.+/', '', system_school))

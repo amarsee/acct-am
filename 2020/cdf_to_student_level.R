@@ -604,7 +604,7 @@ output <- dedup %>%
 
 
 # Write out student level
-write_csv(output, 'N:/ORP_accountability/projects/2020_student_level_file/2020_student_level_file.csv')
+write_csv(output, 'N:/ORP_accountability/projects/2020_student_level_file/2020_student_level_file.csv', na = '')
 
 # compare student level files
 alex_comp <- read_csv("N:\\ORP_accountability\\projects\\2019_student_level_file\\2019_student_level_file.csv")

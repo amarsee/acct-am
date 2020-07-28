@@ -5,9 +5,9 @@ library(tidyverse)
 library(janitor)
 library(readstata13)
 
-demo_combined <- read_csv("N:/TNReady/2019-20/spring/demographics/student_demographics_20200527.csv")
+demo_combined <- read_csv("N:/TNReady/2019-20/spring/demographics/student_demographics_20200707.csv")
 
-demos_filtered_2019 <- demo_combined %>% 
+demos_filtered <- demo_combined %>% 
   transmute(
     system = district_no,
     school = school_no,
@@ -58,6 +58,7 @@ dist_names <- school_names %>%
   select(system, system_name) %>% 
   distinct()
 
+# Need the prior year of ELPA data for one and two year growth standard
 prior <- read_csv("N:/ORP_accountability/data/2019_ELPA/wida_growth_standard_student.csv",
                   col_types = cols(.default = "c")) %>% #,
   clean_names() %>%
@@ -67,10 +68,12 @@ prior <- read_csv("N:/ORP_accountability/data/2019_ELPA/wida_growth_standard_stu
 
 
 # elpa <- read.dta13('N:/Assessment_Data Returns/ACCESS for ELs and ALT/2017-18/WIDA/20180706_WIDA_AccessResults_SY2017-18_Whalen_v3.dta') %>% 
-elpa <- read_csv("N:/Assessment_Data Returns/ACCESS for ELs and ALT/2018-19/TN_Summative_StudRR_File_2019-06-07.csv",
+elpa <- read_csv("N:/TNReady/2019-20/WIDA/TN_Summative_StudRR_File_2020-07-02.csv",
                  col_types = cols(.default = "c")) %>% 
   clean_names() %>% 
+  # 46,634
   filter(reported_mode != 'Mixed') %>% 
+  # 46,630
   filter(
     reported_mode != "Mixed",
     !(grade == 0 & cluster_listening != 0 & !is.na(cluster_listening)),
@@ -82,8 +85,10 @@ elpa <- read_csv("N:/Assessment_Data Returns/ACCESS for ELs and ALT/2018-19/TN_S
     !(grade %in% 6:8 & cluster_listening != 6 & !is.na(cluster_listening)),
     !(grade %in% 9:12 & cluster_listening != 9 & !is.na(cluster_listening))
   ) %>%
+  # 46,615
+  # filter(!is.na(state_student_id), !is.na(composite_overall_scale_score)) %>%
   transmute(
-    student_id = as.numeric(state_student_id),
+    student_id = as.numeric(state_student_id), # NAs introduced due to 3 students having characters in the id
     system = as.integer(str_sub(district_number, 3, 5)),
     school = school_number,
     grade = as.integer(grade),
@@ -105,17 +110,21 @@ elpa <- read_csv("N:/Assessment_Data Returns/ACCESS for ELs and ALT/2018-19/TN_S
     prof_composite = composite_overall_proficiency_level
   ) %>%
   mutate_at(vars(starts_with("scale_score_"), starts_with("prof_"), school, system), as.numeric) %>%
-  filter(!is.na(student_id), !is.na(scale_score_composite)) %>% 
-  mutate(
-    school = if_else(system == 792 & school == 2596, 2598, school)
-  )
+  # 7 have bad IDs, 6 missing and 1 with characters
+  # 3 in system 40 are missing school numbers they have WWWW for the school (4886055, 4974901, 4552200)
+  # 13,073 have null composite scale score
+  # 33,536 at the end
+  filter(!is.na(student_id), !is.na(scale_score_composite), !is.na(school)) #%>%
+  # mutate(
+  #   school = if_else(system == 792 & school == 2596, 2598, school)
+  # )
 
 subgroups <- c("American Indian or Alaska Native", "Asian", "Black or African American", "Black/Hispanic/Native American",
                "Economically Disadvantaged", "English Learners", "Hispanic", 
                "Native Hawaiian or Other Pacific Islander", "Students with Disabilities", "White")
 
 elpa_total <- elpa %>% 
-  # deduplicate
+  # deduplicate - drops all duplicates and leaves 33,531 records
   group_by(student_id) %>% 
   # keep max composite first
   mutate(student_max_comp = max(scale_score_composite, na.rm = TRUE)) %>% 
@@ -127,8 +136,10 @@ elpa_total <- elpa %>%
   left_join(prior, by = 'student_id') %>% 
   mutate(
     exit_denom = if_else(!is.na(prof_composite) & !is.na(prof_literacy), 1, 0),
+    # valid_test = if_else(!is.na(prof_composite) & !is.na(prof_literacy), 1, 0),
     # TN WIDA exit criteria
-    exit = if_else(prof_literacy >= 4 & prof_composite >= 4.2, 1, 0),
+    exit = if_else(prof_literacy >= 4.2 & prof_composite >= 4.4, 1, 0), # 2019-20 exit criteria
+    # met_exit_criteria = if_else(prof_literacy >= 4.2 & prof_composite >= 4.4, 1, 0), # 2019-20 exit criteria
     growth_standard_denom = if_else(!is.na(prof_composite) & !is.na(prof_composite_prior), 1,0),
     growth_standard_1yr = case_when(
       is.na(prof_composite_prior) ~ NA_real_,
@@ -174,7 +185,7 @@ elpa_total <- elpa %>%
 
 elpa_with_demo <- elpa_total %>% 
   mutate(school = as.numeric(school)) %>% 
-  left_join(demos_filtered_2019 %>% rename(student_id = unique_student_id), by = c('student_id', 'system', 'school')) %>% 
+  left_join(demos_filtered %>% rename(student_id = unique_student_id), by = c('student_id', 'system', 'school')) %>% 
   mutate(el = 1) # %>% 
 # replace_na(list(ed=0, swd=0))
 
@@ -204,8 +215,8 @@ state_level <- out_df %>%
     n_exit = sum(exit, na.rm = TRUE),
     growth_standard_denom = sum(growth_standard_denom, na.rm=TRUE), 
     n_met_growth_standard = sum(met_growth_standard, na.rm=TRUE),
-    composite_avg = round(mean(prof_composite, na.rm=TRUE)+1e-5,1),
-    literacy_avg = round(mean(prof_literacy, na.rm=TRUE)+1e-5,1)# ,
+    composite_average = round(mean(prof_composite, na.rm=TRUE)+1e-5,1),
+    literacy_average = round(mean(prof_literacy, na.rm=TRUE)+1e-5,1)# ,
     # avg_composite_growth = round(mean(growth_standard_1yr, na.rm=TRUE)+1e-5,1)
   ) %>% 
   ungroup() %>% 
@@ -217,12 +228,19 @@ state_level <- out_df %>%
     # year = 2019,
     # system = 0,
     # system_name = 'State of Tennessee',
-    subgroup, exit_denom, n_exit, pct_exit, growth_standard_denom, 
-    n_met_growth_standard,pct_met_growth_standard, literacy_avg, composite_avg # , avg_composite_growth
+    subgroup, 
+    exit_denom, 
+    # valid_tests = exit_denom,
+    n_exit, 
+    # n_met_exit_criteria = n_exit,
+    pct_exit, 
+    # pct_met_exit_criteria = pct_exit,
+    growth_standard_denom, 
+    n_met_growth_standard,pct_met_growth_standard, literacy_average, composite_average # , avg_composite_growth
   )
 
 # write state level csv
-write_csv(state_level, "N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_state_AM.csv")
+write_csv(state_level, "N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_state_AM.csv", na = '')
 
 # ===================================== District Level =====================================
 
@@ -233,8 +251,8 @@ district_level <- out_df %>%
     n_exit = sum(exit, na.rm = TRUE),
     growth_standard_denom = sum(growth_standard_denom, na.rm=TRUE), 
     n_met_growth_standard = sum(met_growth_standard, na.rm=TRUE),
-    composite_avg = round(mean(prof_composite, na.rm=TRUE)+1e-5,1),
-    literacy_avg = round(mean(prof_literacy, na.rm=TRUE)+1e-5,1)# ,
+    composite_average = round(mean(prof_composite, na.rm=TRUE)+1e-5,1),
+    literacy_average = round(mean(prof_literacy, na.rm=TRUE)+1e-5,1)# ,
     # avg_composite_growth = round(mean(growth_standard_1yr, na.rm=TRUE)+1e-5,1)
   ) %>% 
   ungroup() %>% 
@@ -246,15 +264,22 @@ district_level <- out_df %>%
   transmute(
     # year = 2019,
     system, system_name,
-    subgroup, exit_denom, n_exit, pct_exit, growth_standard_denom, 
+    subgroup, 
+    exit_denom, 
+    # valid_tests = exit_denom,
+    n_exit, 
+    # n_met_exit_criteria = n_exit,
+    pct_exit, 
+    # pct_met_exit_criteria = pct_exit,
+    growth_standard_denom, 
     n_met_growth_standard,
     pct_met_growth_standard = if_else(is.na(pct_met_growth_standard), NA_real_, pct_met_growth_standard), 
-    literacy_avg, composite_avg# , avg_composite_growth
+    literacy_average, composite_average# , avg_composite_growth
   ) %>% 
   arrange(system, subgroup)
 
 # write state level csv
-write_csv(district_level, "N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_district_AM.csv")
+write_csv(district_level, "N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_district_AM.csv", na = '')
 
 # ===================================== School Level ===============================================
 
@@ -265,8 +290,8 @@ school_level <- out_df %>%
     n_exit = sum(exit, na.rm = TRUE),
     growth_standard_denom = sum(growth_standard_denom, na.rm=TRUE), 
     n_met_growth_standard = sum(met_growth_standard, na.rm=TRUE),
-    composite_avg = round(mean(prof_composite, na.rm=TRUE)+1e-5,1),
-    literacy_avg = round(mean(prof_literacy, na.rm=TRUE)+1e-5,1)# ,
+    composite_average = round(mean(prof_composite, na.rm=TRUE)+1e-5,1),
+    literacy_average = round(mean(prof_literacy, na.rm=TRUE)+1e-5,1)# ,
     # avg_composite_growth = round(mean(growth_standard_1yr, na.rm=TRUE)+1e-5,1)
   ) %>% 
   ungroup() %>% 
@@ -278,15 +303,22 @@ school_level <- out_df %>%
   transmute(
     # year = 2019,
     system, system_name, school, school_name,
-    subgroup, exit_denom, n_exit, pct_exit, growth_standard_denom, 
+    subgroup, 
+    exit_denom,
+    #valid_tests = exit_denom,
+    n_exit,
+    # n_met_exit_criteria = n_exit,
+    pct_exit, 
+    # pct_met_exit_criteria = pct_exit,
+    growth_standard_denom, 
     n_met_growth_standard,
     pct_met_growth_standard = if_else(is.na(pct_met_growth_standard), NA_real_, pct_met_growth_standard), 
-    literacy_avg, composite_avg# , avg_composite_growth
+    literacy_average, composite_average# , avg_composite_growth
   ) %>% 
   arrange(system, school, subgroup)
 
 # write school level csv
-write_csv(school_level, "N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_school_AM.csv")
+write_csv(school_level, "N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_school_AM.csv", na = '')
 
 # ====================================== Student Level ==========================================
 
@@ -307,12 +339,16 @@ elpa_student_level <- elpa_with_demo %>%
             EL = 1,
             prof_composite_19 = prof_composite_prior,
             prof_composite_18 = prof_composite_two_years_prior,
-            exit_denom, exit, growth_standard_denom, growth_standard_1yr, growth_standard_2yr,
+            exit_denom, 
+            # valid_test = exit_denom,
+            exit, 
+            # met_exit_criteria = exit,
+            growth_standard_denom, growth_standard_1yr, growth_standard_2yr,
             met_growth_standard
   )
 
 # write csv
-write_csv(elpa_student_level, "N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_student_AM.csv")
+write_csv(elpa_student_level, "N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_student_AM.csv", na = '')
 
 
 # =================== Split Files ======================

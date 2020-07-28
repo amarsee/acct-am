@@ -79,7 +79,7 @@ write_csv(district_abs %>% suppress_abs(), "N:/ORP_accountability/data/2020_chro
 write_csv(school_abs %>% suppress_abs(threshold = 5), "N:/ORP_accountability/data/2020_chronic_absenteeism/school_chronic_absenteeism_suppressed.csv", na = '')
 
 
-# ================== Ready Grade =====================
+# ================== Ready Grad =====================
 suppress_rg <- function(file, threshold = 1) {
   
   file %>%
@@ -108,10 +108,44 @@ write_csv(state, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_
 write_csv(district, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_district_suppressed.csv", na = '')
 write_csv(school, "N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_school_suppressed.csv", na = '')
 
+# ============== ELPA =====================
+suppress_elpa <- function(file, threshold = 1) {
+  
+  file %>%
+    mutate_at(
+      .vars = vars(n_exit, pct_exit),
+      # .vars = vars(n_met_exit_criteria, pct_met_exit_criteria),
+      .funs = ~ if_else(pct_exit < threshold | pct_exit > (100 - threshold), "**", as.character(.))
+      # .funs = ~ if_else(pct_met_exit_criteria < threshold | pct_met_exit_criteria > (100 - threshold), "**", as.character(.))
+    ) %>%
+    mutate_at(
+      .vars = vars(n_exit, pct_exit, composite_average, literacy_average),
+      # .vars = vars(n_met_exit_criteria, pct_met_exit_criteria, composite_average, literacy_average),
+      .funs = ~ if_else(exit_denom < 10, "*", as.character(.))
+      # .funs = ~ if_else(valid_tests < 10, "*", as.character(.))
+    ) %>%
+    mutate_at(
+      .vars = vars(n_met_growth_standard, pct_met_growth_standard),
+      .funs = ~ if_else(pct_met_growth_standard < threshold | pct_met_growth_standard > (100 - threshold), "**", as.character(.))
+    ) %>%
+    mutate_at(
+      .vars = vars(n_met_growth_standard, pct_met_growth_standard),
+      .funs = ~ if_else(growth_standard_denom < 10, "*", as.character(.))
+    )
+  
+}
 
 
+state <- read_csv("N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_state.csv") %>% 
+  suppress_elpa()
+district <- read_csv("N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_district.csv") %>% 
+  suppress_elpa()
+school <- read_csv("N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_school.csv") %>% 
+  suppress_elpa(threshold = 5)
 
-
+write_csv(state, "N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_state_suppressed.csv", na = '')
+write_csv(district, "N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_district_suppressed.csv", na = '')
+write_csv(school, "N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_school_suppressed.csv", na = '')
 
 
 
