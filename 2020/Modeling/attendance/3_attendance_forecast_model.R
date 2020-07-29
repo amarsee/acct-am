@@ -247,33 +247,35 @@ for (system_school in unique(paste0(daily_attendance_w_features$system, '/', dai
   if (system_school %in% paste0(current_schools$system, '/', current_schools$school)) {
     system_no <- as.numeric(gsub('/.+', '', system_school))
     school_no <- as.numeric(gsub('.+/', '', system_school))
-    
-    school_name <- gsub(' ', '_', (current_schools %>% 
-      filter(system == system_no, school == school_no))$school_name)
-    school_name <- gsub('/', '_', school_name)
-    
-    print(system_school)
-    
-    school_attendance <- daily_attendance_w_features %>%
-      filter(system == system_no, school == school_no, id_date <= as.Date('2020-03-02')) %>%
-      mutate_at(
-        .vars = c('day_of_week', 'cal_month'),
-        .funs = ~ as.factor(.)
-      ) %>%
-      select(attendance_rate:cal_month)
-    
-    att_model <- ranger(
-      formula = attendance_rate ~ .,
-      data = school_attendance,
-      mtry = 6,
-      min.node.size = 5,
-      splitrule = 'extratrees',
-      sample.fraction = 0.632,
-      importance = 'impurity'
-    )
-    
-    saveRDS(att_model, paste0("N:/ORP_accountability/projects/Andrew/acct-am/2020/Modeling/attendance/data/Models/", 
-                              system_no, '-', school_no, '_', school_name, '_attendance_model.rds'))
+    if (system_no >= 792) {
+      school_name <- gsub(' ', '_', (current_schools %>% 
+                                       filter(system == system_no, school == school_no))$school_name)
+      school_name <- gsub('/', '_', school_name)
+      
+      print(system_school)
+      
+      school_attendance <- daily_attendance_w_features %>%
+        filter(system == system_no, school == school_no, id_date <= as.Date('2020-03-02')) %>%
+        mutate_at(
+          .vars = c('day_of_week', 'cal_month'),
+          .funs = ~ as.factor(.)
+        ) %>%
+        select(attendance_rate:cal_month)
+      
+      att_model <- ranger(
+        formula = attendance_rate ~ .,
+        data = school_attendance,
+        mtry = 6,
+        min.node.size = 5,
+        splitrule = 'extratrees',
+        sample.fraction = 0.632,
+        importance = 'impurity'
+      )
+      
+      saveRDS(att_model, paste0("N:/ORP_accountability/projects/Andrew/acct-am/2020/Modeling/attendance/data/Models/", 
+                                system_no, '-', school_no, '_', school_name, '_attendance_model.rds'))
+    }
+
   }
   
 }
