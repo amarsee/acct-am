@@ -104,18 +104,56 @@ daily_pull <- dbGetQuery(con,
                               ABS_AGG.system = ENR.system and
                               ABS_AGG.school = ENR.school and
                               ABS_AGG.id_date =  ENR.id_date
-                          WHERE ABS_AGG.id_date < SYSDATE
+                          WHERE ABS_AGG.id_date < TRUNC(SYSDATE, 'DD')
                              ")) %>%
   as_tibble() %>% 
   clean_names() %>% 
   arrange(system, school, id_date)
 
 
-count <- 0
-for (file_name in list.files('Modeling/attendance/data/Models/', full.names = TRUE)) {
-  model <- readRDS(file_name)
-  count <- count + 1
-  print(count)
-} 
+daily_attendance_w_features <- daily_pull %>% 
+  mutate(id_date = as.Date(id_date)) %>% 
+  group_by(school_year, system, school) %>% 
+  mutate(
+    school_day = row_number(),
+    att_rate_previous_day = data.table::shift(attendance_rate),
+    att_rate_5_day = round(data.table::frollmean(attendance_rate, n = 5, fill = NA), 1),
+    att_rate_10_day = round(data.table::frollmean(attendance_rate, n = 10, fill = NA), 1),
+    att_rate_20_day = round(data.table::frollmean(attendance_rate, n = 20, fill = NA), 1),
+    att_rate_previous_day = if_else(
+      is.na(att_rate_previous_day),
+      attendance_rate,
+      att_rate_previous_day
+    ),
+    att_rate_5_day = if_else(
+      is.na(att_rate_5_day),
+      round(cumsum(attendance_rate)/school_day, 1),
+      att_rate_5_day
+    ),
+    att_rate_10_day = if_else(
+      is.na(att_rate_10_day),
+      round(cumsum(attendance_rate)/school_day, 1),
+      att_rate_10_day
+    ),
+    att_rate_20_day = if_else(
+      is.na(att_rate_20_day),
+      round(cumsum(attendance_rate)/school_day, 1),
+      att_rate_20_day
+    )
+  ) %>% 
+  ungroup() %>% 
+  mutate(
+    day_of_week = weekdays(id_date),
+    cal_month = months(id_date)
+  ) 
 
+enrollment_2020 <- dbGetQuery(con,
+                              str_c("
+                                    SELECT *
+                                    FROM ISP
+                                    WHERE school_year = 2020
+                                      AND begin_date < NVL(end_date, SYSDATE + 40)
+                                    ")) %>%
+  as_tibble() %>% 
+  clean_names()
 
