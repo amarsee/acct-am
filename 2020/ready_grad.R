@@ -180,8 +180,10 @@ write_csv(state_level_ready_grad, "N:/ORP_accountability/projects/2020_ready_gra
 # =================== Split Files ======================
 # Split district file
 district_numbers <- sort(unique(ready_grad_student_level_total$system))
+district_numbers <- c(51, 500) # Updating Alcoa and Lawrence
 
 district_level_ready_grad %>%
+  filter(system %in% c(51, 500)) %>% 
   group_split(system) %>%
   walk2(
     .x = .,
@@ -196,6 +198,7 @@ district_level_ready_grad %>%
 
 # Split school file
 school_level_ready_grad %>%
+  filter(system %in% c(51, 500)) %>%
   group_split(system) %>%
   walk2(
     .x = .,
@@ -209,6 +212,7 @@ school_level_ready_grad %>%
 # Split student level file
 ready_grad_student_level_total %>%
   filter(!is.na(system), !is.na(school)) %>% 
+  filter(system %in% c(51, 500)) %>%
   rename(
     EL = elb,
     ED = econ_dis,

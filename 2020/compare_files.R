@@ -74,10 +74,17 @@ student_ready_grad_am <- read_csv("N:/ORP_accountability/projects/2020_ready_gra
                                   col_types = 'icccciccciiciiiiiiiiiiiiiiiiiiic')
 student_ready_grad_sm <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_grad_student_sm.csv",
                                   col_types = 'icccciccciiciiiiiiiiiiiiiiiiiiic')
-
+student_original <- read_csv("N:/ORP_accountability/projects/2020_ready_graduate/Data/Previous/Ready Grad 07242020 Release/ready_graduate_student_level_07242020.csv",
+                                  col_types = 'icccciccciiciiiiiiiiiiiiiiiiiiic')
 compare_student <- bind_rows(
   setdiff(student_ready_grad_am, student_ready_grad_sm) %>% mutate(person = 'AM'),
   setdiff(student_ready_grad_sm, student_ready_grad_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(student_key, district_no, school_no, person)
+
+compare_student_new <- bind_rows(
+  setdiff(student_ready_grad_am, student_original) %>% mutate(person = 'New'),
+  setdiff(student_original, student_ready_grad_am) %>% mutate(person = 'Original')
 ) %>% 
   arrange(student_key, district_no, school_no, person)
 
