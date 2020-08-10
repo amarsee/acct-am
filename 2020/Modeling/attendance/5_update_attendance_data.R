@@ -147,6 +147,57 @@ daily_attendance_w_features <- daily_pull %>%
     cal_month = months(id_date)
   ) 
 
+# ======================= Student Daily Absences ==========================
+student_daily_absences <- dbGetQuery(con,
+                         str_c("
+                               SELECT 
+                             TO_CHAR(SCAL.SCHOOL_YEAR) || '-' || TO_CHAR(SCAL.SCHOOL_YEAR+1) AS SCHOOL_YEAR,
+                               S.district_no as system,
+                              S.school_no as school,
+                               SCAL.SCHOOL_BU_ID,
+                               SCAL.ID_DATE,
+                              stu_absent.student_key,
+                              stu_absent.first_name,
+                              stu_absent.middle_name,
+                               stu_absent.last_name,
+                               stu_absent.attendance_type
+                               
+                               
+                               FROM (SELECT DISTINCT 
+                               SCAL_ID_DAYS.school_bu_id,
+                               SCAL_ID_DAYS.school_year,
+                               SCAL_ID_DAYS.id_date
+                               FROM SCAL_ID_DAYS
+                               WHERE SCAL_ID_DAYS.school_year = ",2020,") SCAL
+                               LEFT JOIN (
+                               SELECT DISTINCT
+                               ISP.SCHOOL_BU_ID,
+                              isp.primary_district_id as system,
+                              isp.primary_school_id as school,
+                              isp.first_name,
+                              isp.middle_name,
+                              isp.last_name,
+                               student_absences.attendance_date,
+                               student_absences.attendance_type,
+                               isp.student_key
+                               FROM ISP
+                               --LEFT JOIN EIS_MGR.INSTRUCTIONAL_GRADE IG ON ISP.ISP_ID = IG.ISP_ID
+                               LEFT JOIN student_absences ON isp.isp_id = student_absences.isp_id
+                               WHERE isp.school_year = ", 2020,"
+                               AND isp.type_of_service = 'P'
+                               ---AND IG.ASSIGNMENT NOT IN ('P3', 'P4')
+                               AND attendance_type NOT IN ('D', 'P')
+                                AND isp.student_key = 3194068
+                               ) stu_absent ON scal.school_bu_id = stu_absent.school_bu_id
+                                              AND scal.id_date = stu_absent.attendance_date
+                                LEFT JOIN school S ON scal.school_bu_id = S.school_bu_id
+                                WHERE SCAL.id_date < TRUNC(SYSDATE, 'DD')
+                                    
+                               ")) %>%
+  as_tibble() %>% 
+  clean_names() %>% 
+  arrange(system, school, student_key, id_date)
+
 enrollment_2020 <- dbGetQuery(con,
                               str_c("
                                     SELECT *
