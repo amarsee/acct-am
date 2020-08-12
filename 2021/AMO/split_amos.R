@@ -27,8 +27,10 @@ school_combined <- bind_rows(school_success, school_grad_rate, school_ready_grad
   arrange(system, school, indicator)
 
 district_numbers <- sort(unique(school_combined$system))
+district_numbers <- c(51, 500)
 # Split School Level
 school_combined %>%
+  filter(system %in% c(51, 500)) %>% 
   split(., .$system) %>%
   walk2(
     .x = .,
