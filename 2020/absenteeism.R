@@ -59,7 +59,7 @@ con <- dbConnect(
 #                          AND SCAL.SCHOOL_YEAR = ISP.SCHOOL_YEAR
 #                          AND SCAL.INSTRUCTIONAL_PROGRAM_NUM = ISP.INSTRUCTIONAL_PROGRAM_NUM
 #                          AND SCAL.ID_DATE >= ISP.BEGIN_DATE
-#                          AND SCAL.ID_DATE <= NVL(ISP.END_DATE, DATE '2020-03-02')
+#                          AND SCAL.ID_DATE <= LEAST(NVL(ISP.END_DATE, DATE '2020-03-02'), DATE '2020-03-02')
 #                          ) AS ISP_DAYS
 #                          FROM ISP
 #                          JOIN EIS_MGR.STUDENT_NEW STU ON STU.STUDENT_KEY = ISP.STUDENT_KEY
@@ -77,14 +77,14 @@ con <- dbConnect(
 #                          JOIN EIS_MGR.STUDENT_ABSENCES SA  ON ISP.ISP_ID = SA.ISP_ID
 #                          WHERE ISP.SCHOOL_YEAR = EXTRACT(YEAR FROM SYSDATE) - 1
 #                          AND SA.ATTENDANCE_DATE >= ISP.BEGIN_DATE
-#                          AND (SA.ATTENDANCE_DATE <= NVL(ISP.END_DATE, DATE '2020-03-02') ) --DATE '2020-03-02'
+#                          AND (SA.ATTENDANCE_DATE <= LEAST(NVL(ISP.END_DATE, DATE '2020-03-02'), DATE '2020-03-02') ) --DATE '2020-03-02'
 #                          GROUP BY ISP.ISP_ID
 #                          ) TRUANTS ON ISP.ISP_ID = TRUANTS.ISP_ID
 #                          WHERE ISP.SCHOOL_YEAR = EXTRACT(YEAR FROM SYSDATE) - 1
 #                          AND IG.ASSIGNMENT NOT IN ('P3', 'P4')
 #                          AND ISP.TYPE_OF_SERVICE = 'P'
 #                          ORDER BY S.DISTRICT_NO, S.SCHOOL_NO, ISP.LAST_NAME, ISP.FIRST_NAME") %>%
-#   as.tbl() %>%
+#   as_tibble() %>%
 #   clean_names() %>%
 #   mutate_at(
 #     .vars = c("instructional_program_num", "district_no", "school_no", "student_key", "isp_days", "cnt_total"),
@@ -101,7 +101,7 @@ con <- dbConnect(
 # # Export pull so we don't have to run it each time
 # write_csv(attendance, str_c("N:/ORP_accountability/data/2020_chronic_absenteeism/absenteeism_pull_", format(Sys.Date(), "%b%d"), ".csv"), na = '')
 
-attendance <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/absenteeism_pull_Jun16.csv")
+attendance <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/absenteeism_pull_Aug13.csv")
 
 # Pull instructional calendar days from database
 instructional_days <- dbGetQuery(con,
@@ -163,6 +163,7 @@ absenteeism <- attendance %>%
   # Start with 1,181,433 records
   filter(grade %in% c("K", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")) %>%
   mutate(count_total = if_else(is.na(cnt_total), 0, cnt_total)) %>%
+  distinct() %>% 
   # For students with same system, school, student ID, enrollment dates,
   # take maximum instructional program days
   # 1,181,433
@@ -170,6 +171,7 @@ absenteeism <- attendance %>%
   group_by(system, school, student_key, grade, begin_date, end_date) %>%
   mutate(count = n(), temp = max(isp_days)) %>%
   filter(count == 1 | isp_days == temp) %>%
+  ungroup() %>% 
   # For students with same system, school, student ID, enrollment dates, instructional program days,
   # take maximum number of absences
   # 1,181,430
@@ -177,6 +179,11 @@ absenteeism <- attendance %>%
   group_by(system, school, student_key, grade, begin_date, end_date, isp_days) %>%
   mutate(count = n(), temp = max(count_total)) %>%
   filter(count == 1 | count_total == temp) %>%
+  ungroup() %>% 
+  # group_by(system, school, student_key, grade, isp_days) %>%
+  # mutate(count = n(), temp = max(count_total)) %>%
+  # filter(count == 1 | count_total == temp) %>%
+  # ungroup() %>%
   # For students with same system, school, student ID, enrollment dates, instructional program days, absences,
   # take maximum instructional program number
   # 1,181,430 
@@ -184,12 +191,14 @@ absenteeism <- attendance %>%
   group_by(system, school, student_key, grade, begin_date, end_date, isp_days, count_total) %>%
   mutate(count = n(), temp = max(instructional_program_num)) %>%
   filter(count == 1 | instructional_program_num == temp) %>%
+  ungroup() %>% 
   # Drop duplicates on system, school, student ID, enrollment dates, instructional program days, absences, instructional program
   # 1,178,334
   # 3,096 records dropped
   group_by(system, school, student_key, grade, begin_date, end_date, isp_days, count_total, instructional_program_num) %>%
   mutate(count = 1, temp = cumsum(count)) %>%
   filter(temp == 1) %>%
+  ungroup() %>% 
   # dedup by grade? 
   # 1,177,696
   # Drops 638 records
@@ -217,7 +226,8 @@ absenteeism <- attendance %>%
     chronic_absence = as.integer(n_absences/isp_days >= 0.1),
     All = TRUE
   ) %>%
-  left_join(demographics, by = c("system", "school", "student_key"))
+  left_join(demographics, by = c("system", "school", "student_key")) %>% 
+  filter(!(system == 792 & school == 8275))
 
 sch_names <- read_csv('N:/ORP_accountability/data/2020_final_accountability_files/names.csv')
 
