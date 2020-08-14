@@ -42,6 +42,7 @@ con <- dbConnect(
 #                          S.SCHOOL_BU_ID,
 #                          D.DISTRICT_BU_ID,
 #                          NVL (IG.ASSIGNMENT, ' ') AS GRADE,
+#                         --ig.ig_begin_date,
 #                          DECODE(STU.ETHNICITY,'H','Hispanic','Non Hispanic') ETHNICITY,
 #                          STU.RACE_I,
 #                          STU.RACE_A,
@@ -91,7 +92,8 @@ con <- dbConnect(
 #     .f = as.numeric
 #   ) %>%
 #   select(
-#     instructional_program_num, system = district_no, school = school_no, grade, student_key,
+#     instructional_program_num, system = district_no, school = school_no, grade, #ig_begin_date
+#     student_key,
 #     first_name, middle_name, last_name,
 #     gender, ethnicity, race_i, race_a,
 #     race_p, race_b, race_w,
@@ -104,25 +106,25 @@ con <- dbConnect(
 attendance <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/absenteeism_pull_Aug13.csv")
 
 # Pull instructional calendar days from database
-instructional_days <- dbGetQuery(con,
-    "SELECT
-    SCAL.SCHOOL_BU_ID,
-    SCAL.SCHOOL_YEAR AS YEAR,
-    D.DISTRICT_NAME AS SYSTEM_NAME,
-    D.DISTRICT_NO AS SYSTEM,
-    S.SCHOOL_NAME,
-    S.SCHOOL_NO AS SCHOOL,
-    COUNT(DISTINCT SCAL.ID_DATE) AS INSTRUCTIONAL_DAYS
-    FROM EIS_MGR.SCAL_ID_DAYS SCAL
-    JOIN EIS_MGR.SCHOOL S ON SCAL.SCHOOL_BU_ID = S.SCHOOL_BU_ID
-    JOIN EIS_MGR.DISTRICT D ON S.DISTRICT_NO = D.DISTRICT_NO
-    WHERE SCHOOL_YEAR = EXTRACT(YEAR FROM SYSDATE) - 1
-        AND SCAL.ID_DATE <= DATE '2020-03-02'
-    GROUP BY SCAL.SCHOOL_BU_ID, SCAL.SCHOOL_YEAR, D.DISTRICT_NAME, D.DISTRICT_NO, S.SCHOOL_NAME, S.SCHOOL_NO
-    ORDER BY SCAL.SCHOOL_BU_ID"
-) %>%
-    as_tibble() %>%
-    clean_names()
+# instructional_days <- dbGetQuery(con,
+#     "SELECT
+#     SCAL.SCHOOL_BU_ID,
+#     SCAL.SCHOOL_YEAR AS YEAR,
+#     D.DISTRICT_NAME AS SYSTEM_NAME,
+#     D.DISTRICT_NO AS SYSTEM,
+#     S.SCHOOL_NAME,
+#     S.SCHOOL_NO AS SCHOOL,
+#     COUNT(DISTINCT SCAL.ID_DATE) AS INSTRUCTIONAL_DAYS
+#     FROM EIS_MGR.SCAL_ID_DAYS SCAL
+#     JOIN EIS_MGR.SCHOOL S ON SCAL.SCHOOL_BU_ID = S.SCHOOL_BU_ID
+#     JOIN EIS_MGR.DISTRICT D ON S.DISTRICT_NO = D.DISTRICT_NO
+#     WHERE SCHOOL_YEAR = EXTRACT(YEAR FROM SYSDATE) - 1
+#         AND SCAL.ID_DATE <= DATE '2020-03-02'
+#     GROUP BY SCAL.SCHOOL_BU_ID, SCAL.SCHOOL_YEAR, D.DISTRICT_NAME, D.DISTRICT_NO, S.SCHOOL_NAME, S.SCHOOL_NO
+#     ORDER BY SCAL.SCHOOL_BU_ID"
+# ) %>%
+#     as_tibble() %>%
+#     clean_names()
 # 
 # write_csv(instructional_days, "N:/ORP_accountability/data/2020_chronic_absenteeism/instructional_days_ending_02Mar2020.csv", na = '')
 
@@ -202,9 +204,15 @@ absenteeism <- attendance %>%
   # dedup by grade? 
   # 1,177,696
   # Drops 638 records
-  # group_by(system, school, student_key, begin_date, end_date, isp_days, count_total, instructional_program_num) %>%
-  # mutate(count = n(), temp = max(grade)) %>%
-  # filter(count == 1 | grade == temp) %>%
+  mutate(grade = if_else(grade == 'K', 0, as.numeric(grade))) %>% 
+  group_by(system, school, student_key, begin_date, end_date, isp_days, count_total, instructional_program_num) %>%
+  mutate(count = n(), temp = max(grade)) %>%
+  filter(count == 1 | grade == temp) %>%
+  ungroup() %>% 
+  mutate(grade = case_when(
+    grade == 0 ~ 'K', 
+    grade < 10 ~ paste0('0', as.character(grade)),
+    TRUE ~ as.character(grade))) %>% 
   # Collapse multiple enrollments at the same school
   rename(n_absences = count_total) %>%
   group_by(system, school, grade, student_key) %>%
@@ -505,4 +513,18 @@ dplyr::setdiff(
   arrange(system, school) %>% 
   View()
 
+
+
+
+grades_multiple <- dbGetQuery(con,
+                                 str_c("
+                                SELECT *
+                                FROM instructional_grade
+                                WHERE student_key IN ('", str_flatten(unique(shelby$student_id), "','"),"')
+                                  AND ig_begin_date >= DATE '2019-06-30'
+                                  AND ig_begin_date <= DATE '2020-06-15'
+                                 ")
+) %>%
+  as_tibble() %>%
+  clean_names()
 

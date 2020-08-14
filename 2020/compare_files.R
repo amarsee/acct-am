@@ -8,8 +8,8 @@ state_am <- read_csv('N:/ORP_accountability/data/2020_final_accountability_files
 state_sm <- read_csv('N:/ORP_accountability/data/2020_final_accountability_files/state_assessment_file_SM.csv')
 
 compare_state <- bind_rows(
-  setdiff(state_am, state_sm) %>% mutate(person = 'AM'),
-  setdiff(state_sm, state_am) %>% mutate(person = 'SM')
+  dplyr::setdiff(state_am, state_sm) %>% mutate(person = 'AM'),
+  dplyr::setdiff(state_sm, state_am) %>% mutate(person = 'SM')
 ) %>% 
   arrange(subject, grade, subgroup, person)
 
@@ -17,8 +17,8 @@ district_am <- read_csv('N:/ORP_accountability/data/2020_final_accountability_fi
 district_sm <- read_csv('N:/ORP_accountability/data/2020_final_accountability_files/district_assessment_file_SM.csv')
 
 compare_district <- bind_rows(
-  setdiff(district_am, district_sm) %>% mutate(person = 'AM'),
-  setdiff(district_sm, district_am) %>% mutate(person = 'SM')
+  dplyr::setdiff(district_am, district_sm) %>% mutate(person = 'AM'),
+  dplyr::setdiff(district_sm, district_am) %>% mutate(person = 'SM')
 ) %>% 
   arrange(system, subject, grade, subgroup, person)
 
@@ -32,61 +32,68 @@ compare_school <- bind_rows(
   arrange(system, school, subject, grade, subgroup, person)
 
 # =============== Compare Absenteeism =================================
-student_absenteeism_am <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/student_chronic_absenteeism_Aug13.csv")
-student_absenteeism_sm <- read_csv("N:/ORP_accountability/projects/Sophie/Chronic Absenteeism 2020/student_chronic_absenteeism_Aug13.csv")
-student_absenteeism_old <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/Previous Versions/student_chronic_absenteeism_Jul7.csv")
+student_absenteeism_am <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/student_chronic_absenteeism_Aug14.csv")
+student_absenteeism_sm <- read_csv("N:/ORP_accountability/projects/Sophie/student_absenteeism_Aug14.csv")
+student_absenteeism_old <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/Previous Versions/student_chronic_absenteeism_Aug13.csv")
 
 compare_student <- bind_rows(
-  setdiff(student_absenteeism_am %>% select(-grade), student_absenteeism_sm %>% select(-grade)) %>% mutate(person = 'AM'),
-  setdiff(student_absenteeism_sm %>% select(-grade), student_absenteeism_am %>% select(-grade)) %>% mutate(person = 'SM')
+  dplyr::setdiff(student_absenteeism_am %>% select(-grade), student_absenteeism_sm %>% select(-grade)) %>% mutate(person = 'AM'),
+  dplyr::setdiff(student_absenteeism_sm %>% select(-grade), student_absenteeism_am %>% select(-grade)) %>% mutate(person = 'SM')
 ) %>% 
   arrange(student_id, system, school, person)
 
 compare_student_new <- bind_rows(
-  setdiff(student_absenteeism_am, student_absenteeism_old) %>% mutate(person = 'New'),
-  setdiff(student_absenteeism_old, student_absenteeism_am) %>% mutate(person = 'Old')
+  dplyr::setdiff(student_absenteeism_am, student_absenteeism_old) %>% mutate(person = 'New'),
+  dplyr::setdiff(student_absenteeism_old, student_absenteeism_am) %>% mutate(person = 'Old')
 ) %>% 
   filter(!(system == 792 & school == 8275)) %>% 
   arrange(student_id, system, school, person)
 
-state_absenteeism_am <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/state_chronic_absenteeism_Aug13.csv")
-state_absenteeism_sm <- read_csv("N:/ORP_accountability/projects/Sophie/Chronic Absenteeism 2020/state_chronic_absenteeism_Aug13.csv")
-state_absenteeism_old <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/Previous Versions/state_chronic_absenteeism_Jul7.csv")
+state_absenteeism_am <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/state_chronic_absenteeism_Aug14.csv")
+state_absenteeism_sm <- read_csv("N:/ORP_accountability/projects/Sophie/state_absenteeism_Aug14.csv")
+state_absenteeism_old <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/Previous Versions/state_chronic_absenteeism_Aug13.csv")
 
 compare_state <- bind_rows(
-  setdiff(state_absenteeism_am, state_absenteeism_sm) %>% mutate(person = 'AM'),
-  setdiff(state_absenteeism_sm, state_absenteeism_am) %>% mutate(person = 'SM')
+  dplyr::setdiff(state_absenteeism_am, state_absenteeism_sm) %>% mutate(person = 'AM'),
+  dplyr::setdiff(state_absenteeism_sm, state_absenteeism_am) %>% mutate(person = 'SM')
 ) %>% 
   arrange(subgroup, grade_band, person)
 
 compare_state_new <- bind_rows(
-  setdiff(state_absenteeism_am, state_absenteeism_old) %>% mutate(person = 'New'),
-  setdiff(state_absenteeism_old, state_absenteeism_am) %>% mutate(person = 'Old')
+  dplyr::setdiff(state_absenteeism_am, state_absenteeism_old) %>% mutate(person = 'New'),
+  dplyr::setdiff(state_absenteeism_old, state_absenteeism_am) %>% mutate(person = 'Old')
 ) %>% 
   arrange(subgroup, grade_band, person)
 
-dist_absenteeism_am <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/district_chronic_absenteeism_Aug13.csv")
-dist_absenteeism_sm <- read_csv("N:/ORP_accountability/projects/Sophie/Chronic Absenteeism 2020/district_chronic_absenteeism_Aug13.csv")
-dist_absenteeism_old <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/Previous Versions/district_chronic_absenteeism_Jul7.csv")
+dist_absenteeism_am <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/district_chronic_absenteeism_Aug14.csv")
+dist_absenteeism_sm <- read_csv("N:/ORP_accountability/projects/Sophie/district_absenteeism_Aug14.csv")
+dist_absenteeism_old <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/Previous Versions/district_chronic_absenteeism_Aug13.csv")
 
 compare_district <- bind_rows(
-  setdiff(dist_absenteeism_am, dist_absenteeism_sm) %>% mutate(person = 'AM'),
-  setdiff(dist_absenteeism_sm, dist_absenteeism_am) %>% mutate(person = 'SM')
+  dplyr::setdiff(dist_absenteeism_am, dist_absenteeism_sm) %>% mutate(person = 'AM'),
+  dplyr::setdiff(dist_absenteeism_sm, dist_absenteeism_am) %>% mutate(person = 'SM')
 ) %>% 
   arrange(system, subgroup, grade_band, person)
 
 compare_district_new <- bind_rows(
-  setdiff(dist_absenteeism_am, dist_absenteeism_old) %>% mutate(person = 'New'),
-  setdiff(dist_absenteeism_old, dist_absenteeism_am) %>% mutate(person = 'Old')
+  dplyr::setdiff(dist_absenteeism_am, dist_absenteeism_old) %>% mutate(person = 'New'),
+  dplyr::setdiff(dist_absenteeism_old, dist_absenteeism_am) %>% mutate(person = 'Old')
 ) %>% 
   arrange(system, subgroup, grade_band, person)
 
-school_absenteeism_am <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/school_chronic_absenteeism_Aug13.csv")
-school_absenteeism_sm <- read_csv("N:/ORP_accountability/projects/Sophie/Chronic Absenteeism 2020/school_chronic_absenteeism_Aug13.csv")
+school_absenteeism_am <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/school_chronic_absenteeism_Aug14.csv")
+school_absenteeism_sm <- read_csv("N:/ORP_accountability/projects/Sophie/school_absenteeism_Aug14.csv")
+school_absenteeism_old <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/Previous Versions/school_chronic_absenteeism_Aug13.csv")
 
 compare_school <- bind_rows(
-  setdiff(school_absenteeism_am, school_absenteeism_sm) %>% mutate(person = 'AM'),
-  setdiff(school_absenteeism_sm, school_absenteeism_am) %>% mutate(person = 'SM')
+  dplyr::setdiff(school_absenteeism_am, school_absenteeism_sm) %>% mutate(person = 'AM'),
+  dplyr::setdiff(school_absenteeism_sm, school_absenteeism_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(system, school, subgroup, grade_band, person)
+
+compare_school_new <- bind_rows(
+  dplyr::setdiff(school_absenteeism_am, school_absenteeism_old) %>% mutate(person = 'New'),
+  dplyr::setdiff(school_absenteeism_old, school_absenteeism_am) %>% mutate(person = 'Old')
 ) %>% 
   arrange(system, school, subgroup, grade_band, person)
 
@@ -217,4 +224,39 @@ compare_school <- bind_rows(
 
 
 
+# ==================== Shelby County Appeal ================================
+multiple_grades <- absenteeism %>% 
+  group_by(system, school, student_key, n_absences, isp_days) %>% 
+  mutate(n = n(),
+         min_grade = min(grade),
+         max_grade = max(grade)) %>% 
+  filter(n > 1)
+
+# 5023192 - K and 5
+write_csv(multiple_grades %>% arrange(system, school, student_id, grade), "N:/ORP_accountability/projects/Andrew/Data Requests/2020/Data/multiple_grades_absenteeism.csv", na = "")
+
+
+absenteeism %>% 
+  group_by(system, school, student_key, n_absences, isp_days) %>% 
+  mutate(n = n()) %>% 
+  filter(n > 1) %>% View()
+
+school_comp <- school %>% 
+  left_join(
+    school_absenteeism_am %>% select(system, school, subgroup, grade_band,
+                                    n_students_old = n_students,
+                                   n_chronically_absent_old = n_chronically_absent,
+                                    pct_chronically_absent_old = pct_chronically_absent),
+    by = c('system', 'school', 'subgroup', 'grade_band')
+  ) %>% 
+  mutate(
+    pct_diff = pct_chronically_absent - pct_chronically_absent_old
+  )
+
+
+school_metrics <- school_comp %>% 
+  mutate(
+    improved = if_else(pct_diff < 0, 1, 0),
+    declined = if_else(pct_diff > 0, 1, 0)
+  )
 
