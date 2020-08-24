@@ -30,7 +30,7 @@ if(data == T) {
   )
   
   # Pull data
-  scd = as.tbl(dbGetQuery(con,
+  scd = as_tibble(dbGetQuery(con,
                           str_c("SELECT scd.student_key, first_name, middle_name, last_name, suffix, date_of_birth,
                           gender, immigrant, date_1st_enrolled_us_school, year_entered_grade9, native_language,
                           ethnicity, race_i, race_a, race_p, race_b, race_w, cohortyear, calc_from, district_no AS system,
@@ -230,7 +230,7 @@ if(format == T) {
 
 # ======================= Output files ============================
 if(output == T) {
-  path = "N:/ORP_accountability/data/2019_graduation_rate/"
+  path = "N:/ORP_accountability/data/2020_graduation_rate/"
   for(f in c("state", "district", "school")) {
     file = str_c(f, "_grad_rate.csv")
     if(file %in% list.files(path)) {
@@ -304,9 +304,9 @@ if(press == T) {
 
 # ========================== Dropouts =================================
 if(dropouts == T) {
-  scd = read_csv("data/2019_graduation_rate/student_level.csv",
+  scd = read_csv("data/2020_graduation_rate/student_level.csv",
                  col_types = "dccccTccTdcccccccdcdddcddcTcccdccccccdcTcccdTc")
-  enr = read_csv("data/2019_graduation_rate/enrollment20190913.csv")
+  enr = read_csv("data/2020_graduation_rate/enrollment20190913.csv")
   
   a = anti_join(
     # Cohort data
@@ -376,10 +376,10 @@ if(dropouts == T) {
     transmute(system, school, subgroup, grad_cohort, grad_count, dropout_count, 
               grad_rate = ifelse(grad_cohort == 0, NA, round(100 * grad_count / grad_cohort, 1)),
               dropout_rate = ifelse(grad_cohort == 0, NA, round(100 * dropout_count / grad_cohort, 1))) %>% 
-    left_join(read_csv("data/2019_final_accountability_files/names.csv"),
+    left_join(read_csv("data/2020_final_accountability_files/names.csv"),
               by = c("system", "school")) %>%
     select(starts_with("system"), starts_with("school"), everything()) %>% 
-    write_csv("data/2019_graduation_rate/school_dropout_rate.csv", na = "") %>%
+    write_csv("data/2020_graduation_rate/school_dropout_rate.csv", na = "") %>%
     
     # District 
     group_by(system, subgroup) %>% 
@@ -388,12 +388,12 @@ if(dropouts == T) {
     transmute(system, school = 0, school_name = "All Schools", subgroup, grad_cohort, grad_count, dropout_count, 
               grad_rate = ifelse(grad_cohort == 0, NA, round(100 * grad_count / grad_cohort, 1)),
               dropout_rate = ifelse(grad_cohort == 0, NA, round(100 * dropout_count / grad_cohort, 1))) %>% 
-    left_join(read_csv("data/2019_final_accountability_files/names.csv") %>% 
+    left_join(read_csv("data/2020_final_accountability_files/names.csv") %>% 
                 filter(school != 0) %>% 
                 group_by(system) %>% 
                 summarize(system_name = first(system_name)), by = "system") %>% 
     select(starts_with("system"), everything()) %>%
-    write_csv("data/2019_graduation_rate/district_dropout_rate.csv", na = "") %>%
+    write_csv("data/2020_graduation_rate/district_dropout_rate.csv", na = "") %>%
     
     # State
     group_by(subgroup) %>% 
@@ -403,7 +403,7 @@ if(dropouts == T) {
               subgroup, grad_cohort, grad_count, dropout_count, 
               grad_rate = ifelse(grad_cohort == 0, NA, round(100 * grad_count / grad_cohort, 1)),
               dropout_rate = ifelse(grad_cohort == 0, NA, round(100 * dropout_count / grad_cohort, 1))) %>% 
-    write_csv("data/2019_graduation_rate/state_dropout_rate.csv", na = "") 
+    write_csv("data/2020_graduation_rate/state_dropout_rate.csv", na = "") 
 } else {
   rm(dropouts)
 }
