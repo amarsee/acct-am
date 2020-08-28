@@ -92,11 +92,20 @@ if(analysis == T) {
       summarize(year = year(today()), subgroup = s,
                 system = 0, system_name = "State of Tennessee",
                 school = 0, school_name = "All Schools",
-                grad_cohort = sum(included_in_cohort == "Y", na.rm = T),
-                grad_count = sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T),
+                grad_cohort = sum(included_in_cohort == "Y" | 
+                                    (included_in_cohort == "P" & !is.na(revised_included_in_cohort) & revised_included_in_cohort == 'Y') |
+                                    (included_in_cohort == "P" & is.na(revised_included_in_cohort)), na.rm = T),
+                grad_count = sum((included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13)) | 
+                                   (included_in_cohort == "P" & !is.na(revised_included_in_cohort) & revised_included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13)) |
+                                   (included_in_cohort == "P" & is.na(revised_included_in_cohort) & completion_type %in% c(1, 11, 12, 13)) , na.rm = T),
                 grad_rate = ifelse(sum(included_in_cohort == "Y", na.rm = T) == 0,
-                                   NA, round(100 * sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T) / 
-                                               sum(included_in_cohort == "Y", na.rm = T) + 1e-9, 1))) 
+                                   NA, round(100 * sum((included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13)) |
+                                                         (included_in_cohort == "P" & !is.na(revised_included_in_cohort) & revised_included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13)) |
+                                                         (included_in_cohort == "P" & is.na(revised_included_in_cohort) & completion_type %in% c(1, 11, 12, 13)), na.rm = T) / 
+                                               sum(included_in_cohort == "Y" | 
+                                                     (included_in_cohort == "P" & !is.na(revised_included_in_cohort) & revised_included_in_cohort == 'Y') |
+                                                     (included_in_cohort == "P" & is.na(revised_included_in_cohort)), na.rm = T) + 1e-9, 1))
+                ) 
     state_grad = bind_rows(state_grad, temp) 
     
     # District
@@ -106,11 +115,25 @@ if(analysis == T) {
       group_by(system) %>%
       summarize(year = year(today()), subgroup = s,
                 school = 0, school_name = "All Schools",
-                grad_cohort = sum(included_in_cohort == "Y", na.rm = T),
-                grad_count = sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T),
+                grad_cohort = sum(included_in_cohort == "Y" | 
+                                    (included_in_cohort == "P" & !is.na(revised_included_in_cohort) & revised_included_in_cohort == 'Y') |
+                                    (included_in_cohort == "P" & is.na(revised_included_in_cohort)), na.rm = T),
+                grad_count = sum((included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13)) | 
+                                   (included_in_cohort == "P" & !is.na(revised_included_in_cohort) & revised_included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13)) |
+                                   (included_in_cohort == "P" & is.na(revised_included_in_cohort) & completion_type %in% c(1, 11, 12, 13)) , na.rm = T),
                 grad_rate = ifelse(sum(included_in_cohort == "Y", na.rm = T) == 0,
-                                   NA, round(100 * sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T) / 
-                                               sum(included_in_cohort == "Y", na.rm = T) + 1e-9, 1))) %>% 
+                                   NA, round(100 * sum((included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13)) |
+                                                         (included_in_cohort == "P" & !is.na(revised_included_in_cohort) & revised_included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13)) |
+                                                         (included_in_cohort == "P" & is.na(revised_included_in_cohort) & completion_type %in% c(1, 11, 12, 13)), na.rm = T) / 
+                                               sum(included_in_cohort == "Y" | 
+                                                     (included_in_cohort == "P" & !is.na(revised_included_in_cohort) & revised_included_in_cohort == 'Y') |
+                                                     (included_in_cohort == "P" & is.na(revised_included_in_cohort)), na.rm = T) + 1e-9, 1))
+                # grad_cohort = sum(included_in_cohort == "Y", na.rm = T),
+                # grad_count = sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T),
+                # grad_rate = ifelse(sum(included_in_cohort == "Y", na.rm = T) == 0,
+                #                    NA, round(100 * sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T) / 
+                #                                sum(included_in_cohort == "Y", na.rm = T) + 1e-9, 1))
+                ) %>% 
       ungroup()
     district_grad = bind_rows(district_grad, temp) 
     
@@ -120,11 +143,25 @@ if(analysis == T) {
       # Summarize variables
       group_by(system, school) %>%
       summarize(year = year(today()), subgroup = s,
-                grad_cohort = sum(included_in_cohort == "Y", na.rm = T),
-                grad_count = sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T),
+                grad_cohort = sum(included_in_cohort == "Y" | 
+                                    (included_in_cohort == "P" & !is.na(revised_included_in_cohort) & revised_included_in_cohort == 'Y') |
+                                    (included_in_cohort == "P" & is.na(revised_included_in_cohort)), na.rm = T),
+                grad_count = sum((included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13)) | 
+                                   (included_in_cohort == "P" & !is.na(revised_included_in_cohort) & revised_included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13)) |
+                                   (included_in_cohort == "P" & is.na(revised_included_in_cohort) & completion_type %in% c(1, 11, 12, 13)) , na.rm = T),
                 grad_rate = ifelse(sum(included_in_cohort == "Y", na.rm = T) == 0,
-                                   NA, round(100 * sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T) / 
-                                               sum(included_in_cohort == "Y", na.rm = T) + 1e-9, 1))) %>% 
+                                   NA, round(100 * sum((included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13)) |
+                                                         (included_in_cohort == "P" & !is.na(revised_included_in_cohort) & revised_included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13)) |
+                                                         (included_in_cohort == "P" & is.na(revised_included_in_cohort) & completion_type %in% c(1, 11, 12, 13)), na.rm = T) / 
+                                               sum(included_in_cohort == "Y" | 
+                                                     (included_in_cohort == "P" & !is.na(revised_included_in_cohort) & revised_included_in_cohort == 'Y') |
+                                                     (included_in_cohort == "P" & is.na(revised_included_in_cohort)), na.rm = T) + 1e-9, 1))
+                # grad_cohort = sum(included_in_cohort == "Y", na.rm = T),
+                # grad_count = sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T),
+                # grad_rate = ifelse(sum(included_in_cohort == "Y", na.rm = T) == 0,
+                #                    NA, round(100 * sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T) / 
+                #                                sum(included_in_cohort == "Y", na.rm = T) + 1e-9, 1))
+                ) %>% 
       ungroup()
     school_grad = bind_rows(school_grad, temp) 
     
@@ -210,14 +247,18 @@ if(format == T) {
                 bind_rows(
                   tribble(
                     ~system, ~system_name, ~school, ~school_name,
-                    970, "Department of Children's Services", 25, "Gateway to Independence",
-                    970, "Department of Children's Services", 65, "Mountain View Youth Development Center",
+                    330, "Hamilton County", 95, "Hamilton County High School",
+                    520, "Lincoln County", 25, "Lincoln County Ninth Grade Academy",
                     61, "Cleveland", 40, "F.I. Denning Center of Technology and Careers",
-                    570, "Madison County", 40, "Jackson Central-Merry Academy of Medical Technology High School",
+                    # 570, "Madison County", 40, "Jackson Central-Merry Academy of Medical Technology High School",
                     792, "Shelby County", 2085, "Carver High School",
+                    792, "Shelby County", 2315, "Hamilton Middle",
+                    792, "Shelby County", 2378, "Hamilton Middle",
                     792, "Shelby County", 2535, "Northside High School",
                     792, "Shelby County", 8125, "DuBois High School of Arts Technology",
                     792, "Shelby County", 8130, "DuBois High of Leadership Public Policy",
+                    792, "Shelby County", 8295, "Gateway University",
+                    794, "Bartlett", 170, "Bartlett 9th Grade Academy",
                     985, "Achievement School District", 35, "GRAD Academy Memphis"
                   )
                 ), 
@@ -336,7 +377,7 @@ if(dropouts == T) {
            I = race_ethnicity == "I", P = race_ethnicity == "P", W = race_ethnicity == "W", 
            MIG = migrant == 'Y',
            M = gender == "M", `F` = gender == "F") %>% 
-    mutate_at(vars(grad_cohort:`F`), funs(as.integer(.)))
+    mutate_at(vars(grad_cohort:`F`), .funs = ~as.integer(.))
   
   # Summarize to school, district, and state level files
   collapse = tibble()

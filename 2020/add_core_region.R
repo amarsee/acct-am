@@ -22,10 +22,10 @@ add_core("N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_district.csv
 
 # ===================== Absenteeism =========================
 # School
-add_core("N:/ORP_accountability/data/2020_chronic_absenteeism/school_chronic_absenteeism.csv")
+add_core("N:/ORP_accountability/data/2020_chronic_absenteeism/school_chronic_absenteeism_Aug14.csv")
 
 # District
-add_core("N:/ORP_accountability/data/2020_chronic_absenteeism/district_chronic_absenteeism.csv")
+add_core("N:/ORP_accountability/data/2020_chronic_absenteeism/district_chronic_absenteeism_Aug14.csv")
 
 
 

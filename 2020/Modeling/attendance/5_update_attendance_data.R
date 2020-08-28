@@ -201,6 +201,84 @@ student_daily_absences <- dbGetQuery(con,
   filter(!is.na(student_key), grade %in% c('K', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10':'12')) %>% 
   arrange(system, school, student_key, id_date)
 
+write_csv(
+  student_daily_absences,
+  str_c("N:/ORP_accountability/projects/Andrew/acct-am/2020/Modeling/attendance/data/student_daily_absences_", format(Sys.Date(), "%m%d%y"), ".csv"),
+  na = ''
+)
+
+# ======== Power BI =================
+student_power_bi <- dbGetQuery(con,
+                   str_c("
+                    SELECT scal.school_year,
+                        enr.isp_id, 
+                        scal.id_date,
+                        scal.school_bu_id,
+                        enr.primary_district_id,
+                            enr.primary_school_id, enr.instructional_program_num,enr.student_key, 
+                            enr.first_name, enr.middle_name, enr.last_name,
+                            enr.english_language_background, enr.begin_date, enr.end_date,
+                        stu_abs.attendance_type,
+                        CASE WHEN stu_abs.attendance_type IS NULL THEN 1
+                              ELSE 0 END as present
+                    FROM (SELECT school_bu_id,
+                            school_year,
+                            instructional_program_num,
+                            id_date,
+                            1 as temp
+                          FROM scal_id_days
+                          WHERE school_year = ", 2020, ") SCAL
+                    LEFT JOIN (
+                        SELECT isp.isp_id, isp.school_year, isp.school_bu_id, isp.primary_district_id,
+                            isp.primary_school_id, isp.instructional_program_num,isp.student_key, 
+                            isp.first_name, isp.middle_name, isp.last_name,
+                            isp.english_language_background, isp.begin_date, isp.end_date, 1 as temp
+                        FROM isp
+                        WHERE school_year = " , 2020, "
+                          AND begin_date < NVL(end_date, SYSDATE)
+                    ) enr on scal.school_bu_id = enr.school_bu_id AND scal.school_year = enr.school_year
+                                AND scal.instructional_program_num = enr.instructional_program_num
+                                AND scal.temp = enr.temp
+                    LEFT JOIN (SELECT *
+                            FROM student_absences
+                            WHERE attendance_type NOT IN ('P', 'D')
+                          ) stu_abs ON stu_abs.isp_id = enr.isp_id 
+                                      AND stu_abs.attendance_date = scal.id_date
+                    WHERE scal.id_date >= enr.begin_date
+                        AND scal.id_date <= NVL(enr.end_date, TRUNC(SYSDATE, 'DD')-1)
+                    ORDER BY primary_district_id, primary_school_id, student_key, id_date
+                         
+                         ")) %>%
+  as_tibble() %>% 
+  clean_names() #%>% 
+  # filter(!is.na(student_key), grade %in% c('K', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10':'12')) %>% 
+  # arrange(system, school, student_key, id_date)
+
+student_power_bi_test <- dbGetQuery(con,
+                               str_c("
+                                     SELECT count(*)
+                                     FROM (SELECT school_bu_id,
+                                     school_year,
+                                     instructional_program_num,
+                                     id_date,
+                                     1 as temp
+                                     FROM scal_id_days
+                                     WHERE school_year = ", 2020, ") SCAL
+                                     LEFT JOIN (
+                                     SELECT isp.isp_id, isp.school_year, isp.school_bu_id, isp.primary_district_id,
+                                     isp.primary_school_id, isp.instructional_program_num,isp.student_key, 
+                                     isp.first_name, isp.middle_name, isp.last_name,
+                                     isp.english_language_background, 1 as temp
+                                     FROM isp
+                                     WHERE school_year = " , 2020, "
+                                     ) enr on scal.school_bu_id = enr.school_bu_id AND scal.school_year = enr.school_year
+                                     AND scal.instructional_program_num = enr.instructional_program_num
+                                     AND scal.temp = enr.temp
+                                     
+                                     ")) %>%
+  as_tibble() %>% 
+  clean_names()
+# ============= Virtual Attendance =====================
 student_daily_virtual <- dbGetQuery(con,
                                      str_c("
                                            SELECT 
@@ -431,6 +509,14 @@ write_csv(
 )
 
 
-
+cohort <- dbGetQuery(con,
+                               str_c("
+                                     select *
+                                    FROM studentcohortdata scd
+                                    left join studentcohortdocs docs on scd.student_key = docs.student_key
+                                     WHERE cohortyear = 2016
+                                     ")) %>%
+  as_tibble() %>% 
+  clean_names()
 
 
