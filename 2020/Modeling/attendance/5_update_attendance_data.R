@@ -215,9 +215,9 @@ student_power_bi <- dbGetQuery(con,
                         scal.id_date,
                         scal.school_bu_id,
                         enr.primary_district_id,
-                            enr.primary_school_id, enr.instructional_program_num,enr.student_key, 
-                            enr.first_name, enr.middle_name, enr.last_name,
-                            enr.english_language_background, enr.begin_date, enr.end_date,
+                        enr.primary_school_id, enr.instructional_program_num,enr.student_key, 
+                        enr.first_name, enr.middle_name, enr.last_name, enr.grade,
+                        enr.english_language_background, enr.begin_date, enr.end_date,
                         stu_abs.attendance_type,
                         CASE WHEN stu_abs.attendance_type IS NULL THEN 1
                               ELSE 0 END as present
@@ -231,9 +231,17 @@ student_power_bi <- dbGetQuery(con,
                     LEFT JOIN (
                         SELECT isp.isp_id, isp.school_year, isp.school_bu_id, isp.primary_district_id,
                             isp.primary_school_id, isp.instructional_program_num,isp.student_key, 
-                            isp.first_name, isp.middle_name, isp.last_name,
+                            isp.first_name, isp.middle_name, isp.last_name, ig.grade,
                             isp.english_language_background, isp.begin_date, isp.end_date, 1 as temp
                         FROM isp
+                        LEFT JOIN (
+                          SELECT *
+                          FROM (SELECT ig.isp_id,
+                            ig.assignment as grade,
+                            dense_rank() over (partition by student_key order by ig_begin_date desc) rnk
+                            FROM instructional_grade ig)
+                          WHERE rnk = 1
+                        ) ig ON ig.isp_id = isp.isp_id
                         WHERE school_year = " , 2020, "
                           AND begin_date < NVL(end_date, SYSDATE)
                     ) enr on scal.school_bu_id = enr.school_bu_id AND scal.school_year = enr.school_year
