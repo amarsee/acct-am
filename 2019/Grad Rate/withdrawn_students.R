@@ -1,6 +1,6 @@
 # Graduation Cohort Appeals
-# Andrew Marsee
-# 06/18/2020
+# Evan Kramer
+# 10/19/2018
 options(java.parameters = "-Xmx16G")
 library(tidyverse)
 library(lubridate)
@@ -16,9 +16,6 @@ output = T
 press = F
 dropouts = F
 
-cohort_year <- if_else(lubridate::month(lubridate::today()) >= 10, 
-                       lubridate::year(lubridate::today())-3,
-                       lubridate::year(lubridate::today())-4)
 # =================== Data ======================
 if(data == T) {
   # Connect to database
@@ -30,21 +27,21 @@ if(data == T) {
   )
   
   # Pull data
-  scd = as_tibble(dbGetQuery(con,
-                          str_c("SELECT scd.student_key, first_name, middle_name, last_name, suffix, date_of_birth,
-                          gender, immigrant, date_1st_enrolled_us_school, year_entered_grade9, native_language,
-                          ethnicity, race_i, race_a, race_p, race_b, race_w, cohortyear, calc_from, district_no AS system,
-                          school_no AS school, assignment, eoy_action, withdrawal_reason, completion_type, completion_period,
-                          completion_date, ell AS el, econ_dis AS ed, sped AS swd, year_withdrawn, included_in_cohort, 
-                          race_ethnicity, manual_intervention, homeless, cte, migrant, isp_id, save_as_filename, 
-                          modified_date AS upload_date, user_id, reviewer_user_id, comments, status, reviewed_date, revised_included_in_cohort
-                          FROM studentcohortdata scd
-                          LEFT OUTER JOIN studentcohortdocs doc ON scd.student_key = doc.student_key
-                          WHERE cohortyear = ", cohort_year))) %>% 
+  scd = as.tbl(dbGetQuery(con,
+                          "SELECT scd.student_key, first_name, middle_name, last_name, suffix, date_of_birth,
+    gender, immigrant, date_1st_enrolled_us_school, year_entered_grade9, native_language,
+    ethnicity, race_i, race_a, race_p, race_b, race_w, cohortyear, calc_from, district_no AS system,
+    school_no AS school, assignment, eoy_action, withdrawal_reason, completion_type, completion_period,
+    completion_date, ell AS el, econ_dis AS ed, sped AS swd, year_withdrawn, included_in_cohort, 
+    race_ethnicity, manual_intervention, homeless, cte, migrant, isp_id, save_as_filename, 
+    modified_date AS upload_date, user_id, reviewer_user_id, comments, status, reviewed_date, revised_included_in_cohort
+  FROM studentcohortdata scd
+  LEFT OUTER JOIN studentcohortdocs doc ON scd.student_key = doc.student_key
+  WHERE cohortyear = 2015")) %>% 
     janitor::clean_names()
   
-  #  Output file
-  path = str_c("N:/ORP_accountability/data/", cohort_year+4,"_graduation_rate/")
+#  Output file
+  path = "N:/ORP_accountability/data/2019_graduation_rate/"
   file = "student_level.csv"
   if(file %in% list.files(path)) {
     if(!dir.exists(str_c(path, "Previous"))) {
@@ -65,7 +62,7 @@ if(data == T) {
 
 # ================== Analysis ======================
 if(analysis == T) {
-  scd = read_csv(str_c("N:/ORP_accountability/data/", cohort_year+4,"_graduation_rate/student_level.csv"), 
+  scd = read_csv("N:/ORP_accountability/data/2019_graduation_rate/student_level.csv", 
                  col_types = "dccccTccTdcccccccdcdddcddcTcccdccccccdcTcccdTc") %>% 
     # Add subgroups as variables for easy looping
     mutate(All = T, BHN = race_ethnicity %in% c("B", "H", "I"), ED = ed == "Y", EL = el == "Y",
@@ -77,9 +74,9 @@ if(analysis == T) {
     filter(!is.na(system) & !is.na(school))
   
   # Initialize empty data frame for loop
-  state_grad = as_tibble(data.frame())
-  district_grad = as_tibble(data.frame())
-  school_grad = as_tibble(data.frame())
+  state_grad = as.tbl(data.frame())
+  district_grad = as.tbl(data.frame())
+  school_grad = as.tbl(data.frame())
   
   # Loop for all subgroups
   for (s in c("All", "BHN", "ED", "SWD", "EL", "Black", "Hispanic", "Native_Amer", "HPI", "Asian", "White",
@@ -93,11 +90,10 @@ if(analysis == T) {
                 system = 0, system_name = "State of Tennessee",
                 school = 0, school_name = "All Schools",
                 grad_cohort = sum(included_in_cohort == "Y", na.rm = T),
-                grad_count = sum((included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13)), na.rm = T),
+                grad_count = sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T),
                 grad_rate = ifelse(sum(included_in_cohort == "Y", na.rm = T) == 0,
                                    NA, round(100 * sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T) / 
-                                               sum(included_in_cohort == "Y", na.rm = T) + 1e-9, 1))
-                ) 
+                                               sum(included_in_cohort == "Y", na.rm = T) + 1e-9, 1))) 
     state_grad = bind_rows(state_grad, temp) 
     
     # District
@@ -107,17 +103,11 @@ if(analysis == T) {
       group_by(system) %>%
       summarize(year = year(today()), subgroup = s,
                 school = 0, school_name = "All Schools",
-                grad_cohort = sum(included_in_cohort == "Y" , na.rm = T),
+                grad_cohort = sum(included_in_cohort == "Y", na.rm = T),
                 grad_count = sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T),
                 grad_rate = ifelse(sum(included_in_cohort == "Y", na.rm = T) == 0,
                                    NA, round(100 * sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T) / 
-                                               sum(included_in_cohort == "Y", na.rm = T) + 1e-9, 1))
-                # grad_cohort = sum(included_in_cohort == "Y", na.rm = T),
-                # grad_count = sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T),
-                # grad_rate = ifelse(sum(included_in_cohort == "Y", na.rm = T) == 0,
-                #                    NA, round(100 * sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T) / 
-                #                                sum(included_in_cohort == "Y", na.rm = T) + 1e-9, 1))
-                ) %>% 
+                                               sum(included_in_cohort == "Y", na.rm = T) + 1e-9, 1))) %>% 
       ungroup()
     district_grad = bind_rows(district_grad, temp) 
     
@@ -127,17 +117,11 @@ if(analysis == T) {
       # Summarize variables
       group_by(system, school) %>%
       summarize(year = year(today()), subgroup = s,
-                grad_cohort = sum(included_in_cohort == "Y" , na.rm = T),
+                grad_cohort = sum(included_in_cohort == "Y", na.rm = T),
                 grad_count = sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T),
                 grad_rate = ifelse(sum(included_in_cohort == "Y", na.rm = T) == 0,
                                    NA, round(100 * sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T) / 
-                                               sum(included_in_cohort == "Y", na.rm = T) + 1e-9, 1))
-                # grad_cohort = sum(included_in_cohort == "Y", na.rm = T),
-                # grad_count = sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T),
-                # grad_rate = ifelse(sum(included_in_cohort == "Y", na.rm = T) == 0,
-                #                    NA, round(100 * sum(included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13), na.rm = T) / 
-                #                                sum(included_in_cohort == "Y", na.rm = T) + 1e-9, 1))
-                ) %>% 
+                                               sum(included_in_cohort == "Y", na.rm = T) + 1e-9, 1))) %>% 
       ungroup()
     school_grad = bind_rows(school_grad, temp) 
     
@@ -192,7 +176,7 @@ if(format == T) {
   ),
   grad_cohort, grad_count, grad_rate) %>% 
     # Add district names
-    left_join(read_csv(str_c("N:/ORP_accountability/data/",cohort_year+4,"_final_accountability_files/names.csv")) %>% 
+    left_join(read_csv("N:/ORP_accountability/data/2019_final_accountability_files/names.csv") %>% 
                 filter(school != 0) %>%
                 group_by(system) %>% 
                 summarize(system_name = first(system_name)), by = "system") %>%
@@ -219,22 +203,18 @@ if(format == T) {
   ),
   grad_cohort, grad_count, grad_rate) %>% 
     # Add school names
-    left_join(read_csv("N:/ORP_accountability/data/2020_final_accountability_files/names.csv") %>% 
+    left_join(read_csv("N:/ORP_accountability/data/2019_final_accountability_files/names.csv") %>% 
                 bind_rows(
                   tribble(
                     ~system, ~system_name, ~school, ~school_name,
-                    330, "Hamilton County", 95, "Hamilton County High School",
-                    520, "Lincoln County", 25, "Lincoln County Ninth Grade Academy",
+                    970, "Department of Children's Services", 25, "Gateway to Independence",
+                    970, "Department of Children's Services", 65, "Mountain View Youth Development Center",
                     61, "Cleveland", 40, "F.I. Denning Center of Technology and Careers",
-                    # 570, "Madison County", 40, "Jackson Central-Merry Academy of Medical Technology High School",
+                    570, "Madison County", 40, "Jackson Central-Merry Academy of Medical Technology High School",
                     792, "Shelby County", 2085, "Carver High School",
-                    792, "Shelby County", 2315, "Hamilton Middle",
-                    792, "Shelby County", 2378, "Hamilton Middle",
                     792, "Shelby County", 2535, "Northside High School",
                     792, "Shelby County", 8125, "DuBois High School of Arts Technology",
                     792, "Shelby County", 8130, "DuBois High of Leadership Public Policy",
-                    792, "Shelby County", 8295, "Gateway University",
-                    794, "Bartlett", 170, "Bartlett 9th Grade Academy",
                     985, "Achievement School District", 35, "GRAD Academy Memphis"
                   )
                 ), 
@@ -247,7 +227,7 @@ if(format == T) {
 
 # ======================= Output files ============================
 if(output == T) {
-  path = "N:/ORP_accountability/data/2020_graduation_rate/"
+  path = "N:/ORP_accountability/data/2019_graduation_rate/"
   for(f in c("state", "district", "school")) {
     file = str_c(f, "_grad_rate.csv")
     if(file %in% list.files(path)) {
@@ -321,14 +301,14 @@ if(press == T) {
 
 # ========================== Dropouts =================================
 if(dropouts == T) {
-  scd = read_csv("data/2020_graduation_rate/student_level.csv",
-                 col_types = "dccccTccTdcccccccdcdddcddcTcccdccccccdcTcccdTc")
-  enr = read_csv("data/2020_graduation_rate/enrollment20190913.csv")
+  scd = read_csv("projects/2020_graduation_rate/Data/studentcohortdata_20191025.csv",
+                 col_types = "iiccccTcicTiccccccccciciiiciiccciccccccicccTcccTcccccTcTc") %>% 
+    rename(system = district_no, school = school_no)
+  enr = read_csv("data/2020_graduation_rate/enrollment20191028.csv")
   
   a = anti_join(
     # Cohort data
-    filter(scd, included_in_cohort == "Y" & is.na(completion_type) &
-             (is.na(completion_type) | completion_type == 5)),
+    filter(scd, included_in_cohort == "Y" & withdrawal_reason %in% c(3, 4)),
     # Next year enrollments
     janitor::clean_names(enr) %>% 
       filter(type_of_service == "P") %>% 
@@ -337,32 +317,34 @@ if(dropouts == T) {
       summarize(withdrawal_reason = first(withdrawal_reason), 
                 begin_date = first(begin_date), end_date = first(end_date)) %>%
       ungroup() %>% 
-      filter(!withdrawal_reason %in% c(0, 1, 3, 4)), by = "student_key"
-  ) %>% 
+      # Want students who either don't have enrollment or it ended on the day it began
+      filter(!withdrawal_reason %in% c(3, 4), is.na(end_date) | end_date > begin_date), 
+    by = "student_key"
+    ) %>% 
     transmute(student_key, dropout_count = T) %>% 
     right_join(scd, by = "student_key") %>% 
     mutate(grad_cohort = included_in_cohort == "Y", 
            grad_count = included_in_cohort == "Y" & completion_type %in% c(1, 11, 12, 13),
-           dropout_count = ifelse(included_in_cohort == "Y" & withdrawal_reason %in% c(0, 1, 3, 4) & 
-                                    (is.na(completion_type) | !completion_type %in% c(1, 11, 12, 13)), 
-                                  T, dropout_count),
-           All = 1, Bhn = race_ethnicity %in% c("B", "H", "I"), Ed = ed == "Y", 
-           El = el == "Y", Swd = swd == "Y", super = Bhn == T | Ed == T | El == T | Swd == T,
-           non_bhn = !Bhn, non_ed = ed == "N", non_el = el == "N", non_swd = swd == "N",
+           # dropout_count = ifelse(included_in_cohort == "Y" & withdrawal_reason %in% c(3, 4) & 
+           #                          (is.na(completion_type) | !completion_type %in% c(1, 11, 12, 13)), 
+           #                                   T, dropout_count),
+           All = 1, Bhn = race_ethnicity %in% c("B", "H", "I"), Ed = econ_dis == "Y", 
+           El = ell == "Y", Swd = sped == "Y", super = Bhn == T | Ed == T | El == T | Swd == T,
+           non_bhn = !Bhn, non_ed = econ_dis == "N", non_el = ell == "N", non_swd = sped == "N",
            A = race_ethnicity == "A", B = race_ethnicity == "B", H = race_ethnicity == "H",
            I = race_ethnicity == "I", P = race_ethnicity == "P", W = race_ethnicity == "W", 
            MIG = migrant == 'Y',
            M = gender == "M", `F` = gender == "F") %>% 
-    mutate_at(vars(grad_cohort:`F`), .funs = ~as.integer(.))
+    mutate_at(vars(grad_cohort:`F`), .funs = ~(as.integer(.)))
   
   # Summarize to school, district, and state level files
   collapse = tibble()
   
   for(s in c("All", "A", "B", "H", "P", "I", "W", "Bhn", "Ed", "Swd", "El", 
-             "non_bhn", "non_ed", "non_swd", "non_el", "super", 'MIG', "M", "F")) {
+              "non_bhn", "non_ed", "non_swd", "non_el", "super", 'MIG', "M", "F")) {
     temp = filter(a, eval(parse(text = paste(s, "== 1")))) %>%
       group_by(system, school) %>%
-      summarize_at(vars(grad_cohort, grad_count, dropout_count), funs(sum(., na.rm = T))) %>%
+      summarize_at(vars(grad_cohort, grad_count, dropout_count), .funs = ~ sum(., na.rm = T)) %>%
       mutate(subgroup = s) 
     collapse = bind_rows(collapse, temp)
   }
@@ -390,37 +372,37 @@ if(dropouts == T) {
   ) %>% 
     filter(!is.na(subgroup) & !is.na(system)) %>% 
     arrange(system, school, subgroup) %>% 
-    transmute(system, school, subgroup, grad_cohort, grad_count, dropout_count, 
-              grad_rate = ifelse(grad_cohort == 0, NA, round(100 * grad_count / grad_cohort, 1)),
+    transmute(system, school, subgroup, grad_cohort, dropout_count, 
+              # grad_rate = ifelse(grad_cohort == 0, NA, round(100 * grad_count / grad_cohort, 1)),
               dropout_rate = ifelse(grad_cohort == 0, NA, round(100 * dropout_count / grad_cohort, 1))) %>% 
-    left_join(read_csv("data/2020_final_accountability_files/names.csv"),
+    left_join(read_csv("data/2019_final_accountability_files/names.csv"),
               by = c("system", "school")) %>%
     select(starts_with("system"), starts_with("school"), everything()) %>% 
-    write_csv("data/2020_graduation_rate/school_dropout_rate.csv", na = "") %>%
+    write_csv("data/2020_graduation_rate/withdrawal_3_or_4/school_withdrawn_not_enrolled.csv", na = "") %>%
     
     # District 
     group_by(system, subgroup) %>% 
-    summarize_at(vars(grad_cohort, grad_count, dropout_count), funs(sum(., na.rm = T))) %>% 
+    summarize_at(vars(grad_cohort, dropout_count), .funs = ~sum(., na.rm = T)) %>% 
     ungroup() %>%
-    transmute(system, school = 0, school_name = "All Schools", subgroup, grad_cohort, grad_count, dropout_count, 
-              grad_rate = ifelse(grad_cohort == 0, NA, round(100 * grad_count / grad_cohort, 1)),
+    transmute(system, school = 0, school_name = "All Schools", subgroup, grad_cohort, dropout_count, 
+              # grad_rate = ifelse(grad_cohort == 0, NA, round(100 * grad_count / grad_cohort, 1)),
               dropout_rate = ifelse(grad_cohort == 0, NA, round(100 * dropout_count / grad_cohort, 1))) %>% 
-    left_join(read_csv("data/2020_final_accountability_files/names.csv") %>% 
+    left_join(read_csv("data/2019_final_accountability_files/names.csv") %>% 
                 filter(school != 0) %>% 
                 group_by(system) %>% 
                 summarize(system_name = first(system_name)), by = "system") %>% 
     select(starts_with("system"), everything()) %>%
-    write_csv("data/2020_graduation_rate/district_dropout_rate.csv", na = "") %>%
+    write_csv("data/2020_graduation_rate/withdrawal_3_or_4/district_withdrawn_not_enrolled.csv", na = "") %>%
     
     # State
     group_by(subgroup) %>% 
-    summarize_at(vars(grad_cohort, grad_count, dropout_count), funs(sum(., na.rm = T))) %>% 
+    summarize_at(vars(grad_cohort, dropout_count), .funs = ~sum(., na.rm = T)) %>% 
     ungroup() %>%
     transmute(system = 0, system_name = "State of Tennessee", school = 0, school_name = "All Schools", 
-              subgroup, grad_cohort, grad_count, dropout_count, 
-              grad_rate = ifelse(grad_cohort == 0, NA, round(100 * grad_count / grad_cohort, 1)),
+              subgroup, grad_cohort, dropout_count, 
+              # grad_rate = ifelse(grad_cohort == 0, NA, round(100 * grad_count / grad_cohort, 1)),
               dropout_rate = ifelse(grad_cohort == 0, NA, round(100 * dropout_count / grad_cohort, 1))) %>% 
-    write_csv("data/2020_graduation_rate/state_dropout_rate.csv", na = "") 
+    write_csv("data/2020_graduation_rate/withdrawal_3_or_4/state_withdrawn_not_enrolled.csv", na = "") 
 } else {
   rm(dropouts)
 }

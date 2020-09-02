@@ -214,13 +214,18 @@ student_power_bi <- dbGetQuery(con,
                         enr.isp_id, 
                         scal.id_date,
                         scal.school_bu_id,
-                        enr.primary_district_id,
-                        enr.primary_school_id, enr.instructional_program_num,enr.student_key, 
+                        enr.primary_district_id as district_no,
+                        enr.primary_school_id as school_no, 
+                        enr.instructional_program_num,enr.student_key, 
                         enr.first_name, enr.middle_name, enr.last_name, enr.grade,
                         enr.english_language_background, enr.begin_date, enr.end_date,
                         stu_abs.attendance_type,
-                        CASE WHEN stu_abs.attendance_type IS NULL THEN 1
-                              ELSE 0 END as present
+                        CASE WHEN stu_abs.attendance_type = 'D' OR stu_abs.attendance_type IS NULL THEN 1
+                              ELSE 0 END as present,
+                        CASE WHEN stu_abs.attendance_type = 'D' THEN 1
+                              ELSE 0 END as present_virtual,
+                        CASE WHEN stu_abs.attendance_type IN ('A', 'U', 'X', 'T') THEN 1
+                              ELSE 0 END as absent
                     FROM (SELECT school_bu_id,
                             school_year,
                             instructional_program_num,
@@ -241,15 +246,20 @@ student_power_bi <- dbGetQuery(con,
                             dense_rank() over (partition by student_key order by ig_begin_date desc) rnk
                             FROM instructional_grade ig)
                           WHERE rnk = 1
+                            AND grade NOT IN ('P3', 'P4')
                         ) ig ON ig.isp_id = isp.isp_id
                         WHERE school_year = " , 2020, "
+                          AND type_of_service = 'P'
+                          AND primary_district_id <> 0
+                          AND primary_school_id <> 0
                           AND begin_date < NVL(end_date, SYSDATE)
+                          AND ig.grade IS NOT NULL
                     ) enr on scal.school_bu_id = enr.school_bu_id AND scal.school_year = enr.school_year
                                 AND scal.instructional_program_num = enr.instructional_program_num
                                 AND scal.temp = enr.temp
                     LEFT JOIN (SELECT *
                             FROM student_absences
-                            WHERE attendance_type NOT IN ('P', 'D')
+                            WHERE attendance_type NOT IN ('P')
                           ) stu_abs ON stu_abs.isp_id = enr.isp_id 
                                       AND stu_abs.attendance_date = scal.id_date
                     WHERE scal.id_date >= enr.begin_date

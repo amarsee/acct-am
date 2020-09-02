@@ -148,6 +148,31 @@ write_csv(district, "N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_d
 write_csv(school, "N:/ORP_accountability/data/2020_ELPA/wida_growth_standard_school_suppressed.csv", na = '')
 
 
+# ===================== Graduation Rate ====================
+suppress_grad <- function(file, threshold = 1) {
+  
+  file %>%
+    mutate_at(
+      .vars = vars(grad_count, grad_rate),
+      .funs = ~ if_else(grad_rate < threshold | grad_rate > (100 - threshold), "**", as.character(.))
+      # .funs = ~ if_else(grad_rate < threshold | (grad_rate > (100 - threshold) & grad_rate != 100), "**", as.character(.))
+    ) %>%
+    mutate_at(
+      .vars = vars(grad_count, grad_rate),
+      .funs = ~ if_else(grad_cohort < 10, "*", as.character(.))
+    )
+  
+}
 
+state <- read_csv("N:/ORP_accountability/data/2020_graduation_rate/state_grad_rate.csv") %>% 
+  suppress_grad()
+district <- read_csv("N:/ORP_accountability/data/2020_graduation_rate/district_grad_rate.csv") %>% 
+  suppress_grad()
+school <- read_csv("N:/ORP_accountability/data/2020_graduation_rate/school_grad_rate.csv") %>% 
+  suppress_grad(threshold = 1)
+
+write_csv(state, "N:/ORP_accountability/data/2020_graduation_rate/state_grad_rate_suppressed.csv", na = '')
+write_csv(district, "N:/ORP_accountability/data/2020_graduation_rate/district_grad_rate_suppressed.csv", na = '')
+write_csv(school, "N:/ORP_accountability/data/2020_graduation_rate/school_grad_rate_suppressed.csv", na = '')
 
 
