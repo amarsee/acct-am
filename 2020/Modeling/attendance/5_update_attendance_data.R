@@ -24,6 +24,7 @@ con <- dbConnect(
 )
 
 # Some schools have enrollments but no grade assignments
+# ============== Daily Pull ==============
 daily_pull <- dbGetQuery(con,
                        str_c("
                           SELECT --TO_CHAR(ABS_AGG.SCHOOL_YEAR) || '-' || TO_CHAR(ABS_AGG.SCHOOL_YEAR+1) AS SCHOOL_YEAR,
@@ -214,11 +215,50 @@ student_power_bi <- dbGetQuery(con,
                         enr.isp_id, 
                         scal.id_date,
                         scal.school_bu_id,
-                        enr.primary_district_id as district_no,
-                        enr.primary_school_id as school_no, 
+                        --enr.primary_district_id as district_no,
+                        --enr.primary_school_id as school_no, 
+                        sch.district_no,
+                        dist.district_name,
+                        sch.school_no,
+                        sch.school_name,
                         enr.instructional_program_num,enr.student_key, 
                         enr.first_name, enr.middle_name, enr.last_name, enr.grade,
                         enr.english_language_background, enr.begin_date, enr.end_date,
+                        enr.withdrawal_reason, wr.withdrawal_descr,
+                       -- stu_demo.ethnicity,
+                        --stu_demo.race_i, stu_demo.race_a, 
+                        --stu_demo.race_p, stu_demo.race_b, stu_demo.race_w,
+                        (CASE WHEN ((stu_demo.ETHNICITY = 'H') OR (stu_demo.ETHNICITY = 'N')) THEN stu_demo.ETHNICITY
+                          ELSE 'U'
+                          END) ETHNICITY,
+                        DECODE(stu_demo.RACE_I, 'Y', 1, 'N', 0, NULL, NULL) IsAmericanIndian,
+                        DECODE(stu_demo.RACE_A, 'Y', 1, 'N', 0, NULL, NULL) IsAsian,
+                        DECODE(stu_demo.RACE_B, 'Y', 1, 'N', 0, NULL, NULL) IsBlack,
+                        DECODE(stu_demo.RACE_P, 'Y', 1, 'N', 0, NULL, NULL) IsPacificIslander,
+                        DECODE(stu_demo.RACE_W, 'Y', 1, 'N', 0, NULL, NULL) IsWhite,
+                        (CASE WHEN stu_demo.ETHNICITY = 'H' THEN 'Hispanic'
+                            WHEN stu_demo.RACE_B = 'Y' THEN 'Black or African American'
+                            WHEN stu_demo.RACE_I = 'Y' THEN 'American Indian or Alaska Native'
+                            WHEN stu_demo.RACE_P = 'Y' THEN 'Native Hawaiian or Pacific Islander'
+                            WHEN stu_demo.RACE_A = 'Y' THEN 'Asian'
+                            WHEN stu_demo.RACE_W = 'Y' THEN 'White'
+                            ELSE 'Unknown'
+                          END) ReportedRace,
+                        stu_demo.GENDER,
+                       DECODE(typeAB.ISP_ID, NULL, 0, 1)  economically_disadvantaged,
+                        (CASE WHEN enr.ENGLISH_LANGUAGE_BACKGROUND IN ('L','W') THEN 1
+                            ELSE 0
+                         END) isEL,
+                          (CASE WHEN enr.ENGLISH_LANGUAGE_BACKGROUND IN ('1','2','3','4') THEN
+                                      TO_NUMBER(enr.ENGLISH_LANGUAGE_BACKGROUND)
+                                ELSE 0
+                          END) T1T2,
+                        (CASE WHEN IEPExists.ISP_ID IS NOT NULL THEN 1
+                                    ELSE 0
+                        END)  SWD,
+                        (CASE WHEN ismig.ISP_ID IS NOT NULL THEN 1
+                                    ELSE 0
+                        END)  Migrant,
                         stu_abs.attendance_type,
                         CASE WHEN stu_abs.attendance_type = 'D' OR stu_abs.attendance_type IS NULL THEN 1
                               ELSE 0 END as present,
@@ -237,7 +277,8 @@ student_power_bi <- dbGetQuery(con,
                         SELECT isp.isp_id, isp.school_year, isp.school_bu_id, isp.primary_district_id,
                             isp.primary_school_id, isp.instructional_program_num,isp.student_key, 
                             isp.first_name, isp.middle_name, isp.last_name, ig.grade,
-                            isp.english_language_background, isp.begin_date, isp.end_date, 1 as temp
+                            isp.english_language_background, isp.begin_date, isp.end_date,
+                            isp.withdrawal_reason, 1 as temp
                         FROM isp
                         LEFT JOIN (
                           SELECT *
@@ -250,8 +291,8 @@ student_power_bi <- dbGetQuery(con,
                         ) ig ON ig.isp_id = isp.isp_id
                         WHERE school_year = " , 2020, "
                           AND type_of_service = 'P'
-                          AND primary_district_id <> 0
-                          AND primary_school_id <> 0
+                          --AND primary_district_id <> 0
+                          --AND primary_school_id <> 0
                           AND begin_date < NVL(end_date, SYSDATE)
                           AND ig.grade IS NOT NULL
                     ) enr on scal.school_bu_id = enr.school_bu_id AND scal.school_year = enr.school_year
@@ -262,15 +303,49 @@ student_power_bi <- dbGetQuery(con,
                             WHERE attendance_type NOT IN ('P')
                           ) stu_abs ON stu_abs.isp_id = enr.isp_id 
                                       AND stu_abs.attendance_date = scal.id_date
+                    LEFT JOIN(
+                        SELECT DISTINCT student_key, ethnicity,
+                            race_i, race_a, race_p, race_b, race_w, gender
+                        FROM student_new
+                    ) stu_demo ON stu_demo.student_key = enr.student_key
+                    LEFT JOIN (
+                        SELECT DISTINCT school_bu_id, district_no, school_no, school_name
+                        FROM school
+                    ) sch ON sch.school_bu_id = scal.school_bu_id
+                    LEFT JOIN (
+                        SELECT DISTINCT district_no, district_name
+                        FROM district
+                    ) dist ON dist.district_no = sch.district_no
+                    LEFT JOIN (SELECT DISTINCT ISP_ID
+                        FROM EIS_MGR.STUDENT_CLASSIFICATION
+                        WHERE TRUNC(SYSDATE) BETWEEN SC_BEGIN_DATE AND COALESCE(SC_END_DATE, TRUNC(SYSDATE + 1))
+                          AND STUDENT_CLASSIFICATION_TYPE IN ('H','I','J','U','FOS01')
+                    )  typeAB ON enr.ISP_ID = typeAB.ISP_ID
+                    LEFT JOIN (SELECT DISTINCT ISP_ID 
+                        FROM EIS_MGR.SPED_DISABILITIES
+                        WHERE TRUNC(SYSDATE) BETWEEN DIS_BEGIN_DATE AND COALESCE(DIS_END_DATE, TRUNC(SYSDATE + 1))
+                          AND DISABILITY_TYPE NOT IN (3,16)
+                          AND DISABILITY_LEVEL = 'P'
+                    )  IEPExists ON enr.ISP_ID = IEPExists.ISP_ID
+                    LEFT JOIN (SELECT DISTINCT ISP_ID
+                          FROM EIS_MGR.STUDENT_CLASSIFICATION
+                          WHERE TRUNC(SYSDATE) BETWEEN SC_BEGIN_DATE AND COALESCE(SC_END_DATE, TRUNC(SYSDATE + 1))
+                              AND STUDENT_CLASSIFICATION_TYPE = 'I'
+                    )  ismig ON enr.ISP_ID = ismig.ISP_ID
+                    LEFT JOIN withdrawal_reasons wr ON wr.withdrawal_reason = enr.withdrawal_reason
                     WHERE scal.id_date >= enr.begin_date
-                        AND scal.id_date <= NVL(enr.end_date, TRUNC(SYSDATE, 'DD')-1)
-                    ORDER BY primary_district_id, primary_school_id, student_key, id_date
-                         
+                        AND scal.id_date <= NVL(enr.end_date, TRUNC(SYSDATE, 'DD')-1) 
+                        AND rownum < 100001
+                   -- ORDER BY primary_district_id, primary_school_id, student_key, id_date
+                    ORDER BY district_no, school_no, student_key, id_date
+
                          ")) %>%
   as_tibble() %>% 
   clean_names() #%>% 
   # filter(!is.na(student_key), grade %in% c('K', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10':'12')) %>% 
   # arrange(system, school, student_key, id_date)
+
+write_csv(student_power_bi, paste0("N:/ORP_accountability/projects/Andrew/acct-am/2020/Modeling/attendance/data/student_daily_attendance_", format(Sys.Date(), "%d%b%y"), '.csv'), na = '')
 
 student_power_bi_test <- dbGetQuery(con,
                                str_c("
