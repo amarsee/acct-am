@@ -1,4 +1,4 @@
-# Graduation Cohort Appeals
+# Graduation Rate Calculations
 # Andrew Marsee
 # 06/18/2020
 options(java.parameters = "-Xmx16G")
@@ -323,7 +323,7 @@ if(press == T) {
 if(dropouts == T) {
   scd = read_csv("data/2020_graduation_rate/student_level.csv",
                  col_types = "dccccTccTdcccccccdcdddcddcTcccdccccccdcTcccdTc")
-  enr = read_csv("data/2020_graduation_rate/enrollment20190913.csv")
+  enr = read_csv("data/2020_graduation_rate/enrollment20200909.csv")
   
   a = anti_join(
     # Cohort data
@@ -362,7 +362,7 @@ if(dropouts == T) {
              "non_bhn", "non_ed", "non_swd", "non_el", "super", 'MIG', "M", "F")) {
     temp = filter(a, eval(parse(text = paste(s, "== 1")))) %>%
       group_by(system, school) %>%
-      summarize_at(vars(grad_cohort, grad_count, dropout_count), funs(sum(., na.rm = T))) %>%
+      summarize_at(vars(grad_cohort, grad_count, dropout_count), .funs = ~sum(., na.rm = T)) %>%
       mutate(subgroup = s) 
     collapse = bind_rows(collapse, temp)
   }

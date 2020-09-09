@@ -94,7 +94,7 @@ attendance <- dbGetQuery(con,
     AND IG.ASSIGNMENT NOT IN ('P3', 'P4') 
     AND ISP.TYPE_OF_SERVICE = 'P'
     ORDER BY S.DISTRICT_NO, S.SCHOOL_NO, ISP.LAST_NAME, ISP.FIRST_NAME") %>%
-    as.tbl() %>%
+    as_tibble() %>%
     clean_names() %>%
     mutate_at(
         .vars = c("instructional_program_num", "district_no", "school_no", "student_key", "isp_days", "cnt_total",
