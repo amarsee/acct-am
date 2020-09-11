@@ -400,7 +400,7 @@ if(dropouts == T) {
     
     # District 
     group_by(system, subgroup) %>% 
-    summarize_at(vars(grad_cohort, grad_count, dropout_count), funs(sum(., na.rm = T))) %>% 
+    summarize_at(vars(grad_cohort, grad_count, dropout_count), .funs = ~sum(., na.rm = T)) %>% 
     ungroup() %>%
     transmute(system, school = 0, school_name = "All Schools", subgroup, grad_cohort, grad_count, dropout_count, 
               grad_rate = ifelse(grad_cohort == 0, NA, round(100 * grad_count / grad_cohort, 1)),
@@ -414,7 +414,7 @@ if(dropouts == T) {
     
     # State
     group_by(subgroup) %>% 
-    summarize_at(vars(grad_cohort, grad_count, dropout_count), funs(sum(., na.rm = T))) %>% 
+    summarize_at(vars(grad_cohort, grad_count, dropout_count), .funs = ~sum(., na.rm = T)) %>% 
     ungroup() %>%
     transmute(system = 0, system_name = "State of Tennessee", school = 0, school_name = "All Schools", 
               subgroup, grad_cohort, grad_count, dropout_count, 

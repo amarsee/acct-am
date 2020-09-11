@@ -169,7 +169,7 @@ state <- read_csv("N:/ORP_accountability/data/2020_graduation_rate/state_grad_ra
 district <- read_csv("N:/ORP_accountability/data/2020_graduation_rate/district_grad_rate.csv") %>% 
   suppress_grad()
 school <- read_csv("N:/ORP_accountability/data/2020_graduation_rate/school_grad_rate.csv") %>% 
-  suppress_grad(top_threshold = 1, bottom_threshold = 5)
+  suppress_grad(top_threshold = 5, bottom_threshold = 5)
 
 write_csv(state, "N:/ORP_accountability/data/2020_graduation_rate/state_grad_rate_suppressed.csv", na = '')
 write_csv(district, "N:/ORP_accountability/data/2020_graduation_rate/district_grad_rate_suppressed.csv", na = '')
