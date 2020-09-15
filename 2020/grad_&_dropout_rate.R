@@ -74,7 +74,9 @@ if(analysis == T) {
            White = race_ethnicity == "W", Homeless = homeless == "Y", Male = gender == "M", Female = gender == "F",
            Migrant = migrant == "Y", Non_BHN = !race_ethnicity %in% c("B", "H", "I"), Non_ED = ed == "N", 
            Non_EL = el == "N", Non_Homeless = homeless == "N", Non_Migrant = migrant == "N", Non_SWD = swd == "N") %>% 
-    filter(!is.na(system) & !is.na(school))
+    filter(!is.na(system) & !is.na(school)) # %>% 
+    # filter(!system %in% c(792, 190)) # state without Metro and Shelby
+    # filter(ED == TRUE) # Only economically disadvantaged students
   
   # Initialize empty data frame for loop
   state_grad = as_tibble(data.frame())
@@ -424,3 +426,24 @@ if(dropouts == T) {
 } else {
   rm(dropouts)
 }
+
+# ============== ACT Participation ================
+cohort_2020_act <- bind_rows(
+  # Junior Day 2019
+  read_csv("N:/Assessment_Data Returns/ACT/2018-19/2019 Spring/Spring 2019 Final File/20190620_ACT_JuniorDayResults_SY2018-19.csv") %>% 
+    rename(actid = act_id) %>% 
+    select(-(hs_grades_eng:hs_avg)) %>% 
+    mutate_at(.vars = vars(act_eng:act_sci), .funs = ~ as.numeric(.)),
+  # Retake Fall 2019
+  read_csv("N:/Assessment_Data Returns/ACT/2019-2020/2019 Fall Testing/Senior Retake Preliminary Files/20200831_ACT_cohort_retake_SY2019-20.csv") %>% 
+    select(-(hs_grades_eng:hs_avg), -dob) %>% 
+    rename(state_stud_id = state_id, actid = actid_national) %>% 
+    rename_at(.vars = vars(act_eng_scale:act_composite_scale), .funs = ~ gsub('_scale', '', .)) %>% 
+    mutate_at(.vars = vars(act_eng:act_composite), .funs = ~ as.numeric(.)) %>% 
+    mutate(testdate = as.character(testdate),
+           state_stud_id = as.numeric(state_stud_id))
+)
+
+
+
+
