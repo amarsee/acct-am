@@ -3,28 +3,32 @@ library(janitor)
 library(readxl)
 library(lubridate)
 
-school_names <- read_csv("N:/ORP_accountability/data/2020_final_accountability_files/names.csv") # %>% 
-  # bind_rows(
-  #   tribble(
-  #     ~system, ~system_name, ~school, ~school_name,
-  #     970, "Department Of Children's Services Education Division", 25, "Gateway to Independence",
-  #     970, "Department Of Children's Services Education Division", 65, "Mountain View Youth Development Center",
-  #     61, "Cleveland", 40, "F.I. Denning Center of Technology and Careers",
-  #     570, "Madison County", 40, "Jackson Central-Merry Academy of Medical Technology High School",
-  #     792, "Shelby County", 2085, "Carver High School",
-  #     792, "Shelby County", 2535, "Northside High School",
-  #     792, "Shelby County", 8125, "DuBois High School of Arts Technology",
-  #     792, "Shelby County", 8130, "DuBois High of Leadership Public Policy",
-  #     985, "Achievement School District", 35, "GRAD Academy Memphis"
-  #   )
-  # )
+school_names <- read_csv("N:/ORP_accountability/data/2020_final_accountability_files/names.csv") %>% 
+  bind_rows(
+    tribble(
+      ~system, ~system_name, ~school, ~school_name,
+      330, "Hamilton County", 95, "Hamilton County High School",
+      520, "Lincoln County", 25, "Lincoln County Ninth Grade Academy",
+      61, "Cleveland", 40, "F.I. Denning Center of Technology and Careers",
+      # 570, "Madison County", 40, "Jackson Central-Merry Academy of Medical Technology High School",
+      792, "Shelby County", 2085, "Carver High School",
+      792, "Shelby County", 2315, "Hamilton Middle",
+      792, "Shelby County", 2378, "Hamilton Middle",
+      792, "Shelby County", 2535, "Northside High School",
+      792, "Shelby County", 8125, "DuBois High School of Arts Technology",
+      792, "Shelby County", 8130, "DuBois High of Leadership Public Policy",
+      792, "Shelby County", 8295, "Gateway University",
+      794, "Bartlett", 170, "Bartlett 9th Grade Academy",
+      985, "Achievement School District", 35, "GRAD Academy Memphis"
+    )
+  )
 
 system_names <- school_names %>% 
   select(system, system_name) %>% 
   distinct()
 
-act_student <- read_csv("N:/ORP_accountability/data/2020_ACT/ACT_student_pre_appeals.csv") #,
-                        #col_types = 'icccccccciccccccciciiiciiccccciccccccicccccccciiiiiiillllllllllllllllllllllllll')
+act_student <- read_csv("N:/ORP_accountability/data/2020_ACT/ACT_student_pre_appeals.csv",
+                        col_types = 'icccccccciccccccciciiiciiccccciccccccicccccccciiiiiiillllllllllllllllllllllllll')
 
 # ============================== Functions ===============================
 filter_subgroup <- function(df, column_name, subgroup_label){
@@ -176,7 +180,7 @@ student_level_to_split %>%
     .y = district_numbers,
     .f = ~ write_csv(.x, path = paste0(
       "N:/ORP_accountability/data/", year(now()), "_ACT/split/", .y,
-      "_StudentLevelACT_", sprintf("%02d", day(now())), month(now(), label = T), year(now()),
+      "_2020_StudentLevelACT_", format(Sys.Date(), "%d%b%Y"),
       ".csv"
     ), na = "")
   )
@@ -189,7 +193,7 @@ school_level_act %>%
     .y = district_numbers,
     .f = ~ write_csv(.x, path = paste0(
       "N:/ORP_accountability/data/", year(now()), "_ACT/split/", .y,
-      "_SchoolLevelACT_", sprintf("%02d", day(now())), month(now(), label = T), year(now()),
+      "_2020_SchoolLevelACT_", format(Sys.Date(), "%d%b%Y"),
       ".csv"
     ), na = "")
   )
@@ -202,7 +206,7 @@ district_level_act %>%
     .y = district_numbers,
     .f = ~ write_csv(.x, path = paste0(
       "N:/ORP_accountability/data/", year(now()), "_ACT/split/", .y,
-      "_DistrictLevelACT_", sprintf("%02d", day(now())), month(now(), label = T), year(now()),
+      "_2020_DistrictLevelACT_", format(Sys.Date(), "%d%b%Y"),
       ".csv"
     ), na = "")
   )

@@ -4,7 +4,7 @@ library(readstata13)
 library(lubridate)
 library(readxl)
 
-hs_crosswalk <- read_csv("N:/ORP_accountability/projects/Jessica/Data Returns/Helpful Documents/ACT_xwalkAug2018rev.csv")
+# hs_crosswalk <- read_csv("N:/ORP_accountability/projects/Jessica/Data Returns/Helpful Documents/ACT_xwalkAug2018rev.csv")
 
 grad_rate_student_level <- read_csv("N:/ORP_accountability/data/2020_graduation_rate/student_level.csv") %>% 
   filter(included_in_cohort == 'Y', completion_type %in% c(1, 11, 12, 13))
