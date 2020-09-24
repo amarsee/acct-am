@@ -68,7 +68,8 @@ junior_prior <- read_csv("N:/Assessment_Data Returns/ACT/2018-19/2019 Spring/Spr
   mutate(test_date = '2018-19', pref = 3)
 
 # ============= Junior Day Current ====================
-junior_current <- read_csv("N:/Assessment_Data Returns/ACT/2019-2020/2020 Spring Testing/Final/20200914_ACT_JuniorDayResults_SY2019-20.csv") %>% 
+junior_current <- read_csv("N:/Assessment_Data Returns/ACT/2019-2020/2020 Spring Testing/Final/20200924_ACT_JuniorDayResults_SY2019-20.csv",
+                           col_types = 'icccccicciiiiiiciiciiiiiciiciiii') %>% 
   # filter(test_location != "M") %>% 
   # dedup by highest composite
   group_by(state_stud_id) %>% 
@@ -150,7 +151,7 @@ act_student_level <- bind_rows(junior_2_prior, junior_prior, junior_current, coh
   left_join(grad_rate_student_level, ., by = c('student_key')) 
 
 # ===================== Update Student Level with Appeals ======================================
-appeals_tracker <- read_excel("N:/ORP_accountability/appeals/2020/ACT/Coding/ACT Appeals Master Tracker.xlsm", sheet = 3) %>% 
+appeals_tracker <- read_excel("N:/ORP_accountability/appeals/2021/ACT/Coding/ACT Appeals Master Tracker.xlsm", sheet = 3) %>% 
   clean_names() %>% 
   filter(status == 'Approved') %>% 
   mutate(student_key = as.numeric(student_id)) %>% 

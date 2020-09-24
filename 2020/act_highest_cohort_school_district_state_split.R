@@ -129,7 +129,7 @@ appeals_tracker_district <- read_excel("N:/ORP_accountability/appeals/2020/ACT/C
               select(system, participation_rate, avg_composite = composite, pct_21_or_higher), 
             by = 'system')
 
-write_csv(appeals_tracker_district, 'N:/ORP_accountability/appeals/2020/ACT/Coding/act_district_stats.csv', na = '')
+write_csv(appeals_tracker_district, 'N:/ORP_accountability/appeals/2021/ACT/Coding/act_district_stats.csv', na = '')
 
 # ======================== State Level ==================================
 state_level_act <- student_w_subgroups %>% 
