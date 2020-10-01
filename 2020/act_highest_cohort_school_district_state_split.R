@@ -148,8 +148,6 @@ write_csv(state_level_act, "N:/ORP_accountability/data/2020_ACT/ACT_state_pre_ap
 
 
 
-
-
 # =========================== Split Files ================================
 student_level_to_split <- act_student %>% 
   left_join(school_names, by = c('system', 'school')) %>% 

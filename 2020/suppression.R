@@ -175,4 +175,99 @@ write_csv(state, "N:/ORP_accountability/data/2020_graduation_rate/state_grad_rat
 write_csv(district, "N:/ORP_accountability/data/2020_graduation_rate/district_grad_rate_suppressed.csv", na = '')
 write_csv(school, "N:/ORP_accountability/data/2020_graduation_rate/school_grad_rate_suppressed.csv", na = '')
 
+# ==================== ACT Highest Cohort ====================
+district_current <- read_csv("N:/ORP_accountability/data/2020_ACT/ACT_district_post_appeals_AM.csv") %>%
+  filter(
+    subgroup %in% c("All Students", "Black/Hispanic/Native American", "Economically Disadvantaged",
+                    "English Learners", "Students with Disabilities")
+  ) %>%
+  select(
+    District = system,
+    `District Name` = system_name,
+    Subgroup = subgroup,
+    `Valid Tests` = valid_test,
+    `Participation Rate` = participation_rate,
+    `Average English Score` = english,
+    `Average Math Score` = math,
+    `Average Reading Score` = reading,
+    `Average Science Score` = science,
+    `Average Composite Score` = composite,
+    `Number Scoring 21 or Higher` = n_21_or_higher,
+    `Percent Scoring 21 or Higher` = pct_21_or_higher,
+    `Number Scoring Below 19` = n_below_19,
+    `Percent Scoring Below 19` = pct_below_19
+  ) %>%
+  mutate_at(vars(`Participation Rate`:`Percent Scoring Below 19`), ~ if_else(`Valid Tests` > 0 & `Valid Tests` < 10, "*", as.character(.))) %>%
+  mutate(
+    flag = `Valid Tests` >= 10 & 
+      as.numeric(`Percent Scoring 21 or Higher`) < 1 | as.numeric(`Percent Scoring 21 or Higher`) > 99 |
+      as.numeric(`Percent Scoring Below 19`) < 1 | as.numeric(`Percent Scoring Below 19`) > 99
+  ) %>%
+  mutate_at(vars(`Number Scoring 21 or Higher`:`Percent Scoring Below 19`), ~ if_else(not_na(flag) & flag, "**", as.character(.))) %>%
+  select(-flag)
+
+school_current <- read_csv("N:/ORP_accountability/data/2020_ACT/ACT_school_post_appeals_AM.csv") %>%
+  filter(
+    subgroup %in% c("All Students", "Black/Hispanic/Native American", "Economically Disadvantaged",
+                    "English Learners", "Students with Disabilities")
+  ) %>%
+  select(
+    District = system,
+    `District Name` = system_name,
+    School = school,
+    `School Name` = school_name,
+    Subgroup = subgroup,
+    `Valid Tests` = valid_test,
+    `Participation Rate` = participation_rate,
+    `Average English Score` = english,
+    `Average Math Score` = math,
+    `Average Reading Score` = reading,
+    `Average Science Score` = science,
+    `Average Composite Score` = composite,
+    `Number Scoring 21 or Higher` = n_21_or_higher,
+    `Percent Scoring 21 or Higher` = pct_21_or_higher,
+    `Number Scoring Below 19` = n_below_19,
+    `Percent Scoring Below 19` = pct_below_19
+  ) %>%
+  mutate_at(vars(`Participation Rate`:`Percent Scoring Below 19`), ~ if_else(`Valid Tests` > 0 & `Valid Tests` < 10, "*", as.character(.))) %>%
+  mutate(
+    flag = `Valid Tests` >= 10 & 
+      as.numeric(`Percent Scoring 21 or Higher`) < 5 | as.numeric(`Percent Scoring 21 or Higher`) > 95 |
+      as.numeric(`Percent Scoring Below 19`) < 5 | as.numeric(`Percent Scoring Below 19`) > 95
+  ) %>%
+  mutate_at(vars(`Number Scoring 21 or Higher`:`Percent Scoring Below 19`), ~ if_else(not_na(flag) & flag, "**", as.character(.))) %>%
+  select(-flag)
+
+state_act <- read_csv("N:/ORP_accountability/data/2020_ACT/ACT_state_post_appeals_AM.csv") %>%
+  filter(
+    subgroup %in% c("All Students", "Black/Hispanic/Native American", "Economically Disadvantaged",
+                    "English Learners", "Students with Disabilities")
+  ) %>%
+  select(
+    District = system,
+    `District Name` = system_name,
+    Subgroup = subgroup,
+    `Valid Tests` = valid_test,
+    `Participation Rate` = participation_rate,
+    `Average English Score` = english,
+    `Average Math Score` = math,
+    `Average Reading Score` = reading,
+    `Average Science Score` = science,
+    `Average Composite Score` = composite,
+    `Number Scoring 21 or Higher` = n_21_or_higher,
+    `Percent Scoring 21 or Higher` = pct_21_or_higher,
+    `Number Scoring Below 19` = n_below_19,
+    `Percent Scoring Below 19` = pct_below_19
+  )
+  
+
+write_csv(school_current, "N:/ORP_accountability/data/2020_ACT/ACT_school_suppressed.csv", na = "")
+write_csv(state_act, "N:/ORP_accountability/data/2020_ACT/ACT_state_suppressed.csv", na = '')
+write_csv(district_current, "N:/ORP_accountability/data/2020_ACT/ACT_district_suppressed.csv", na = "")
+
+
+
+
+
+
 
