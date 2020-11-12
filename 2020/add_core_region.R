@@ -28,6 +28,12 @@ add_core("N:/ORP_accountability/data/2020_chronic_absenteeism/school_chronic_abs
 add_core("N:/ORP_accountability/data/2020_chronic_absenteeism/district_chronic_absenteeism_Aug14.csv")
 
 
+# ================== ACT =========================
+# School
+add_core("N:/ORP_accountability/data/2020_ACT/ACT_school_pre_appeals.csv")
+
+# District
+add_core("N:/ORP_accountability/data/2020_ACT/ACT_district_pre_appeals.csv")
 
 
 

@@ -153,8 +153,10 @@ act_student_level <- bind_rows(junior_2_prior, junior_prior, junior_current, coh
 # ===================== Update Student Level with Appeals ======================================
 appeals_tracker <- read_excel("N:/ORP_accountability/appeals/2021/ACT/Coding/ACT Appeals Master Tracker.xlsm", sheet = 3) %>% 
   clean_names() %>% 
-  filter(status == 'Approved') %>% 
+  filter(status == 'Approved') %>% # approved appeals
   mutate(student_key = as.numeric(student_id)) %>% 
+  mutate_at(vars(sat_total:sat_reading),
+            .funs = ~if_else(. == 'n/a', '0', .)) %>% # sometimes people put n/a 
   mutate_at(c(vars(act_english_highest:act_composite_highest), vars(sat_total:sat_reading)),
             .funs = ~as.numeric(.)) %>% 
   mutate_at(.vars = c(vars(act_english_highest:act_composite_highest), vars(sat_total:sat_reading)),
@@ -189,9 +191,9 @@ act_student_w_appeals <- act_student_level %>%
   # ) %>% 
   select(-(act_english_highest:cr_all_app))
 
-act_student_level_post_appeals <- act_student_level %>% 
+act_student_level_post_appeals <- act_student_w_appeals %>% 
   mutate(
-    sat_total = NA,
+    # sat_total = NA, # Comment out for post appeals
     enrolled = 1,
     tested = !is.na(composite) | !is.na(sat_total),
     valid_test = !is.na(composite) | !is.na(sat_total),
@@ -222,7 +224,7 @@ act_student_level_post_appeals <- act_student_level %>%
   ) %>% 
   select(-(cr_eng:cr_all))
 
-write_csv(act_student_level_post_appeals, "N:/ORP_accountability/data/2020_ACT/ACT_student_pre_appeals.csv", na = '')
+write_csv(act_student_level_post_appeals, "N:/ORP_accountability/data/2020_ACT/ACT_student_post_appeals_v1.csv", na = '')
 
 
 

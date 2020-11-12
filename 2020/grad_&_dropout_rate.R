@@ -19,6 +19,7 @@ dropouts = F
 cohort_year <- if_else(lubridate::month(lubridate::today()) >= 10, 
                        lubridate::year(lubridate::today())-3,
                        lubridate::year(lubridate::today())-4)
+cohort_year <- 2016
 # =================== Data ======================
 if(data == T) {
   # Connect to database

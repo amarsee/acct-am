@@ -14,6 +14,7 @@ library(acct)
 library(tidyverse)
 library(janitor)
 library(lubridate)
+library(scales)
 library(RJDBC)
 
 con <- dbConnect(
@@ -70,7 +71,7 @@ daily_pull <- dbGetQuery(con,
                              LEFT JOIN student_absences ON isp.isp_id = student_absences.isp_id
                              WHERE isp.school_year = ", 2020,"
                              AND isp.type_of_service = 'P'
-                             ---AND IG.ASSIGNMENT NOT IN ('P3', 'P4')
+                             --AND IG.ASSIGNMENT NOT IN ('P3', 'P4')
                              AND attendance_type NOT IN ('D', 'P')
                              ) stu_absent ON scal.school_bu_id = stu_absent.school_bu_id
                              AND scal.id_date = stu_absent.attendance_date
@@ -224,6 +225,7 @@ student_power_bi <- dbGetQuery(con,
                         enr.instructional_program_num,enr.student_key, 
                         enr.first_name, enr.middle_name, enr.last_name, enr.grade,
                         enr.english_language_background, enr.begin_date, enr.end_date,
+                        --enr.student_num,
                         enr.withdrawal_reason, wr.withdrawal_descr,
                        -- stu_demo.ethnicity,
                         --stu_demo.race_i, stu_demo.race_a, 
@@ -278,8 +280,27 @@ student_power_bi <- dbGetQuery(con,
                             isp.primary_school_id, isp.instructional_program_num,isp.student_key, 
                             isp.first_name, isp.middle_name, isp.last_name, ig.grade,
                             isp.english_language_background, isp.begin_date, isp.end_date,
-                            isp.withdrawal_reason, 1 as temp
-                        FROM isp
+                            isp.withdrawal_reason, isp.student_num, 1 as temp  
+                        FROM (
+                          SELECT isp_id, school_year, school_bu_id, primary_district_id,
+                            primary_school_id, instructional_program_num,student_key, 
+                            first_name, middle_name, last_name,
+                            english_language_background, begin_date, end_date,
+                            withdrawal_reason, type_of_service, floor(dbms_random.value(1,1000000)) as student_num
+                          FROM instructional_service_period
+                          WHERE --school_year = 2020
+                              --AND student_num < 100001
+                              (student_key BETWEEN 3466661 and 3543131) OR 
+                              (student_key BETWEEN 3777867 and 3795044) OR
+                              (student_key BETWEEN 3828079 and 3845973) OR 
+                              (student_key BETWEEN 3935617 and 3951786) OR
+                              (student_key BETWEEN 4032790 and 4048239) OR 
+                              (student_key BETWEEN 4186346 and 4201888) OR
+                              (student_key BETWEEN 4379560 and 4393394) OR 
+                              (student_key BETWEEN 4478626 and 4492161) OR
+                              (student_key BETWEEN 4736613 and 4748740) OR 
+                              (student_key BETWEEN 4867362 and 4879146) 
+                        )isp
                         LEFT JOIN (
                           SELECT *
                           FROM (SELECT ig.isp_id,
@@ -295,6 +316,7 @@ student_power_bi <- dbGetQuery(con,
                           --AND primary_school_id <> 0
                           AND begin_date < NVL(end_date, SYSDATE)
                           AND ig.grade IS NOT NULL
+                          --AND isp.student_num < 100001
                     ) enr on scal.school_bu_id = enr.school_bu_id AND scal.school_year = enr.school_year
                                 AND scal.instructional_program_num = enr.instructional_program_num
                                 AND scal.temp = enr.temp
@@ -335,7 +357,8 @@ student_power_bi <- dbGetQuery(con,
                     LEFT JOIN withdrawal_reasons wr ON wr.withdrawal_reason = enr.withdrawal_reason
                     WHERE scal.id_date >= enr.begin_date
                         AND scal.id_date <= NVL(enr.end_date, TRUNC(SYSDATE, 'DD')-1) 
-                        AND rownum < 100001
+                        --AND rownum < 100001
+                        --AND enr.student_num < 100001
                    -- ORDER BY primary_district_id, primary_school_id, student_key, id_date
                     ORDER BY district_no, school_no, student_key, id_date
 
@@ -374,61 +397,101 @@ student_power_bi_test <- dbGetQuery(con,
 # ============= Virtual Attendance =====================
 student_daily_virtual <- dbGetQuery(con,
                                      str_c("
-                                           SELECT 
-                                           TO_CHAR(SCAL.SCHOOL_YEAR) || '-' || TO_CHAR(SCAL.SCHOOL_YEAR+1) AS SCHOOL_YEAR,
-                                           S.district_no as system,
-                                           S.school_no as school,
-                                           SCAL.SCHOOL_BU_ID,
-                                           SCAL.ID_DATE,
-                                           stu_absent.student_key,
-                                           stu_absent.first_name,
-                                           stu_absent.middle_name,
-                                           stu_absent.last_name,
-                                           stu_absent.grade,
-                                           stu_absent.attendance_type
-                                           
-                                           
-                                           FROM (SELECT DISTINCT 
-                                           SCAL_ID_DAYS.school_bu_id,
-                                           SCAL_ID_DAYS.school_year,
-                                           SCAL_ID_DAYS.id_date
-                                           FROM SCAL_ID_DAYS
-                                           WHERE SCAL_ID_DAYS.school_year = ",2020,") SCAL
-                                           LEFT JOIN (
-                                           SELECT DISTINCT
-                                           ISP.SCHOOL_BU_ID,
-                                           isp.primary_district_id as system,
-                                           isp.primary_school_id as school,
-                                           isp.first_name,
-                                           isp.middle_name,
-                                           isp.last_name,
-                                           ig.assignment as grade,
-                                           student_absences.attendance_date,
-                                           student_absences.attendance_type,
-                                           isp.student_key
-                                           FROM ISP
-                                           LEFT JOIN EIS_MGR.INSTRUCTIONAL_GRADE IG ON ISP.ISP_ID = IG.ISP_ID
-                                           LEFT JOIN student_absences ON isp.isp_id = student_absences.isp_id
-                                           WHERE isp.school_year = ", 2020,"
-                                           AND isp.type_of_service = 'P'
-                                           AND IG.ASSIGNMENT NOT IN ('P3', 'P4')
-                                           AND attendance_type IN ('D')
-                                           --AND isp.student_key = 3194068
-                                           ) stu_absent ON scal.school_bu_id = stu_absent.school_bu_id
-                                           AND scal.id_date = stu_absent.attendance_date
-                                           LEFT JOIN school S ON scal.school_bu_id = S.school_bu_id
-                                           WHERE SCAL.id_date < TRUNC(SYSDATE, 'DD')
-                                           
+             SELECT 
+             TO_CHAR(SCAL.SCHOOL_YEAR) || '-' || TO_CHAR(SCAL.SCHOOL_YEAR+1) AS SCHOOL_YEAR,
+             S.district_no as system,
+             S.school_no as school,
+             SCAL.SCHOOL_BU_ID,
+             SCAL.ID_DATE,
+             stu_absent.student_key,
+             stu_absent.first_name,
+             stu_absent.middle_name,
+             stu_absent.last_name,
+             stu_absent.grade,
+             stu_absent.attendance_type
+             
+             
+             FROM (SELECT DISTINCT 
+             SCAL_ID_DAYS.school_bu_id,
+             SCAL_ID_DAYS.school_year,
+             SCAL_ID_DAYS.id_date
+             FROM SCAL_ID_DAYS
+             WHERE SCAL_ID_DAYS.school_year = ",2020,") SCAL
+             LEFT JOIN (
+             SELECT DISTINCT
+             ISP.SCHOOL_BU_ID,
+             isp.primary_district_id as system,
+             isp.primary_school_id as school,
+             isp.first_name,
+             isp.middle_name,
+             isp.last_name,
+             ig.grade,
+             student_absences.attendance_date,
+             student_absences.attendance_type,
+             isp.student_key
+             FROM ISP
+            LEFT JOIN (
+              SELECT *
+              FROM (SELECT ig.isp_id,
+                ig.assignment as grade,
+                dense_rank() over (partition by student_key order by ig_begin_date desc) rnk
+                FROM instructional_grade ig)
+              WHERE rnk = 1
+                AND grade NOT IN ('P3', 'P4')
+            ) ig ON ig.isp_id = isp.isp_id
+             LEFT JOIN student_absences ON isp.isp_id = student_absences.isp_id
+             WHERE isp.school_year = ", 2020,"
+              AND isp.type_of_service = 'P'
+              --AND attendance_type NOT IN ('P')
+             --AND isp.student_key = 3194068
+             ) stu_absent ON scal.school_bu_id = stu_absent.school_bu_id
+             AND scal.id_date = stu_absent.attendance_date
+             LEFT JOIN school S ON scal.school_bu_id = S.school_bu_id
+             WHERE SCAL.id_date <= TRUNC(SYSDATE, 'DD')-1
+             
                                            ")) %>%
   as_tibble() %>% 
   clean_names() %>% 
   filter(!is.na(student_key), grade %in% c('K', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10':'12')) %>% 
   arrange(system, school, student_key, id_date)
 
+state_attendance_by_day <- student_daily_virtual %>% 
+  filter(grade %in% c('09', '10', '11', '12')) %>% 
+  group_by(grade, id_date, attendance_type) %>% 
+  summarise(
+    n_students = n()
+  ) %>% 
+  ungroup() %>% 
+  mutate(id_date = as.Date(id_date))
+
+system_id_date <- student_daily_virtual %>% 
+  filter(grade %in% c('09', '10', '11', '12')) %>%
+  # filter(attendance_type == "D") %>% # attendance_type == "D", system %in% system_list, 
+  group_by(system, id_date) %>% 
+  summarise(
+    n_students = n()
+  ) %>% 
+  ungroup() %>% 
+  # mutate(id_date = as.Date(id_date)) %>% 
+  # select(-attendance_type) %>% 
+  pivot_wider(names_from = "id_date", values_from = "n_students") %>% 
+  clean_names() %>% 
+  mutate(diff = x2020_09_08_00_00_00_0 - x2020_09_03_00_00_00_0 ) # x2020_08_28_00_00_00_0 - x2020_08_31_00_00_00_0
+
+ggplot(state_attendance_by_day, aes(x = id_date, y = n_students, color = attendance_type)) + 
+  geom_point() + 
+  scale_x_date(date_breaks = "weeks" , date_labels = "%b %d") +
+  labs(y = "Number of Times Code Type Reported", x = "Date",
+       color = "Attendance Code") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  facet_wrap(~ grade, nrow = 2)
+
 enrollment_2020 <- dbGetQuery(con,
                               str_c("
                                     SELECT DISTINCT isp.school_year,
                                       isp.student_key,
+                                      S.district_no as system,
+                                      S.school_no as school,
                                       isp.student_pin,
                                       isp.begin_date,
                                       isp.end_date,
@@ -436,14 +499,30 @@ enrollment_2020 <- dbGetQuery(con,
                                       isp.withdrawal_reason,
                                       isp.primary_district_id,
                                       isp.primary_school_id,
-                                      ig.assignment as grade
+                                      ig.grade
                                     FROM ISP
-                                    LEFT JOIN instructional_grade ig ON isp.isp_id = ig.isp_id
+                                LEFT JOIN (
+                                            SELECT *
+                                    FROM (SELECT ig.isp_id,
+                                    ig.assignment as grade,
+                                    dense_rank() over (partition by student_key order by ig_begin_date desc) rnk
+                                    FROM instructional_grade ig)
+                                    WHERE rnk = 1
+                                    AND grade NOT IN ('P3', 'P4')
+                              ) ig ON ig.isp_id = isp.isp_id
+                              LEFT JOIN school S ON isp.school_bu_id = S.school_bu_id
                                     WHERE school_year = 2020
                                       AND type_of_service = 'P'
                                     ")) %>%
   as_tibble() %>% 
   clean_names()
+
+system_enr <- enrollment_2020 %>% 
+  mutate(begin_date = as.Date(begin_date), end_date = as.Date(end_date)) %>% 
+  filter(system %in% system_list, grade %in% c('09', '10', '11', '12'),
+         begin_date <= as.Date("2020-10-01") & (is.na(end_date) | end_date >=as.Date("2020-10-02"))) %>% 
+  group_by(system) %>% 
+  summarise(n_enrolled = n())
 
 enrollment_2019 <- dbGetQuery(con,
                               str_c("
@@ -611,5 +690,50 @@ cohort <- dbGetQuery(con,
                                      ")) %>%
   as_tibble() %>% 
   clean_names()
+
+# =================== Course Codes ========================
+course_codes <- dbGetQuery(con,
+                     str_c("
+         select *
+         FROM CCMS_COURSE
+
+                ")) %>%
+  as_tibble() %>% 
+  clean_names()
+
+eoc_course_codes <- course_codes %>% 
+  filter(course_name %in% c("Algebra I", "Algebra II", "Geometry",
+                            "Integrated Mathematics I", "Integrated Mathematics II", "Integrated Mathematics III",
+                            "English I", "English II"))
+test_student <- dbGetQuery(con,
+                           str_c("
+         SELECT DISTINCT student_key
+
+          FROM instructional_service_period
+          WHERE school_year = 2020
+
+                ")) %>%
+  as_tibble() %>% 
+  # head(10000) %>% 
+  clean_names()
+
+test_instructional_program <- dbGetQuery(con,
+     str_c("
+          SELECT DISTINCT instr.school_year, s.district_no, s.school_no,
+              instr.instructional_program_num, instr.standard_type, instr.minutes_allocated
+          FROM instructional_standard instr
+           LEFT JOIN school s ON instr.school_bu_id = s.school_bu_id
+           WHERE instr.school_year = 2020
+           
+           ")) %>%
+  as_tibble() %>% 
+  # head(10000) %>% 
+  clean_names() %>% 
+  arrange(district_no, school_no, instructional_program_num)
+
+write_csv()
+
+
+
 
 

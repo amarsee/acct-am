@@ -27,7 +27,7 @@ system_names <- school_names %>%
   select(system, system_name) %>% 
   distinct()
 
-act_student <- read_csv("N:/ORP_accountability/data/2020_ACT/ACT_student_pre_appeals.csv",
+act_student <- read_csv("N:/ORP_accountability/data/2020_ACT/ACT_student_post_appeals_v1.csv",
                         col_types = 'icccccccciccccccciciiiciiccccciccccccicccccccciiiiiiillllllllllllllllllllllllll')
 
 # ============================== Functions ===============================
@@ -122,7 +122,7 @@ district_level_act <- student_w_subgroups %>%
 write_csv(district_level_act, "N:/ORP_accountability/data/2020_ACT/ACT_district_pre_appeals.csv", na = '')
 
 # District Level for the tracker
-appeals_tracker_district <- read_excel("N:/ORP_accountability/appeals/2020/ACT/Coding/ACT Appeals Master Tracker.xlsm", sheet = 2) %>% 
+appeals_tracker_district <- read_excel("N:/ORP_accountability/appeals/2021/ACT/Coding/ACT Appeals Master Tracker.xlsm", sheet = 2) %>% 
   clean_names() %>% 
   select(system = district_number) %>% 
   left_join(district_level_act %>% filter(subgroup == 'All Students') %>% 

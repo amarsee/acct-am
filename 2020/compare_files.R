@@ -260,3 +260,55 @@ school_metrics <- school_comp %>%
     declined = if_else(pct_diff > 0, 1, 0)
   )
 
+# ================= Compare ACT ================
+student_act_am <- read_csv("N:/ORP_accountability/data/2020_ACT/ACT_student_pre_appeals.csv",
+                           col_types = 'icccccccciccccccciciiiciiccccciccccccicccccccciiiiiiillllllllllllllllllllllllll')
+student_act_sm <- read_csv("N:/ORP_accountability/projects/Sophie/ACT 2020/ACT_pre_appeals_student.csv",
+                           col_types = 'icccccccciccccccciciiiciiccccciccccccicccccccciiiiiiillllllllllllllllllllllllll')
+
+compare_student <- bind_rows(
+  setdiff(student_act_am, student_act_sm) %>% mutate(person = 'AM'),
+  setdiff(student_act_sm, student_act_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(student_key, system, school, person)
+
+state_act_am <- read_csv("N:/ORP_accountability/data/2020_ACT/ACT_state_pre_appeals.csv")
+state_act_sm <- read_csv("N:/ORP_accountability/projects/Sophie/ACT 2020/ACT_preappeals_state.csv")
+
+compare_state <- bind_rows(
+  setdiff(state_act_am, state_act_sm) %>% mutate(person = 'AM'),
+  setdiff(state_act_sm, state_act_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(subgroup, person)
+
+dist_act_am <- read_csv("N:/ORP_accountability/data/2020_ACT/ACT_district_pre_appeals.csv")
+dist_act_sm <- read_csv("N:/ORP_accountability/projects/Sophie/ACT 2020/ACT_preappeals_district.csv")
+
+compare_district <- bind_rows(
+  setdiff(dist_act_am, dist_act_sm) %>% mutate(person = 'AM'),
+  setdiff(dist_act_sm, dist_act_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(system, subgroup, person)
+
+school_act_am <- read_csv("N:/ORP_accountability/data/2020_ACT/ACT_school_pre_appeals.csv")
+school_act_sm <- read_csv("N:/ORP_accountability/projects/Sophie/ACT 2020/ACT_preappeals_school.csv")
+
+compare_school <- bind_rows(
+  setdiff(school_act_am, school_act_sm) %>% mutate(person = 'AM'),
+  setdiff(school_act_sm, school_act_am) %>% mutate(person = 'SM')
+) %>% 
+  arrange(system, school, subgroup, person)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
