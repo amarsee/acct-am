@@ -181,13 +181,16 @@ school_achievement <- state_totals %>%
   mutate(
     valid_tests = if_else(valid_tests > 29, valid_tests, 0),
     n_on_track = if_else(valid_tests > 29, n_on_track, 0),
-    n_mastered = if_else(valid_tests > 29, n_mastered, 0)
+    n_mastered = if_else(valid_tests > 29, n_mastered, 0),
+    enrolled_pr = if_else(valid_tests > 29, enrolled, 0)
   ) %>% 
   group_by(system, school, subgroup)  %>%
    summarise(
      participation_rate = round5(100 * sum(tested)/sum(enrolled)),
       n_count = sum(valid_tests),
-      success_rate = round(((sum(n_on_track) + sum(n_mastered))/sum(valid_tests)) * 100 + 1e-10, 1)
+      success_rate = if_else(participation_rate >= 95,
+                             round(((sum(n_on_track) + sum(n_mastered))/sum(valid_tests)) * 100 + 1e-10, 1),
+                             round(((sum(n_on_track) + sum(n_mastered))/(round(0.95* sum(enrolled_pr)+1e-10)) ) * 100 + 1e-10, 1))
    ) %>% 
   ungroup() %>% 
   mutate(success_rate = ifelse(is.na(success_rate), NA, success_rate)) %>% 
@@ -373,75 +376,24 @@ grad_2019 <- read_csv("N:/ORP_accountability/data/2018_graduation_rate/school_gr
 # comp_grad <- setdiff(grad_2018, grad_comp)
 
 # ========================== ACT/SAT Participation =============================================
-subgroups <- c("Black/Hispanic/Native American", "Economically Disadvantaged", "English Learners with Transitional 1-4",
-               "Students with Disabilities", "Super Subgroup", "American Indian or Alaska Native", "Asian", "Black or African American",
-               "Hispanic", "White")
-
-act_partic_concat <- function(df, subgroup_list){
-  out_df_act_partic <- df %>%
-    mutate(
-      subgroup = "All Students"
-    )
-  for (subgroup in subgroup_list){
-    student_df <- df
-    if (subgroup == "Black/Hispanic/Native American"){
-      hist_df <- student_df %>%
-        filter(race_ethnicity == 'B' | race_ethnicity == 'H' | race_ethnicity == 'I') %>%
-        mutate(subgroup = "Black/Hispanic/Native American")
-      non_hist_df <- 0
-    } else if (subgroup == "Economically Disadvantaged") {
-      hist_df <- student_df %>%
-        filter(econ_dis == 'Y') %>%
-        mutate(subgroup = "Economically Disadvantaged")
-      non_hist_df <- 0
-    }else if (subgroup == "English Learners with Transitional 1-4") {
-      hist_df <- student_df %>%
-        filter(elb == 'Y') %>%
-        mutate(subgroup = "English Learners with Transitional 1-4")
-      non_hist_df <- 0
-    }else if (subgroup == "Super Subgroup"){
-      hist_df <- student_df %>%
-        filter(race_ethnicity == 'B' | race_ethnicity == 'H' | race_ethnicity == 'I' | elb == 'Y' | econ_dis == 'Y' | swd == 'Y') %>%
-        mutate(subgroup = "Super Subgroup")
-      non_hist_df <- 0
-    }else if (subgroup == "American Indian or Alaska Native"){
-      hist_df <- student_df %>%
-        filter(race_ethnicity == 'I') %>%
-        mutate(subgroup = "American Indian or Alaska Native")
-      non_hist_df <- 0
-    }else if (subgroup ==  "Asian"){
-      hist_df <- student_df %>%
-        filter(race_ethnicity == 'A') %>%
-        mutate(subgroup = "Asian")
-      non_hist_df <- 0
-    }else if (subgroup ==  "Black or African American"){
-      hist_df <- student_df %>%
-        filter(race_ethnicity == 'B') %>%
-        mutate(subgroup = "Black or African American")
-      non_hist_df <- 0
-    }else if (subgroup ==  "Hispanic"){
-      hist_df <- student_df %>%
-        filter(race_ethnicity == 'H') %>%
-        mutate(subgroup = "Hispanic")
-      non_hist_df <- 0
-    }else if (subgroup ==  "White"){
-      hist_df <- student_df %>%
-        filter(race_ethnicity == 'W') %>%
-        mutate(subgroup = "White")
-      non_hist_df <- 0
-    }else {
-      hist_df <- student_df %>%
-        filter(swd == 'Y') %>%
-        mutate(subgroup = "Students with Disabilities")
-      non_hist_df <- 0
-    }
-
-    out_df_act_partic <- rbind(out_df_act_partic, hist_df)
-  }
-  return(out_df_act_partic)
+act_partic_concat <- function(df){
+  out_df <- bind_rows(
+    df %>% mutate(subgroup = "All Students"),
+    df %>% filter(race_ethnicity == 'B' | race_ethnicity == 'H' | race_ethnicity == 'I') %>% mutate(subgroup = "Black/Hispanic/Native American"),
+    df %>% filter(econ_dis == 'Y') %>% mutate(subgroup = "Economically Disadvantaged"),
+    df %>% filter(elb == 'Y') %>% mutate(subgroup = "English Learners with Transitional 1-4"),
+    df %>% filter(race_ethnicity == 'B' | race_ethnicity == 'H' | race_ethnicity == 'I' | elb == 'Y' | econ_dis == 'Y' | swd == 'Y') %>% mutate(subgroup = "Super Subgroup"),
+    df %>% filter(race_ethnicity == 'I') %>% mutate(subgroup = "American Indian or Alaska Native"),
+    df %>% filter(race_ethnicity == 'A') %>% mutate(subgroup = "Asian"),
+    df %>% filter(race_ethnicity == 'B') %>% mutate(subgroup = "Black or African American"),
+    df %>% filter(race_ethnicity == 'H') %>% mutate(subgroup = "Hispanic"),
+    df %>% filter(race_ethnicity == 'W') %>% mutate(subgroup = "White"),
+    df %>% filter(swd == 'Y') %>% mutate(subgroup = "Students with Disabilities")
+  )
+  return(out_df)
 }
 
-ready_grad_participation_rate <- read_csv('N:/ORP_accountability/projects/2019_ready_graduate/Data/ready_graduate_student_level.csv',
+ready_grad_participation_rate_n <- read_csv('N:/ORP_accountability/projects/2019_ready_graduate/Data/ready_graduate_student_level_06182019.csv',
                                      col_types = 'icccciccciiciiiiiiiiiiiiiiiiiiic') %>%
   rename(system = district_no, school = school_no) %>%
   mutate(
@@ -450,7 +402,7 @@ ready_grad_participation_rate <- read_csv('N:/ORP_accountability/projects/2019_r
     completed_act_or_sat = if_else((sat_total > 0 | act_composite > 0) & included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13), 1, 0),
     on_time_grad = if_else(included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13), 1, 0)
   ) %>% 
-  act_partic_concat(subgroups) %>%
+  act_partic_concat() %>%
   group_by(system, school, subgroup) %>%
   summarise(
     n_on_time_grads = sum(on_time_grad, na.rm = TRUE),
