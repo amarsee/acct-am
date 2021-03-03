@@ -427,6 +427,7 @@ acct_system_school <- read_csv("N:\\ORP_accountability\\data\\2019_chronic_absen
 
 dedup <- student_level %>%
   anti_join(alt_cte_adult, by = c("system", "school")) %>%
+  # 1,559,451
   mutate(
     # For students with multiple records across test types, MSAA has priority, then EOC, then 3-8
     test_priority = case_when(
@@ -440,6 +441,8 @@ dedup <- student_level %>%
   filter(test_priority == temp | temp == -Inf) %>%
   select(-test_priority, -temp) %>%
   ungroup() %>%
+  # 1,548,767
+  # Lost 10,684 records
   # For students with multiple records within the same test, take highest proficiency level
   mutate(
     prof_priority = case_when(
@@ -454,12 +457,16 @@ dedup <- student_level %>%
   filter(prof_priority == temp | temp == -Inf) %>% # | (is.na(state_student_id) & test == "Alt-Social Studies")) %>%
   select(-prof_priority, -temp) %>%
   ungroup() %>%
+  # 1,548,046
+  # Lost 721 records
   # For students with multiple records within the same performance level, take highest scale score
   group_by(state_student_id, original_subject, test, performance_level) %>%
   mutate(temp = max(scale_score, na.rm = TRUE)) %>%
   filter(scale_score == temp | temp == -Inf) %>%
   select(-temp) %>%
   ungroup() %>%
+  # 1,547,348
+  # Lost 698 records
   # For students with multiple test records with the same proficiency across administrations, take the most recent
   mutate(
     semester_priority = case_when(
@@ -472,6 +479,8 @@ dedup <- student_level %>%
   filter(semester_priority == temp | temp == -Inf | (is.na(state_student_id) & test == "Alt-Social Studies")) %>%
   select(-semester_priority, -temp) %>%
   ungroup() %>%
+  # 1,547,259
+  # Lost 89 records
   # Deduplicate by missing demographic, grade
   # demographic
   mutate(
@@ -486,6 +495,8 @@ dedup <- student_level %>%
   filter(demo_priority == temp | temp == -Inf) %>%
   select(-demo_priority, -temp) %>%
   ungroup() %>% 
+  # 1,547,259
+  # Lost 0 records
   # grade
   mutate(
     grade_priority = case_when(
@@ -500,6 +511,7 @@ dedup <- student_level %>%
   ungroup() %>% 
   # Valid test if there is a performance level
   mutate(valid_test = as.numeric(!is.na(performance_level)))
+  #1,547,259
 
 
 school_names <- read_csv("N:\\ORP_accountability\\data\\2019_final_accountability_files\\names.csv") %>% 
@@ -536,7 +548,9 @@ output <- dedup %>%
          original_performance_level, performance_level, scale_score, enrolled, tested, valid_test,
          state_student_id, last_name, first_name, grade, gender, reported_race, bhn_group, teacher_of_record_tln,
          functionally_delayed, special_ed, economically_disadvantaged, gifted, migrant, el, t1234, el_recently_arrived,
-         enrolled_50_pct_district, enrolled_50_pct_school, absent, refused_to_test, residential_facility) %>%
+         enrolled_50_pct_district, enrolled_50_pct_school, absent, 
+         medically_exempt, 
+         refused_to_test, residential_facility) %>%
   mutate(
     el = if_else(state_student_id %in% wida_current$student_id, 1, el) # If student appears in WIDA file, assign el to 1
   ) %>% 
@@ -567,7 +581,7 @@ output <- dedup %>%
 
 
 # Write out student level
-write_csv(output, 'N:/ORP_accountability/projects/2019_student_level_file/2019_student_level_AM.csv')
+write_csv(output, 'N:/ORP_accountability/projects/2019_student_level_file/2019_student_level_medically_exempt_included.csv')
 
 # compare student level files
 alex_comp <- read_csv("N:\\ORP_accountability\\projects\\2019_student_level_file\\2019_student_level_file.csv")

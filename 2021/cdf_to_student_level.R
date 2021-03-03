@@ -111,52 +111,52 @@ fall_eoc_total <- fall_eoc %>%
   )
 
 # =============================================== TCAP 3-8 ========================================================================
-# grade_3_8_TCAP <- read_fwf("N:/Assessment_Data Returns/TCAP_Grades 3-8/2018-19/2018-2019 TN 2019 Spring 3-8 CDF Final Scores-20190730_updated2019-08-01.Txt",
-#                            col_types = 'icicccciicccciiiiiciici', 
-#                            #n_max = 993639,
-#                            fwf_cols(system = c(7, 11), system_name = c(12, 86), school = c(87, 90),
-#                                     school_name = c(91, 165), last_name = c(166, 200), first_name = c(201, 235),
-#                                     middle_initial = c(236, 236), unique_student_id = c(245, 253), grade = c(276, 277),
-#                                     content_area_code = c(278, 280), attempted = c(378, 378), modified_format = c(379, 380),
-#                                     school_type = c(597, 597),teacher_of_record_tln = c(390, 409), reason_not_tested = c(592, 593), ri_status = c(594, 595),
-#                                     raw_score = c(702, 704), scale_score= c(708, 711), performance_level = c(712, 726),
-#                                     scale_score_lb_ci = c(730,732), scale_score_ub_ci = c(727,729), item_response_array=c(747,876),
-#                                     enrolled_grade = c(274, 275)))
-# 
-# grade_3_8_total <- grade_3_8_TCAP %>%
-#   # mutate(
-#   #   grade = case_when(
-#   #     grade =='K' ~ '0',
-#   #     grade == 'T7' ~ '07',
-#   #     grade == 'T8' ~ '08',
-#   #     TRUE ~ grade
-#   #     ),
-#   #   grade = as.numeric(grade)
-#   # ) %>% 
-#   mutate(
-#     school = case_when(
-#       system == 961L & school == 961L ~ 5L,
-#       system == 963L & school == 963L ~ 5L,
-#       TRUE ~ school
-#     ),
-#     ri_status = if_else(ri_status == 6L & reason_not_tested == 1L, 0L, ri_status)
-#   ) %>% 
-#   left_join(demos_filtered, by = c("system", "school", "unique_student_id")) %>%
-#   select(system:attempted, gender, reported_race, bhn_group, hispanic, native_american:white, economically_disadvantaged, title_1, gifted, functionally_delayed,
-#          migrant, el, el_arrived_year_1:special_ed,  modified_format, enrolled_50_pct_district, enrolled_50_pct_school,
-#          teacher_of_record_tln:item_response_array) %>% 
-#   replace_na(list(bhn_group = 0)) %>% # race = 'Unknown', 
-#   mutate(grade = if_else(grade %in% 1:2, NA_integer_, grade)) %>% 
-#   filter(
-#     system <= 986,  # Private School districts
-#     school != 981,  # Homeschool
-#     grade %in% 1:12 | is.na(grade)  # Grade 13
-#   ) %>%
-#   select(-(hispanic:white)) %>% 
-#   mutate(
-#     test= 'TNReady',
-#     semester = 'Spring'
-#   )
+grade_3_8_TCAP <- read_fwf("N:/Assessment_Data Returns/TCAP_Grades 3-8/2018-19/2018-2019 TN 2019 Spring 3-8 CDF Final Scores-20190730_updated2019-08-01.Txt",
+                           col_types = 'icicccciicccciiiiiciici',
+                           #n_max = 993639,
+                           fwf_cols(system = c(7, 11), system_name = c(12, 86), school = c(87, 90),
+                                    school_name = c(91, 165), last_name = c(166, 200), first_name = c(201, 235),
+                                    middle_initial = c(236, 236), unique_student_id = c(245, 253), grade = c(276, 277),
+                                    content_area_code = c(278, 280), attempted = c(378, 378), modified_format = c(379, 380),
+                                    school_type = c(597, 597),teacher_of_record_tln = c(390, 409), reason_not_tested = c(592, 593), ri_status = c(594, 595),
+                                    raw_score = c(702, 704), scale_score= c(708, 711), performance_level = c(712, 726),
+                                    scale_score_lb_ci = c(730,732), scale_score_ub_ci = c(727,729), item_response_array=c(747,876),
+                                    enrolled_grade = c(274, 275)))
+
+grade_3_8_total <- grade_3_8_TCAP %>%
+  # mutate(
+  #   grade = case_when(
+  #     grade =='K' ~ '0',
+  #     grade == 'T7' ~ '07',
+  #     grade == 'T8' ~ '08',
+  #     TRUE ~ grade
+  #     ),
+  #   grade = as.numeric(grade)
+  # ) %>%
+  mutate(
+    school = case_when(
+      system == 961L & school == 961L ~ 5L,
+      system == 963L & school == 963L ~ 5L,
+      TRUE ~ school
+    ),
+    ri_status = if_else(ri_status == 6L & reason_not_tested == 1L, 0L, ri_status)
+  ) %>%
+  left_join(demos_filtered, by = c("system", "school", "unique_student_id")) %>%
+  select(system:attempted, gender, reported_race, bhn_group, hispanic, native_american:white, economically_disadvantaged, title_1, gifted, functionally_delayed,
+         migrant, el, el_arrived_year_1:special_ed,  modified_format, enrolled_50_pct_district, enrolled_50_pct_school,
+         teacher_of_record_tln:item_response_array) %>%
+  replace_na(list(bhn_group = 0)) %>% # race = 'Unknown',
+  mutate(grade = if_else(grade %in% 1:2, NA_integer_, grade)) %>%
+  filter(
+    system <= 986,  # Private School districts
+    school != 981,  # Homeschool
+    grade %in% 1:12 | is.na(grade)  # Grade 13
+  ) %>%
+  select(-(hispanic:white)) %>%
+  mutate(
+    test= 'TNReady',
+    semester = 'Spring'
+  )
 
 # =================================== Spring EOC ==================================================
 spring_eoc <- read_fwf("N:/Assessment_Data Returns/TCAP_End-of-Course/2018-19/Spring EOC 2019/2018-2019 TN 2019 Spring EOC CDF Final Scores-20190629.txt",

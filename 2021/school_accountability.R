@@ -4,82 +4,8 @@ library(readxl)
 library(readstata13)
 library(acct)
 
-math_eoc <- c("Algebra I", "Algebra II", "Geometry", "Integrated Math I", "Integrated Math II", "Integrated Math III")
-english_eoc <- c("English I", "English II")
-
-grade_pools <- read_csv("N:/ORP_accountability/projects/2019_school_accountability/grade_pools_designation_immune.csv") %>% 
-  select(system, school, pool, designation_ineligible) %>% 
-  mutate(pool = if_else(system == 600 & school == 40, 'HS', pool))
-
-cte_alt_adult <- read_csv("N:/ORP_accountability/data/2019_tdoe_provided_files/cte_alt_adult_schools.csv") %>% 
-  clean_names() %>% 
-  mutate_at(.vars = c('district_number', 'school_number'),
-            .funs = as.numeric) %>% 
-  rename(school_name = school) %>% 
-  rename(system = district_number, school = school_number)
-
-student_level <- read_csv("N://ORP_accountability/projects/2019_student_level_file/2019_student_level_file.csv")
-
-sl <- student_level %>%
-  filter(!(system == 964 & school == 964 | system == 970 & school == 970)) %>%
-  mutate_at("residential_facility", ~ if_else(is.na(.), 0, .)) %>%
-  mutate_at("enrolled_50_pct_school", ~ if_else(is.na(.), "Y", .)) %>% 
-  mutate(
-    original_subject = case_when(
-      grade < 9 & original_subject %in% c('Algebra I', 'Algebra II', "Geometry", "Integrated Math I", "Integrated Math II",
-                                          "Integrated Math III", 'English I', 'English II', 'Biology I', 'Chemistry') ~ subject,
-      TRUE ~ original_subject
-    )
-  )
-
-# school_df <- student_level %>% 
-#   select(system, system_name, school, school_name) %>% 
-#   distinct()
-
-school_df <- read_csv("N:\\ORP_accountability\\data\\2019_final_accountability_files\\names.csv")
-
-integrated_math <- student_level %>% 
-  filter(original_subject %in% c("Algebra I", "Integrated Math I")) %>% 
-  count(system, original_subject) %>% 
-  group_by(system) %>% 
-  mutate(temp = max(n)) %>% 
-  # Systems where Integrated Math is the max between that and Algebra I
-  filter(n == temp, original_subject == "Integrated Math I")
-# Vector with the sytems where that is the case
-int_math_vec <- integrated_math[['system']]
-
-# Previous AMO data
-amo_achievement <- read_csv("N:/ORP_accountability/projects/2019_amo/success_rate_targets_school.csv") %>% 
-  transmute(system, school, subgroup, metric_prior = success_rate_prior, AMO_target, AMO_target_double)
-
-# ACT score substitution
-act_sub <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/act_substitution_school.csv") %>% 
-  #left_join(school_df, by = c('system', 'school')) %>% 
-  transmute(system, system_name, school, school_name,
-    subject = case_when(
-      subject == "ACT Math" & system %in% int_math_vec ~ "Integrated Math III",
-      TRUE  ~ "Algebra II"
-    ), grade = 11, subgroup = "All Students", valid_test = valid_tests, on_track = n_met_benchmark, mastered = 0
-  ) 
-
-# ========================================== Prep for Achievement =======================================
-sl <- sl %>% 
-  mutate(
-    on_track = case_when(
-      performance_level == "Proficient" | performance_level == "On Track" ~ 1,
-      TRUE                      ~ 0
-    ),
-    mastered = case_when(
-      performance_level == "Mastered" | performance_level == "Advanced" ~ 1,
-      TRUE                      ~ 0
-    )
-  ) %>% 
-  filter(residential_facility == 0, (enrolled_50_pct_school == 'Y' | (acct_system != system | school != acct_school)),  # homebound == 0, !is.na(state_student_id),grade %in% 3:12, 
-         original_subject %in% c("Math", "ELA", math_eoc, english_eoc)) %>% 
-  
-  # fill(system_name) %>% 
-  rename(subgroup = reported_race)
-
+# Functions ====================
+# Calculate ach totals by subgroup
 total_by_subgroup <- function(df) {
   out_df <- df %>% 
     group_by(acct_system, acct_school, subject, subgroup) %>% 
@@ -99,8 +25,8 @@ ci_upper_bound <- function(df) {
   out_df <- df %>% 
     mutate(
       ci_bound = round(100 * (n_count/(n_count + (qnorm(0.975)^2)))*((metric/100) + ((qnorm(0.975)^2)/(2*n_count))  +   
-                  qnorm(0.975)* sqrt( (((metric/100) * (1 - (metric/100)))/ n_count) + ((qnorm(0.975)^2) / (4* n_count^2)))) + 1e-10,1)
-           )
+                                                                       qnorm(0.975)* sqrt( (((metric/100) * (1 - (metric/100)))/ n_count) + ((qnorm(0.975)^2) / (4* n_count^2)))) + 1e-10,1)
+    )
   return(out_df)
 }
 
@@ -108,54 +34,101 @@ ci_lower_bound <- function(df) {
   out_df <- df %>% 
     mutate(
       ci_bound = round(100 * (n_count/(n_count + (qnorm(0.975)^2)))*((metric/100) + ((qnorm(0.975)^2)/(2*n_count))  -   
-                                  qnorm(0.975)* sqrt( (((metric/100) * (1 - (metric/100)))/ n_count) + ((qnorm(0.975)^2) / (4* n_count^2)))) + 1e-10,1)
+                                                                       qnorm(0.975)* sqrt( (((metric/100) * (1 - (metric/100)))/ n_count) + ((qnorm(0.975)^2) / (4* n_count^2)))) + 1e-10,1)
     )
   return(out_df)
 }
 
-grouped_by_race <- total_by_subgroup(sl)
 
-all_students <- sl %>% 
-  bind_rows(act_sub %>% rename(acct_system = system, acct_school = school)) %>% 
-  mutate(subgroup = "All Students") %>% 
-  total_by_subgroup()
+# School Information =====================
+school_df <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/names.csv")
 
-super_subgroup <- sl %>% 
-  filter(bhn_group > 0 | economically_disadvantaged > 0 | t1234 > 0 | el > 0 | special_ed > 0) %>% 
-  mutate(subgroup = "Super Subgroup") %>% 
-  total_by_subgroup()
+grade_pools <- read_csv("N:/ORP_accountability/projects/2019_school_accountability/grade_pools_designation_immune.csv") %>% 
+  select(system, school, pool, designation_ineligible) %>% 
+  mutate(pool = if_else(system == 600 & school == 40, 'HS', pool))
 
-cat_subgroups <- function(student_df, students_grouped ){
-  base_df = students_grouped
-  subgroups <- c("Black/Hispanic/Native American", "Economically Disadvantaged", "English Learners with Transitional 1-4", "Students with Disabilities")
-  for (subgroup in subgroups){
-    if (subgroup == "Black/Hispanic/Native American"){
-      hist_df <- student_df %>% 
-        filter(bhn_group > 0) %>% 
-        mutate(subgroup = "Black/Hispanic/Native American")
-    } else if (subgroup == "Economically Disadvantaged") {
-      hist_df <- student_df %>% 
-        filter(economically_disadvantaged > 0) %>% 
-        mutate(subgroup = "Economically Disadvantaged")
-    }else if (subgroup == "English Learners with Transitional 1-4") {
-      hist_df <- student_df %>% 
-        filter(t1234 > 0 | el > 0) %>% 
-        mutate(subgroup = "English Learners with Transitional 1-4")
-    }else {
-      hist_df <- student_df %>% 
-        filter(special_ed > 0) %>% 
-        mutate(subgroup = "Students with Disabilities")
-      }
-    hist_grouped <- total_by_subgroup(hist_df)
-    base_df <- rbind(base_df, hist_grouped)
-  }
-  return(base_df)
-}
+cte_alt_adult <- read_csv("N:/ORP_accountability/data/2019_tdoe_provided_files/cte_alt_adult_schools.csv") %>% 
+  clean_names() %>% 
+  mutate_at(.vars = c('district_number', 'school_number'),
+            .funs = as.numeric) %>% 
+  rename(school_name = school) %>% 
+  rename(system = district_number, school = school_number)
 
-state_totals <- cat_subgroups(sl, grouped_by_race) %>% 
-  filter(subgroup != "Unknown") %>% 
-  #rename(system = acct_system, school = acct_school) %>% 
-  rbind(all_students, super_subgroup) %>% 
+# Subjects =======================
+math_eoc <- c("Algebra I", "Algebra II", "Geometry", "Integrated Math I", "Integrated Math II", "Integrated Math III")
+english_eoc <- c("English I", "English II")
+
+# Student Level ==============
+student_level <- read_csv("N://ORP_accountability/projects/2019_student_level_file/2019_student_level_file.csv")
+
+integrated_math <- student_level %>% 
+  filter(original_subject %in% c("Algebra I", "Integrated Math I")) %>% 
+  count(system, original_subject) %>% 
+  group_by(system) %>% 
+  mutate(temp = max(n)) %>% 
+  # Systems where Integrated Math is the max between that and Algebra I
+  filter(n == temp, original_subject == "Integrated Math I")
+
+# Vector with the sytems where that is the case
+int_math_vec <- integrated_math[['system']]
+
+# Previous AMO data
+amo_achievement <- read_csv("N:/ORP_accountability/projects/2019_amo/success_rate_targets_school.csv") %>% 
+  transmute(system, school, subgroup, metric_prior = success_rate_prior, AMO_target, AMO_target_double)
+
+# ACT score substitution
+act_sub <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/act_substitution_school.csv") %>% 
+  #left_join(school_df, by = c('system', 'school')) %>% 
+  transmute(system, system_name, school, school_name,
+    subject = case_when(
+      subject == "ACT Math" & system %in% int_math_vec ~ "Integrated Math III",
+      TRUE  ~ "Algebra II"
+    ), grade = 11, subgroup = "All Students", valid_test = valid_tests, on_track = n_met_benchmark, mastered = 0
+  ) 
+
+# ========================================== Prep for Achievement =======================================
+sl <- student_level %>%
+  filter(!(system == 964 & school == 964 | system == 970 & school == 970)) %>%
+  mutate_at("residential_facility", ~ if_else(is.na(.), 0, .)) %>%
+  mutate_at("enrolled_50_pct_school", ~ if_else(is.na(.), "Y", .)) %>% 
+  mutate(
+    original_subject = case_when(
+      grade < 9 & original_subject %in% c('Algebra I', 'Algebra II', "Geometry", "Integrated Math I", "Integrated Math II",
+                                          "Integrated Math III", 'English I', 'English II', 'Biology I', 'Chemistry') ~ subject,
+      TRUE ~ original_subject
+    )
+  ) %>% 
+  mutate(
+    on_track = case_when(
+      performance_level == "Proficient" | performance_level == "On Track" ~ 1,
+      TRUE                      ~ 0
+    ),
+    mastered = case_when(
+      performance_level == "Mastered" | performance_level == "Advanced" ~ 1,
+      TRUE                      ~ 0
+    )
+  ) %>% 
+  filter(residential_facility == 0, 
+         (enrolled_50_pct_school == 'Y' | (acct_system != system | school != acct_school)),  # homebound == 0, !is.na(state_student_id),grade %in% 3:12, 
+         original_subject %in% c("Math", "ELA", math_eoc, english_eoc)) %>% 
+  
+  # fill(system_name) %>% 
+  rename(subgroup = reported_race)
+
+state_totals <- bind_rows(
+  sl %>% filter(subgroup != "Unknown"), # Race/ethnicity subgroups
+  sl %>% filter(bhn_group > 0) %>% mutate(subgroup = "Black/Hispanic/Native American"),
+  sl %>% filter(economically_disadvantaged > 0) %>% mutate(subgroup = "Economically Disadvantaged"),
+  sl %>% filter(t1234 > 0 | el > 0) %>% mutate(subgroup = "English Learners with Transitional 1-4"),
+  sl %>% filter(special_ed > 0) %>% mutate(subgroup = "Students with Disabilities"),
+  sl %>% 
+    filter(bhn_group > 0 | economically_disadvantaged > 0 | t1234 > 0 | el > 0 | special_ed > 0) %>% 
+    mutate(subgroup = "Super Subgroup"),
+  sl %>% 
+    bind_rows(act_sub %>% rename(acct_system = system, acct_school = school)) %>% 
+    mutate(subgroup = "All Students")
+) %>% 
+  total_by_subgroup() %>% 
   arrange(system, school, subject, subgroup) %>% 
   # rename(subject = original_subject) %>% 
   mutate(
@@ -166,6 +139,7 @@ state_totals <- cat_subgroups(sl, grouped_by_race) %>%
       TRUE ~ subgroup
     )
   )
+
 
 # ====================== TCAP Participation Rate =======================
 school_assessment <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/school_assessment_file.csv")
@@ -194,6 +168,7 @@ school_achievement <- state_totals %>%
       TRUE ~ subject
       )
     ) %>% 
+  # Need to have 30 tests in subject (e.g HS Math or Math)
   group_by(system, school, subject, subgroup)  %>%
   summarise(
     enrolled = sum(enrolled, na.rm = TRUE),
