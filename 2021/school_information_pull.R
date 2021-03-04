@@ -1,7 +1,7 @@
 # Connect to Database Using Local Environment Variables
 # Andrew Marsee
-# 4/29/2020
-# Pull conducted on 4/29/2020
+# 3/4/2021
+# Pull conducted on 
 
 # Set up, more here: https://changhsinlee.com/pyderpuffgirls-ep2/
 options(java.parameters = "-Xmx16G")

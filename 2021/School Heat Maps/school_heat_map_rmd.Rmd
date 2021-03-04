@@ -1,0 +1,819 @@
+---
+output: 
+  pdf_document:
+params:
+  district_id: 20
+  school_id: 20
+  set_title: "School Heat Map"
+
+title: "`r paste(params$set_title, '2020-21')`"
+
+
+header-includes:
+# - \usepackage[head=30pt,foot=40pt]{geometry}
+- \usepackage{booktabs}
+- \usepackage{longtable}
+- \usepackage{array}
+- \usepackage{multirow}
+- \usepackage{wrapfig}
+- \usepackage{float}
+- \usepackage{colortbl}
+- \usepackage{pdflscape}
+- \usepackage{tabu}
+- \usepackage{threeparttable}
+- \usepackage{threeparttablex}
+- \usepackage[normalem]{ulem}
+- \usepackage{makecell}
+- \usepackage{xcolor}
+- \usepackage{fancyhdr}
+- \usepackage{hyperref}
+- \usepackage{caption}
+- \usepackage{titling}
+- \setlength{\droptitle}{-7em} 
+
+# - \pagestyle{fancy}
+# - \fancyhead[L]{\includegraphics[height=1.2cm]{logo.png}}
+# - \fancyfoot[C]{For more information regarding indicators and weights for school accountability results, please see section 6.4 of the}
+# - \fancyfoot[L]{\thepage}
+# - \fancypagestyle{plain}{\pagestyle{fancy}}
+
+---
+<!-- Add logo to top of each page  -->
+\addtolength{\headheight}{1.0cm}
+
+\pagestyle{fancyplain}
+\lhead{\includegraphics[height=1.2cm]{logo.png}}
+\renewcommand{\headrulewidth}{2pt}
+
+
+
+\captionsetup[table]{labelformat=empty}
+<!-- Format the hyperlinks -->
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+<!-- \fancyfoot{For more information regarding indicators and weights for school accountability results, please see section 6.4 of the      \hyperlink{protocol}{https://www.tn.gov/content/dam/tn/education/accountability/Accountability_Protocol_2019.pdf}.} -->
+
+
+```{r setup, include=FALSE}
+# ![Caption](smallorb.png) 
+# knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(janitor)
+library(readxl)
+library(readstata13)
+library(broman)
+library(knitr)
+library(kableExtra)
+library(pander)
+library(formattable)
+# Key for conversion from overall score to grade
+final_score = c("3.1 - 4.0", "2.1 - 3.0", "1.1 - 2.0", "0 - 1.0", "Priority School")
+grade = c("A", "B", "C", "D", "F")
+grade_tbl <- data.frame(`Final Score` = final_score, "Grade" = grade) %>% 
+  rename("Overall Score" = Final.Score)
+
+sub_score = c("4", "3", "2", "1", "0")
+color = c(" ", " ", " ", " ", " ")
+color_key <- data.frame(`Subgroup Score` = sub_score, "Color" = color) %>% 
+  rename("Subgroup Score" = Subgroup.Score) %>% 
+    mutate(
+    Color = case_when(
+          `Subgroup Score` == 4 ~ cell_spec(Color, "latex", background = '#009900'),
+          `Subgroup Score` == 3 ~ cell_spec(Color, "latex", background = '#80ffaa'),
+          `Subgroup Score` == 2 ~ cell_spec(Color, "latex", background = '#ffff66'),
+          `Subgroup Score` == 1 ~ cell_spec(Color, "latex", background = '#ff9999'),
+          `Subgroup Score` == 0 ~ cell_spec(Color, "latex", background = '#ff0000'),
+          TRUE ~ cell_spec(Color, "latex", background = 'white')
+    )
+  ) %>% 
+  rename("Subgroup Indicator Score" = `Subgroup Score`)
+
+heat_map_weightings <- read_csv("N:/ORP_accountability/projects/Andrew/Accountability/2019/school_heat_map_data/heat_map_weightings_Aug15.csv") %>% 
+  filter(system == params$district_id, school == params$school_id)
+
+total_acct <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/school_accountability_file.csv") %>% 
+  filter(system == params$district_id, school == params$school_id)
+
+school_acct <- read_csv("N:/ORP_accountability/projects/Andrew/Accountability/2020/School Heat Maps/heat_map_data/school_report_scores.csv") %>% 
+  filter(!is.na(pool)) %>% 
+  left_join(total_acct %>% select(system, school, designation_ineligible) %>% distinct(), by = c('system', 'school')) %>% 
+  filter(designation_ineligible == 0, system == params$district_id, school == params$school_id) %>% 
+  select(-designation_ineligible)
+
+school_pool <- unique(school_acct$pool)
+
+# tcap_rates <- read_rds("N:/ORP_accountability/projects/Andrew/Pre-Coding-2019/data/school_tcap_rates.rds")
+tcap_rates <- total_acct %>% 
+  filter(system == params$district_id, school == params$school_id, indicator=='Achievement') %>% 
+    mutate(
+    subgroup = case_when(
+      subgroup == "Black/Hispanic/Native American" ~ "BHN",
+      subgroup == "Economically Disadvantaged" ~ "ED",
+      subgroup == "Students with Disabilities" ~ "SWD",
+      subgroup == "English Learners with Transitional 1-4" ~ "EL",
+      TRUE ~ subgroup
+    ),
+    participation_rate = if_else(is.na(score), NA_real_, participation_rate)
+  ) %>% 
+  filter(subgroup %in% c('All Students', 'BHN', 'ED', 'SWD', 'EL')) %>% 
+  select(system, subgroup, participation_rate)
+
+tcap_school <- tcap_rates %>% 
+  rename(Percent = participation_rate) %>% 
+  mutate(Met = ifelse(Percent >= 95, 'Y', 'N')) %>% 
+  gather(key = 'Measure', value = 'metric', Percent:Met) %>% 
+  spread(subgroup, metric) 
+
+if (!"BHN" %in% colnames(tcap_school)){
+  tcap_school <- tcap_school %>% 
+    mutate(BHN = NA_real_)
+}
+if (!"ED" %in% colnames(tcap_school)){
+  tcap_school <- tcap_school %>% 
+    mutate(ED = NA_real_)
+}
+if (!"EL" %in% colnames(tcap_school)){
+  tcap_school <- tcap_school %>% 
+    mutate(EL = NA_real_)
+}
+if (!"SWD" %in% colnames(tcap_school)){
+  tcap_school <- tcap_school %>% 
+    mutate(SWD = NA_real_)
+}
+
+
+tcap_school <-  tcap_school %>%
+  select(Measure, `All Students`, BHN, ED, EL, SWD) %>% 
+ # select(Measure:SWD) %>%
+  arrange(desc(Measure)) %>%
+  rename(' ' = Measure)
+
+act_sat <- total_acct %>% 
+  filter(system == params$district_id, school == params$school_id, indicator=='Ready Graduates') %>% 
+    mutate(
+    subgroup = case_when(
+      subgroup == "Black/Hispanic/Native American" ~ "BHN",
+      subgroup == "Economically Disadvantaged" ~ "ED",
+      subgroup == "Students with Disabilities" ~ "SWD",
+      subgroup == "English Learners with Transitional 1-4" ~ "EL",
+      TRUE ~ subgroup
+    ),
+   participation_rate = if_else(is.na(score), NA_real_, participation_rate)
+  ) %>% 
+  filter(subgroup %in% c('All Students', 'BHN', 'ED', 'SWD', 'EL')) %>% 
+  select(system, subgroup, participation_rate)
+
+if(school_pool == 'HS') {
+
+  act_sat_school <- act_sat %>% 
+    rename(Percent = participation_rate) %>% 
+    mutate(Met = ifelse(Percent >= 95, 'Y', 'N')) %>% 
+    gather(key = 'Measure', value = 'metric', Percent:Met) %>% 
+    spread(subgroup, metric) 
+  
+  if (!"BHN" %in% colnames(act_sat_school)){
+    act_sat_school <- act_sat_school %>% 
+      mutate(BHN = NA_real_)
+  }
+  if (!"ED" %in% colnames(act_sat_school)){
+    act_sat_school <- act_sat_school %>% 
+      mutate(ED = NA_real_)
+  }
+  if (!"EL" %in% colnames(act_sat_school)){
+    act_sat_school <- act_sat_school %>% 
+      mutate(EL = NA_real_)
+  }
+  if (!"SWD" %in% colnames(act_sat_school)){
+    act_sat_school <- act_sat_school %>% 
+      mutate(SWD = NA_real_)
+  }
+
+  
+  act_sat_school <-  act_sat_school %>%
+    select(Measure, `All Students`, BHN, ED, EL, SWD) %>%
+    arrange(desc(Measure)) %>%
+    rename(' ' = Measure)
+}
+
+school_weighting <- heat_map_weightings %>% 
+  filter(system == params$district_id, school == params$school_id)
+
+school_final_grades <- read_csv("N:/ORP_accountability/projects/Andrew/Accountability/2019/school_heat_map_data/school_final_grades_Aug15.csv") %>% 
+  filter(system == params$district_id, school == params$school_id)
+
+
+```
+
+\vspace{-40pt}
+
+```{r echo = FALSE}
+school_base_df <- school_acct %>% 
+  select(Indicator:`Indicator Score (60-40)`) 
+if (!"BHN" %in% colnames(school_base_df)){
+  school_base_df <- school_base_df %>% 
+    mutate(BHN = NA_real_)
+}
+if (!"ED" %in% colnames(school_base_df)){
+  school_base_df <- school_base_df %>% 
+    mutate(ED = NA_real_)
+}
+if (!"EL" %in% colnames(school_base_df)){
+  school_base_df <- school_base_df %>% 
+    mutate(EL = NA_real_)
+}
+if (!"SWD" %in% colnames(school_base_df)){
+  school_base_df <- school_base_df %>% 
+    mutate(SWD = NA_real_)
+}
+# Check if Super Subgroup is needed in the heat map
+super_sub_check_df <- school_base_df %>% 
+  select(BHN, ED, EL, SWD)
+#If all 4 subgroups are all NAs, include Super Subgorup
+if(ncol(super_sub_check_df[,colSums(is.na(super_sub_check_df)) == 7]) == 4){ 
+  school_base_df <- school_base_df %>% 
+  select(Indicator, `All Students`, BHN, ED, EL, SWD, `Super Subgroup`, `Indicator Score (60-40)`) %>% 
+  replace(is.na(.), '') %>% 
+  mutate_at(
+    .vars = c("All Students","BHN","ED","EL", "SWD", "Super Subgroup"),
+    .f = ~ case_when(
+          . == 4 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#009900'),
+          . == 3 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#80ffaa'),
+          . == 2 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#ffff66'),
+          . == 1 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#ff9999'),
+          . == 0 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#ff0000'),
+          TRUE ~ cell_spec(., "latex", background = 'white')
+  )
+) %>% 
+  mutate(
+    `All Students` = paste0('\\hyperlink{allstudents}{',`All Students`,'}'),
+    BHN = paste0('\\hyperlink{BHN}{',BHN,'}'),
+    ED = paste0('\\hyperlink{ED}{',ED,'}'),
+    EL = paste0('\\hyperlink{EL}{',EL,'}'),
+    SWD = paste0('\\hyperlink{SWD}{',SWD,'}')
+  )
+} else {
+  school_base_df <- school_base_df %>% 
+    select(Indicator, `All Students`, BHN, ED, EL, SWD, `Indicator Score (60-40)`) %>% 
+    # left_join(
+    #   school_acct %>%
+    #     select(Indicator, metric_all_students:pathway_super_subgroup),
+    #   by = c('Indicator')
+    # ) %>%
+    # mutate(
+    #   score_all = `All Students`,
+    #   score_bhn = BHN,
+    #   score_ed = ED,
+    #   score_el = EL,
+    #   score_swd = SWD,
+    #   `All Students` = if_else(Indicator != 'Weighted Subgroup Score', metric_all_students, `All Students`),
+    #   BHN = if_else(Indicator != 'Weighted Subgroup Score', metric_bhn, BHN),
+    #   ED = if_else(Indicator != 'Weighted Subgroup Score', metric_ed, ED),
+    #   EL = if_else(Indicator != 'Weighted Subgroup Score', metric_el, EL),
+    #   SWD = if_else(Indicator != 'Weighted Subgroup Score', metric_swd, SWD)
+    # ) %>% 
+    replace(is.na(.), '') %>% 
+    mutate_at(
+      .vars = c("All Students","BHN","ED","EL", "SWD"),
+      .f = ~ case_when(
+            . == 4 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#009900'),
+            . == 3 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#80ffaa'),
+            . == 2 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#ffff66'),
+            . == 1 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#ff9999'),
+            . == 0 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(., "latex", background = '#ff0000'),
+            TRUE ~ cell_spec(., "latex", background = 'white')
+    )
+  ) %>%
+    mutate(
+    #   `All Students` = case_when(
+    #         score_all == 4 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(`All Students`, "latex", background = '#009900'),
+    #         score_all == 3 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(`All Students`, "latex", background = '#80ffaa'),
+    #         score_all == 2 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(`All Students`, "latex", background = '#ffff66'),
+    #         score_all == 1 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(`All Students`, "latex", background = '#ff9999'),
+    #         score_all == 0 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(`All Students`, "latex", background = '#ff0000'),
+    #         TRUE ~ cell_spec(`All Students`, "latex", background = 'white')
+    # ),
+    # BHN = case_when(
+    #         score_bhn == 4 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(BHN, "latex", background = '#009900'),
+    #         score_bhn == 3 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(BHN, "latex", background = '#80ffaa'),
+    #         score_bhn == 2 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(BHN, "latex", background = '#ffff66'),
+    #         score_bhn == 1 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(BHN, "latex", background = '#ff9999'),
+    #         score_bhn == 0 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(BHN, "latex", background = '#ff0000'),
+    #         TRUE ~ cell_spec(BHN, "latex", background = 'white')
+    # ),
+    # ED = case_when(
+    #         score_ed == 4 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(ED, "latex", background = '#009900'),
+    #         score_ed == 3 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(ED, "latex", background = '#80ffaa'),
+    #         score_ed == 2 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(ED, "latex", background = '#ffff66'),
+    #         score_ed == 1 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(ED, "latex", background = '#ff9999'),
+    #         score_ed == 0 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(ED, "latex", background = '#ff0000'),
+    #         TRUE ~ cell_spec(ED, "latex", background = 'white')
+    # ),
+    # EL = case_when(
+    #         score_el == 4 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(EL, "latex", background = '#009900'),
+    #         score_el == 3 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(EL, "latex", background = '#80ffaa'),
+    #         score_el == 2 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(EL, "latex", background = '#ffff66'),
+    #         score_el == 1 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(EL, "latex", background = '#ff9999'),
+    #         score_el == 0 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(EL, "latex", background = '#ff0000'),
+    #         TRUE ~ cell_spec(EL, "latex", background = 'white')
+    # ),
+    # SWD = case_when(
+    #         score_swd == 4 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(SWD, "latex", background = '#009900'),
+    #         score_swd == 3 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(SWD, "latex", background = '#80ffaa'),
+    #         score_swd == 2 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(SWD, "latex", background = '#ffff66'),
+    #         score_swd == 1 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(SWD, "latex", background = '#ff9999'),
+    #         score_swd == 0 & Indicator != 'Weighted Subgroup Score' ~ cell_spec(SWD, "latex", background = '#ff0000'),
+    #         TRUE ~ cell_spec(SWD, "latex", background = 'white')
+    # ),
+      `All Students` = paste0('\\hyperlink{allstudents}{',`All Students`,'}'),
+      BHN = paste0('\\hyperlink{BHN}{',BHN,'}'),
+      ED = paste0('\\hyperlink{ED}{',ED,'}'),
+      EL = paste0('\\hyperlink{EL}{',EL,'}'),
+      SWD = paste0('\\hyperlink{SWD}{',SWD,'}')
+    ) # %>% 
+    # select(-(metric_all_students:score_swd))
+}
+
+if(school_pool == 'K8') {
+  school_base_df <- school_base_df %>% 
+    filter(! Indicator %in% c('Graduation Rate', 'Ready Graduate'))
+}
+
+if(ncol(super_sub_check_df[,colSums(is.na(super_sub_check_df)) == 7]) == 4) {
+school_base_df %>%
+  #rename(`Indicator Score (60-40 Weighting)` = `Indicator Score (60-40)`) %>% 
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "", align = c('l', 'c', 'c', 'c', 'c', 'c', 'c', 'c')) %>% 
+  kable_styling(position = 'center') # %>% 
+  #column_spec(ncol(school_base_df), width = "8em")
+} else {
+school_base_df %>%
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "", align = c('l', 'c', 'c', 'c', 'c', 'c', 'c')) %>% 
+  kable_styling(position = 'center')
+}
+
+
+school_final_score <- school_final_grades$final_score
+# school_final_grade <- school_final_grades$final_grade
+school_final_grade <- case_when(
+  school_final_score > 3.0 ~ 'A',
+  school_final_score > 2.0 ~ 'B',
+  school_final_score > 1.0 ~ 'C',
+  school_final_score > 0 ~ 'D',
+  TRUE ~ 'F'
+)
+
+```
+<!-- \href{run:N:/ORP_accountability/projects/Andrew/Pre-Coding-2019/heat_maps/dist_10/HS_Clinton High School_25_2019.pdf}{LINK TO PDF} -->
+
+\vspace{3pt}
+
+<!-- Use this \hyperlink{test}{link} to jump to the 4th page -->
+<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Final Score:** `r school_final_score`  -->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Overall Score:** `r school_final_score` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Grade:** `r school_final_grade`
+
+\vspace{3pt}
+
+```{r echo=FALSE, results='asis'}
+# final_score_df <- data.frame("Final Score", as.character(school_final_score), stringsAsFactors = FALSE) %>% 
+#   rename(`Final Score` = Final.Score)
+
+#t1 <- kable(final_score_df, format = 'latex',escape = F, booktabs = T, align = 'c')
+
+t1 <- kable(color_key, format = 'latex',escape = F, booktabs = T, align = 'c') %>% 
+  column_spec(1, width = "9em")
+
+t2 <- kable(grade_tbl, format = 'latex',escape = F, booktabs = T)
+
+#    \\begin{minipage}{.5\\linewidth}
+    #   \\caption{}
+    #   \\centering",
+    #     t1,
+    # "\\end{minipage}%
+cat(c("\\begin{table}[h]
+    \\begin{minipage}{.5\\linewidth}
+       \\caption{Color Key}
+       \\centering",
+         #paste0("{\\large \\textbf{ Final Score}: ", as.character(school_final_score), '}'),
+          t1,
+    "\\end{minipage}
+    \\begin{minipage}{0.5\\linewidth}
+      \\centering
+        \\caption{Overall Score Key}",
+        t2,
+    "\\end{minipage} 
+\\end{table}"
+)) 
+```
+\vspace{2pt}
+
+<!-- ### TNReady Participation Rate -->
+
+<!-- ```{r echo=FALSE} -->
+<!-- if(ncol(super_sub_check_df[,colSums(is.na(super_sub_check_df)) == 7]) == 4) { -->
+<!-- tcap_table <- tcap_school %>% -->
+<!--   mutate(`Super Subgroup` = NA) %>% -->
+<!--   kable(format = 'latex',escape = F, booktabs = T, linesep = "") -->
+<!-- } else { -->
+<!-- tcap_table <- tcap_school %>% -->
+<!--   kable(format = 'latex',escape = F, booktabs = T, linesep = "") -->
+<!-- } -->
+<!-- # tcap_table <- tcap_school %>% -->
+<!-- #   kable(format = 'latex',escape = F, booktabs = T, linesep = "") -->
+<!-- tcap_table # %>% -->
+<!--   # kable_styling(position = 'center') -->
+
+<!-- ``` -->
+
+
+
+``` {r pool_if, echo = FALSE}
+flag <- school_pool == 'HS'
+```
+
+
+``` {r super sub flag, echo = FALSE} 
+flag_2 <- ncol(super_sub_check_df[,colSums(is.na(super_sub_check_df)) == 7]) == 4
+```
+
+
+<!-- `r if(flag){"### ACT/SAT Participation Rate"}` -->
+
+<!-- ``` {r echo = FALSE, eval = flag} -->
+
+<!-- if(ncol(super_sub_check_df[,colSums(is.na(super_sub_check_df)) == 7]) == 4) { -->
+<!--   act_table <- act_sat_school %>% -->
+<!--     mutate(`Suber Subgroup` = NA) %>% -->
+<!--     kable(format = 'latex',escape = F, booktabs = T, linesep = "") -->
+<!-- } else { -->
+<!--  act_table <- act_sat_school %>% -->
+<!--     kable(format = 'latex',escape = F, booktabs = T, linesep = "") -->
+<!-- } -->
+
+<!-- # if (dist_pools[[school_num]] == 'HS') { -->
+<!-- #   act_table <- act_sat_school %>% -->
+<!-- #     kable(format = 'latex',escape = F, booktabs = T, linesep = "") -->
+<!-- # } else { -->
+<!-- #   act_table <- ' ' -->
+<!-- # } -->
+<!-- act_table # %>% -->
+<!--   # kable_styling(position = 'center') -->
+
+<!-- ``` -->
+
+
+``` {r echo = FALSE, eval = flag & !flag_2, results='asis'}
+
+if(ncol(super_sub_check_df[,colSums(is.na(super_sub_check_df)) == 7]) == 4) {
+tcap_table <- tcap_school %>%
+  mutate(`Super Subgroup` = NA) %>%
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "") %>% 
+  column_spec(c(2), width = "4em")
+} else {
+tcap_table <- tcap_school %>%
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "") %>% 
+  column_spec(c(2), width = "4em")
+}
+
+if(ncol(super_sub_check_df[,colSums(is.na(super_sub_check_df)) == 7]) == 4) {
+  act_table <- act_sat_school %>%
+    mutate(`Suber Subgroup` = NA) %>%
+    kable(format = 'latex',escape = F, booktabs = T, linesep = "") %>% 
+    column_spec(c(2), width = "4em")
+} else {
+ act_table <- act_sat_school %>%
+    kable(format = 'latex',escape = F, booktabs = T, linesep = "") %>% 
+   column_spec(c(2), width = "4em")
+}
+
+cat(c("\\begin{table}[h]
+    \\begin{minipage}{.5\\linewidth}
+       \\caption{\\textbf{TNReady Participation Rate}}
+       \\centering",
+         #paste0("{\\large \\textbf{ Final Score}: ", as.character(school_final_score), '}'),
+          tcap_table,
+    "\\end{minipage}
+    \\begin{minipage}{0.5\\linewidth}
+      \\centering
+        \\caption{\\textbf{ACT/SAT Participation Rate}}",
+        act_table,
+    "\\end{minipage} 
+\\end{table}"
+)) 
+
+```
+
+
+
+``` {r echo = FALSE, eval = !flag & !flag_2, results='asis'}
+
+if(ncol(super_sub_check_df[,colSums(is.na(super_sub_check_df)) == 7]) == 4) {
+tcap_table <- tcap_school %>%
+  mutate(`Super Subgroup` = NA) %>%
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "")
+} else {
+tcap_table <- tcap_school %>%
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "")
+}
+
+cat(c("\\begin{table}[h]
+    \\begin{minipage}{.5\\linewidth}
+       \\caption{\\textbf{TNReady Participation Rate}}
+       \\centering",
+         #paste0("{\\large \\textbf{ Final Score}: ", as.character(school_final_score), '}'),
+          tcap_table,
+    "\\end{minipage}
+    \\begin{minipage}{0.5\\linewidth}
+      \\centering
+        \\caption{}",
+        
+    "\\end{minipage} 
+\\end{table}"
+)) 
+
+```
+
+
+
+``` {r echo = FALSE, eval = flag & flag_2, results='asis'}
+
+tcap_table <- tcap_school %>%
+  mutate(`Super Subgroup` = NA) %>%
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "") %>% 
+  column_spec(c(2), width = "4em")
+
+
+act_table <- act_sat_school %>%
+  mutate(`Suber Subgroup` = NA) %>%
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "") %>% 
+  column_spec(c(2), width = "4em")
+
+
+cat(c("\\begin{table}[h]
+    \\begin{minipage}{.75\\linewidth}
+       \\caption{\\textbf{TNReady Participation Rate}}
+       \\centering",
+         #paste0("{\\large \\textbf{ Final Score}: ", as.character(school_final_score), '}'),
+          tcap_table,
+    "\\end{minipage}
+    \\begin{minipage}{0.25\\linewidth}
+      \\centering
+        \\caption{}",
+    
+    "\\end{minipage} 
+\\end{table}"
+)) 
+
+cat(c("\\begin{table}[h]
+    \\begin{minipage}{.75\\linewidth}
+       \\caption{\\textbf{ACT/SAT Participation Rate}}
+       \\centering",
+         #paste0("{\\large \\textbf{ Final Score}: ", as.character(school_final_score), '}'),
+          act_table,
+    "\\end{minipage}
+    \\begin{minipage}{0.25\\linewidth}
+      \\centering
+        \\caption{}",
+        
+    "\\end{minipage} 
+\\end{table}"
+)) 
+
+```
+
+``` {r echo = FALSE, eval = !flag & flag_2, results='asis'}
+
+tcap_table <- tcap_school %>%
+  mutate(`Super Subgroup` = NA) %>%
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "") %>% 
+  column_spec(c(2), width = "4em")
+
+
+cat(c("\\begin{table}[h]
+    \\begin{minipage}{.75\\linewidth}
+       \\caption{\\textbf{TNReady Participation Rate}}
+       \\centering",
+         #paste0("{\\large \\textbf{ Final Score}: ", as.character(school_final_score), '}'),
+          tcap_table,
+    "\\end{minipage}
+    \\begin{minipage}{0.25\\linewidth}
+      \\centering
+        \\caption{}",
+        
+    "\\end{minipage} 
+\\end{table}"
+)) 
+
+```
+
+<!-- \vspace{60pt} -->
+
+<!-- `r if(!flag){"\\vspace{120pt}"}` -->
+
+<!-- For more information regarding indicators and weights for school accountability results, please see section 6.4 of the protocol ([here](https://www.tn.gov/content/dam/tn/education/accountability/Accountability_Protocol_2019.pdf#page=40)). -->
+
+
+<!-- \newpage -->
+
+`r if(flag_2){'\\newpage'}`
+
+\hypertarget{allstudents}{ }
+
+## All Students
+
+
+
+``` {r echo = FALSE}
+
+base_all_weight <- school_weighting %>% 
+  filter(subgroup == 'All Students', Indicator != 'Final Score') %>% 
+  select(`Indicator`:`Adjusted Weight`, `N Count`) 
+
+if(school_pool == 'K8') {
+  base_all_weight <- base_all_weight %>% 
+    filter(! Indicator %in% c('Graduation Rate', 'Ready Graduate'))
+}
+
+base_all_weight %>% 
+  kable(format = 'latex',escape = F, booktabs = T,linesep = "")
+
+final_score_all_students <- school_weighting %>% 
+  filter(subgroup == 'All Students', Indicator == 'Final Score')
+print_score <- final_score_all_students$`Final Score`
+  
+```
+
+**Final Score:** `r print_score`
+
+`r if(!flag_2){'\\newpage'}`
+
+`r if(!flag_2){'\\hypertarget{BHN}{ }'}`
+
+`r if(!flag_2){"## BHN"}`
+
+<!-- \newpage -->
+
+<!-- \hypertarget{BHN}{ } -->
+
+<!-- ## BHN -->
+
+
+``` {r echo = FALSE, eval = !flag_2}
+
+base_bhn_weight <- school_weighting %>% 
+  filter(subgroup == 'BHN', Indicator != 'Final Score') %>% 
+  select(`Indicator`:`Adjusted Weight`, `N Count`)
+
+if(school_pool == 'K8') {
+  base_bhn_weight <- base_bhn_weight %>% 
+    filter(! Indicator %in% c('Graduation Rate', 'Ready Graduate'))
+}
+
+base_bhn_weight %>% 
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "") 
+
+final_score_all_students <- school_weighting %>% 
+  filter(subgroup == 'BHN', Indicator == 'Final Score')
+print_score <- final_score_all_students$`Final Score`
+  
+```
+
+`r if(!flag_2) {paste("**Final Score:**", print_score)}`
+
+
+`r if(!flag_2){'\\hypertarget{ED}{ }'}`
+
+`r if(!flag_2){"## ED"}`
+
+<!-- \hypertarget{ED}{ } -->
+
+<!-- ## ED -->
+
+``` {r echo = FALSE, eval = !flag_2}
+
+base_ed_weight <- school_weighting %>% 
+  filter(subgroup == 'ED', Indicator != 'Final Score') %>% 
+  select(`Indicator`:`Adjusted Weight`, `N Count`)
+
+if(school_pool == 'K8') {
+  base_ed_weight <- base_ed_weight %>% 
+    filter(! Indicator %in% c('Graduation Rate', 'Ready Graduate'))
+}
+base_ed_weight %>% 
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "") 
+
+final_score_all_students <- school_weighting %>% 
+  filter(subgroup == 'ED', Indicator == 'Final Score')
+print_score <- final_score_all_students$`Final Score`
+  
+```
+
+`r if(!flag_2) {paste("**Final Score:**", print_score)}`
+
+
+`r if(!flag_2){'\\hypertarget{EL}{ }'}`
+
+`r if(!flag_2){"## EL"}`
+
+<!-- **Final Score:** `r print_score` -->
+
+<!-- \hypertarget{EL}{ } -->
+
+<!-- ## EL -->
+
+``` {r echo = FALSE, eval = !flag_2}
+
+base_ell_weight <- school_weighting %>% 
+  filter(subgroup == 'EL', Indicator != 'Final Score') %>% 
+  select(`Indicator`:`Adjusted Weight`, `N Count`)
+
+if(school_pool == 'K8') {
+  base_ell_weight <- base_ell_weight %>% 
+    filter(! Indicator %in% c('Graduation Rate', 'Ready Graduate'))
+}
+base_ell_weight %>% 
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "")
+
+final_score_all_students <- school_weighting %>% 
+  filter(subgroup == 'EL', Indicator == 'Final Score')
+print_score <- final_score_all_students$`Final Score`
+  
+```
+
+`r if(!flag_2) {paste("**Final Score:**", print_score)}`
+
+
+`r if(!flag_2){'\\hypertarget{SWD}{ }'}`
+
+`r if(!flag_2){"## SWD"}`
+
+<!-- **Final Score:** `r print_score` -->
+
+<!-- \hypertarget{SWD}{ } -->
+
+<!-- ## SWD -->
+
+
+``` {r echo = FALSE, eval = !flag_2}
+
+base_swd_weight <- school_weighting %>% 
+  filter(subgroup == 'SWD', Indicator != 'Final Score') %>% 
+  select(`Indicator`:`Adjusted Weight`, `N Count`)
+
+if(school_pool == 'K8') {
+  base_swd_weight <- base_swd_weight %>% 
+    filter(! Indicator %in% c('Graduation Rate', 'Ready Graduate'))
+}
+
+base_swd_weight %>% 
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "")
+
+final_score_all_students <- school_weighting %>% 
+  filter(subgroup == 'SWD', Indicator == 'Final Score')
+print_score <- final_score_all_students$`Final Score`
+  
+```
+
+<!-- **Final Score:** `r print_score` -->
+
+`r if(!flag_2) {paste("**Final Score:**", print_score)}`
+
+
+``` {r super sub weight, echo = FALSE} 
+flag_2 <- ncol(super_sub_check_df[,colSums(is.na(super_sub_check_df)) == 7]) == 4
+```
+
+<!-- `r if(flag_2){'\\newpage'}` -->
+
+`r if(flag_2){"## Super Subgroup"}`
+
+``` {r super sub display weights, echo = FALSE, eval = flag_2}
+
+base_super_sub_weight <- school_weighting %>% 
+  filter(subgroup == 'Super Subgroup', Indicator != 'Final Score') %>% 
+  select(`Indicator`:`Adjusted Weight`, `N Count`)
+
+if(school_pool == 'K8') {
+  base_super_sub_weight <- base_super_sub_weight %>% 
+    filter(! Indicator %in% c('Graduation Rate', 'Ready Graduate'))
+}
+
+base_super_sub_weight %>% 
+  kable(format = 'latex',escape = F, booktabs = T, linesep = "")
+
+final_score_all_students <- school_weighting %>% 
+  filter(subgroup == 'Super Subgroup', Indicator == 'Final Score')
+print_score <- final_score_all_students$`Final Score`
+  
+```
+
+```{r conditional_block, echo=FALSE, results='asis', eval=flag_2}
+cat("**Final Score:** ", print_score)
+```
+
+
+<!-- **Final Score:** `r print_score` -->
+

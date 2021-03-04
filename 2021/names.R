@@ -1,5 +1,15 @@
+
+
+options(java.parameters = "-Xmx16G")
 library(acct)
 library(tidyverse)
+library(RJDBC)
+eis_con = dbConnect(
+  JDBC("oracle.jdbc.OracleDriver", classPath="N:/ORP_accountability/ojdbc6.jar"),
+  readRegistry("Environment", hive = "HCU")$EIS_MGR_CXN_STR[1],
+  "EIS_MGR",
+  readRegistry("Environment", hive = "HCU")$EIS_MGR_PWD[1]
+) 
 
 fall_eoc <- read_csv("N:/ORP_accountability/data/2020_cdf/2020_fall_eoc_cdf.csv",
     col_types = "iciccccdiccccdiiiiciiciiciiciiiiiicc")
@@ -17,6 +27,28 @@ districts <- bind_rows(fall_eoc) %>% # , spring_eoc, tn_ready
 schools <- bind_rows(fall_eoc) %>% # , spring_eoc, tn_ready
     transmute(system, school, school_name = str_to_title(school_name)) %>%
     distinct()
+
+schools <- as_tibble(
+  dbGetQuery(
+    eis_con,
+    "
+      SELECT s.district_no, d.district_name,
+              s.school_no, s.school_name
+      FROM school s
+      LEFT JOIN district d ON s.district_no = d.district_no
+      WHERE s.operational_status = 'A'
+        AND s.instructional_type NOT IN ('010')
+    "
+  )
+  ) %>% 
+  janitor::clean_names() %>% 
+  transmute(
+    system = as.numeric(district_no),
+    system_name = district_name,
+    school = as.numeric(school_no),
+    school_name = school_name
+  ) %>% 
+  arrange(system, school)
 
 master <- readxl::read_excel("H:/EDEN Data/EDEN 19-20/LEA and School Master Files/2019-20 EDFacts School Master File_1-27-20.xls", sheet = 2) %>%
     janitor::clean_names() %>%
