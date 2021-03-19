@@ -4,6 +4,8 @@ library(readxl)
 library(readstata13)
 library(acct)
 
+min_n_count <- 30
+
 # Functions ====================
 # Calculate ach totals by subgroup
 total_by_subgroup <- function(df) {
@@ -314,21 +316,23 @@ amo_grad <- read_csv("N:/ORP_accountability/projects/2019_amo/grad_school.csv") 
       subgroup == "English Learners" ~ "English Learners with Transitional 1-4",
       TRUE ~ subgroup
     ),
-    metric_prior = if_else(grad_cohort >= 30, grad_rate, NA_real_), 
+    metric_prior = if_else(grad_cohort >= min_n_count, grad_rate, NA_real_), 
     AMO_target, AMO_target_double
   ) # %>% 
   # filter(!(subgroup == "Native Hawaiian or Other Pacific Islander" & n_count == 0))
 
 grad_2019 <- read_csv("N:/ORP_accountability/data/2018_graduation_rate/school_grad_rate.csv") %>% 
-  filter(school !=0, system != 0, !grepl("Non-", subgroup), !subgroup %in% c('Male', 'Female', 'Homeless', 'Migrant'), 
-         !(system == 90 & school == 7)) %>% 
+  filter(school !=0, system != 0, 
+         !grepl("Non-", subgroup), # Grad file has non-ED, etc. that we don't need here
+         !subgroup %in% c('Male', 'Female', 'Homeless', 'Migrant'), # Don't need these groups either
+         !(system == 90 & school == 7)) %>% # Carroll County
   transmute(
     system, system_name, school, school_name, indicator = "Graduation Rate",
     subgroup = case_when(
       subgroup == "English Learners" ~ "English Learners with Transitional 1-4",
       TRUE ~ subgroup
     ),
-    n_count = if_else(grad_cohort >= 30, grad_cohort, 0), 
+    n_count = if_else(grad_cohort >= min_n_count, grad_cohort, 0), # Resetting to 0 if the school does not meet n count
     # n_count = if_else(grad_cohort >= 20, grad_cohort, 0), 
     metric = if_else(n_count > 0, grad_rate, NA_real_)
   ) %>% 
@@ -427,7 +431,7 @@ amo_ready_grad <- read_csv("N:/ORP_accountability/projects/2019_amo/ready_grad_s
       subgroup == "English Learners" ~ "English Learners with Transitional 1-4",
       TRUE ~ subgroup
     ),
-    metric_prior = if_else(grad_cohort >= 30, pct_ready_grad, NA_real_), 
+    metric_prior = if_else(grad_cohort >= min_n_count, pct_ready_grad, NA_real_), 
     AMO_target, AMO_target_double
   )
 
@@ -440,7 +444,7 @@ ready_grad <- read_csv("N:/ORP_accountability/projects/2019_ready_graduate/Data/
       subgroup == "English Learners" ~ "English Learners with Transitional 1-4",
       TRUE ~ subgroup
     ), participation_rate,
-    n_count = ifelse(n_count >= 30, n_count, 0), 
+    n_count = ifelse(n_count >= min_n_count, n_count, 0), 
     # n_count = ifelse(n_count >= 20, n_count, 0),
     metric = ifelse(n_count > 0, pct_ready_grad, NA_real_)
   ) %>% 
@@ -506,7 +510,7 @@ amo_absenteeism <- read_csv("N:/ORP_accountability/projects/2019_amo/absenteeism
       subgroup == "English Learners" ~ "English Learners with Transitional 1-4",
       TRUE ~ subgroup
     ),
-    metric_prior = if_else(n_students >= 30, pct_chronically_absent, NA_real_), 
+    metric_prior = if_else(n_students >= min_n_count, pct_chronically_absent, NA_real_), 
     AMO_target = AMO_target, AMO_target_double = AMO_target_double
   )
 
@@ -519,7 +523,7 @@ absenteeism <- read_csv("N:/ORP_accountability/data/2019_chronic_absenteeism/sch
       subgroup == "English Learners" ~ "English Learners with Transitional 1-4",
       TRUE ~ subgroup
     ),
-    n_count = ifelse(n_students >= 30, n_students, 0), 
+    n_count = ifelse(n_students >= min_n_count, n_students, 0), 
     metric = ifelse(n_count > 0, pct_chronically_absent, NA_real_)
   ) %>% 
   ci_lower_bound() %>% 

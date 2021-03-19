@@ -43,7 +43,7 @@ cdf <- read_fwf("N:/Assessment_Data Returns/TCAP_End-of-Course/2020-2021/Fall202
 )
 
 # Demographic file
-demographics <- read_csv("N:/ORP_accountability/projects/Andrew/Data Requests/2021/data/demographics_02042021.csv") %>%
+demographics <- read_csv("N:/ORP_accountability/projects/Andrew/Demographics/Data/student_demographics_03182021.csv") %>%
   # Student IDs should be 7 digits
   filter(str_length(student_key) == 7) %>%
   transmute(

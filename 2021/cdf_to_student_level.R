@@ -3,11 +3,9 @@ library(janitor)
 library(readxl)
 library(readstata13)
 
-# demographics <- read_csv("N:/Assessment_Data Returns/TCAP_End-of-Course/2018-19/Demographic Files/fall_eoc_demographics_snapshot_20181208.csv")
+demographics <- read_csv("N:/ORP_accountability/projects/Andrew/Demographics/Data/student_demographics_03182021.csv")
 
-demographics_2020_spring <- read_csv("N:/TNReady/2019-20/spring/demographics/student_demographics_20200707.csv")
-
-demos_filtered <- demographics_2020_spring %>% 
+demos_filtered <- demographics%>% 
   filter(str_length(student_key) == 7) %>% 
   transmute(
     unique_student_id = student_key,
@@ -59,7 +57,7 @@ demos_filtered <- demographics_2020_spring %>%
 # EOCs
 # ======================================= Fall EOC ===========================================================
 # Set to blank if test code = TNSCIEBI, TNBRSCIEBI, TNSOCSUH, TNBRSOCSUH, or TNALTSCBI
-fall_eoc <- read_fwf("N:/Assessment_Data Returns/TCAP_End-of-Course/2019-2020/fall EOC 2019/2019_TN_Fall_2019_EOC_CDF_20200128.txt",
+fall_eoc <- read_fwf("N:/Assessment_Data Returns/TCAP_End-of-Course/2020-2021/Fall2020_EOC/2020_TN_Fall_2020_EOC_CDF_20210204.txt",
                      col_types = 'icicccciicccciiiiiciic',
                      fwf_cols(system = c(33, 37), 
                               system_name = c(38, 112), 
@@ -85,14 +83,6 @@ fall_eoc <- read_fwf("N:/Assessment_Data Returns/TCAP_End-of-Course/2019-2020/fa
                               item_response_array=c(781,910)))
 
 fall_eoc_total <- fall_eoc %>%
-  mutate(
-    school = case_when(
-      system == 961L & school == 961L ~ 5L,
-      system == 963L & school == 963L ~ 5L,
-      TRUE ~ school
-    ),
-    ri_status = if_else(ri_status == 6L & reason_not_tested == 1L, 0L, ri_status)
-  ) %>% 
   left_join(demos_filtered, by = c( "system", "school", "unique_student_id")) %>%
   select(system:attempted, gender, reported_race, bhn_group, hispanic, native_american:white, economically_disadvantaged, title_1, gifted, functionally_delayed,
          migrant, el, el_arrived_year_1:special_ed,  modified_format, enrolled_50_pct_district, enrolled_50_pct_school,
@@ -100,7 +90,7 @@ fall_eoc_total <- fall_eoc %>%
   filter(
     system <= 986,  # Private School districts
     school != 981,  # Homeschool
-    grade %in% 1:12 | is.na(grade)  # Grade 13
+    grade %in% 1:12 | is.na(grade)  # Grade 13, 89 grade 0
   ) %>%
   mutate(grade = if_else(grade %in% 1:2, NA_integer_, grade)) %>% 
   replace_na(list(bhn_group = 0)) %>% # race = 'Unknown', 
@@ -220,7 +210,7 @@ alt_science_ss <- read_csv("N:/ORP_accountability/data/2019_cdf/2019_alt_ss_cdf.
 
 
 # =================================== Total TCAP/EOC ================================================
-total_cdf <- bind_rows(fall_eoc_total) %>% # , spring_eoc_total, grade_3_8_total, alt_science_ss
+total_cdf <- bind_rows(fall_eoc) %>% # , spring_eoc_total, grade_3_8_total, alt_science_ss
   filter(content_area_code != 'E3') %>% 
   filter(!(unique_student_id == 4244992 & content_area_code == 'ENG')) %>% 
   mutate(
@@ -307,31 +297,32 @@ msaa <- read_csv("N:/ORP_accountability/data/2019_cdf/2019_msaa_cdf.csv") %>%
 
 
 # ================================================ Student Level =====================================
-student_level <- bind_rows(total_cdf %>% mutate(economically_disadvantaged=if_else(economically_disadvantaged=='Y', 1, 0))) %>% # , alt_science_ss , msaa
+student_level <- #bind_rows(total_cdf %>% mutate(economically_disadvantaged=if_else(economically_disadvantaged=='Y', 1, 0))) %>% # , alt_science_ss , msaa
+  total_cdf %>% 
   mutate(
     enrolled = 1,
     tested = 1, # MSAA already has a tested field if_else(test != "MSAA", 1, tested)
     valid_test = NA_integer_, # initialize valid tests and assign it later
     # economically_disadvantaged = if_else(economically_disadvantaged == 'Y', 1, 0),
-    el = if_else(el == 1, 1, 0), 
-    el_recently_arrived = if_else(el_arrived_year_1 == 1 | el_arrived_year_2 == 1, 1, 0),
-    t1234 = if_else(t1234 %in% 1:4, 1, 0), # Transitional given a 0 or 1 instead of 0-4
-    special_ed = if_else(special_ed == 1, 1, 0),
-    functionally_delayed = if_else(functionally_delayed == 1, 1,0),
+    # el = if_else(el == 1, 1, 0), 
+    # el_recently_arrived = if_else(el_arrived_year_1 == 1 | el_arrived_year_2 == 1, 1, 0),
+    # t1234 = if_else(t1234 %in% 1:4, 1, 0), # Transitional given a 0 or 1 instead of 0-4
+    # special_ed = if_else(special_ed == 1, 1, 0),
+    # functionally_delayed = if_else(functionally_delayed == 1, 1,0),
     # homebound = homebound == "Y",
     original_performance_level = performance_level,
     subject = original_subject,
     reporting_status = NA
   ) %>%
-  select(system, school, test, original_subject, subject, 
-         original_performance_level, performance_level, scale_score,
-         enrolled, tested, valid_test, state_student_id = unique_student_id,
-         last_name, first_name, grade, gender, reported_race, bhn_group, gifted, functionally_delayed, special_ed,
-         economically_disadvantaged, migrant, el, t1234, el_recently_arrived,
-         enrolled_50_pct_district, enrolled_50_pct_school, absent, not_enrolled, not_scheduled,
-         breach_adult, breach_student, irregular_admin, incorrect_grade_subject,
-         refused_to_test, failed_attemptedness, residential_facility, did_not_submit,
-         semester, ri_status, medically_exempt, teacher_of_record_tln, reporting_status) %>%
+  # select(system, school, test, original_subject, subject, 
+  #        original_performance_level, performance_level, scale_score,
+  #        enrolled, tested, valid_test, state_student_id = unique_student_id,
+  #        last_name, first_name, grade, gender, reported_race, bhn_group, gifted, functionally_delayed, special_ed,
+  #        economically_disadvantaged, migrant, el, t1234, el_recently_arrived,
+  #        enrolled_50_pct_district, enrolled_50_pct_school, absent, not_enrolled, not_scheduled,
+  #        breach_adult, breach_student, irregular_admin, incorrect_grade_subject,
+  #        refused_to_test, failed_attemptedness, residential_facility, did_not_submit,
+  #        semester, ri_status, medically_exempt, teacher_of_record_tln, reporting_status) %>%
   # Drop excluded records
   filter(!is.na(system),
          grade != 13 | is.na(grade),
@@ -347,31 +338,33 @@ student_level <- bind_rows(total_cdf %>% mutate(economically_disadvantaged=if_el
   # Any record with an RI status other than 0 or 3 is neither enrolled nor tested
   mutate(
     enrolled = case_when(
-      breach_adult == 1 | breach_student == 1 | irregular_admin==1 | incorrect_grade_subject == 1 | refused_to_test == 1 | failed_attemptedness == 1 ~ 0,
+      breach_adult == 1 | breach_student == 1 | irregular_admin==1 | incorrect_grade_subject == 1 | 
+        refused_to_test == 1 | failed_attemptedness == 1 ~ 0,
       not_enrolled == 1 | not_scheduled == 1 ~ 0,
       TRUE ~ 1
     ),
     tested = case_when(
-      test == "MSAA" & reporting_status == "DNT" ~ 0,
-      breach_adult == 1 | breach_student ==1 | irregular_admin == 1 | incorrect_grade_subject == 1| refused_to_test == 1 | failed_attemptedness == 1 ~ 0,
+      # test == "MSAA" & reporting_status == "DNT" ~ 0,
+      breach_adult == 1 | breach_student ==1 | irregular_admin == 1 | incorrect_grade_subject == 1| 
+        refused_to_test == 1 | failed_attemptedness == 1 ~ 0,
       absent == 1 | not_enrolled == 1 | not_scheduled == 1 ~ 0,
-      el_recently_arrived == 1L & is.na(original_performance_level) ~ 0,
+      # el_recently_arrived == 1L & is.na(original_performance_level) ~ 0,
       TRUE ~ 1
     ),
     performance_level = case_when(
       # Invalid performance level for values below, used to denote valid tests
       breach_adult == 1 | breach_student == 1 | irregular_admin==1 | incorrect_grade_subject == 1 | refused_to_test == 1 | failed_attemptedness == 1 ~ NA_character_,
       not_enrolled == 1 | not_scheduled == 1 | absent == 1 | medically_exempt == 1 | residential_facility == 1 | did_not_submit == 1~ NA_character_,
-      el_recently_arrived == 1 ~ NA_character_,
+      # el_recently_arrived == 1 ~ NA_character_,
       TRUE ~ performance_level
     ),
     # Modify subject for MSAA tests in grades >= 9 (6.8)
-    subject = case_when(
-      original_subject == "Math" & test == "MSAA" & grade >= 9 & system %in% int_math_systems ~ "Integrated Math I",
-      original_subject == "Math" & test == "MSAA" & grade >= 9 & !(system %in% int_math_systems) ~ "Algebra I",
-      original_subject == "ELA" & test == "MSAA" & grade >= 9 ~ "English II",
-      TRUE ~ subject
-    ),
+    # subject = case_when(
+    #   original_subject == "Math" & test == "MSAA" & grade >= 9 & system %in% int_math_systems ~ "Integrated Math I",
+    #   original_subject == "Math" & test == "MSAA" & grade >= 9 & !(system %in% int_math_systems) ~ "Algebra I",
+    #   original_subject == "ELA" & test == "MSAA" & grade >= 9 ~ "English II",
+    #   TRUE ~ subject
+    # ),
     # Convert subjects per accountability rules
     subject = case_when(
       grade %in% 3:8 & original_subject %in% math_eoc ~ "Math",

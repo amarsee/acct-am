@@ -26,7 +26,8 @@ sl <- student_level %>%
       TRUE ~ original_subject
     )
   ) %>% 
-  filter(residential_facility == 0, enrolled_50_pct_district == 'Y' | system != acct_system, # !is.na(state_student_id), grade %in% 3:12,
+  filter(residential_facility == 0, 
+         enrolled_50_pct_district == 'Y' | system != acct_system, # !is.na(state_student_id), grade %in% 3:12,
          !original_subject %in% c("US History", "Social Studies")) %>% 
   select(-system, -school) %>% 
   rename(system = acct_system, school = acct_school)

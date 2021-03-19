@@ -102,7 +102,7 @@ con <- dbConnect(
 # 
 # # Export pull so we don't have to run it each time
 # write_csv(attendance, str_c("N:/ORP_accountability/data/2020_chronic_absenteeism/absenteeism_pull_", format(Sys.Date(), "%b%d"), ".csv"), na = '')
-
+# EDFacts
 attendance <- dbGetQuery(con,
                          "SELECT
                          TO_CHAR(ISP.SCHOOL_YEAR) || '-' || TO_CHAR(ISP.SCHOOL_YEAR+1) AS SCHOOL_YEAR,
@@ -143,7 +143,7 @@ attendance <- dbGetQuery(con,
                          AND SCAL.SCHOOL_YEAR = ISP.SCHOOL_YEAR
                          AND SCAL.INSTRUCTIONAL_PROGRAM_NUM = ISP.INSTRUCTIONAL_PROGRAM_NUM
                          AND SCAL.ID_DATE >= ISP.BEGIN_DATE
-                         AND SCAL.ID_DATE <= LEAST(NVL(ISP.END_DATE, DATE '2020-06-30'), DATE '2020-06-30')
+                         AND SCAL.ID_DATE <= LEAST(NVL(ISP.END_DATE, DATE '2020-03-02'), DATE '2020-03-02')
                          ) AS ISP_DAYS
                          FROM ISP
                          JOIN EIS_MGR.STUDENT_NEW STU ON STU.STUDENT_KEY = ISP.STUDENT_KEY
@@ -168,12 +168,12 @@ attendance <- dbGetQuery(con,
                              COUNT(CASE WHEN ATTENDANCE_TYPE <> 'P' THEN 1 END) AS CNT_TOTAL
                              FROM EIS_MGR.INSTRUCTIONAL_SERVICE_PERIOD ISP
                              JOIN EIS_MGR.STUDENT_ABSENCES SA  ON ISP.ISP_ID = SA.ISP_ID
-                             WHERE ISP.SCHOOL_YEAR = EXTRACT(YEAR FROM SYSDATE) - 1
+                             WHERE ISP.SCHOOL_YEAR = 2019
                              AND SA.ATTENDANCE_DATE >= ISP.BEGIN_DATE
-                             AND (SA.ATTENDANCE_DATE <= LEAST(NVL(ISP.END_DATE, DATE '2020-06-30'), DATE '2020-06-30') ) --DATE '2020-03-02'
+                             AND (SA.ATTENDANCE_DATE <= LEAST(NVL(ISP.END_DATE, DATE '2020-03-02'), DATE '2020-03-02') ) --DATE '2020-03-02'
                              GROUP BY ISP.ISP_ID
                          ) TRUANTS ON ISP.ISP_ID = TRUANTS.ISP_ID
-                         WHERE ISP.SCHOOL_YEAR = EXTRACT(YEAR FROM SYSDATE) - 1
+                         WHERE ISP.SCHOOL_YEAR = 2019
                          AND IG.grade NOT IN ('P3', 'P4')
                          AND ISP.TYPE_OF_SERVICE = 'P'
                          ORDER BY S.DISTRICT_NO, S.SCHOOL_NO, ISP.LAST_NAME, ISP.FIRST_NAME") %>%
@@ -193,7 +193,7 @@ attendance <- dbGetQuery(con,
   )
 
 # Export pull so we don't have to run it each time
-write_csv(attendance, str_c("N:/ORP_accountability/data/2020_chronic_absenteeism/absenteeism_pull_whole_year_", format(Sys.Date(), "%b%d"), ".csv"), na = '')
+write_csv(attendance, str_c("N:/ORP_accountability/data/2020_chronic_absenteeism/absenteeism_pull_Mar2_EDFacts_", format(Sys.Date(), "%b%d"), ".csv"), na = '')
 
 
 attendance <- read_csv("N:/ORP_accountability/data/2020_chronic_absenteeism/absenteeism_pull_Aug13.csv")
@@ -211,8 +211,8 @@ instructional_days <- dbGetQuery(con,
     FROM EIS_MGR.SCAL_ID_DAYS SCAL
     JOIN EIS_MGR.SCHOOL S ON SCAL.SCHOOL_BU_ID = S.SCHOOL_BU_ID
     JOIN EIS_MGR.DISTRICT D ON S.DISTRICT_NO = D.DISTRICT_NO
-    WHERE SCHOOL_YEAR = EXTRACT(YEAR FROM SYSDATE) - 1
-        --AND SCAL.ID_DATE <= DATE '2020-03-02'
+    WHERE SCHOOL_YEAR = 2019
+        AND SCAL.ID_DATE <= DATE '2020-03-02'
     GROUP BY SCAL.SCHOOL_BU_ID, SCAL.SCHOOL_YEAR, D.DISTRICT_NAME, D.DISTRICT_NO, S.SCHOOL_NAME, S.SCHOOL_NO
     ORDER BY SCAL.SCHOOL_BU_ID"
 ) %>%
