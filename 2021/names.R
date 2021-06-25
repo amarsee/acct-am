@@ -28,6 +28,7 @@ schools <- bind_rows(fall_eoc) %>% # , spring_eoc, tn_ready
     transmute(system, school, school_name = str_to_title(school_name)) %>%
     distinct()
 
+# Pull active schools from EIS
 schools <- as_tibble(
   dbGetQuery(
     eis_con,
@@ -49,12 +50,12 @@ schools <- as_tibble(
     school_name = school_name
   ) %>% 
   arrange(system, school)
-
-master <- readxl::read_excel("H:/EDEN Data/EDEN 19-20/LEA and School Master Files/2019-20 EDFacts School Master File_1-27-20.xls", sheet = 2) %>%
+# Master school file for EDFacts from TNShare
+master <- readxl::read_excel("N:/ORP_accountability/projects/Andrew/EDFacts/2020-2021/2020-21 EDFacts School Master FIle_3-9-21.xlsx", sheet = 2) %>%
     janitor::clean_names() %>%
     transmute(
         system = as.integer(dg_4_lea_id_state),
-        system_name = extra_item_lea_name,
+        system_name = lea_name,
         school = as.integer(dg_5_school_id_state),
         school_name = dg_7_school_name
     ) 
@@ -67,33 +68,47 @@ schools_present <- master %>%
   inner_join(schools %>% select(system, school), by = c('system', 'school')) %>% 
   select(system, school, school_name)
 
-districts_present <- bind_rows(fall_eoc) %>% # , spring_eoc, tn_ready
-  transmute(system) %>%
-  distinct() %>% 
-  inner_join(
-    master %>% 
-      select(system, system_name) %>% 
-      distinct(),
-    by = c('system')
-  )
+# districts_present <- bind_rows(fall_eoc) %>% # , spring_eoc, tn_ready
+#   transmute(system) %>%
+#   distinct() %>% 
+#   inner_join(
+#     master %>% 
+#       select(system, system_name) %>% 
+#       distinct(),
+#     by = c('system')
+#   )
 
-bind_rows(schools_present, schools_missing) %>%
-    left_join(districts_present, by = "system") %>%
+districts <- schools %>% 
+  select(system, system_name) %>% 
+  distinct()
+
+test <- bind_rows(schools_present, schools_missing) %>%
+    left_join(districts, by = "system") %>%
     select(system, system_name, school, school_name) %>%
+    bind_rows(
+      tribble(
+        ~system, ~system_name, ~school, ~school_name,
+        970, "Department Of Children's Services Education Division", 25, "Gateway to Independence",
+        # Wilder included in EDFacts starting 2020-21
+        # 970, "Department of Children's Services", 45, "Wilder Youth Development Center",
+        970, "Department Of Children's Services Education Division", 65, "Mountain View Youth Development Center",
+        970, "Department Of Children's Services Education Division", 140, "DCS Affiliated Schools"
+      )
+    ) %>%
     arrange(system, school) %>%
-    write_csv("N:/ORP_accountability/data/2020_final_accountability_files/names.csv", na = "")
+    write_csv("N:/ORP_accountability/data/2021_final_accountability_files/names.csv", na = "")
 
-master %>%
-  distinct() %>% 
-  bind_rows(
-    tribble(
-      ~system, ~system_name, ~school, ~school_name,
-      970, "Department of Children's Services", 25, "Gateway to Independence",
-      970, "Department of Children's Services", 45, "Wilder Youth Development Center",
-      970, "Department of Children's Services", 65, "Mountain View Youth Development Center",
-      970, "Department of Children's Services", 140, "DCS Affiliated Schools"
-    )
-  ) %>%
-  arrange(system, school) %>%
-  write_csv("N:/ORP_accountability/data/2020_final_accountability_files/names.csv", na = "")
+# master %>%
+#   distinct() %>% 
+#   bind_rows(
+#     tribble(
+#       ~system, ~system_name, ~school, ~school_name,
+#       970, "Department of Children's Services", 25, "Gateway to Independence",
+#       970, "Department of Children's Services", 45, "Wilder Youth Development Center",
+#       970, "Department of Children's Services", 65, "Mountain View Youth Development Center",
+#       970, "Department of Children's Services", 140, "DCS Affiliated Schools"
+#     )
+#   ) %>%
+#   arrange(system, school) %>%
+#   write_csv("N:/ORP_accountability/data/2020_final_accountability_files/names.csv", na = "")
 

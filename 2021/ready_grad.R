@@ -47,8 +47,9 @@ rg = as_tibble(
   )
   ) %>%
   janitor::clean_names()
+  
 
-rg <- read_csv("N:/ORP_accountability/projects/2021_ready_graduate/Data/ready_graduate_student_level.csv")
+# rg <- read_csv("N:/ORP_accountability/projects/2021_ready_graduate/Data/ready_graduate_student_level.csv")
 
 ready_grad_student <- rg %>%
   select(
@@ -77,17 +78,27 @@ ready_grad_student <- rg %>%
   #   )
   # )
 
-write_csv(ready_grad_student , 'N:/ORP_accountability/projects/2020_ready_graduate/Data/ready_graduate_student_level.csv', na = '')
+write_csv(ready_grad_student , 'N:/ORP_accountability/projects/2021_ready_graduate/Data/ready_graduate_student_level.csv', na = '')
 
 
-school_names_current <- read_csv("N:/ORP_accountability/data/2020_final_accountability_files/names.csv")
-school_names_prior <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/names.csv")
+school_names_current <- read_csv("N:/ORP_accountability/data/2021_final_accountability_files/names.csv")
+school_names_prior <- read_csv("N:/ORP_accountability/data/2020_final_accountability_files/names.csv")
 
 school_names <- school_names_current %>% 
   bind_rows(
     school_names_prior %>% 
       mutate(system_name = if_else(system == 970, "Department Of Children's Services Education Division", system_name)) %>% 
-      filter(!paste(system, school, sep = '/') %in% paste(school_names_current$system, school_names_current$school, sep = '/'))
+      filter(!paste(system, school, sep = '/') %in% paste(school_names_current$system, school_names_current$school, sep = '/')),
+    tribble(
+      ~system,~system_name,~school,~school_name,
+      61, "Cleveland", 40, "F.I. Denning Center of Technology and Careers",
+      330, "Hamilton County", 95, "Hamilton County High School",
+      792, "Shelby County", 8125, "DuBois High School of Arts Technology",
+      792, "Shelby County", 8130, "DuBois High of Leadership Public Policy",
+      792, "Shelby County", 8295, "Gateway University",
+      794, "Bartlett", 170, "Bartlett 9th Grade Academy",
+      985, "Achievement School District", 35, "GRAD Academy Memphis"
+    )
   ) %>% 
   arrange(system, school)
 
@@ -116,23 +127,23 @@ out_df_ready_grad <- bind_rows(
     ready_grad_student_level_total %>% filter(race_ethnicity == 'A') %>% mutate(subgroup = "Asian"),
     ready_grad_student_level_total %>% filter(race_ethnicity == 'B') %>% mutate(subgroup = "Black or African American"),
     ready_grad_student_level_total %>% filter(race_ethnicity == 'B' | race_ethnicity == 'H' | race_ethnicity == 'I') %>% mutate(subgroup = "Black/Hispanic/Native American"),
-    # ready_grad_student_level_total %>% filter(econ_dis == 'Y') %>% mutate(subgroup = "Economically Disadvantaged"),
-    # ready_grad_student_level_total %>% filter(econ_dis == 'N') %>% mutate(subgroup = "Non-Economically Disadvantaged"),
-    ready_grad_student_level_total %>% filter(ed == 'Y') %>% mutate(subgroup = "Economically Disadvantaged"),
-    ready_grad_student_level_total %>% filter(ed == 'N') %>% mutate(subgroup = "Non-Economically Disadvantaged"),
-    # ready_grad_student_level_total %>% filter(elb == 'Y') %>% mutate(subgroup = "English Learners with Transitional 1-4"),
-    # ready_grad_student_level_total %>% filter(elb == 'N') %>% mutate(subgroup = "Non-English Learners"),
-    ready_grad_student_level_total %>% filter(el == 'Y') %>% mutate(subgroup = "English Learners with Transitional 1-4"),
-    ready_grad_student_level_total %>% filter(el == 'N') %>% mutate(subgroup = "Non-English Learners"),
+    ready_grad_student_level_total %>% filter(econ_dis == 'Y') %>% mutate(subgroup = "Economically Disadvantaged"),
+    ready_grad_student_level_total %>% filter(econ_dis == 'N') %>% mutate(subgroup = "Non-Economically Disadvantaged"),
+    # ready_grad_student_level_total %>% filter(ed == 'Y') %>% mutate(subgroup = "Economically Disadvantaged"),
+    # ready_grad_student_level_total %>% filter(ed == 'N') %>% mutate(subgroup = "Non-Economically Disadvantaged"),
+    ready_grad_student_level_total %>% filter(elb == 'Y') %>% mutate(subgroup = "English Learners with Transitional 1-4"),
+    ready_grad_student_level_total %>% filter(elb == 'N') %>% mutate(subgroup = "Non-English Learners"),
+    # ready_grad_student_level_total %>% filter(el == 'Y') %>% mutate(subgroup = "English Learners with Transitional 1-4"),
+    # ready_grad_student_level_total %>% filter(el == 'N') %>% mutate(subgroup = "Non-English Learners"),
     ready_grad_student_level_total %>% filter(race_ethnicity == 'H') %>% mutate(subgroup = "Hispanic"),
     ready_grad_student_level_total %>% filter(race_ethnicity == 'P') %>% mutate(subgroup = "Native Hawaiian or Other Pacific Islander"),
     ready_grad_student_level_total %>% filter(race_ethnicity == 'W') %>% mutate(subgroup = "White"),
-    # ready_grad_student_level_total %>% 
-    #   filter(race_ethnicity == 'B' | race_ethnicity == 'H' | race_ethnicity == 'I' | elb == 'Y' | econ_dis == 'Y' | swd == 'Y') %>% 
-    #   mutate(subgroup = "Super Subgroup"),
-    ready_grad_student_level_total %>% 
-      filter(race_ethnicity == 'B' | race_ethnicity == 'H' | race_ethnicity == 'I' | el == 'Y' | ed == 'Y' | swd == 'Y') %>% 
+    ready_grad_student_level_total %>%
+      filter(race_ethnicity == 'B' | race_ethnicity == 'H' | race_ethnicity == 'I' | elb == 'Y' | econ_dis == 'Y' | swd == 'Y') %>%
       mutate(subgroup = "Super Subgroup"),
+    # ready_grad_student_level_total %>%
+    #   filter(race_ethnicity == 'B' | race_ethnicity == 'H' | race_ethnicity == 'I' | el == 'Y' | ed == 'Y' | swd == 'Y') %>%
+    #   mutate(subgroup = "Super Subgroup"),
     ready_grad_student_level_total %>% filter(swd == 'Y') %>% mutate(subgroup = "Students with Disabilities"),
     ready_grad_student_level_total %>% filter(swd == 'N')%>% mutate(subgroup = "Non-Students with Disabilities")
   )
@@ -191,19 +202,22 @@ state_level_ready_grad <- out_df_ready_grad %>%
 write_csv(state_level_ready_grad, "N:/ORP_accountability/projects/2021_ready_graduate/Data/ready_graduate_state.csv", na = '')
 
 # =================== Split Files ======================
+district_level_ready_grad <- read_csv("N:/ORP_accountability/projects/2021_ready_graduate/Data/ready_graduate_district.csv")
+school_level_ready_grad <- read_csv("N:/ORP_accountability/projects/2021_ready_graduate/Data/ready_graduate_school.csv")
+
 # Split district file
 district_numbers <- sort(unique(ready_grad_student_level_total$system))
-district_numbers <- c(51) # Updating Alcoa and Lawrence , 500
+# district_numbers <- c(51) # Updating Alcoa and Lawrence , 500
 
 district_level_ready_grad %>%
-  filter(system %in% c(51)) %>% 
+  # filter(system %in% c(51)) %>% 
   group_split(system) %>%
   walk2(
     .x = .,
     .y = district_numbers,
-    .f = ~ write_csv(.x, path = paste0(
-      "N:/ORP_accountability/projects/2020_ready_graduate/Data/split/", .y,
-      "_2020_ReadyGraduate_District_Level_", format(Sys.Date(), "%d%b%Y"),
+    .f = ~ write_csv(.x, file = paste0(
+      "N:/ORP_accountability/projects/2021_ready_graduate/Data/split/", .y,
+      "_2021_ReadyGraduate_District_Level_", format(Sys.Date(), "%d%b%Y"),
       ".csv"
     ), na = "")
   )
@@ -211,21 +225,21 @@ district_level_ready_grad %>%
 
 # Split school file
 school_level_ready_grad %>%
-  filter(system %in% c(51)) %>%
+  # filter(system %in% c(51)) %>%
   group_split(system) %>%
   walk2(
     .x = .,
     .y = district_numbers,
-    .f = ~ write_csv(.x, path = paste0(
-      "N:/ORP_accountability/projects/2020_ready_graduate/Data/split/", .y,
-      "_2020_ReadyGraduate_School_Level_", format(Sys.Date(), "%d%b%Y"), ".csv"
+    .f = ~ write_csv(.x, file = paste0(
+      "N:/ORP_accountability/projects/2021_ready_graduate/Data/split/", .y,
+      "_2021_ReadyGraduate_School_Level_", format(Sys.Date(), "%d%b%Y"), ".csv"
     ), na = "")
   )
 
 # Split student level file
 ready_grad_student_level_total %>%
   filter(!is.na(system), !is.na(school)) %>% 
-  filter(system %in% c(51)) %>%
+  # filter(system %in% c(51)) %>%
   rename(
     EL = elb,
     ED = econ_dis,
@@ -261,9 +275,9 @@ ready_grad_student_level_total %>%
   walk2(
     .x = .,
     .y = district_numbers,
-    .f = ~ write_csv(.x, path = paste0(
-      "N:/ORP_accountability/projects/2020_ready_graduate/Data/split/", .y,
-      "_2020_ReadyGraduate_Student_Level_", format(Sys.Date(), "%d%b%Y"), ".csv"
+    .f = ~ write_csv(.x, file = paste0(
+      "N:/ORP_accountability/projects/2021_ready_graduate/Data/split/", .y,
+      "_2021_ReadyGraduate_Student_Level_", format(Sys.Date(), "%d%b%Y"), ".csv"
     ), na = "")
   )
 
